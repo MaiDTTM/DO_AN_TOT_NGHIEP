@@ -1,25 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
+import IndexHeader from './components/Header/index_header';
+
+//style
+const styleForm = {display: 'flex', flexDirection :'column'}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div style={styleForm}>
+            <div className='width-common'>
+                    <IndexHeader/>
+            </div>
+            <div>Content</div>
+            <div>Footer</div>
+        </div>
+    );
 }
 
 export default App;

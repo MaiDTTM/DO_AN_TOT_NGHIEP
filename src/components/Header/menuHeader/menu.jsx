@@ -1,6 +1,7 @@
 import React from 'react';
-import { Input, Space,Badge  } from 'antd';
-import { AudioOutlined,UserOutlined,HeartTwoTone,ShoppingCartOutlined,ClockCircleOutlined } from '@ant-design/icons';
+import { Input, Space, Badge } from 'antd';
+import { AudioOutlined, UserOutlined, HeartTwoTone, ShoppingCartOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
 import PropTypes from 'prop-types';
 import './style.css';
 
@@ -9,25 +10,26 @@ function Menu() {
     const { Search } = Input;
     const onSearch = (value) => console.log(value);
     return (
-        <div className='menu_header'>
-            <div>
+        <div className='menu_header' >
+            <div className='logo'>
                 <img src={logo} />
             </div>
-            <div>
-                <Search placeholder='input search text' onSearch={onSearch} enterButton />
+            <div className='search'>
+                <Search placeholder="input search text" onSearch={onSearch} enterButton />
             </div>
-            <div>
-                <UserOutlined />
-                <a href='#'>Đăng nhập / Đăng ký</a>
-            </div>
-            <div>
-                    <HeartTwoTone twoToneColor="#eb2f96" />
+            <div className='singIn_singOut'>
+                <div>
+                    <UserOutlined />
+                    <a href='#'>Đăng nhập / Đăng ký</a>
+                </div>
+                <div>
+                    <HeartTwoTone twoToneColor='#eb2f96' />
                     <a href='#'>Yêu thích</a>
-            </div>
-            <div>
-                <Badge count={5}>
-                    <a href="#" className="head-example" />
-                </Badge>
+                </div>
+                <div>
+                    <ShoppingCartOutlined />
+                    <a href='#'>Giỏ hàng</a>
+                </div>
             </div>
         </div>
     );
