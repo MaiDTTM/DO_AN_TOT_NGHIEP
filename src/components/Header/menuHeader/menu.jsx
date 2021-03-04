@@ -5,8 +5,9 @@ import 'antd/dist/antd.css';
 import PropTypes from 'prop-types';
 import './style.css';
 import logo from '../../../img/logotet2019.png';
+// import { Link } from 'react-router-dom';
 //style
-const stylIcon = { width :'80px', display: 'flex', justifyContent: 'space-between' };
+const stylIcon = { width :'90px', display: 'flex', justifyContent: 'space-evenly' };
 
 function Menu() {
     const { Search } = Input;
@@ -28,9 +29,13 @@ function Menu() {
                     <HeartTwoTone twoToneColor='#eb2f96' />
                     <a href='#'>Yêu thích</a>
                 </div>
-                <div className='Dangnhap'>
+                <div style={stylIcon}>
                     <UserOutlined />
-                    <a href='#'>Đăng nhập / Đăng ký</a>
+                    <a >Đăng nhập</a>
+                </div>
+                <div style={stylIcon}>
+                    <UserOutlined />
+                    <a >Đăng ký</a>
                 </div>
             </div>
         </div>

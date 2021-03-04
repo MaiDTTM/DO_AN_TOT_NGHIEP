@@ -140,4 +140,5 @@
 .right_slider :hover{
     cursor: pointer;
     margin-right: 5px;
+    margin-left: -5px;
 }

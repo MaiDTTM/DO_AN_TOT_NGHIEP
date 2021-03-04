@@ -23,13 +23,8 @@
     object-fit: contain;
 }
 .singIn_singOut{
-    width: 370px;
+    width: 390px;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-}
-.singIn_singOut .Dangnhap{
-    width: 160px;
-    display: flex;
-    justify-content: space-between;
 }

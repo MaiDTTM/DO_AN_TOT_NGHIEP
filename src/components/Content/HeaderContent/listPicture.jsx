@@ -6,6 +6,7 @@ import './styleListPicture.css';
 import banner1 from '../../../img/banner1.png';
 import banner2 from '../../../img/banner2.png';
 import banner3 from '../../../img/banner3.jpg';
+import banner4 from '../../../img/banner4.jpg';
 
 ListPicture.propTypes = {
 
@@ -14,21 +15,21 @@ ListPicture.propTypes = {
 function ListPicture(props) {
     return (
         <div className='list_banner'>
-            <div className='item_banner'>
+            <div className='item_banner one'>
                 <div className='img_banner'>
                     <a href='#'>
                         <img src={banner1} alt=''/>
                     </a>
                 </div>
             </div>
-            <div className='item_banner'>
+            <div className='item_banner tow'>
                 <div className='img_banner'>
                     <a href='#'>
                         <img src={banner2} alt=''/>
                     </a>
                 </div>
             </div>
-            <div className='item_banner'>
+            <div className='item_banner three'>
                 <div className='img_banner'>
                     <a href='#'>
                         <img src={banner3} alt=''/>
