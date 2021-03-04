@@ -38,6 +38,9 @@ function Slider() {
                                     <img src={hot} />
                                 </i>
                                 <a>Đồ sơ sinh</a>
+                                <i>
+                                    <img src={hot} />
+                                </i>
                             </li>
                         </div>
                         <div className='suabot_ta_bim'>
@@ -52,6 +55,11 @@ function Slider() {
                                     <a>- Tã bỉm</a>
                                     <a>- Máy hút sữa [Có quà]</a>
                                 </div>
+                                <div>
+                                    <i>
+                                        <img src={hot} />
+                                    </i>
+                                </div>
                             </li>
                         </div>
                         <div className='khuyenmai_hangmoi'>
@@ -64,6 +72,11 @@ function Slider() {
                                 <div>
                                     <a>Khuyến mại</a>
                                     <a>- Hàng mới về</a>
+                                </div>
+                                <div>
+                                    <i>
+                                        <img src={hot} />
+                                    </i>
                                 </div>
                             </li>
                         </div>

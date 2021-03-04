@@ -1,0 +1,16 @@
+.list_banner{
+    /*width: 100%;*/
+    /*height: 235px;*/
+    /*padding-top: 25px;*/
+    display: flex;
+    /*justify-content: center;*/
+}
+.list_banner .item_banner .img_banner img{
+    width: 370px;
+    height: 100%;
+    filter: drop-shadow(0 0 5px #ff62fe);
+}
+.item_banner{
+    padding-right: 25px;
+    cursor: pointer;
+}
