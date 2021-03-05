@@ -1,84 +1,78 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input, Layout } from 'antd';
+import { Form, Input, Button, Checkbox } from 'antd';
+import 'antd/dist/antd.css';
 
 // style
 import './style.css';
-// import PropTypes from 'prop-types';
+import logo from "../../img/logotet2019.png";
 
+//const
 const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
 };
 const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
+    wrapperCol: { offset: 8, span: 16 },
 };
+
 function Login() {
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
 
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
     return (
-        <Layout style={{ minHeight: '100vh' }}>
-            <Layout className='site_layout'>
-                <div className="container">
-                    <div className="header">
-                        <h1 className="formName">DAISYSHOP LOGIN FORM</h1>
-                    </div>
-                    <div className="loginForm">
-                        <h2>Fill out the form below to login</h2>
-                        <Form
-                            {...layout}
-                            name='basic'
-                            initialValues={{
-                                remember: true,
-                            }}
-                        >
-                            <div className="formItem">
-                                <Form.Item
-                                    label='Email'
-                                    name='email'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your username!',
-                                        },
-                                    ]}
-                                >
-                                    <Input />
-                                </Form.Item>
-
-                                <Form.Item
-                                    label='Password'
-                                    name='password'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your password!',
-                                        },
-                                    ]}
-                                >
-                                    <Input.Password />
-                                </Form.Item>
-
-                                <Form.Item  name='remember' valuePropName='checked'>
-                                    <Checkbox>Remember me</Checkbox>
-                                </Form.Item>
-
-                                <Form.Item >
-                                    <Button type='primary' htmlType='submit'>
-                                        Login
-                                    </Button>
-                                </Form.Item>
-                            </div>
-                        </Form>
-                    </div>
+        <div className="dang_nhap">
+            <div className="herader_dangnhap">
+                <a><img src={logo}/></a>
+                <div className="verticalLine">
+                    <p><b>Chào mừng bạn quay trở lại</b></p>
                 </div>
-            </Layout>
-        </Layout>
+            </div>
+            <div><hr/></div>
+            <div className='titell'>
+                <h3>ĐĂNG NHẬP VỚI EMAIL VÀ SỐ ĐIỆN THOẠI</h3>
+            </div>
+            <div className='form_dangnhap'>
+                <Form className="form"
+                      {...layout}
+                      name="basic"
+                      initialValues={{ remember: true }}
+                      onFinish={onFinish}
+                      onFinishFailed={onFinishFailed}
+                >
+                    <Form.Item className='Username'
+                               label="Username"
+                               name="username"
+                               rules={[{ required: true, message: 'Please input your username!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item className="Password"
+                               label="Password"
+                               name="password"
+                               rules={[{ required: true, message: 'Please input your password!' }]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+
+                    <Form.Item className="Checkbox"
+                               {...tailLayout} name="remember" valuePropName="checked">
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item className="Submit"
+                               {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+        </div>
     );
 }
 

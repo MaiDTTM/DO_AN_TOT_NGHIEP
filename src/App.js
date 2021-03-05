@@ -6,7 +6,8 @@ import Footer from './components/Footer/footer';
 import Login from './components/Login';
 
 //style
-const styleForm = {display: 'flex', flexDirection :'column'}
+const styleForm = {display: 'flex', flexDirection :'column'};
+const styleDN = {display: 'flex', justifyContent: 'center'};
 
 function App() {
     return (
@@ -21,7 +22,7 @@ function App() {
             //         <Footer/>
             //     </div>
             // </div>
-        <div>
+        <div style={styleDN}>
             <Login/>
         </div>
     );
