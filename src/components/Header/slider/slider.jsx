@@ -22,7 +22,7 @@ const contentStyle = {
 
 function Slider() {
     return (
-        <div className='form'>
+        <div className='slider_center'>
             <div className='menu_slider'>
                 <ul className='hot_sale'>
                     <div className='menu_danhmuc'>

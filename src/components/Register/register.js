@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import 'antd/dist/antd.css';
+
 // style
-import styles from './index.module.css';
 import logo from '../../img/logotet2019.png';
+import style from './style.module.css';
 import { Link } from 'react-router-dom';
 
 //const
@@ -14,7 +16,7 @@ const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
 
-function Login() {
+function Register() {
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -23,12 +25,12 @@ function Login() {
 		console.log('Failed:', errorInfo);
 	};
 	return (
-		<div className={styles.dang_nhap}>
-			<div className={styles.herader_dangnhap}>
+		<div className={style.dang_ky}>
+			<div className={style.herader_dangky}>
 				<Link to={'/'}>
 					<img src={logo} />
 				</Link>
-				<div className={styles.verticalLine}>
+				<div className={style.verticalLine}>
 					<p>
 						<b>Chào mừng bạn quay trở lại</b>
 					</p>
@@ -37,12 +39,12 @@ function Login() {
 			<div>
 				<hr />
 			</div>
-			<div className={styles.title}>
-				<h3>ĐĂNG NHẬP VỚI EMAIL VÀ SỐ ĐIỆN THOẠI</h3>
+			<div className={style.titell}>
+				<h3>TẠO MỘT TÀI KHOẢN MỚI</h3>
 			</div>
-			<div className={styles.form_dangnhap}>
+			<div className={style.form_dangky}>
 				<Form
-					className={styles.form}
+					className={style.form}
 					{...layout}
 					name="basic"
 					initialValues={{ remember: true }}
@@ -50,35 +52,52 @@ function Login() {
 					onFinishFailed={onFinishFailed}
 				>
 					<Form.Item
-						className={styles.Username}
+						className={style.Username}
 						label="Username"
 						name="username"
 						rules={[{ required: true, message: 'Please input your username!' }]}
 					>
-						<Input />
+						<Input className={style.input_username} />
 					</Form.Item>
-
 					<Form.Item
-						className={styles.Password}
+						className={style.Email}
+						label="Email"
+						name="Email"
+						rules={[{ required: false, message: 'Please input your Email!' }]}
+					>
+						<Input className={style.input_email} />
+					</Form.Item>
+					<Form.Item
+						className={style.Password}
 						label="Password"
 						name="password"
+						rules={[{ required: true, message: 'Please input your password!' }]}
+					>
+						<Input.Password className={style.input_password} />
+					</Form.Item>
+					<Form.Item
+						className={style.Enter_the_Password}
+						label="Enter the Password"
+						name="Enter_the_Password"
 						rules={[{ required: true, message: 'Please input your password!' }]}
 					>
 						<Input.Password />
 					</Form.Item>
 
 					<Form.Item
-						className={styles.Checkbox}
+						className={style.Checkbox}
 						{...tailLayout}
 						name="remember"
 						valuePropName="checked"
 					>
-						<Checkbox>Remember me</Checkbox>
+						<Checkbox>
+							Tôi đồng ý với các điều khoản quy định khi sử dụng trang web
+						</Checkbox>
 					</Form.Item>
 
-					<Form.Item className={styles.Submit} {...tailLayout}>
+					<Form.Item className={style.Submit} {...tailLayout}>
 						<Button type="primary" htmlType="submit">
-							Submit
+							Đăng ký
 						</Button>
 					</Form.Item>
 				</Form>
@@ -87,4 +106,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default Register;

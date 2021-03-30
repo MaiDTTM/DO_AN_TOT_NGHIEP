@@ -1,31 +1,29 @@
 import './App.css';
 import 'antd/dist/antd.css';
-import IndexHeader from './components/Header/index_header';
-import Content from './components/Content/Content';
-import Footer from './components/Footer/footer';
 import Login from './components/Login';
 
+//import react router
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Register from './components/Register/register';
+import MainLayout from './components/MainLayout';
+import LayoutAdmin from './components/Admin';
+import Count from './components/Demo/testMaiDao';
+import TestAPI from './components/Demo/testMaiDao';
+
 //style
-const styleForm = {display: 'flex', flexDirection :'column'};
-const styleDN = {display: 'flex', justifyContent: 'center'};
 
 function App() {
-    return (
-            // <div style={styleForm}>
-            //     <div className='width-common'>
-            //         <IndexHeader/>
-            //     </div>
-            //     <div className='content'>
-            //         <Content/>
-            //     </div>
-            //     <div className='footer'>
-            //         <Footer/>
-            //     </div>
-            // </div>
-        <div style={styleDN}>
-            <Login/>
-        </div>
-    );
+	return (
+		<Router>
+			<Switch>
+				<Route path="/login" exact component={Login} />
+				<Route path="/register" exact component={Register} />
+				<Route path="/demo" exact component={TestAPI} />
+				<Route path="/" exact component={MainLayout} />
+				<Route path="/Admin" exact component={LayoutAdmin} />
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

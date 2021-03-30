@@ -7,8 +7,7 @@ import SliderHeader from './slider/slider';
 import './styleForm.css';
 //style
 const Style = { display: 'flex', justifyContent: 'center', backgroundColor: '#ea2190', float: 'left' };
-const styleHeader = {display: 'flex', flexDirection :'column'}
-const styleSlider = {display: 'flex',justifyContent: 'center'}
+const styleHeader = {display: 'flex', flexDirection :'column'};
 
 function IndexHeader() {
     return (
