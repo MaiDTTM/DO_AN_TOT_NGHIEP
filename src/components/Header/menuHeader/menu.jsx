@@ -14,7 +14,7 @@ function Menu() {
 	const onSearch = (value) => console.log(value);
 	return (
 		<div className="menu_header">
-			<div className="logo">
+			<div className="logo" style={{ height: '100%' }}>
 				<img src={logo} />
 			</div>
 			<div className="search">
