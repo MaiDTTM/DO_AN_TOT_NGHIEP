@@ -6,9 +6,8 @@ import Login from './components/Login';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Register from './components/Register/register';
 import MainLayout from './components/MainLayout';
-import LayoutAdmin from './components/Admin';
-import Count from './components/Demo/testMaiDao';
 import TestAPI from './components/Demo/testMaiDao';
+import LayoutAdmin from './components/Admin';
 
 //style
 
