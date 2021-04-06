@@ -20,3 +20,6 @@
 .table_user{
 	height: 92%;
 }
+.ant-modal{
+	width: 1000px !important;
+}
