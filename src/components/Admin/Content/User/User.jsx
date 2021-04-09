@@ -101,22 +101,12 @@ function User() {
 		<div className="content_user">
 			<div className="filter_user_content">
 				<div style={{ display: 'flex' }}>
-					<div id="add_search">
-						<Search
-							placeholder="input search text"
-							onSearch={onSearch}
-							style={{ width: 200 }}
-						/>
-					</div>
-					<Tooltip title="search">
-						<Button
-							type="primary"
-							shape="circle"
-							icon={<SearchOutlined />}
-							onClick={handleClick}
-							id="button_search"
-						/>
-					</Tooltip>
+					<form action="" className="search-bar">
+						<input type="search" name="search" pattern=".*\S.*" required />
+						<button className="search-btn" type="submit">
+							<span>Search</span>
+						</button>
+					</form>
 				</div>
 				<Button icon={<UserAddOutlined />} className="button_user_add">
 					Add user
@@ -127,7 +117,7 @@ function User() {
 				<Table
 					columns={columns}
 					dataSource={data}
-					scroll={{ x: 1500, y: 510 }}
+					scroll={{ x: 1500, y: 350 }}
 					sticky
 					style={{ height: '100%', width: '100%' }}
 				/>

@@ -143,3 +143,33 @@
     margin-right: 5px;
     margin-left: -5px;
 }
+#menu_slider li {
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 1em;
+}
+#menu_slider ul li {
+    position: relative;
+    width: 100%;
+    border-bottom:0px !important;
+    padding-right: 0em !important;
+}
+#menu_slider li:hover {
+    background: #CDE2CD;
+}
+#menu_slider ul .sub-menu {
+    position: absolute;
+    background-color: red;
+    left: 265px;
+    top: 0;
+    list-style-type: none;
+    width: 1220px;
+    height: 518px;
+    z-index: 1;
+    display: none;
+}
+#menu_slider li:hover .sub-menu {
+    display: block;
+}

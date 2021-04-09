@@ -14,7 +14,12 @@ import Footer from './Footer/footer';
 // import PropTypes from 'prop-types';
 
 // const
-const styleForm = { display: 'flex', flexDirection: 'column' };
+const styleForm = {
+	display: 'flex',
+	flexDirection: 'column',
+	width: '100%',
+	height: '100%',
+};
 
 function MainLayout() {
 	return (
