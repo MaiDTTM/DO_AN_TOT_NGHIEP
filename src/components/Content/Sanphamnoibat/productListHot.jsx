@@ -42,8 +42,9 @@ function ProductListHot(props) {
 						backgroundColor: '#ec5dde',
 					}}
 				/>
-				<div className="elemtent_noibat">
+				<div className="element_noi_bat">
 					<div className="slideshow-container"></div>
+					<div></div>
 					<div className="item_cart_content">
 						<Card
 							hoverable
