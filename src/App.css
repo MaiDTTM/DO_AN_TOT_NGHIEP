@@ -47,6 +47,8 @@
   font-family: Arial,Tahoma;
   display: flex;
   justify-content: center;
+  padding-top: 20px;
+  margin-top: 70px;
 }
 
 @keyframes App-logo-spin {

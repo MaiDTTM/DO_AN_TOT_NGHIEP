@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Pagination } from 'antd';
 //style
 import './styleGoiY.css';
-import '../Css.css';
 const { Meta } = Card;
 
 ProductListGoiYChoBan.propTypes = {};
@@ -10,10 +9,45 @@ ProductListGoiYChoBan.propTypes = {};
 function ProductListGoiYChoBan(props) {
 	return (
 		<div className="list_hot">
-			<div className="header_hot">
-				<h1>GỢI Ý CHO BẠN</h1>
-			</div>
 			<div className="content_host">
+				<div className="header_goi_y">
+					<div
+						style={{
+							width: '30%',
+							height: '100%',
+							display: 'flex',
+							justifyContent: 'space-around',
+							marginTop: '15px',
+						}}
+					>
+						<div style={{ display: 'flex', flexDirection: 'column' }}>
+							<div>
+								<h1>GỢI Ý CHO BẠN</h1>
+							</div>
+							<div
+								style={{
+									width: '100%',
+									height: '5px',
+									backgroundColor: 'rgb(238, 77, 45)',
+								}}
+							/>
+						</div>
+						<div>
+							<img
+								src="https://cf.shopee.vn/file/3eee015cc8c039be3ebe8bb7b621ecf3"
+								style={{ width: 'auto', height: '1.25rem' }}
+							/>
+						</div>
+					</div>
+				</div>
+				<hr
+					style={{
+						height: '2px',
+						borderWidth: '0',
+						color: '#5deccf',
+						backgroundColor: '#efdada',
+					}}
+				/>
 				<div className="content_host_item">
 					<Card
 						hoverable

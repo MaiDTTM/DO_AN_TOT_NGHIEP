@@ -2,9 +2,9 @@ import React from 'react';
 import ListPicture from './HeaderContent/listPicture';
 import ProductListHot from './Sanphamnoibat/productListHot';
 import 'antd/dist/antd.css';
-import ProductListBanChay from './SanPhamBanChay/producListBanChay';
 import ProductListGoiYChoBan from './GoiYChoBan/productGoiYChoBan';
 import FlashSale from './FlashSale/FlashSale';
+import ProductListXuHuong from './XuHuongTimKiem/XuHuoongTimKiem';
 
 //style
 const listBanner = {
@@ -16,7 +16,7 @@ const listBanner = {
 };
 const productHot = {
 	width: '100%',
-	height: '960px',
+	height: '850px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
@@ -28,9 +28,9 @@ const flashSale = {
 	display: 'flex',
 	justifyContent: 'center',
 };
-const productBanChay = {
+const productXuHuong = {
 	width: '100%',
-	height: '890px',
+	height: '210px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
@@ -55,8 +55,8 @@ function Content(props) {
 			<div style={productHot}>
 				<ProductListHot />
 			</div>
-			<div style={productBanChay}>
-				<ProductListBanChay />
+			<div style={productXuHuong}>
+				<ProductListXuHuong />
 			</div>
 			<div style={productGoiY}>
 				<ProductListGoiYChoBan />

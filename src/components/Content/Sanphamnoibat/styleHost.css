@@ -10,13 +10,20 @@
     flex-direction: column;
     /*justify-content: space-between;*/
     background-color: #ffffff;
+	border-radius: 20px;
+	/*border: 1px outset #ccc !important;*/
+}
+.card_item{
+	width: 200px !important;
+	height: 80% !important;
+	margin-top: 40px;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .header_noi_bat {
 	display: flex;
 	justify-content: flex-start;
 	height: 10%;
 	width: 100%;
-    background-color: #f5a06e;
 }
 .elemtent_noibat{
 	width: 100%;
@@ -96,13 +103,112 @@
 .item_cart_content{
 	width: 60%;
 	height: 100%;
-	background-color: #61dafb;
+	/*background-color: #61dafb;*/
+	display: flex;
+	flex-direction: column;
+}
+.item_cart_content_i{
+	width: 100%;
+	height: 50%;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 10px;
+}
+.slideshow-container {
+	max-width:40% !important;
+	width: 40% !important;
+	height: 100%;
+	position: relative;
+	/*margin: auto;*/
+	margin: 0 0 !important;
+	background-color: #ff62fe;
 }
 
+
+
+
+
+/*slider*/
+/* Slideshow container */
 .slideshow-container {
-	width: 40%;
-	height: 100%;
+	max-width: 500px;
 	position: relative;
 	margin: auto;
 }
+/* Ẩn các slider */
+.mySlides {
+	display: none;
+}
+/* Định dạng nội dung Caption */
+.text {
+	color: #f2f2f2;
+	font-size: 15px;
+	padding: 8px 12px;
+	position: absolute;
+	bottom: 8px;
+	width: 100%;
+	text-align: center;
+}
 
+/* định dạng các chấm chuyển đổi các slide */
+.dot {
+	cursor:pointer;
+	height: 13px;
+	width: 13px;
+	margin: 0 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 3s ease;
+}
+/* khi được hover, active đổi màu nền */
+.active, .dot:hover {
+	background-color: #717171;
+}
+
+/* Thêm hiệu ứng khi chuyển đổi các slide */
+.fade {
+	width: 100%;
+	height: 100%;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 3s;
+	animation-name: fade;
+	animation-duration: 3s;
+}
+.fade img{
+	width: 100%;
+	height: 95%;
+}
+/* thiết kế nút mũi tên*/
+.prev, .next {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	margin-top: -22px;
+	padding: 16px;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+}
+/* thiết kế nút mũi tên next nằm phía bên phải */
+.next {
+	right: 0;
+	border-radius: 3px 0 0 3px;
+}
+/* hiệu ứng thay đổi background khi hover vào nút mũi tên*/
+.prev:hover, .next:hover {
+	background-color: rgba(0,0,0,0.8);
+}
+@-webkit-keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}
+
+@keyframes fade {
+	from {opacity: .4}
+	to {opacity: 1}
+}
