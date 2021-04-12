@@ -8,6 +8,9 @@ import Register from './components/Register/register';
 import MainLayout from './components/MainLayout';
 import TestAPI from './components/Demo/testMaiDao';
 import LayoutAdmin from './components/Admin';
+import DetailProduct from './components/Content/DetailProduct/DetailProduct';
+import IntroduceProduct from './components/Header/slider/introduceProduct/introduceProduct';
+import BuyProduct from './components/Content/DetailProduct/BuyProduct/BuyProduct';
 
 //style
 
@@ -20,6 +23,9 @@ function App() {
 				<Route path="/demo" exact component={TestAPI} />
 				<Route path="/" exact component={MainLayout} />
 				<Route path="/Admin" exact component={LayoutAdmin} />
+				<Route path="/detail" exact component={DetailProduct} />
+				<Route path="/gioithieu" exact component={IntroduceProduct} />
+				<Route path="/buyproduct" exact component={BuyProduct} />
 			</Switch>
 		</Router>
 	);

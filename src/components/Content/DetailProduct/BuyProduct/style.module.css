@@ -1,0 +1,99 @@
+.wrap_oder{
+    width: 980px;
+    margin: 0 auto;
+    color: #222;
+}
+.header_oder{
+    float: left;
+    width: 980px;
+}
+.logo_oder{
+    float: left;
+    width: 228px;
+    margin-top: 20px;
+}
+.oder_header_icon{
+    float: right;
+    position: relative;
+    color: #1787c6;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 35px 0 0 0;
+    width: 752px;
+    display: flex;
+    justify-content: space-around;
+}
+.box_icon_item_1{
+    display: flex;
+    justify-content: space-around;
+    height: 52px;
+    float: left;
+    width: 180px;
+}
+.box_icon_item_2{
+    display: flex;
+    justify-content: space-around;
+    height: 52px;
+    float: left;
+    width: 220px;
+}
+.box_icon_item_3{
+    display: flex;
+    justify-content: space-around;
+    height: 52px;
+    float: left;
+    width: 220px;
+}
+.box_icon_ic_icon_ship{
+    background: url("https://shoptretho.com.vn/Areas/Desktop/Content/Images/icon-update-v20151030.png");
+    width: 42px;
+    height: 42px;
+    background-position: 0 -55px;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+    color: #1787c6;
+}
+.box_icon_bg_icon_ship{
+    background: url("https://shoptretho.com.vn/Areas/Desktop/Content/Images/icon-update-v20151030.png");
+    width: 42px;
+    height: 42px;
+    background-position: -42px -55px;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+    color: #1787c6;
+}
+.box_icon_chinhhang{
+    background: url("https://shoptretho.com.vn/Areas/Desktop/Content/Images/icon-update-v20151030.png");
+    width: 42px;
+    height: 42px;
+    background-position: -84px -55px;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+    color: #1787c6;
+}
+.giao_hang{
+    margin: 10px 0 0 5px;
+    float: left;
+}
+.login_oder{
+    background-color: #f8f8f8;
+    border: 1px dashed #dedede;
+    float: left;
+    width: 980px;
+    line-height: 43px;
+    margin: 10px 0 0 0;
+    padding-left: 5px;
+    color: #666666;
+    font-size: 14px;
+}
+.login_order b {
+    font-weight: bold;
+    margin: 0 5px 0 5px;
+    color: #1155cc;
+    cursor: pointer;
+}
+
+

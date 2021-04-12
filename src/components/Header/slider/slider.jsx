@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import { MenuFoldOutlined } from '@ant-design/icons';
+import { SmileTwoTone, MenuFoldOutlined } from '@ant-design/icons';
 //style
 import './styleSlider.css';
 import hot from '../../../img/hot.gif';
@@ -11,6 +11,7 @@ import slider3 from '../../../img/slider3.jpg';
 import slider4 from '../../../img/slider4.jpg';
 import slider5 from '../../../img/slider5.png';
 import HoverMenu from './hoverMenu';
+import { Link } from 'react-router-dom';
 
 const contentStyle = {
 	width: '950px',
@@ -87,6 +88,19 @@ function Slider() {
 			<div className="slider">
 				<div className="left_slider" id="menu_slider">
 					<ul style={{ listStyle: 'none', width: '100%', height: '100%' }}>
+						<li>
+							<i
+								style={{
+									width: '33px',
+									height: '33px',
+									marginLeft: '10px',
+									marginRight: '10px',
+								}}
+							>
+								<SmileTwoTone />
+							</i>
+							<Link to={'/gioithieu'}>Giới thiệu về GCB</Link>
+						</li>
 						<li>
 							<i>
 								<img src="https://shoptretho.com.vn/Content/images/khuyen-mai.png?mode=max&width=60&height=60" />

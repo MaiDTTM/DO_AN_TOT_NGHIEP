@@ -30,14 +30,14 @@ const flashSale = {
 };
 const productXuHuong = {
 	width: '100%',
-	height: '210px',
+	height: '240px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
 };
 const productGoiY = {
 	width: '100%',
-	height: '1335px',
+	height: '2700px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',

@@ -1,8 +1,25 @@
 .form_slider{
+    width: 100%;
+    height: 80%;
     display: flex;
     justify-content: center;
+    position: static;
+    float: left;
+    margin-top: 150px;
+}
+.header_home{
+    width: 100%;
+    height: 20%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    float: left;
 }
 .from_menu_header{
     display: flex;
     justify-content: center;
+    width: 100%;
+    height: 100px;
+    background-color: #ffffff;
 }

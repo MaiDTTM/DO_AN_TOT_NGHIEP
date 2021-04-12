@@ -1,9 +1,14 @@
 import React from 'react';
 import { Input } from 'antd';
-import { UserOutlined, HeartTwoTone, ShoppingCartOutlined } from '@ant-design/icons';
+import {
+	UserOutlined,
+	HeartTwoTone,
+	ShoppingCartOutlined,
+	AppstoreOutlined,
+} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './style.css';
-import logo from '../../../img/logotet2019.png';
+import logo from '../../../img/logo-gcb.jpg';
 import { Link } from 'react-router-dom';
 
 //style
@@ -15,7 +20,9 @@ function Menu() {
 	return (
 		<div className="menu_header">
 			<div className="logo" style={{ height: '100%' }}>
-				<img src={logo} />
+				<Link to={'/'}>
+					<img src={logo} />
+				</Link>
 			</div>
 			<div className="search">
 				<Search placeholder="Bé muốn tìm đồ chơi gì ?" onSearch={onSearch} enterButton />

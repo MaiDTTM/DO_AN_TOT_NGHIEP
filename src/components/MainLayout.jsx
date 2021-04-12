@@ -18,13 +18,13 @@ const styleForm = {
 	display: 'flex',
 	flexDirection: 'column',
 	width: '100%',
-	height: '100%',
+	// height: '100%',
 };
 
 function MainLayout() {
 	return (
 		<div style={styleForm}>
-			<div className="width-common">
+			<div className="header">
 				<IndexHeader />
 			</div>
 			<div className="content">
