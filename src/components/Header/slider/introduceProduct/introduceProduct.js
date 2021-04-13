@@ -3,7 +3,7 @@ import { Tag } from 'antd';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.css';
 import Advertisement from '../../advertisement/advertisement';
-import Menu from '../../menuHeader/menu';
+import MenuHome from '../../menuHeader/MenuHome';
 import Footer from '../../../Footer/footer';
 import {
 	TwitterOutlined,
@@ -27,7 +27,7 @@ function IntroduceProduct() {
 				<Advertisement />
 			</div>
 			<div className="from_menu_header">
-				<Menu />
+				<MenuHome />
 			</div>
 			<div className={Styles.form_content}>
 				<div className={Styles.content_gioi_thieu}>

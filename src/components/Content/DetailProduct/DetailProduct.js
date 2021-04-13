@@ -1,8 +1,8 @@
 import React from 'react';
 import Advertisement from '../../Header/advertisement/advertisement';
-import Menu from '../../Header/menuHeader/menu';
+import MenuHome from '../../Header/menuHeader/MenuHome';
 import '../../Header/advertisement/style.scss';
-import '../../Header/menuHeader/style.css';
+import '../../Header/menuHeader/style.module.css';
 import Styles from './Style.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button, Card, Rate, Pagination, Alert, Spin } from 'antd';
@@ -42,7 +42,7 @@ function DetailProduct() {
 					<Advertisement />
 				</div>
 				<div className="from_menu_header">
-					<Menu />
+					<MenuHome />
 				</div>
 			</div>
 			<div className={Styles.content_detail}>

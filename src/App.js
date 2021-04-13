@@ -11,6 +11,7 @@ import LayoutAdmin from './components/Admin';
 import DetailProduct from './components/Content/DetailProduct/DetailProduct';
 import IntroduceProduct from './components/Header/slider/introduceProduct/introduceProduct';
 import BuyProduct from './components/Content/DetailProduct/BuyProduct/BuyProduct';
+import CartProduct from './components/CartProduct/CartProduct';
 
 //style
 
@@ -26,6 +27,7 @@ function App() {
 				<Route path="/detail" exact component={DetailProduct} />
 				<Route path="/gioithieu" exact component={IntroduceProduct} />
 				<Route path="/buyproduct" exact component={BuyProduct} />
+				<Route path="/cart" exact component={CartProduct} />
 			</Switch>
 		</Router>
 	);

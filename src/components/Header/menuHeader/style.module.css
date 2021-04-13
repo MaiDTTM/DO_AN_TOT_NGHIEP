@@ -5,9 +5,6 @@
     width: 1487px;
     height: 100%;
 }
-.head-example{
-    background-color: red;
-}
 .search{
     width: 490px;
     height: 41px;
@@ -33,4 +30,19 @@
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
+}
+.img_hover_cart{
+    width: 70px;
+    height: 70px;
+}
+.span_hover_cart{
+   margin-left: 20px;
+    width: 60%;
+}
+.hover_cart{
+    display: flex;
+    width: 100%;
+}
+.gia_hover_cart{
+
 }

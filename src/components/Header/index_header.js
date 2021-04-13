@@ -1,10 +1,10 @@
 import React from 'react';
 import Advertisement from './advertisement/advertisement';
-import Menu from './menuHeader/menu.jsx';
 import SliderHeader from './slider/slider';
 
 //import style
 import './styleForm.css';
+import MenuHome from './menuHeader/MenuHome';
 //style
 const Style = {
 	width: '100%',
@@ -30,7 +30,7 @@ function IndexHeader() {
 					<Advertisement />
 				</div>
 				<div className="from_menu_header">
-					<Menu />
+					<MenuHome />
 				</div>
 			</div>
 			<div className="form_slider">
