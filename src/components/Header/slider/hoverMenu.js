@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import './styleSlider.css';
+import './styleSlider.module.css';
 import { Carousel } from 'antd';
 import slider1 from '../../../img/slider1.jpg';
 import slider2 from '../../../img/slider2.jpg';

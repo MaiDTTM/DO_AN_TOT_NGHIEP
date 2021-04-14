@@ -2,7 +2,6 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { SmileTwoTone, MenuFoldOutlined } from '@ant-design/icons';
 //style
-import './styleSlider.css';
 import hot from '../../../img/hot.gif';
 //import slider
 import slider1 from '../../../img/slider1.jpg';
@@ -12,6 +11,7 @@ import slider4 from '../../../img/slider4.jpg';
 import slider5 from '../../../img/slider5.png';
 import HoverMenu from './hoverMenu';
 import { Link } from 'react-router-dom';
+import Styles from './styleSlider.module.css';
 
 const contentStyle = {
 	width: '950px',
@@ -24,18 +24,18 @@ const contentStyle = {
 
 function Slider() {
 	return (
-		<div className="slider_center">
-			<div className="menu_slider">
-				<ul className="hot_sale">
-					<div className="menu_danhmuc">
-						<li className="danhmuc">
-							<MenuFoldOutlined className={'icon__category'} />
+		<div className={Styles.slider_center}>
+			<div className={Styles.menu_slider}>
+				<ul className={Styles.hot_sale}>
+					<div className={Styles.menu_danhmuc}>
+						<li className={Styles.danhmuc}>
+							<MenuFoldOutlined className={Styles.icon__category} />
 							<h2>DANH MỤC</h2>
 						</li>
 					</div>
-					<div className="menu_hotsale">
-						<div className="dososinh">
-							<li className="hot_sale_one">
+					<div className={Styles.menu_hotsale}>
+						<div className={Styles.dososinh}>
+							<li className={Styles.hot_sale_one}>
 								<i>
 									<img src={hot} />
 								</i>
@@ -45,8 +45,8 @@ function Slider() {
 								</i>
 							</li>
 						</div>
-						<div className="suabot_ta_bim">
-							<li className="hot_sale_tow">
+						<div className={Styles.suabot_ta_bim}>
+							<li className={Styles.hot_sale_tow}>
 								<div>
 									<i>
 										<img src={hot} />
@@ -64,8 +64,8 @@ function Slider() {
 								</div>
 							</li>
 						</div>
-						<div className="khuyenmai_hangmoi">
-							<li className="hot_sale_fire">
+						<div className={Styles.khuyenmai_hangmoi}>
+							<li className={Styles.hot_sale_fire}>
 								<div>
 									<i>
 										<img src={hot} />
@@ -85,10 +85,10 @@ function Slider() {
 					</div>
 				</ul>
 			</div>
-			<div className="slider">
-				<div className="left_slider" id="menu_slider">
-					<ul style={{ listStyle: 'none', width: '100%', height: '100%' }}>
-						<li>
+			<div className={Styles.slider}>
+				<div className={Styles.left_slider}>
+					<ul className={Styles.content_category_list}>
+						<li className={Styles.content_category_list_item}>
 							<i
 								style={{
 									width: '33px',
@@ -106,7 +106,37 @@ function Slider() {
 								<img src="https://shoptretho.com.vn/Content/images/khuyen-mai.png?mode=max&width=60&height=60" />
 							</i>
 							<a href="#">Khuyến mại lớn</a>
-							<HoverMenu />
+							<div className={Styles.menuhover}>
+								<div className={Styles.menuhover_row}>
+									<ul>
+										<li className={Styles.menuhover_row_item}>
+											<a href="" className={Styles.menuhover_link}>
+												Tất cả ngoại ngữ
+											</a>
+										</li>
+										<li className={Styles.menuhover_row_item}>
+											<a href="" className={Styles.menuhover_link}>
+												Tiếng hàn
+											</a>
+										</li>
+										<li className={Styles.menuhover_row_item}>
+											<a href="" className={Styles.menuhover_link}>
+												Tiếng anh
+											</a>
+										</li>
+										<li className={Styles.menuhover_row_item}>
+											<a href="" className={Styles.menuhover_link}>
+												Tiếng đức
+											</a>
+										</li>
+										<li className={Styles.menuhover_row_item}>
+											<a href="" className={Styles.menuhover_link}>
+												Tiếng trung
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
 						</li>
 						<li>
 							<i>
@@ -170,8 +200,8 @@ function Slider() {
 						</li>
 					</ul>
 				</div>
-				<div className="center_slider">
-					<Carousel autoplay className="picture_slider">
+				<div className={Styles.center_slider}>
+					<Carousel autoplay className={Styles.picture_slider}>
 						<div>
 							<h3 style={contentStyle}>
 								<img src={slider1} alt="Bỉm Moony" />
@@ -202,7 +232,7 @@ function Slider() {
 						</div>
 					</Carousel>
 				</div>
-				<div className="right_slider">
+				<div className={Styles.right_slider}>
 					<img
 						src="https://media.shoptretho.com.vn/upload/image/banner/20210301/quet-vnpay-giam-15k-190-x-204.png"
 						alt="Quét VNPay giảm 15k"

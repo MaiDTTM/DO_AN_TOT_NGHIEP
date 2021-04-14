@@ -104,19 +104,21 @@ function MenuHome() {
 					style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}
 				>
 					<div>Trong giỏ hàng hiện đang có : 82 sản phẩm</div>
-					<div>
-						<Button
-							style={{
-								backgroundColor: '#f53d2d',
-								height: '40px',
-								color: '#ffffff',
-								boxShadow:
-									'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-							}}
-						>
-							Xem giỏ hàng
-						</Button>
-					</div>
+					<Link to={'/cart'}>
+						<div>
+							<Button
+								style={{
+									backgroundColor: '#f53d2d',
+									height: '40px',
+									color: '#ffffff',
+									boxShadow:
+										'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+								}}
+							>
+								Xem giỏ hàng
+							</Button>
+						</div>
+					</Link>
 				</div>
 			</Menu.Item>
 		</Menu>

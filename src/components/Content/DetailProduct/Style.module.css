@@ -225,9 +225,23 @@
 .btn_detail{
 	width: 150px !important;
 	height: 50px;
-	background: #35e5df !important;
 	color: #282c34;
+	background: rgba(255,87,34,.1);
+	border: 1px solid #ee4d2d;
+	/*box-shadow: 0 1px 1px 0 rgb(0 0 0 / 3%);*/
 }
+.btn_detail_them_vao_gio{
+	width: 150px !important;
+	height: 50px;
+	margin-right: 15px;
+	padding: 0 .75rem;
+	font-size: 14px;
+	color: #fff;
+	background: #ee4d2d;
+}
+/*.btn_detail_them_vao_gio:hover {*/
+/*	background-color: #cbc9a4 !important;*/
+/*}*/
 .footer_detail{
 	background-color: #d9f3f4;
 }

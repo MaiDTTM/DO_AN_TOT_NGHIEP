@@ -223,23 +223,14 @@ function DetailProduct() {
 										<Button
 											type="primary"
 											className={Styles.btn_detail}
-											onClick={
-												// <Spin tip="Loading...">
-												// 	<Alert
-												// 		message="Alert message title"
-												// 		description="Further details about the context of this alert."
-												// 		type="info"
-												// 	/>
-												// </Spin>
-												(e) => handleBuyProduct(e)
-											}
+											onClick={(e) => handleBuyProduct(e)}
 										>
 											Mua ngay
 										</Button>
 									</Link>
 								</div>
 								<div style={{ width: '40%' }}>
-									<Button className={Styles.btn_detail} type="primary">
+									<Button className={Styles.btn_detail_them_vao_gio} type="primary">
 										Thêm vào giỏ hàng
 									</Button>
 								</div>
