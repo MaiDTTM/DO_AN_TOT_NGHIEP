@@ -106,26 +106,26 @@ function Slider() {
 								<img src="https://shoptretho.com.vn/Content/images/khuyen-mai.png?mode=max&width=60&height=60" />
 							</i>
 							<a href="#">Khuyến mại lớn</a>
-							<div className={Styles.menuhover}>
+							<div className={Styles.menu_hover}>
 								<div className={Styles.menuhover_row}>
 									<ul>
 										<li className={Styles.menuhover_row_item}>
-											<a href="" className={Styles.menuhover_link}>
+											<a href="" className={Styles.menu_hover_link}>
 												Tất cả ngoại ngữ
 											</a>
 										</li>
 										<li className={Styles.menuhover_row_item}>
-											<a href="" className={Styles.menuhover_link}>
+											<a href="" className={Styles.menu_hover_link}>
 												Tiếng hàn
 											</a>
 										</li>
 										<li className={Styles.menuhover_row_item}>
-											<a href="" className={Styles.menuhover_link}>
+											<a href="" className={Styles.menu_hover_link}>
 												Tiếng anh
 											</a>
 										</li>
 										<li className={Styles.menuhover_row_item}>
-											<a href="" className={Styles.menuhover_link}>
+											<a href="" className={Styles.menu_hover_link}>
 												Tiếng đức
 											</a>
 										</li>

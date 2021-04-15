@@ -200,7 +200,7 @@
     color: #000;
     background: #f7f7f7;
 }
-.menuhover {
+.menu_hover {
     opacity: 0;
     visibility: hidden;
     position: absolute;
@@ -215,9 +215,12 @@
     /* z-index: 99; */
     /* overflow: hidden; */
     background: #fff;
+    z-index: 999999;
+    background-color: red;
+    display: block;
 }
 
-.menuhover_link {
+.menu_hover_link {
     display: block;
     padding: 8px 0px 8px 10px;
     text-decoration: none;
