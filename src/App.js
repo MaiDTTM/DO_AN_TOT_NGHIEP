@@ -12,6 +12,7 @@ import DetailProduct from './components/Content/DetailProduct/DetailProduct';
 import IntroduceProduct from './components/Header/slider/introduceProduct/introduceProduct';
 import BuyProduct from './components/Content/DetailProduct/BuyProduct/BuyProduct';
 import CartProduct from './components/CartProduct/CartProduct';
+import AccountMe from './components/Account/AccountMe';
 
 //style
 
@@ -28,6 +29,7 @@ function App() {
 				<Route path="/gioithieu" exact component={IntroduceProduct} />
 				<Route path="/buyproduct" exact component={BuyProduct} />
 				<Route path="/cart" exact component={CartProduct} />
+				<Route path="/account" exact component={AccountMe} />
 			</Switch>
 		</Router>
 	);

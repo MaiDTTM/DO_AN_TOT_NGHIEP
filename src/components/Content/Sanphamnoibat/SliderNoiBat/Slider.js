@@ -7,7 +7,7 @@ import slider3 from '../../../../img/slidernoibat3.png';
 
 function Slider() {
 	//khai báo biến slideIndex đại diện cho slide hiện tại
-	let slideIndex;
+	var slideIndex;
 	const currentSlide = (n) => {
 		showSlides((slideIndex = n));
 	};
@@ -17,6 +17,9 @@ function Slider() {
 		let i;
 		const slides = document.getElementsByClassName('mySlides');
 		const dots = document.getElementsByClassName('dot');
+		if (slideIndex > slides.length - 1) {
+			slideIndex = 0;
+		}
 		for (i = 0; i < slides.length; i++) {
 			slides[i].style.display = 'none';
 		}
@@ -29,15 +32,12 @@ function Slider() {
 		//chuyển đến slide tiếp theo
 		slideIndex++;
 		//nếu đang ở slide cuối cùng thì chuyển về slide đầu
-		if (slideIndex > slides.length - 1) {
-			slideIndex = 0;
-		}
 		//tự động chuyển đổi slide sau 5s
 		setTimeout(showSlides, 5000);
 	};
 	React.useEffect(() => {
 		showSlides((slideIndex = 0));
-	});
+	}, []);
 	return (
 		<div className="slider_noi_bat">
 			<div className="slideshow-container">

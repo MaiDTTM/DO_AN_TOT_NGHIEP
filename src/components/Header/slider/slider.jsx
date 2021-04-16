@@ -5,11 +5,10 @@ import { SmileTwoTone, MenuFoldOutlined } from '@ant-design/icons';
 import hot from '../../../img/hot.gif';
 //import slider
 import slider1 from '../../../img/slider1.jpg';
-import slider2 from '../../../img/slider2.jpg';
+import slider2 from '../../../img/giam-gia-do-choi-go.jpg';
 import slider3 from '../../../img/slider3.jpg';
 import slider4 from '../../../img/slider4.jpg';
-import slider5 from '../../../img/slider5.png';
-import HoverMenu from './hoverMenu';
+import slider5 from '../../../img/slider6.jpg';
 import { Link } from 'react-router-dom';
 import Styles from './styleSlider.module.css';
 
@@ -20,6 +19,7 @@ const contentStyle = {
 	lineHeight: '160px',
 	textAlign: 'center',
 	background: '#364d79',
+	objectFit: 'cover',
 };
 
 function Slider() {
@@ -544,6 +544,7 @@ function Slider() {
 						<div>
 							<h3 style={contentStyle}>
 								<img
+									style={{ width: '950px', height: '501px', objectFit: 'cover' }}
 									src={slider2}
 									alt="Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé"
 								/>
@@ -561,7 +562,11 @@ function Slider() {
 						</div>
 						<div>
 							<h3 style={contentStyle}>
-								<img src={slider5} alt="Uống sữa Friso nhận ngàn quà tặng MB" />
+								<img
+									src={slider5}
+									alt="Uống sữa Friso nhận ngàn quà tặng MB"
+									style={{ width: '950px', height: '501px', objectFit: 'fill' }}
+								/>
 							</h3>
 						</div>
 					</Carousel>

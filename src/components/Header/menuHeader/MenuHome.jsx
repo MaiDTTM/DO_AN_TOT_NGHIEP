@@ -126,7 +126,11 @@ function MenuHome() {
 				</Link>
 			</div>
 			<div className={Styles.search}>
-				<Search placeholder="Bé muốn tìm đồ chơi gì ?" onSearch={onSearch} enterButton />
+				<Search
+					placeholder="Bố mẹ muốn tìm đồ chơi gì cho bé ?"
+					onSearch={onSearch}
+					enterButton
+				/>
 			</div>
 			<div className={Styles.singIn_singOut}>
 				<div style={stylIcon}>
