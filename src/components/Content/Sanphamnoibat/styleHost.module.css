@@ -115,6 +115,7 @@
 	/*background-color: #61dafb;*/
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 .item_cart_content_i {
 	width: 100%;
@@ -123,6 +124,7 @@
 	justify-content: space-around;
 	margin-bottom: 10px;
 	flex-wrap: wrap;
+	margin-top:20px;
 }
 .slideshow_container {
 	max-width: 40% !important;
@@ -131,7 +133,6 @@
 	position: relative;
 	/*margin: auto;*/
 	margin: 0 0 !important;
-	background-color: #ff62fe;
 }
 
 /*slider*/
@@ -164,6 +165,7 @@
 	border-color: #fff !important;
 }
 .btn_giam_noi_bat {
+	position: absolute;
 	opacity: 1;
 	visibility: visible;
 	width: 35px !important;

@@ -1,76 +1,66 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import './styles.css';
-function Slider() {
-	var slideIndex = 1;
-	showDivs(slideIndex);
-	function plusDivs(n) {
-		showDivs((slideIndex += n));
-	}
+import slider0 from '../../../../img/slidernoibat0.jpg';
+import slider2 from '../../../../img/slidernoibat2.jpg';
+import slider3 from '../../../../img/slidernoibat3.png';
 
-	function currentDiv(n) {
-		showDivs((slideIndex = n));
-	}
-	function showDivs(n) {
-		var i;
-		var x = document.getElementsByClassName('mySlides');
-		console.log('x', x);
-		var dots = document.getElementsByClassName('demo');
-		console.log('dots', dots);
-		// if (n > x.length) {
-		// 	slideIndex = 1;
-		// }
-		// if (n < 1) {
-		// 	slideIndex = x.length;
-		// }
-		// for (i = 0; i < x.length; i++) {
-		// 	x[i].style.display = 'none';
-		// }
-		// for (i = 0; i < dots.length; i++) {
-		// 	dots[i].className = dots[i].className.replace(' w3-white', '');
-		// }
-		// x[slideIndex - 1].style.display = 'block';
-		// dots[slideIndex - 1].className += ' w3-white';
-	}
+function Slider() {
+	//khai báo biến slideIndex đại diện cho slide hiện tại
+	let slideIndex;
+	const currentSlide = (n) => {
+		showSlides((slideIndex = n));
+	};
+	// KHai bào hàm hiển thị slide
+	const showSlides = () => {
+		console.log('slideIndex', slideIndex);
+		let i;
+		const slides = document.getElementsByClassName('mySlides');
+		const dots = document.getElementsByClassName('dot');
+		for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = 'none';
+		}
+		for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(' active', '');
+		}
+		//
+		slides[slideIndex].style.display = 'block';
+		dots[slideIndex].className += ' active';
+		//chuyển đến slide tiếp theo
+		slideIndex++;
+		//nếu đang ở slide cuối cùng thì chuyển về slide đầu
+		if (slideIndex > slides.length - 1) {
+			slideIndex = 0;
+		}
+		//tự động chuyển đổi slide sau 5s
+		setTimeout(showSlides, 5000);
+	};
+	React.useEffect(() => {
+		showSlides((slideIndex = 0));
+	});
 	return (
-		<div className="w3-content w3-display-container" style={{ maxWidth: '800px' }}>
-			<img
-				className="mySlides"
-				src="https://giupban.com.vn/wp-content/uploads/2019/09/anh-thien-nhien-dep-2.jpeg"
-				style={{ width: '100%' }}
-			/>
-			<img
-				className="mySlides"
-				src="https://i.pinimg.com/originals/a8/45/76/a84576a04c1874304735604d9f47d5a4.jpg"
-				style={{ width: '100%' }}
-			/>
-			<img
-				className="mySlides"
-				src="https://giupban.com.vn/wp-content/uploads/2019/09/anh-thien-nhien-dep-2.jpeg"
-				style={{ width: '100%' }}
-			/>
-			<div
-				className="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
-				style={{ width: '100%' }}
-			>
-				<div className="w3-left w3-hover-text-khaki" onClick={plusDivs(-1)}>
-					&#10094;
+		<div className="slider_noi_bat">
+			<div className="slideshow-container">
+				<div className="mySlides fade">
+					<img
+						src={slider0}
+						style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+					/>
 				</div>
-				<div className="w3-right w3-hover-text-khaki" onClick={plusDivs(1)}>
-					&#10095;
+				<div className="mySlides fade">
+					<img
+						src={slider2}
+						style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+					/>
 				</div>
-				<span
-					className="w3-badge demo w3-border w3-transparent w3-hover-white"
-					onClick={currentDiv(1)}
-				/>
-				<span
-					className="w3-badge demo w3-border w3-transparent w3-hover-white"
-					onClick={currentDiv(2)}
-				/>
-				<span
-					className="w3-badge demo w3-border w3-transparent w3-hover-white"
-					onClick={currentDiv(3)}
-				/>
+				<div className="mySlides fade">
+					<img src={slider3} style={{ width: '100%', height: '100%' }} />
+				</div>
+			</div>
+			<div style={{ textAlign: 'center' }}>
+				<span className="dot" onClick={() => currentSlide(0)} />
+				<span className="dot" onClick={() => currentSlide(1)} />
+				<span className="dot" onClick={() => currentSlide(2)} />
 			</div>
 		</div>
 	);

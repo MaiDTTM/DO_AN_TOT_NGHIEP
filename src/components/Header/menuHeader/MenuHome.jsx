@@ -1,11 +1,6 @@
 import React from 'react';
-import { Button, Input, Dropdown, Menu } from 'antd';
-import {
-	UserOutlined,
-	HeartTwoTone,
-	ShoppingCartOutlined,
-	AppstoreOutlined,
-} from '@ant-design/icons';
+import { Button, Input, Dropdown, Menu, Badge } from 'antd';
+import { UserOutlined, HeartTwoTone, ShoppingCartOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import Styles from './style.module.css';
 import logo from '../../../img/logo-gcb.jpg';
@@ -137,24 +132,28 @@ function MenuHome() {
 				<div style={stylIcon}>
 					<Dropdown overlay={menu}>
 						<Link to={'/cart'}>
-							<Button
-								icon={<ShoppingCartOutlined style={{ color: '#ca1c1c' }} />}
-								type="text"
-								style={{ color: '#ca1c1c' }}
-							>
-								Giỏ hàng
-							</Button>
+							<Badge size="small" count={5}>
+								<Button
+									icon={<ShoppingCartOutlined style={{ color: '#ca1c1c' }} />}
+									type="text"
+									style={{ color: '#948d68' }}
+								>
+									Giỏ hàng
+								</Button>
+							</Badge>
 						</Link>
 					</Dropdown>
 				</div>
 				<div style={stylIcon}>
-					<Button
-						icon={<HeartTwoTone twoToneColor="#eb2f96" />}
-						style={{ color: '#eb2f96' }}
-						type="text"
-					>
-						Yêu thích
-					</Button>
+					<Badge size="small" count={9}>
+						<Button
+							icon={<HeartTwoTone twoToneColor="#eb2f96" />}
+							style={{ color: '#eb2f96' }}
+							type="text"
+						>
+							Yêu thích
+						</Button>
+					</Badge>
 				</div>
 				<div style={stylIcon}>
 					<Link to={'/login'}>

@@ -88,7 +88,7 @@
 .btn_giam:hover{
 	width: 50px !important;
 	height: 50px !important;
-	background-color: #fff;
+	background-color: #fff !important;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 	color: #282c34;
 	border-color:#fff !important;

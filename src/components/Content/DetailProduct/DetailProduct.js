@@ -5,12 +5,13 @@ import '../../Header/advertisement/style.scss';
 import '../../Header/menuHeader/style.module.css';
 import Styles from './Style.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { Button, Card, Rate, Pagination, Alert, Spin } from 'antd';
+import { Button, Card, Rate, Pagination, message } from 'antd';
 import { Link } from 'react-router-dom';
 import CommentProduct from './Comment/Comment';
 import Footer from '../../Footer/footer';
 import BuyProduct from './BuyProduct/BuyProduct';
 const { Meta } = Card;
+const key = 'updatable';
 // import PropTypes from 'prop-types';
 const Style = {
 	width: '100%',
@@ -20,13 +21,6 @@ const Style = {
 	backgroundColor: '#ea2190',
 	float: 'left',
 };
-const styleHeader = {
-	display: 'flex',
-	flexDirection: 'column',
-	width: '100%',
-	height: '100%',
-	float: 'left',
-};
 function DetailProduct() {
 	const handleBuyProduct = (e) => {
 		return (
@@ -34,6 +28,45 @@ function DetailProduct() {
 				<BuyProduct />
 			</div>
 		);
+	};
+	const openMessage = () => {
+		message.loading({
+			className: 'message_success',
+			content: 'Đang thêm vào giỏ của bạn!',
+			key,
+		});
+		setTimeout(() => {
+			message.success({
+				className: 'message_success',
+				content: 'Thêm vào giỏ hàng thành công!',
+				key,
+				duration: 2,
+			});
+		}, 2000);
+	};
+	let slideIndex;
+	const currentDiv = (n) => {
+		showDivs((slideIndex = n));
+	};
+	const showDivs = (value) => {
+		console.log('value', value);
+		let i;
+		const x = document.getElementsByClassName('mySlides');
+		const dots = document.getElementsByClassName('demo');
+		if (value > x.length) {
+			slideIndex = 1;
+		}
+		if (value < 1) {
+			slideIndex = x.length;
+		}
+		for (i = 0; i < x.length; i++) {
+			x[i].style.display = 'none';
+		}
+		for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(' w3-opacity-off', '');
+		}
+		x[slideIndex - 1].style.display = 'block';
+		dots[slideIndex - 1].className += ' w3-opacity-off';
 	};
 	return (
 		<div>
@@ -48,21 +81,70 @@ function DetailProduct() {
 			<div className={Styles.content_detail}>
 				<div className={Styles.content_1}>
 					<div className={Styles.content_1_img}>
-						<div className={Styles.content_1_img_tren}>
-							<img src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400" />
-						</div>
-						<div className={Styles.content_1_img_duoi}>
-							<Button type="text">
-								<LeftOutlined style={{ marginTop: '50px', fontSize: '24px' }} />
-							</Button>
-							<div className={Styles.img_duoi}>
-								<img src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400" />
-								<img src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400" />
-								<img src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400" />
+						<div
+							className="w3_content"
+							style={{
+								width: '95%',
+								height: '92%',
+								display: 'flex',
+								flexDirection: 'column',
+								marginLeft: '15px',
+								marginTop: '25px',
+							}}
+						>
+							<img
+								className="mySlides"
+								src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400"
+								style={{
+									width: '100%',
+									height: '70%',
+									display: 'block',
+								}}
+							/>
+							<img
+								className="mySlides"
+								src="https://i.pinimg.com/originals/a0/dc/35/a0dc35e337a9c7bf922bf5edc022236d.jpg"
+								style={{ width: '100%', height: '70%', display: 'none' }}
+							/>
+							<img
+								className="mySlides"
+								src="https://i.pinimg.com/originals/a8/45/76/a84576a04c1874304735604d9f47d5a4.jpg"
+								style={{ width: '100%', height: '70%', display: 'none' }}
+							/>
+							<div
+								className="w3-row-padding w3-section"
+								style={{
+									width: '100%',
+									marginTop: '30px',
+									display: 'flex',
+									justifyContent: 'space-around',
+								}}
+							>
+								<div className="w3-col s4" style={{ width: '30%' }}>
+									<img
+										className="demo w3-opacity w3-hover-opacity-off"
+										src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400"
+										style={{ width: '100%', cursor: 'pointer', display: 'block' }}
+										onClick={() => currentDiv(1)}
+									/>
+								</div>
+								<div className="w3-col s4" style={{ width: '30%' }}>
+									<img
+										className="demo w3-opacity w3-hover-opacity-offf"
+										src="https://i.pinimg.com/originals/a0/dc/35/a0dc35e337a9c7bf922bf5edc022236d.jpg"
+										style={{ width: '100%', cursor: 'pointer', display: 'block' }}
+										onClick={() => currentDiv(2)}
+									/>
+								</div>
+								<div className="w3-col s4" style={{ width: '30%' }}>
+									<img
+										className="demo w3-opacity w3-hover-opacity-offff"
+										src="https://i.pinimg.com/originals/a8/45/76/a84576a04c1874304735604d9f47d5a4.jpg"
+										style={{ width: '100%', cursor: 'pointer', display: 'block' }}
+										onClick={() => currentDiv(3)}
+									/>
+								</div>
 							</div>
-							<Button type="text">
-								<RightOutlined style={{ marginTop: '50px', fontSize: '24px' }} />
-							</Button>
 						</div>
 					</div>
 					<div className={Styles.content_1_detail}>
@@ -230,7 +312,11 @@ function DetailProduct() {
 									</Link>
 								</div>
 								<div style={{ width: '40%' }}>
-									<Button className={Styles.btn_detail_them_vao_gio} type="primary">
+									<Button
+										className={Styles.btn_detail_them_vao_gio}
+										onClick={openMessage}
+										type="primary"
+									>
 										Thêm vào giỏ hàng
 									</Button>
 								</div>

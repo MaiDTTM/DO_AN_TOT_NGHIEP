@@ -4,7 +4,7 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 100000;
+	z-index: 1;
 	float: left;
 }
 .content_detail {
@@ -33,17 +33,6 @@
 	flex-direction: column;
 	border-right: 2px solid #f1f1f1;
 	border-color: #f44336!important;
-}
-.content_1_img_tren {
-	width: 100%;
-	height: 70%;
-	display: flex;
-	justify-content: center;
-}
-.content_1_img_tren img {
-	width: 90%;
-	height: 90%;
-	margin-top: 25px;
 }
 .img_duoi {
 	display: flex;
@@ -257,4 +246,7 @@
 }
 .pa{
 	font-size: 20px !important;
+}
+.message_success{
+	z-index: 2;
 }

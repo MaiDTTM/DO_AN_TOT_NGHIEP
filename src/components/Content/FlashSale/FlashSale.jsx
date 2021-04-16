@@ -52,6 +52,7 @@ function FlashSale() {
 							height: '100%',
 							display: 'flex',
 							justifyContent: 'space-around',
+							position: 'relative',
 						}}
 					>
 						<Link to={'/detail'}>
