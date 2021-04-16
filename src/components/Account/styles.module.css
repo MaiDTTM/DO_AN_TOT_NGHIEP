@@ -28,6 +28,9 @@
 .user_page_sidebar_menu > ul > li {
 	padding: 10px 5px;
 }
+.user_page_sidebar_menu > ul > li:hover {
+	background-color: #93d4e5;
+}
 .user_page_brief__avatar {
 	width: 50px;
 	height: 50px;
@@ -153,4 +156,6 @@
 	width: 128px;
 	height: 128px;
 }
-
+.content{
+	background-color: #ffffff !important;
+}
