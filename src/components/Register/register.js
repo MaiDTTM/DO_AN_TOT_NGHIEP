@@ -43,64 +43,54 @@ function Register() {
 				<h3>TẠO MỘT TÀI KHOẢN MỚI</h3>
 			</div>
 			<div className={style.form_dangky}>
-				<Form
-					className={style.form}
-					{...layout}
-					name="basic"
-					initialValues={{ remember: true }}
-					onFinish={onFinish}
-					onFinishFailed={onFinishFailed}
-				>
-					<Form.Item
-						className={style.Username}
-						label="Username"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
-					>
-						<Input className={style.input_username} />
-					</Form.Item>
-					<Form.Item
-						className={style.Email}
-						label="Email"
-						name="Email"
-						rules={[{ required: false, message: 'Please input your Email!' }]}
-					>
-						<Input className={style.input_email} />
-					</Form.Item>
-					<Form.Item
-						className={style.Password}
-						label="Password"
-						name="password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
-					>
-						<Input.Password className={style.input_password} />
-					</Form.Item>
-					<Form.Item
-						className={style.Enter_the_Password}
-						label="Enter the Password"
-						name="Enter_the_Password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
-					>
-						<Input.Password />
-					</Form.Item>
-
-					<Form.Item
-						className={style.Checkbox}
-						{...tailLayout}
-						name="remember"
-						valuePropName="checked"
-					>
-						<Checkbox>
-							Tôi đồng ý với các điều khoản quy định khi sử dụng trang web
-						</Checkbox>
-					</Form.Item>
-
-					<Form.Item className={style.Submit} {...tailLayout}>
-						<Button type="primary" htmlType="submit">
-							Đăng ký
-						</Button>
-					</Form.Item>
-				</Form>
+				<form>
+					<div className={style.item_form_dang_ky} style={{ marginTop: '25px' }}>
+						<div className={style.title_dang_ky}>Tên đăng ký :</div>
+						<div className={style.input_field}>
+							<input type="text" id="name" required />
+							<label htmlFor="name">Your name</label>
+						</div>
+					</div>
+					<div className={style.item_form_dang_ky}>
+						<div className={style.title_dang_ky}>Email :</div>
+						<div className={style.input_field}>
+							<input type="email" id="email" required />
+							<label htmlFor="email" style={{ width: '60px' }}>
+								Email
+							</label>
+						</div>
+					</div>
+					<div className={style.item_form_dang_ky}>
+						<div className={style.title_dang_ky}>Số điện thoại :</div>
+						<div className={style.input_field}>
+							<input type="number" id="sdt" required />
+							<label htmlFor="sdt" style={{ width: '140px' }}>
+								Phone number
+							</label>
+						</div>
+					</div>
+					<div className={style.item_form_dang_ky}>
+						<div className={style.title_dang_ky}>Mật khẩu :</div>
+						<div className={style.input_field}>
+							<input type="password" id="pass" required />
+							<label htmlFor="password" style={{ width: '100px' }}>
+								Password
+							</label>
+						</div>
+					</div>
+					<div className={style.item_form_dang_ky}>
+						<div className={style.action_dang_ky}>
+							<Checkbox>
+								Tôi đồng ý với các điều khoản quy định sử dụng của trang web
+							</Checkbox>
+						</div>
+					</div>
+					<div className={style.item_form_dang_ky}>
+						<div className={style.action_dang_ky}>
+							<button>Tạo một tài khoản mới</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

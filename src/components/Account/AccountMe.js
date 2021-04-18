@@ -23,22 +23,53 @@ const Style = {
 };
 function AccountMe() {
 	var slideIndex;
+	const [disabled, setDisabled] = React.useState(true);
+	React.useEffect(() => {
+		document.getElementById('li_1').style.backgroundColor = '#93d4e5';
+		document.getElementById('li_2').style.backgroundColor = '#ffffff';
+		document.getElementById('chu_y').style.display = 'none';
+	}, []);
 	const currentDiv = (n) => {
-		showDivs((slideIndex = n));
+		if (n === 1) {
+			setDisabled(true);
+			document.getElementById('li_1').style.backgroundColor = '#93d4e5';
+			document.getElementById('li_2').style.backgroundColor = '#ffffff';
+			document.getElementById('left_item_password_3').style.display = 'none';
+			document.getElementById('left_item_password_2').style.display = 'none';
+			document.getElementById('left_item_password_4').style.display = 'none';
+			document.getElementById('chu_y').style.display = 'none';
+			showDivs((slideIndex = n));
+		} else if (n === 2) {
+			document.getElementById('li_2').style.backgroundColor = '#93d4e5';
+			document.getElementById('li_1').style.backgroundColor = '#ffffff';
+			showDivs((slideIndex = n));
+		} else if (n === 5) {
+			setDisabled(false);
+			document.getElementById('li_1').style.backgroundColor = '#ffffff';
+			document.getElementById('li_2').style.backgroundColor = '#ffffff';
+			showDivs((slideIndex = n));
+		}
 	};
+	console.log('disabled', disabled);
 	const showDivs = (value) => {
 		let i;
 		const x = document.getElementsByClassName('content');
-		if (value > x.length) {
-			slideIndex = 1;
-		}
-		if (value < 1) {
-			slideIndex = x.length;
-		}
 		for (i = 0; i < x.length; i++) {
 			x[i].style.display = 'none';
 		}
-		x[slideIndex - 1].style.display = 'block';
+		if (value > x.length) {
+			x[slideIndex - 5].style.display = 'block';
+			document.getElementById('li_2').style.backgroundColor = '#ffffff';
+			document.getElementById('li_2').style.backgroundColor = '#ffffff';
+			document.getElementById('left_item_password_3').style.display = 'block';
+			document.getElementById('left_item_password_2').style.display = 'block';
+			document.getElementById('left_item_password_4').style.display = 'block';
+			document.getElementById('chu_y').style.display = 'block';
+		} else if (value < 1) {
+			slideIndex = x.length;
+		} else {
+			x[slideIndex - 1].style.display = 'block';
+		}
 	};
 	return (
 		<div className={Styles.header_home}>
@@ -59,17 +90,19 @@ function AccountMe() {
 						<div className={style.user_page_brief__right}>
 							<div className={style.user_page_brief__username}>maisumule</div>
 							<div>
-								<Button icon={<EditOutlined />}>Sửa hồ sơ</Button>
+								<Button icon={<EditOutlined />} onClick={() => currentDiv(5)} value="3">
+									Sửa hồ sơ
+								</Button>
 							</div>
 						</div>
 					</div>
 					<div className={style.user_page_sidebar_menu}>
-						<ul style={{ listStyle: 'none' }}>
-							<li onClick={() => currentDiv(1)}>
+						<ul style={{ listStyle: 'none' }} defaultValue="1">
+							<li onClick={() => currentDiv(1)} id="li_1" value="1">
 								<SmileTwoTone style={{ marginRight: '10px' }} />
 								Hồ sơ của bạn
 							</li>
-							<li onClick={() => currentDiv(2)}>
+							<li onClick={() => currentDiv(2)} id="li_2" value="2">
 								<CheckCircleTwoTone
 									twoToneColor="#52c41a"
 									style={{ marginRight: '10px' }}
@@ -83,7 +116,7 @@ function AccountMe() {
 					<div className={style.h4QDlo}>
 						<div className={style.my_account_section}>
 							<div className="content" style={{ backgroundColor: '#ffffff' }}>
-								<HoSo />
+								<HoSo disabled={disabled} />
 							</div>
 							<div
 								className="content"

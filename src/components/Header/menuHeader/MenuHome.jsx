@@ -12,7 +12,7 @@ function MenuHome() {
 	const { Search } = Input;
 	const onSearch = (value) => console.log(value);
 	const menu = (
-		<Menu style={{ width: '500px', backgroundColor: '#ece3e3' }}>
+		<Menu style={{ width: '500px', backgroundColor: '#efe6ef' }}>
 			<span
 				style={{
 					color: '#be1b1b',
@@ -140,7 +140,7 @@ function MenuHome() {
 								<Button
 									icon={<ShoppingCartOutlined style={{ color: '#ca1c1c' }} />}
 									type="text"
-									style={{ color: '#948d68' }}
+									style={{ color: '#b2d7cd' }}
 								>
 									Giỏ hàng
 								</Button>
