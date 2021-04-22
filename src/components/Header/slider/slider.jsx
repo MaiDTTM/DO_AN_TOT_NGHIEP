@@ -1,6 +1,12 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import { SmileTwoTone, MenuFoldOutlined } from '@ant-design/icons';
+import {
+	SmileTwoTone,
+	MenuFoldOutlined,
+	HomeOutlined,
+	PhoneOutlined,
+	QuestionCircleOutlined,
+} from '@ant-design/icons';
 //style
 import hot from '../../../img/hot.gif';
 //import slider
@@ -39,7 +45,7 @@ function Slider() {
 								<i>
 									<img src={hot} />
 								</i>
-								<a>Đồ sơ sinh</a>
+								<a>Top đầu tìm kiếm</a>
 								<i>
 									<img src={hot} />
 								</i>
@@ -53,9 +59,9 @@ function Slider() {
 									</i>
 								</div>
 								<div>
-									<a>Sữa bột</a>
-									<a>- Tã bỉm</a>
-									<a>- Máy hút sữa [Có quà]</a>
+									<a>Xếp hình</a>
+									<a>- Xe</a>
+									<a>- Máy súc [Có quà]</a>
 								</div>
 								<div>
 									<i>
@@ -88,7 +94,22 @@ function Slider() {
 			<div className={Styles.slider}>
 				<div className={Styles.left_slider}>
 					<ul className={Styles.content_category_list}>
-						<li>
+						<li style={{ paddingTop: '6px' }}>
+							<Link to={'/'}>
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginLeft: '10px',
+										marginRight: '10px',
+									}}
+								>
+									<HomeOutlined style={{ color: '#d219e7', fontSize: '20px' }} />
+								</i>
+								Trang chủ
+							</Link>
+						</li>
+						<li style={{ paddingTop: '6px' }}>
 							<Link to={'/gioithieu'}>
 								<i
 									style={{
@@ -98,439 +119,227 @@ function Slider() {
 										marginRight: '10px',
 									}}
 								>
-									<SmileTwoTone />
+									<SmileTwoTone style={{ fontSize: '20px' }} />
 								</i>
 								Giới thiệu về GCB
 							</Link>
 						</li>
-						<li>
+						<li style={{ paddingTop: '6px' }}>
 							<a href="#">
-								<i>
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginRight: '10px',
+									}}
+								>
 									<img src="https://shoptretho.com.vn/Content/images/khuyen-mai.png?mode=max&width=60&height=60" />
 								</i>
 								Khuyến mại lớn
 							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Tất cả ngoại ngữ
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Tiếng hàn
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Tiếng anh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Tiếng đức
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Tiếng trung
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
 						</li>
-						<li>
+						<li style={{ paddingTop: '6px' }}>
 							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/be-an-1.png?mode=max&width=60&height=60" />
-								</i>
-								Cho bé ăn
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/be-mac-1.png?mode=max&width=60&height=60" />
-								</i>
-								Cho bé mặc
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/be-di-choi-1.png?mode=max&width=60&height=60" />
-								</i>
-								Cho bé đi chơi
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/be-ngu-1.png?mode=max&width=60&height=60" />
-								</i>
-								Cho bé ngủ
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/ve-sinh-cho-be-1.png?mode=max&width=60&height=60" />
-								</i>
-								Vệ sinh cho bé
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20151027/be-khoe-1.png?mode=max&width=60&height=60" />
-								</i>
-								Bé khỏe & an toàn
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</li>
-						<li>
-							<a href="#">
-								<i>
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginRight: '10px',
+									}}
+								>
 									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/do-choi-1.png?mode=max&width=60&height=60" />
 								</i>
-								Đồ chơi trẻ em
+								Sản phẩm đồ chơi gỗ
 							</a>
 							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
+								<ul>
+									<div style={{ display: 'flex' }}>
+										<div
+											className={Styles.menu_hover_row}
+											style={{ borderRight: '1px solid #e0e0e0' }}
+										>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Bảng ghép chữ, số và hình các loại
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Đồ chơi cỡ lớn
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Bảng viết, giá vẽ, chữ, số nam châm
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Rút gỗ, rubik, tangram trí uẩn
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Bàn tính, đômino, que tính
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Xếp và ghép hình trí tuệ
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Luồn hạt, xâu vòng, đồng hồ
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Xe ô tô, đoàn tàu
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Nhạc cụ, âm thanh, đồ cho bé 1 tuổi
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Câu cá, câu ếch, cắt củ quả
+												</a>
+											</li>
+										</div>
+										<div className={Styles.menu_hover_row}>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Xếp tháp, thả hình, luyện kỹ năng
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Kỹ thuật, kéo đẩy, đập bóng, đập cọc
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Xe tập đi, ngựa gỗ, ghế ăn bột
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Lắp ghép thú 3D
+												</a>
+											</li>
+										</div>
+									</div>
+								</ul>
 							</div>
 						</li>
-						<li>
+						<li style={{ paddingTop: '6px' }}>
 							<a href="#">
-								<i>
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginRight: '10px',
+									}}
+								>
 									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/qua-tang-1.png?mode=max&width=60&height=60" />
 								</i>
 								Quà tặng
 							</a>
-							<div className={Styles.menu_hover}>
+							<div className={Styles.menu_hover__qua_tang}>
 								<div className={Styles.menu_hover_row}>
 									<ul>
 										<li className={Styles.menu_hover_row_item}>
 											<a href="" className={Styles.menu_hover_link}>
-												Hoan
+												Quà sinh nhật cho bé
 											</a>
 										</li>
 										<li className={Styles.menu_hover_row_item}>
 											<a href="" className={Styles.menu_hover_link}>
-												Thanh
+												Quà đầy tháng
 											</a>
 										</li>
 										<li className={Styles.menu_hover_row_item}>
 											<a href="" className={Styles.menu_hover_link}>
-												Slider
+												Quà tết thiếu nhi 1-6
 											</a>
 										</li>
 										<li className={Styles.menu_hover_row_item}>
 											<a href="" className={Styles.menu_hover_link}>
-												Vui
+												Quà tặng 8-3
 											</a>
 										</li>
 										<li className={Styles.menu_hover_row_item}>
 											<a href="" className={Styles.menu_hover_link}>
-												Vui
+												Quà tết trung thu
+											</a>
+										</li>
+										<li className={Styles.menu_hover_row_item}>
+											<a href="" className={Styles.menu_hover_link}>
+												Quà tặng Noel cho bé
+											</a>
+										</li>
+										<li className={Styles.menu_hover_row_item}>
+											<a href="" className={Styles.menu_hover_link}>
+												Quà tết cho bé
+											</a>
+										</li>
+										<li className={Styles.menu_hover_row_item}>
+											<a href="" className={Styles.menu_hover_link}>
+												Quà tặng cho bé
+											</a>
+										</li>
+										<li className={Styles.menu_hover_row_item}>
+											<a href="" className={Styles.menu_hover_link}>
+												Album ảnh, khung ảnh, sách
+											</a>
+										</li>
+										<li className={Styles.menu_hover_row_item}>
+											<a
+												href=""
+												className={Styles.menu_hover_link}
+												style={{ color: 'red' }}
+											>
+												Xem tất cả >>
 											</a>
 										</li>
 									</ul>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li style={{ paddingTop: '6px' }}>
 							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20150803/do-dung-cho-me-1.png?mode=max&width=60&height=60" />
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginLeft: '10px',
+										marginRight: '10px',
+									}}
+								>
+									<QuestionCircleOutlined
+										style={{ color: '#25e0ab', fontSize: '20px' }}
+									/>
 								</i>
-								Đồ dùng cho mẹ
+								Hướng dẫn mua hàng
 							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
 						</li>
-						<li>
-							<a href="#">
-								<i>
-									<img src="https://media.shoptretho.com.vn/upload/image/menu/20151027/do-gia-dung-1.png?mode=max&width=60&height=60" />
+						<li style={{ paddingTop: '6px' }}>
+							<Link to={'/lienhe'}>
+								<i
+									style={{
+										width: '33px',
+										height: '33px',
+										marginLeft: '10px',
+										marginRight: '10px',
+									}}
+								>
+									<PhoneOutlined style={{ color: '#2bbe26', fontSize: '20px' }} />
 								</i>
-								Đồ dùng gia đình
-							</a>
-							<div className={Styles.menu_hover}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Hoan
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Thanh
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Slider
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Vui
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
+								Liên hệ chúng tôi
+							</Link>
 						</li>
 					</ul>
 				</div>

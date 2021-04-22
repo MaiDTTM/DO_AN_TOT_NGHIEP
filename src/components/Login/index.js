@@ -43,13 +43,7 @@ function Login() {
 			</div>
 			<div className={styles.form_dang_nhap}>
 				<form>
-					<div className={style.item_form_dang_nhap} style={{ marginTop: '25px' }}>
-						<div className={style.input_field}>
-							<input type="text" id="name" required />
-							<label htmlFor="name">Your name</label>
-						</div>
-					</div>
-					<div className={style.item_form_dang_nhap}>
+					<div className={style.item_form_dang_nhap} style={{ marginTop: '45px' }}>
 						<div className={style.input_field}>
 							<input type="email" id="email" required />
 							<label htmlFor="email" style={{ width: '140px' }}>
@@ -65,7 +59,7 @@ function Login() {
 							</label>
 						</div>
 					</div>
-					<div className={style.item_form_dang_nhap}>
+					<div className={style.item_form_dang_nhap} style={{ marginTop: '15px' }}>
 						<div className={style.action_dang_nhap}>
 							<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
 						</div>

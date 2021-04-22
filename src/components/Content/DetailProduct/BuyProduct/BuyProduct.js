@@ -10,14 +10,12 @@ import {
 	DeleteOutlined,
 	ExclamationCircleOutlined,
 } from '@ant-design/icons';
+import axios from 'axios';
 const { TextArea } = Input;
 const { Option } = Select;
 const layout = {
 	labelCol: { span: 8 },
 	wrapperCol: { span: 16 },
-};
-const tailLayout = {
-	wrapperCol: { offset: 8, span: 16 },
 };
 const radioStyle = {
 	display: 'block',
@@ -28,18 +26,29 @@ const radioStyle = {
 const styleInput = { width: '380px' };
 function BuyProduct() {
 	const [modal2Visible, setModal2Visible] = React.useState(false);
+	const [LtsItem, setLtsItem] = React.useState({});
+	console.log('dataObj', LtsItem);
 	const onFinish = (values) => {
-		console.log('Success:', values);
+		// console.log('Success:', values);
 	};
 
 	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+		// console.log('Failed:', errorInfo);
 	};
 	function setModalVisible(modal2Visible) {
 		setModal2Visible({ modal2Visible });
 	}
-	const btn_ok = document.getElementsByClassName('ant-btn ant-btn-primary');
-	console.log('btn_ok', btn_ok);
+	const getAPI = async () => {
+		await fetch('https://thongtindoanhnghiep.co/api/city')
+			.then((res) => console.log('res.json()', res.json()))
+			// .then((data) => {
+			// 	setLtsItem(data.LtsItem);
+			// })
+			.catch(console.log);
+	};
+	React.useEffect(() => {
+		getAPI();
+	}, []);
 	return (
 		<div className={Styles.wrap_oder}>
 			<div className={Styles.header_oder}>
@@ -265,7 +274,10 @@ function BuyProduct() {
 								</Form.Item>
 								<Form.Item>
 									<div style={{ width: '320px' }}>
-										<TextArea rows={4} />
+										<TextArea
+											rows={4}
+											placeholder="Viết ghi chú, yêu cầu đối với đơn hàng cho người giao hàng."
+										/>
 									</div>
 								</Form.Item>
 							</div>

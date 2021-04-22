@@ -13,6 +13,7 @@ import IntroduceProduct from './components/Header/slider/introduceProduct/introd
 import BuyProduct from './components/Content/DetailProduct/BuyProduct/BuyProduct';
 import CartProduct from './components/CartProduct/CartProduct';
 import AccountMe from './components/Account/AccountMe';
+import LienHe from './components/Header/slider/LienHeChungToi/LienHe';
 
 //style
 
@@ -30,6 +31,7 @@ function App() {
 				<Route path="/buyproduct" exact component={BuyProduct} />
 				<Route path="/cart" exact component={CartProduct} />
 				<Route path="/account" exact component={AccountMe} />
+				<Route path="/lienhe" exact component={LienHe} />
 			</Switch>
 		</Router>
 	);

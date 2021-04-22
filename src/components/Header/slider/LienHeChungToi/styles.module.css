@@ -1,0 +1,9 @@
+.header_home {
+    width: 100%;
+    height: 140px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    float: left;
+}

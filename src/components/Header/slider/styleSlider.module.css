@@ -144,8 +144,8 @@
 	margin-left: -5px;
 }
 .left_slider li {
-	width: auto;
-	height: 40px;
+	width: 100%;
+	height: 50px;
 	line-height: 40px;
 	padding: 0 1em;
 }
@@ -179,6 +179,17 @@
 	text-align: left;
 }
 .menu_hover{
+	width: 534px;
+	height: 501px;
+	position: absolute;
+	top: 0;
+	left: 267px;/*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
+	display: none;
+	z-index: 999999;
+	background-color: #ffffff;
+	box-shadow:0px 0px 10px 4px #e0e0e0;border:1px solid #daf1ff;
+}
+.menu_hover__qua_tang{
 	width: 267px;
 	height: 501px;
 	position: absolute;
@@ -189,11 +200,25 @@
 	background-color: #ffffff;
 	box-shadow:0px 0px 10px 4px #e0e0e0;border:1px solid #daf1ff;
 }
-.menu_hover_row ul{
+.content_category_list > li:hover .menu_hover__qua_tang {
+	display: block;
+}
+.menu_hover__qua_tang ul{
+	list-style: none;
+}
+.menu_hover:hover{
+	display: flex;
+}
+.menu_hover_row{
+	width: 267px;
+	height: 100%;
+}
+.menu_hover ul{
 	list-style: none;
 }
 .menu_hover_row_item:hover{
-	background-color: #aecf91;
+	background-color: #93cfd6;
+	cursor: pointer;
 }
 .menu_hover_link{
 

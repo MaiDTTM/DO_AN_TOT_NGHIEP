@@ -202,7 +202,7 @@ function HoSo(props) {
 							{/*mk hiển thị trang hồ sơ*/}
 							<div
 								className={style.my_account_profile__left_item}
-								style={{ display: 'block' }}
+								style={{ display: 'none' }}
 								id="left_item_password_1"
 							>
 								<Form.Item label="Mật khẩu HT:">

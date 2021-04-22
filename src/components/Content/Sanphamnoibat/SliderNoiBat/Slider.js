@@ -7,6 +7,34 @@ import slider3 from '../../../../img/slidernoibat3.png';
 
 function Slider() {
 	//khai báo biến slideIndex đại diện cho slide hiện tại
+	// const [slideIndex, setSlideIndex] = React.useState(0);
+	// React.useEffect((slideIndex) => {
+	// 	//chuyển đến slide tiếp theo
+	// 	slideIndex++;
+	// 	const showSlides = setTimeout((slideIndex) => {
+	// 		console.log('slideIndex', slideIndex);
+	// 		let i;
+	// 		const slides = document.getElementsByClassName('mySlides');
+	// 		const dots = document.getElementsByClassName('dot');
+	// 		//nếu đang ở slide cuối cùng thì chuyển về slide đầu
+	// 		if (slideIndex > slides.length - 1) {
+	// 			slideIndex = 0;
+	// 		}
+	// 		for (i = 0; i < slides.length; i++) {
+	// 			slides[i].style.display = 'none';
+	// 		}
+	// 		for (i = 0; i < dots.length; i++) {
+	// 			dots[i].className = dots[i].className.replace(' active', '');
+	// 		}
+	// 		//
+	// 		slides[slideIndex].style.display = 'block';
+	// 		dots[slideIndex].className += ' active';
+	// 		//tự động chuyển đổi slide sau 5s
+	// 		setTimeout(showSlides, 5000);
+	// 	}, 5000);
+	//
+	// 	return () => clearTimeout(showSlides);
+	// });
 	var slideIndex;
 	const currentSlide = (n) => {
 		showSlides((slideIndex = n));
@@ -17,6 +45,7 @@ function Slider() {
 		let i;
 		const slides = document.getElementsByClassName('mySlides');
 		const dots = document.getElementsByClassName('dot');
+		//nếu đang ở slide cuối cùng thì chuyển về slide đầu
 		if (slideIndex > slides.length - 1) {
 			slideIndex = 0;
 		}
@@ -31,12 +60,12 @@ function Slider() {
 		dots[slideIndex].className += ' active';
 		//chuyển đến slide tiếp theo
 		slideIndex++;
-		//nếu đang ở slide cuối cùng thì chuyển về slide đầu
 		//tự động chuyển đổi slide sau 5s
 		setTimeout(showSlides, 5000);
 	};
 	React.useEffect(() => {
 		showSlides((slideIndex = 0));
+		clearTimeout(showSlides);
 	}, []);
 	return (
 		<div className="slider_noi_bat">

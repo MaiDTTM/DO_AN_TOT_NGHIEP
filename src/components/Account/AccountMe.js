@@ -35,6 +35,7 @@ function AccountMe() {
 			document.getElementById('li_1').style.backgroundColor = '#93d4e5';
 			document.getElementById('li_2').style.backgroundColor = '#ffffff';
 			document.getElementById('left_item_password_3').style.display = 'none';
+			document.getElementById('left_item_password_1').style.display = 'none';
 			document.getElementById('left_item_password_2').style.display = 'none';
 			document.getElementById('left_item_password_4').style.display = 'none';
 			document.getElementById('chu_y').style.display = 'none';
@@ -63,6 +64,7 @@ function AccountMe() {
 			document.getElementById('li_2').style.backgroundColor = '#ffffff';
 			document.getElementById('left_item_password_3').style.display = 'block';
 			document.getElementById('left_item_password_2').style.display = 'block';
+			document.getElementById('left_item_password_1').style.display = 'block';
 			document.getElementById('left_item_password_4').style.display = 'block';
 			document.getElementById('chu_y').style.display = 'block';
 		} else if (value < 1) {
