@@ -2,8 +2,6 @@ import React from 'react';
 import { Tag } from 'antd';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.css';
-import Advertisement from '../../advertisement/advertisement';
-import MenuHome from '../../menuHeader/MenuHome';
 import Footer from '../../../Footer/footer';
 import {
 	TwitterOutlined,
@@ -11,24 +9,12 @@ import {
 	FacebookOutlined,
 	LinkedinOutlined,
 } from '@ant-design/icons';
+import Chung from '../../Chung';
 
-const Style = {
-	width: '100%',
-	height: '60px',
-	display: 'flex',
-	justifyContent: 'center',
-	backgroundColor: '#ea2190',
-	float: 'left',
-};
 function IntroduceProduct() {
 	return (
 		<div>
-			<div className="top_header width-common" style={Style}>
-				<Advertisement />
-			</div>
-			<div className="from_menu_header">
-				<MenuHome />
-			</div>
+			<Chung />
 			<div className={Styles.form_content}>
 				<div className={Styles.content_gioi_thieu}>
 					<div className={Styles.title_gioi_thieu}>

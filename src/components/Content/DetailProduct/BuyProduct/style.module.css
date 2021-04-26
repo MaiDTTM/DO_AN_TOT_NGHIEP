@@ -1,11 +1,23 @@
 .wrap_oder{
-    width: 1300px;
+    width: 1200px;
     margin: 0 auto;
     color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .header_oder{
     float: left;
-    width: 1300px;
+    width: 1200px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.header_oder_1{
+    float: left;
+    width: 1200px;
+    height: 80px;
+    display: flex;
 }
 .logo_oder{
     float: left;
@@ -82,7 +94,7 @@
     background-color: #f8f8f8;
     border: 1px dashed #dedede;
     float: left;
-    width: 1300px;
+    width: 1200px;
     line-height: 43px;
     margin: 10px 0 0 0;
     padding-left: 5px;
@@ -99,7 +111,9 @@
     float: left;
     border: 1px solid #ececec;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
 }
 .cart_error{
     text-align: center;
@@ -120,13 +134,12 @@ form {
     display: flex;
 }
 .right_order {
-    width: 500px;
+    width: 400px;
     position: relative;
     float: left;
     border-left: 1px solid #ececec;
     left: -1px;
     padding-bottom: 20px;
-    padding-left: 35px;
 }
 .thong_tin, .thanh_toan, .box_cart_info {
     float: left;
@@ -247,7 +260,7 @@ input, button, select, textarea {
     float: left;
     height: 60px;
     font-size: 13px;
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -266,5 +279,8 @@ input, button, select, textarea {
 .btn_logo{
     width: 100% !important;
     height: 100% !important;
+    background-color: #ffffff;
 }
-
+.btn_logo:hover{
+    background-color: #ffffff;
+}

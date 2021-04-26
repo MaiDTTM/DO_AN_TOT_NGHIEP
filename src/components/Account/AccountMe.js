@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons';
 import HoSo from './HoSo/HoSo';
 import DonHang from './DonHang/DonHang';
+import Chung from '../Header/Chung';
 // import PropTypes from 'prop-types';
 const Style = {
 	width: '100%',
@@ -75,12 +76,7 @@ function AccountMe() {
 	};
 	return (
 		<div className={Styles.header_home}>
-			<div className="top_header width-common" style={Style}>
-				<Advertisement />
-			</div>
-			<div className="from_menu_header">
-				<MenuHome />
-			</div>
+			<Chung />
 			<div className={style.content_account}>
 				<div className={style.user_page_sidebar}>
 					<div className={style.user_page_brief}>

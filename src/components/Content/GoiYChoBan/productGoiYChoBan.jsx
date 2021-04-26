@@ -55,12 +55,12 @@ function ProductListGoiYChoBan(props) {
 						flexDirection: 'column',
 						width: '100%',
 						height: '97.5%',
+						alignItems: 'center',
 					}}
 				>
 					<div className={Styles.content_host_item_goi_y}>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -76,7 +76,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -92,7 +91,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -108,7 +106,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -124,7 +121,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -140,7 +136,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -156,7 +151,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -169,7 +163,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -185,7 +178,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -201,7 +193,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -217,7 +208,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -233,7 +223,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -246,7 +235,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -259,7 +247,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -275,7 +262,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -291,7 +277,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -307,7 +292,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -323,7 +307,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -336,7 +319,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -352,7 +334,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -368,7 +349,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -384,7 +364,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -400,7 +379,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -413,7 +391,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -429,7 +406,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -445,7 +421,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -461,7 +436,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -477,7 +451,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -493,7 +466,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -509,7 +481,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -525,7 +496,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img
@@ -541,7 +511,6 @@ function ProductListGoiYChoBan(props) {
 						</Card>
 						<Card
 							hoverable
-							style={{ width: 240 }}
 							className={Styles.card_item_goi_y}
 							cover={
 								<img

@@ -1,5 +1,5 @@
 .list_hot {
-	width: 1650px;
+	width: 1200px;
 	height: 100%;
 }
 .header_hot {
@@ -24,14 +24,18 @@
 }
 .xem_tat_ca a {
 	color: #ee4d2d;
-	font-size: 24px;
+	font-size: 18px;
 	display: block;
 	margin: 15px 0;
 }
 .btn_xem {
 	color: #ee4d2d;
 	padding: 0.3125rem 0.4375rem;
-	margin: 15px 0;
+	margin: 9px 0;
+}
+.btn_xem:hover{
+	color: #ee4d2d;
+	background-color: #ffffff;
 }
 .content_host {
 	height: 100%;
@@ -99,8 +103,8 @@
 	justify-content: flex-end;
 }
 .card_item {
-	width: 250px;
-	height: 90%;
+	width: 150px;
+	height: 230px;
 	margin-top: 15px;
 }
 .card_item:hover {
@@ -119,10 +123,10 @@
 	flex-direction: column;
 	text-align: center;
 	font-weight: 400;
-	line-height: 0.6125rem;
+	line-height: 0.4125rem;
 	color: #ee4d2d;
 	text-transform: uppercase;
-	font-size: 0.55rem;
+	font-size: 0.3rem;
 	float: right;
 	margin-left: 0.3125rem;
 	background-color: rgba(255, 212, 36, 0.9);

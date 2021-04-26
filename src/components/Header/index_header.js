@@ -1,19 +1,10 @@
 import React from 'react';
-import Advertisement from './advertisement/advertisement';
 import SliderHeader from './slider/slider';
 
 //import style
 import './styleForm.css';
-import MenuHome from './menuHeader/MenuHome';
+import Chung from './Chung';
 //style
-const Style = {
-	width: '100%',
-	height: '60px',
-	display: 'flex',
-	justifyContent: 'center',
-	backgroundColor: '#ea2190',
-	float: 'left',
-};
 const styleHeader = {
 	display: 'flex',
 	flexDirection: 'column',
@@ -25,16 +16,11 @@ const styleHeader = {
 function IndexHeader() {
 	return (
 		<div style={styleHeader}>
-			<div className="header_home">
-				<div className="top_header width-common" style={Style}>
-					<Advertisement />
-				</div>
-				<div className="from_menu_header">
-					<MenuHome />
-				</div>
-			</div>
+			<Chung />
 			<div className="form_slider">
-				<SliderHeader />
+				<div style={{ display: 'flex', height: '100%', width: '1200px', float: 'left' }}>
+					<SliderHeader />
+				</div>
 			</div>
 		</div>
 	);

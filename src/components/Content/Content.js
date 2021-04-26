@@ -8,35 +8,35 @@ import ProductListXuHuong from './XuHuongTimKiem/XuHuoongTimKiem';
 
 //style
 const listBanner = {
-	width: '100%',
+	width: '1200px',
 	height: '235px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
 };
 const productHot = {
-	width: '100%',
-	height: '850px',
+	width: '1200px',
+	height: '550px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
 };
 const flashSale = {
-	width: '100%',
-	height: '500px',
+	width: '1200px',
+	height: '350px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
 };
 const productXuHuong = {
-	width: '100%',
+	width: '1200px',
 	height: '240px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',
 };
 const productGoiY = {
-	width: '100%',
+	width: '1200px',
 	height: '2700px',
 	paddingTop: '25px',
 	display: 'flex',
@@ -45,7 +45,14 @@ const productGoiY = {
 
 function Content(props) {
 	return (
-		<div>
+		<div
+			style={{
+				width: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+			}}
+		>
 			<div style={listBanner}>
 				<ListPicture />
 			</div>

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import CommentProduct from './Comment/Comment';
 import Footer from '../../Footer/footer';
 import BuyProduct from './BuyProduct/BuyProduct';
+import Chung from '../../Header/Chung';
 const { Meta } = Card;
 const key = 'updatable';
 // import PropTypes from 'prop-types';
@@ -70,14 +71,7 @@ function DetailProduct() {
 	};
 	return (
 		<div>
-			<div className={Styles.header_home}>
-				<div className="top_header width-common" style={Style}>
-					<Advertisement />
-				</div>
-				<div className="from_menu_header">
-					<MenuHome />
-				</div>
-			</div>
+			<Chung />
 			<div className={Styles.content_detail}>
 				<div className={Styles.content_1}>
 					<div className={Styles.content_1_img}>
@@ -89,7 +83,6 @@ function DetailProduct() {
 								display: 'flex',
 								flexDirection: 'column',
 								marginLeft: '15px',
-								marginTop: '25px',
 							}}
 						>
 							<img
@@ -151,17 +144,16 @@ function DetailProduct() {
 						<div
 							style={{
 								width: '100%',
-								height: '25%',
+								height: '15%',
 								display: 'flex',
 								flexDirection: 'column',
 							}}
 						>
 							<div
 								style={{
-									fontSize: '20px',
+									fontSize: '18px',
 									fontFamily: 'inherit',
 									marginLeft: '50px',
-									marginTop: '40px',
 								}}
 							>
 								<h1>Bảng số có núm gỗ - BA101</h1>
@@ -178,7 +170,7 @@ function DetailProduct() {
 									<Rate
 										allowHalf
 										defaultValue={2.5}
-										style={{ fontSize: '25px', marginRight: '20px' }}
+										style={{ fontSize: '18px', marginRight: '20px' }}
 									/>
 									<div
 										style={{
@@ -289,8 +281,8 @@ function DetailProduct() {
 								style={{
 									display: 'flex',
 									width: '80%',
-									marginTop: '50px',
-									marginBottom: '50px',
+									marginBottom: '25px',
+									paddingTop: '15px',
 								}}
 							>
 								<div

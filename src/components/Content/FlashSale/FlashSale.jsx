@@ -30,7 +30,7 @@ function FlashSale() {
 							<Countdown
 								value={deadline}
 								onFinish={onFinish}
-								valueStyle={{ color: '#ffffff', fontSize: '25px' }}
+								valueStyle={{ color: '#ffffff', fontSize: '18px' }}
 							/>
 						</div>
 					</div>

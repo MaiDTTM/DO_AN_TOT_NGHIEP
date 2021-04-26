@@ -12,14 +12,17 @@ import './styles.css';
 //const
 const { TextArea } = Input;
 // dòng dưới comment
-const CommentList = ({ comments }) => (
-	<List
-		dataSource={comments}
-		header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
-		itemLayout="horizontal"
-		renderItem={(props) => <Comment {...props} />}
-	/>
-);
+const CommentList = (props) => {
+	const { comments } = props;
+	return (
+		<List
+			dataSource={comments}
+			header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+			itemLayout="horizontal"
+			renderItem={(props) => <Comment {...props} />}
+		/>
+	);
+};
 // Form add comment
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
 	<>
@@ -35,11 +38,13 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 );
 function CommentProduct() {
 	const [comments, setComments] = React.useState([]);
+	console.log('comments', comments);
 	const [submitting, setSubmitting] = React.useState(false);
 	const [value, setValue] = React.useState('');
 	const [likes, setLikes] = useState(0);
 	const [dislikes, setDislikes] = useState(0);
 	const [action, setAction] = useState(null);
+	console.log('likes', likes);
 	const like = () => {
 		setLikes(likes + 1);
 		setDislikes(dislikes > 0 ? dislikes - 1 : dislikes);
@@ -80,16 +85,16 @@ function CommentProduct() {
 			setComments([
 				...comments,
 				{
-					actions: actions,
+					actions: actions, // Nay ko dc update nen no ko ve ra moi the moi bao chinh
 					author: (
 						<a style={{ fontSize: '16px' }}>
-							<b>Han Solo</b>
+							<b>Mai Dao</b>
 						</a>
 					),
 					avatar: (
 						<Avatar
 							src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-							alt="Han Solo"
+							alt="Mai Dao"
 						/>
 					),
 					content: <p>{value}</p>,
@@ -105,9 +110,17 @@ function CommentProduct() {
 	const handleChange = (e) => {
 		setValue(e.target.value);
 	};
+	React.useEffect(() => {
+		let arrNew = [];
+		if (comments.length > 0) {
+			comments.map((item) => arrNew.push({ ...item, actions: actions }));
+			setComments([...arrNew]);
+		}
+	}, [likes]);
+
 	return (
 		<>
-			{comments.length > 0 && <CommentList comments={comments} />}
+			{comments.length > 0 && <CommentList comments={comments} actions={actions} />}
 			<Comment
 				avatar={
 					<Avatar

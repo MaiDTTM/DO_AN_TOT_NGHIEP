@@ -52,14 +52,14 @@ function BuyProduct() {
 	return (
 		<div className={Styles.wrap_oder}>
 			<div className={Styles.header_oder}>
-				<div className={Styles.header_oder}>
+				<div className={Styles.header_oder_1}>
 					<div className={Styles.logo_oder}>
 						<Button
 							type="text"
 							className={Styles.btn_logo}
 							onClick={() => setModalVisible(true)}
 						>
-							<img src={logo} />
+							<img src={logo} style={{ width: '55%', height: '100%' }} />
 						</Button>
 						<Modal
 							centered

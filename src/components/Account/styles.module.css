@@ -1,9 +1,10 @@
 .content_account {
 	display: flex;
-	padding: 1.25rem 0 3.125rem;
+	padding:  0 3.125rem;
 	width: 1200px;
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 150px;
 }
 .user_page_sidebar {
 	display: block;
@@ -138,7 +139,7 @@
 	padding-left: 20px;
 }
 .my_account_profile__left_item {
-	padding-top: 10px;
+	padding-top: 2px;
 	display: flex;
 	width: 100%;
 }

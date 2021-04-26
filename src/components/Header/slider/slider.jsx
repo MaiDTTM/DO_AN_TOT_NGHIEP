@@ -19,8 +19,8 @@ import { Link } from 'react-router-dom';
 import Styles from './styleSlider.module.css';
 
 const contentStyle = {
-	width: '950px',
-	height: '501px',
+	width: '666px',
+	height: '350px',
 	color: '#fff',
 	lineHeight: '160px',
 	textAlign: 'center',
@@ -193,6 +193,8 @@ function Slider() {
 													Luồn hạt, xâu vòng, đồng hồ
 												</a>
 											</li>
+										</div>
+										<div className={Styles.menu_hover_row}>
 											<li className={Styles.menu_hover_row_item}>
 												<a href="" className={Styles.menu_hover_link}>
 													Xe ô tô, đoàn tàu
@@ -208,8 +210,6 @@ function Slider() {
 													Câu cá, câu ếch, cắt củ quả
 												</a>
 											</li>
-										</div>
-										<div className={Styles.menu_hover_row}>
 											<li className={Styles.menu_hover_row_item}>
 												<a href="" className={Styles.menu_hover_link}>
 													Xếp tháp, thả hình, luyện kỹ năng
@@ -248,65 +248,72 @@ function Slider() {
 								</i>
 								Quà tặng
 							</a>
-							<div className={Styles.menu_hover__qua_tang}>
-								<div className={Styles.menu_hover_row}>
-									<ul>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà sinh nhật cho bé
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà đầy tháng
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tết thiếu nhi 1-6
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tặng 8-3
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tết trung thu
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tặng Noel cho bé
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tết cho bé
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Quà tặng cho bé
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a href="" className={Styles.menu_hover_link}>
-												Album ảnh, khung ảnh, sách
-											</a>
-										</li>
-										<li className={Styles.menu_hover_row_item}>
-											<a
-												href=""
-												className={Styles.menu_hover_link}
-												style={{ color: 'red' }}
-											>
-												Xem tất cả >>
-											</a>
-										</li>
-									</ul>
-								</div>
+							<div className={Styles.menu_hover}>
+								<ul>
+									<div style={{ display: 'flex' }}>
+										<div
+											className={Styles.menu_hover_row}
+											style={{ borderRight: '1px solid #e0e0e0' }}
+										>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà sinh nhật cho bé
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà đầy tháng
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tết thiếu nhi 1-6
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tặng 8-3
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tết trung thu
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tặng Noel cho bé
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tết cho bé
+												</a>
+											</li>
+										</div>
+										<div className={Styles.menu_hover_row}>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Quà tặng cho bé
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a href="" className={Styles.menu_hover_link}>
+													Album ảnh, khung ảnh, sách
+												</a>
+											</li>
+											<li className={Styles.menu_hover_row_item}>
+												<a
+													href=""
+													className={Styles.menu_hover_link}
+													style={{ color: 'red' }}
+												>
+													Xem tất cả >>
+												</a>
+											</li>
+										</div>
+									</div>
+								</ul>
 							</div>
 						</li>
 						<li style={{ paddingTop: '6px' }}>
@@ -353,7 +360,7 @@ function Slider() {
 						<div>
 							<h3 style={contentStyle}>
 								<img
-									style={{ width: '950px', height: '501px', objectFit: 'cover' }}
+									style={{ width: '666px', height: '350px', objectFit: 'cover' }}
 									src={slider2}
 									alt="Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé"
 								/>
@@ -374,7 +381,7 @@ function Slider() {
 								<img
 									src={slider5}
 									alt="Uống sữa Friso nhận ngàn quà tặng MB"
-									style={{ width: '950px', height: '501px', objectFit: 'fill' }}
+									style={{ width: '666px', height: '350px', objectFit: 'fill' }}
 								/>
 							</h3>
 						</div>
@@ -382,10 +389,12 @@ function Slider() {
 				</div>
 				<div className={Styles.right_slider}>
 					<img
+						style={{ width: '100%', height: '175px' }}
 						src="https://media.shoptretho.com.vn/upload/image/banner/20210301/quet-vnpay-giam-15k-190-x-204.png"
 						alt="Quét VNPay giảm 15k"
 					/>
 					<img
+						style={{ width: '100%', height: '175px' }}
 						src="https://media.shoptretho.com.vn/upload/image/banner/20210301/chuc-mung-8-3-uu-dai-cho-me-qua-tang-cho-be-190-x-204-1.png"
 						alt="Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé"
 					/>

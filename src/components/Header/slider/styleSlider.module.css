@@ -1,68 +1,60 @@
 .slider_center {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	width: 1487px;
-	height: 568px;
+	width: 1200px;
+	height: 100%;
 }
 .slider {
-	width: 1487px;
-	height: 501px;
+	width: 1200px;
+	height: 350px;
 	display: flex;
 	justify-content: space-between;
 	/*background-color: #61dafb;*/
 }
 .slider .left_slider {
+	width: 267px;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
 .menu_slider {
-	width: 1487px;
+	width: 1200px;
 	height: 50px;
 	/*background-color: peachpuff;*/
 	margin-bottom: 0em;
 }
 .picture_slider {
-	width: 950px;
-	height: 501px;
+	width: 666px;
+	height: 350px;
 }
 .center_slider {
-	width: 950px;
-	height: 501px;
+	width: 666px;
+	height: 350px;
 }
 .center_slider :hover {
 	cursor: pointer;
 }
 .center_slider img {
 	width: 100%;
-	height: 501px;
+	height: 100%;
 }
 .right_slider {
 	display: flex;
 	flex-direction: column;
-	width: 270px;
-	height: 518px;
-}
-.left_slider {
-	width: 270px;
-	height: 518px;
-	border-radius: 5px;
-}
-.left_slider img {
-	/*object-fit: cover;*/
+	width: 267px;
+	height: 350px;
 }
 .menu_slider .hot_sale .menu_danhmuc {
 	width: 267px;
+	background-color: #0f7fc1;
 	height: 100%;
 }
 .menu_slider .hot_sale .danhmuc {
 	display: flex;
 	justify-content: center;
-	padding: 8px;
 	width: 267px;
 	height: 100%;
-	background-color: #0f7fc1;
 }
 .menu_slider .hot_sale h2 {
 	font-family: courier;
@@ -92,7 +84,7 @@
 	color: #ffffff;
 	font-size: 20px;
 	margin-right: 15px;
-	margin-top: 10px;
+	padding-top: 10px;
 }
 .menu_slider .hot_sale li i {
 	width: 38px;
@@ -150,8 +142,8 @@
 	padding: 0 1em;
 }
 .content_category_list {
-	height: 501px;
-	min-width: 235px;
+	height: 100%;
+	width: 267px;
 	list-style: none;
 	line-height: 15px;
 	position: relative;
@@ -180,7 +172,7 @@
 }
 .menu_hover{
 	width: 534px;
-	height: 501px;
+	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 267px;/*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
@@ -191,7 +183,7 @@
 }
 .menu_hover__qua_tang{
 	width: 267px;
-	height: 501px;
+	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 267px;/*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
