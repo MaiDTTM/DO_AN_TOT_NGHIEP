@@ -36,13 +36,16 @@
     height: 70px;
 }
 .span_hover_cart{
-   margin-left: 20px;
-    width: 60%;
+    margin-left: 20px;
+    width: 100%;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 .hover_cart{
     display: flex ;
     width: 100%;
 }
 .gia_hover_cart{
-
+    color: #02d702;
+    margin-left: 10px;
 }

@@ -1,77 +1,49 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Input, Popconfirm, Avatar, Button, message, Table, Modal } from 'antd';
+import queryString from 'query-string';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.css';
 import logo from '../../img/logotet2019.png';
-import { Link } from 'react-router-dom';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { Link, useHistory } from 'react-router-dom';
 import PopupBuyProduct from './PopupBuyProduct/PopupBuyProduct';
 import Footer from '../Footer/footer';
+import useCartLogicData from '../../hooks/useCartLogicData';
+import useProductLogicData from '../../hooks/useProductLogicData';
+import { ContextApp } from '../../context/contextApp';
 const { Search } = Input;
 const text = 'Are you sure to delete this task?';
-const data = [];
-function confirm() {
-	message.info('Clicked on Yes.');
-}
-for (let i = 1; i < 31; i++) {
-	data.push({
-		key: i,
-		stt: i,
-		name: (
-			<div style={{ display: 'flex', width: '500px' }}>
-				<Avatar
-					src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-					style={{ width: '50px', height: '50px' }}
-				/>
-				<div style={{ marginLeft: '15px' }}>
-					Ant Design, a design language for background applications, is refined by Ant UED
-					Team dtgfdgfghfhgjhhgj
-				</div>
-			</div>
-		),
-		price: (
-			<div className={Styles.gia_item_cart}>
-				<span>45.000</span>
-			</div>
-		),
-		number: 2,
-		total: <span style={{ color: 'red' }}> 48.000</span>,
-		action: (
-			<div className={Styles.action_item_cart}>
-				<Link to={'/buyproduct'}>
-					<Button
-						style={{
-							backgroundColor: '#ee4d2d',
-							color: '#fff',
-						}}
-					>
-						Mua hàng
-					</Button>
-				</Link>
-				<Popconfirm
-					placement="topLeft"
-					title={text}
-					onConfirm={confirm}
-					okText="Yes"
-					cancelText="No"
-				>
-					<Button type="text" style={{ color: '#9f643c' }}>
-						Xoá
-					</Button>
-				</Popconfirm>
-			</div>
-		),
-	});
-}
+
 function CartProduct() {
-	const onSearch = (value) => console.log(value);
-	const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+	// hooks
+	const { carts, deleteCart, getListCart } = useCartLogicData();
+	const { product, getListProduct } = useProductLogicData();
+	const history = useHistory();
+	const { selectedRowKeys, setSelectedRowKeys } = useContext(ContextApp);
+
+	// state
 	const [modal2Visible, setModal2Visible] = React.useState(false);
+
+	// const
+	const { location } = history;
+	const parsed = queryString.parse(location.search);
+	const arrCarts = Object.values(carts).filter(
+		(item) => parsed && parsed.id !== item._id
+	);
+	const arrSelect = Object.values(carts).filter(
+		(item) => parsed && parsed.id === item._id
+	);
+	const arrCartTable = arrSelect.concat(arrCarts.reverse());
+
+	// handle func
 	const onSelectChange = (selectedRowKeys) => {
-		console.log('selectedRowKeys changed: ', selectedRowKeys);
 		setSelectedRowKeys(selectedRowKeys);
 	};
-	console.log('selectedRowKeys', selectedRowKeys);
+
+	const handleDeleteOption = () => {
+		selectedRowKeys.map(async (idCart) => await deleteCart(idCart));
+	};
+	const onSearch = (value) => console.log(value);
+
 	const handleClickBuyAllProduct = () => {
 		if (selectedRowKeys.length === 0) {
 			message.error('Hãy chọn sản phẩm để thực hiện chức năng này');
@@ -79,6 +51,21 @@ function CartProduct() {
 			setModal2Visible(true);
 		}
 	};
+
+	const handleFindIndex = () => {
+		if (parsed && parsed.id) {
+			setSelectedRowKeys([parsed.id]);
+		}
+	};
+
+	// Vòng đời
+	React.useEffect(() => {
+		handleFindIndex();
+		getListCart();
+		getListProduct();
+	}, []);
+
+	// JSX
 	const columns = [
 		{
 			title: 'STT',
@@ -89,6 +76,9 @@ function CartProduct() {
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<div>Tên sản phẩm</div>
 					<div>
+						<Button onClick={handleDeleteOption} style={{ marginRight: '5px' }} danger>
+							Xóa sản phẩm đã chọn
+						</Button>
 						<Button onClick={handleClickBuyAllProduct}>Xem sản phẩm đã chọn</Button>
 						<Modal
 							title={
@@ -104,7 +94,12 @@ function CartProduct() {
 							className={Styles.modal_xem_tat_ca}
 							style={{ width: '1200px' }}
 						>
-							<PopupBuyProduct setModal2Visible={setModal2Visible} />
+							<PopupBuyProduct
+								setModal2Visible={setModal2Visible}
+								selectedRowKeys={selectedRowKeys}
+								product={product}
+								carts={carts}
+							/>
 						</Modal>
 					</div>
 				</div>
@@ -166,6 +161,65 @@ function CartProduct() {
 			},
 		],
 	};
+	const dataTable = arrCartTable.map((item, i) => ({
+		key: item._id,
+		stt: i + 1,
+		name: (
+			<div style={{ display: 'flex', width: '500px' }}>
+				<Avatar
+					src="https://picsum.photos/200"
+					style={{ width: '50px', height: '50px' }}
+				/>
+				<div style={{ marginLeft: '15px' }}>
+					{product && product[item.product_id] && product[item.product_id].name}
+				</div>
+			</div>
+		),
+		price: (
+			<div className={Styles.gia_item_cart}>
+				<span>
+					{`${
+						product && product[item.product_id] && product[item.product_id].price * 1000
+					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+				</span>
+			</div>
+		),
+		number: item.amount,
+		total: (
+			<span style={{ color: 'red' }}>
+				{`${
+					product &&
+					product[item.product_id] &&
+					product[item.product_id].price * 1000 * item.amount
+				}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+			</span>
+		),
+		action: (
+			<div className={Styles.action_item_cart}>
+				<Link to={'/buyproduct'}>
+					<Button
+						style={{
+							backgroundColor: '#ee4d2d',
+							color: '#fff',
+						}}
+					>
+						Mua hàng
+					</Button>
+				</Link>
+				<Popconfirm
+					placement="topLeft"
+					title={text}
+					onConfirm={() => deleteCart(item._id)}
+					okText="Yes"
+					cancelText="No"
+				>
+					<Button type="text" style={{ color: '#9f643c' }}>
+						Xoá
+					</Button>
+				</Popconfirm>
+			</div>
+		),
+	}));
 	return (
 		<div>
 			<div className={Styles.form_cart}>
@@ -198,7 +252,7 @@ function CartProduct() {
 						<Table
 							rowSelection={rowSelection}
 							columns={columns}
-							dataSource={data}
+							dataSource={dataTable}
 							pagination={false}
 						/>
 					</div>
@@ -215,4 +269,4 @@ CartProduct.propTypes = {};
 
 CartProduct.defaultProps = {};
 
-export default CartProduct;
+export default React.memo(CartProduct);

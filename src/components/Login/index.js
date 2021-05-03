@@ -1,27 +1,56 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Checkbox, message as messageAnt } from 'antd';
 // style
 import styles from './index.module.css';
 import logo from '../../img/logotet2019.png';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import style from './index.module.css';
+import { useDispatch } from 'react-redux';
+import baseAPI from '../../axios/baseAPI';
+import { TypeApi } from '../../util/TypeApi';
+import { LoginUser } from '../../actions/userAction';
 
-//const
-const layout = {
-	labelCol: { span: 8 },
-	wrapperCol: { span: 16 },
+const TypeInput = {
+	user: 'user',
+	password: 'password',
 };
-const tailLayout = {
-	wrapperCol: { offset: 8, span: 16 },
-};
-
 function Login() {
-	const onFinish = (values) => {
-		console.log('Success:', values);
-	};
+	// state
+	const [user, setUser] = useState('');
+	const [password, setPassword] = useState('');
 
-	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+	// hook
+	const dispatch = useDispatch();
+	const history = useHistory();
+
+	// handle
+	const onChangeText = (event, type) => {
+		switch (type) {
+			case TypeInput.user:
+				setUser(event.target.value);
+				break;
+			case TypeInput.password:
+				setPassword(event.target.value);
+				break;
+			default:
+				break;
+		}
+	};
+	const onSave = async () => {
+		const data = { user, password };
+		if (user && password) {
+			const { message, myUser } = await baseAPI.add(`${TypeApi.user}/login`, data);
+			if (message === 'SUCCESS') {
+				await dispatch(LoginUser(myUser));
+				history.push('/');
+			} else {
+				messageAnt.warn(message);
+			}
+		} else {
+			messageAnt.warn('Không được bỏ trống thông tin nào !');
+		}
+		setUser('');
+		setPassword('');
 	};
 	return (
 		<div className={styles.dang_nhap}>
@@ -42,34 +71,43 @@ function Login() {
 				<h3>ĐĂNG NHẬP VỚI EMAIL VÀ SỐ ĐIỆN THOẠI</h3>
 			</div>
 			<div className={styles.form_dang_nhap}>
-				<form>
-					<div className={style.item_form_dang_nhap} style={{ marginTop: '45px' }}>
-						<div className={style.input_field}>
-							<input type="email" id="email" required />
-							<label htmlFor="email" style={{ width: '140px' }}>
-								Email hoặc SĐT
-							</label>
-						</div>
+				<div className={style.item_form_dang_nhap} style={{ marginTop: '45px' }}>
+					<div className={style.input_field}>
+						<input
+							id="email"
+							value={user}
+							onChange={(e) => onChangeText(e, TypeInput.user)}
+							required
+						/>
+						<label htmlFor="email" style={{ width: '140px' }}>
+							Email hoặc SĐT
+						</label>
 					</div>
-					<div className={style.item_form_dang_nhap}>
-						<div className={style.input_field}>
-							<input type="password" id="pass" required />
-							<label htmlFor="password" style={{ width: '100px' }}>
-								Password
-							</label>
-						</div>
+				</div>
+				<div className={style.item_form_dang_nhap}>
+					<div className={style.input_field}>
+						<input
+							type="password"
+							id="pass"
+							value={password}
+							onChange={(e) => onChangeText(e, TypeInput.password)}
+							required
+						/>
+						<label htmlFor="password" style={{ width: '100px' }}>
+							Password
+						</label>
 					</div>
-					<div className={style.item_form_dang_nhap} style={{ marginTop: '15px' }}>
-						<div className={style.action_dang_nhap}>
-							<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
-						</div>
+				</div>
+				<div className={style.item_form_dang_nhap} style={{ marginTop: '15px' }}>
+					<div className={style.action_dang_nhap}>
+						<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
 					</div>
-					<div className={style.item_form_dang_nhap}>
-						<div className={style.action_dang_nhap}>
-							<button>Đăng nhập</button>
-						</div>
+				</div>
+				<div className={style.item_form_dang_nhap}>
+					<div className={style.action_dang_nhap}>
+						<button onClick={onSave}>Đăng nhập</button>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	);

@@ -1,18 +1,82 @@
 import React from 'react';
-import { Button, Input, Dropdown, Menu, Badge } from 'antd';
+import { Button, Input, Dropdown, Menu, Badge, message } from 'antd';
 import { UserOutlined, HeartTwoTone, ShoppingCartOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import Styles from './style.module.css';
 import logo from '../../../img/logo-gcb.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import img from '../../../img/banner1.png';
+import { useDispatch, useSelector } from 'react-redux';
+import Avatar from 'antd/es/avatar/avatar';
+import { TYPE_ACTION } from '../../../actions/TypeAction';
+import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
+import baseAPI from '../../../axios/baseAPI';
+import useCartLogicData from '../../../hooks/useCartLogicData';
+import useProductLogicData from '../../../hooks/useProductLogicData';
 //style
 const stylIcon = { width: '90px', display: 'flex', justifyContent: 'space-evenly' };
+
+// const
+const { Search } = Input;
+
 function MenuHome() {
-	const { Search } = Input;
+	// hooks
+	const myUser = useSelector((state) => state['myUser']);
+	const { carts, getListCart } = useCartLogicData();
+	const { product, getListProduct } = useProductLogicData();
+	// const product = useSelector((state) => state['product']);
+	const dispatch = useDispatch();
+	const history = useHistory();
+
+	// const
+	const arrCarts = Object.values(carts);
+
+	// handle func
 	const onSearch = (value) => console.log(value);
+
+	const handleClick = (event) => {
+		switch (event.key) {
+			case 'USER':
+				history.push('/account');
+				break;
+			case 'LOGOUT':
+				localStorage.clear();
+				dispatch({ type: TYPE_ACTION.USER.LOGOUT });
+				history.push('/');
+				break;
+			default:
+			// code block
+		}
+	};
+	const handleGetListCart = async (dataPrams) => {
+		const data = await baseAPI.getAll(TypeApi.cart, dataPrams);
+		dispatch({ type: TYPE_ACTION.CART.GET_ALL_CART, payload: { data } });
+	};
+
+	// const
+	const handleClickMenuCart = (e) => {
+		switch (e.key) {
+			case 'XEM_THEM':
+				history.push('/cart');
+				break;
+			default:
+				history.push(`/cart?id=${e.key}`); // Note: e.key chính là id product
+				break;
+		}
+	};
+
+	// Xử lý vòng đời
+	React.useEffect(() => {
+		myUser && myUser._id && getListCart();
+	}, [myUser]);
+	React.useEffect(() => {
+		getListProduct();
+	}, []);
 	const menu = (
-		<Menu style={{ width: '500px', backgroundColor: '#efe6ef' }}>
+		<Menu
+			onClick={handleClickMenuCart}
+			style={{ width: '500px', backgroundColor: '#efe6ef' }}
+		>
 			<span
 				style={{
 					color: '#be1b1b',
@@ -31,61 +95,28 @@ function MenuHome() {
 					backgroundColor: '#d06e6e',
 				}}
 			/>
-			<Menu.Item key="0" style={{ marginTop: '20px' }}>
-				<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-					<div className={Styles.hover_cart}>
-						<div className={Styles.img_hover_cart}>
-							<img src={img} className={Styles.img_hover_cart} />
+			{arrCarts
+				.reverse()
+				.slice(0, 4)
+				.map((item) => (
+					<Menu.Item key={item._id} style={{ marginTop: '20px' }}>
+						<div className={Styles.hover_cart}>
+							<div className={Styles.img_hover_cart}>
+								<img src={img} className={Styles.img_hover_cart} />
+							</div>
+							<div className={Styles.span_hover_cart}>
+								{product && product[item.product_id] && product[item.product_id].name}
+							</div>
+							<div className={Styles.gia_hover_cart}>
+								{`${
+									product &&
+									product[item.product_id] &&
+									product[item.product_id].price * 1000
+								}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+							</div>
 						</div>
-						<div className={Styles.span_hover_cart}>1nd menu item</div>
-						<div className={Styles.gia_hover_cart}>48.000đ</div>
-					</div>
-				</a>
-			</Menu.Item>
-			<Menu.Item key="1">
-				<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-					<div className={Styles.hover_cart}>
-						<div className={Styles.img_hover_cart}>
-							<img src={img} className={Styles.img_hover_cart} />
-						</div>
-						<div className={Styles.span_hover_cart}>1nd menu item</div>
-						<div className={Styles.gia_hover_cart}>48.000đ</div>
-					</div>
-				</a>
-			</Menu.Item>
-			<Menu.Item key="3">
-				<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-					<div className={Styles.hover_cart}>
-						<div className={Styles.img_hover_cart}>
-							<img src={img} className={Styles.img_hover_cart} />
-						</div>
-						<div className={Styles.span_hover_cart}>1nd menu item</div>
-						<div className={Styles.gia_hover_cart}>48.000đ</div>
-					</div>
-				</a>
-			</Menu.Item>
-			<Menu.Item key="3">
-				<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-					<div className={Styles.hover_cart}>
-						<div className={Styles.img_hover_cart}>
-							<img src={img} className={Styles.img_hover_cart} />
-						</div>
-						<div className={Styles.span_hover_cart}>1nd menu item</div>
-						<div className={Styles.gia_hover_cart}>48.000đ</div>
-					</div>
-				</a>
-			</Menu.Item>
-			<Menu.Item key="3">
-				<a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-					<div className={Styles.hover_cart}>
-						<div className={Styles.img_hover_cart}>
-							<img src={img} className={Styles.img_hover_cart} />
-						</div>
-						<div className={Styles.span_hover_cart}>1nd menu item</div>
-						<div className={Styles.gia_hover_cart}>48.000đ</div>
-					</div>
-				</a>
-			</Menu.Item>
+					</Menu.Item>
+				))}
 			<hr
 				style={{
 					height: '2px',
@@ -94,27 +125,38 @@ function MenuHome() {
 					backgroundColor: '#d06e6e',
 				}}
 			/>
-			<Menu.Item key="4">
+			<Menu.Item key="XEM_THEM">
 				<div
 					style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}
 				>
-					<div>Trong giỏ hàng hiện đang có : 82 sản phẩm</div>
-					<Link to={'/cart'}>
-						<div>
-							<Button
-								style={{
-									backgroundColor: '#f53d2d',
-									height: '40px',
-									color: '#ffffff',
-									boxShadow:
-										'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-								}}
-							>
-								Xem giỏ hàng
-							</Button>
-						</div>
-					</Link>
+					<div>Trong giỏ hàng hiện đang có : {arrCarts.length}</div>
+					<div>
+						<Button
+							style={{
+								backgroundColor: '#f53d2d',
+								height: '40px',
+								color: '#ffffff',
+								boxShadow:
+									'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+							}}
+						>
+							Xem giỏ hàng
+						</Button>
+					</div>
 				</div>
+			</Menu.Item>
+		</Menu>
+	);
+	const menuUser = (
+		<Menu onClick={handleClick}>
+			<Menu.Item key="USER">
+				<div>Tài khoản</div>
+			</Menu.Item>
+			<Menu.Item key="1">
+				<div>Đơn đặt hàng</div>
+			</Menu.Item>
+			<Menu.Item key="LOGOUT">
+				<div>Đăng xuất</div>
 			</Menu.Item>
 		</Menu>
 	);
@@ -136,7 +178,7 @@ function MenuHome() {
 				<div style={stylIcon}>
 					<Dropdown overlay={menu}>
 						<Link to={'/cart'}>
-							<Badge size="small" count={5}>
+							<Badge size="small" count={arrCarts.length}>
 								<Button
 									icon={<ShoppingCartOutlined style={{ color: '#ca1c1c' }} />}
 									type="text"
@@ -159,24 +201,47 @@ function MenuHome() {
 						</Button>
 					</Badge>
 				</div>
-				<div style={stylIcon}>
-					<Link to={'/login'}>
-						<Button
-							icon={<UserOutlined style={{ color: '#2febc5' }} />}
-							type="text"
-							style={{ color: '#40ac22' }}
+				{myUser.email ? (
+					<Dropdown overlay={menuUser}>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								cursor: 'pointer',
+							}}
 						>
-							Đăng nhập
-						</Button>
-					</Link>
-				</div>
-				<div style={stylIcon}>
-					<Link to={'/register'}>
-						<Button icon={<UserOutlined />} type="text">
-							Đăng ký
-						</Button>
-					</Link>
-				</div>
+							<Avatar
+								style={{ width: '30px', height: '30px' }}
+								icon={<UserOutlined />}
+								src={`${BASE_URL_IMAGE}${myUser.image}`}
+							/>
+							<div style={{ marginLeft: 5, marginTop: 5, fontWeight: 'bold' }}>
+								{myUser.name}
+							</div>
+						</div>
+					</Dropdown>
+				) : (
+					<React.Fragment>
+						<div style={stylIcon}>
+							<Link to={'/login'}>
+								<Button
+									icon={<UserOutlined style={{ color: '#2febc5' }} />}
+									type="text"
+									style={{ color: '#40ac22' }}
+								>
+									Đăng nhập
+								</Button>
+							</Link>
+						</div>
+						<div style={stylIcon}>
+							<Link to={'/register'}>
+								<Button icon={<UserOutlined />} type="text">
+									Đăng ký
+								</Button>
+							</Link>
+						</div>
+					</React.Fragment>
+				)}
 			</div>
 		</div>
 	);

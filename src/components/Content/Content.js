@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import ProductListGoiYChoBan from './GoiYChoBan/productGoiYChoBan';
 import FlashSale from './FlashSale/FlashSale';
 import ProductListXuHuong from './XuHuongTimKiem/XuHuoongTimKiem';
+import { useSelector } from 'react-redux';
 
 //style
 const listBanner = {
@@ -44,6 +45,8 @@ const productGoiY = {
 };
 
 function Content(props) {
+	// hooks
+	const product = useSelector((state) => state['product']);
 	return (
 		<div
 			style={{
@@ -57,7 +60,7 @@ function Content(props) {
 				<ListPicture />
 			</div>
 			<div style={flashSale}>
-				<FlashSale />
+				<FlashSale product={product} />
 			</div>
 			<div style={productHot}>
 				<ProductListHot />
@@ -66,7 +69,7 @@ function Content(props) {
 				<ProductListXuHuong />
 			</div>
 			<div style={productGoiY}>
-				<ProductListGoiYChoBan />
+				<ProductListGoiYChoBan product={product} />
 			</div>
 		</div>
 	);

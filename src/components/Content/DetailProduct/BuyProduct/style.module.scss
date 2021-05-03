@@ -244,7 +244,7 @@ input, button, select, textarea {
     float: left;
     width: 100%;
     text-align: center;
-    margin-top: 20px;
+    //margin-top: 20px;
 }
 .xong{
     background-color: #ff62fe !important;
@@ -283,4 +283,28 @@ input, button, select, textarea {
 }
 .btn_logo:hover{
     background-color: #ffffff;
+}
+.textarea_diachi {
+    :global {
+        textarea.ant-input {
+            max-width: unset;
+            width: 380px !important;
+        }
+    }
+}
+.textarea_message {
+    :global {
+        textarea.ant-input {
+            max-width: unset;
+            width: 320px !important;
+        }
+    }
+}
+
+.table_product {
+    :global {
+        .ant-col-16 {
+            max-width: unset;
+        }
+    }
 }

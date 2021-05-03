@@ -110,8 +110,7 @@
 .input_field input:hover{
     border-color: #fd999a;
 }
-.input_field input:focus,
-.input_field input:valid {
+.input_field input:focus {
 	border-color: #00dd22;
 }
 .input_field input:focus ~ label,

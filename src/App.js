@@ -1,9 +1,10 @@
+import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 import Login from './components/Login';
 
 //import react router
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import Register from './components/Register/register';
 import MainLayout from './components/MainLayout';
 import TestAPI from './components/Demo/testMaiDao';
@@ -14,26 +15,41 @@ import BuyProduct from './components/Content/DetailProduct/BuyProduct/BuyProduct
 import CartProduct from './components/CartProduct/CartProduct';
 import AccountMe from './components/Account/AccountMe';
 import LienHe from './components/Header/slider/LienHeChungToi/LienHe';
+import { useDispatch } from 'react-redux';
+import { LoginUser } from './actions/userAction';
+import { ContextApp } from './context/contextApp';
 
 //style
 
 function App() {
+	// hooks
+	const dispatch = useDispatch();
+
+	// state
+	const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+
+	// Vòng đời
+	React.useEffect(() => {
+		localStorage && dispatch(LoginUser(localStorage));
+	}, []);
 	return (
-		<Router>
-			<Switch>
-				<Route path="/login" exact component={Login} />
-				<Route path="/register" exact component={Register} />
-				<Route path="/demo" exact component={TestAPI} />
-				<Route path="/" exact component={MainLayout} />
-				<Route path="/Admin" exact component={LayoutAdmin} />
-				<Route path="/detail" exact component={DetailProduct} />
-				<Route path="/gioithieu" exact component={IntroduceProduct} />
-				<Route path="/buyproduct" exact component={BuyProduct} />
-				<Route path="/cart" exact component={CartProduct} />
-				<Route path="/account" exact component={AccountMe} />
-				<Route path="/lienhe" exact component={LienHe} />
-			</Switch>
-		</Router>
+		<ContextApp.Provider value={{ selectedRowKeys, setSelectedRowKeys }}>
+			<Router>
+				<Switch>
+					<Route path="/login" exact component={Login} />
+					<Route path="/register" exact component={Register} />
+					<Route path="/demo" exact component={TestAPI} />
+					<Route path="/" exact component={MainLayout} />
+					<Route path="/Admin" exact component={LayoutAdmin} />
+					<Route path="/detail/:id" exact component={DetailProduct} />
+					<Route path="/gioithieu" exact component={IntroduceProduct} />
+					<Route path="/buyproduct" exact component={BuyProduct} />
+					<Route path="/cart" exact component={CartProduct} />
+					<Route path="/account" exact component={AccountMe} />
+					<Route path="/lienhe" exact component={LienHe} />
+				</Switch>
+			</Router>
+		</ContextApp.Provider>
 	);
 }
 

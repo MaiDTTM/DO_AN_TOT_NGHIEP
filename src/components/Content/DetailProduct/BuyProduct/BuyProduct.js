@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Avatar, Table } from 'antd';
 // import PropTypes from 'prop-types';
-import Styles from './style.module.css';
+import Styles from './style.module.scss';
 import logo from '../../../../img/logo-gcb.jpg';
 import { Form, Input, Button, Select, Radio, Modal } from 'antd';
 import { Link } from 'react-router-dom';
-import {
-	MinusOutlined,
-	PlusOutlined,
-	DeleteOutlined,
-	ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import axios from 'axios';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import useProductLogicData from '../../../../hooks/useProductLogicData';
+import useCartLogicData from '../../../../hooks/useCartLogicData';
+import { useSelector } from 'react-redux';
+import { ContextApp } from '../../../../context/contextApp';
 const { TextArea } = Input;
 const { Option } = Select;
 const layout = {
@@ -22,12 +21,56 @@ const radioStyle = {
 	height: '30px',
 	lineHeight: '30px',
 };
+const columns = [
+	{
+		title: 'Ảnh',
+		dataIndex: 'image',
+		key: 'image',
+		fixed: 'left',
+		width: 50,
+	},
+	{
+		title: 'Tên',
+		dataIndex: 'name',
+		key: '1',
+		width: 200,
+	},
+	{
+		title: 'Số lượng',
+		dataIndex: 'amount',
+		key: '2',
+		width: 200,
+	},
+	{
+		title: 'Giá',
+		dataIndex: 'price',
+		key: '3',
+		width: 200,
+	},
+	{
+		title: 'Action',
+		key: 'operation',
+		fixed: 'right',
+		width: 50,
+		render: () => <a>action</a>,
+	},
+];
 
+const data = [];
 const styleInput = { width: '380px' };
 function BuyProduct() {
+	// hooks
+	const { product, getListProduct } = useProductLogicData();
+	const { carts, getListCart } = useCartLogicData();
+	const [form] = Form.useForm();
+	const myUser = useSelector((state) => state['myUser']);
+	const { selectedRowKeys, setSelectedRowKeys } = useContext(ContextApp);
+
+	// state
 	const [modal2Visible, setModal2Visible] = React.useState(false);
-	const [LtsItem, setLtsItem] = React.useState({});
-	console.log('dataObj', LtsItem);
+	const [dataTable, setDataTable] = React.useState([]);
+
+	// handle func
 	const onFinish = (values) => {
 		// console.log('Success:', values);
 	};
@@ -38,17 +81,37 @@ function BuyProduct() {
 	function setModalVisible(modal2Visible) {
 		setModal2Visible({ modal2Visible });
 	}
-	const getAPI = async () => {
-		await fetch('https://thongtindoanhnghiep.co/api/city')
-			.then((res) => console.log('res.json()', res.json()))
-			// .then((data) => {
-			// 	setLtsItem(data.LtsItem);
-			// })
-			.catch(console.log);
-	};
+
+	// Vòng đời
 	React.useEffect(() => {
-		getAPI();
+		getListCart();
+		getListProduct();
 	}, []);
+	React.useEffect(() => {
+		form.setFieldsValue({ ...myUser });
+	}, [myUser]);
+
+	React.useEffect(() => {
+		if (
+			Object.keys(carts).length > 0 &&
+			Object.keys(product).length > 0 &&
+			selectedRowKeys.length
+		) {
+			const arrTable = selectedRowKeys.map((id) => ({
+				key: id,
+				image: (
+					<Avatar
+						src="https://picsum.photos/200"
+						style={{ width: '50px', height: '50px' }}
+					/>
+				),
+				name: <div>Tên</div>,
+				amount: `1`,
+				price: `1`,
+			}));
+			setDataTable(arrTable);
+		}
+	}, [carts, product, selectedRowKeys]);
 	return (
 		<div className={Styles.wrap_oder}>
 			<div className={Styles.header_oder}>
@@ -127,12 +190,12 @@ function BuyProduct() {
 				</div>
 				<div className={Styles.login_oder}>
 					<span>Hãy </span>
-					<Link to={'/login'}>
-						<b>Đăng nhập</b>
+					<Link to={'/account'}>
+						<b>Cập nhật thông tin tài khoản của bạn</b>
 					</Link>
 					<span> để mua hàng nhanh hơn! </span>
 					<span style={{ float: 'right', margin: '0 5px 0 5px' }}>
-						<Link>
+						<Link to={'/cart'}>
 							<i>Tiếp tục mua hàng >> </i>
 						</Link>
 					</span>
@@ -151,34 +214,41 @@ function BuyProduct() {
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
 					className={Styles.form_thanh_toan}
+					form={form}
 				>
 					<div style={{ display: 'flex' }}>
 						<div className={Styles.left_order}>
 							<div className={Styles.thong_tin}>
 								<span className={Styles.tieu_de}>Thông tin mua hàng</span>
 								<Form.Item
-									className={Styles.form_thanh_toan}
-									name="username"
+									name="name"
 									rules={[{ required: true, message: 'Please input your username!' }]}
 								>
-									<Input placeholder="Username" style={styleInput} />
+									<Input placeholder="Username" style={styleInput} disabled />
 								</Form.Item>
-								<Form.Item
-									className={Styles.form_thanh_toan}
-									name="password"
-									rules={[{ required: true, message: 'Please input your password!' }]}
-								>
-									<Input.Password placeholder="Password" style={styleInput} />
-								</Form.Item>
+								{/*<Form.Item*/}
+								{/*	className={Styles.form_thanh_toan}*/}
+								{/*	name="password"*/}
+								{/*	rules={[{ required: true, message: 'Please input your password!' }]}*/}
+								{/*>*/}
+								{/*	<Input.Password placeholder="Password" style={styleInput} />*/}
+								{/*</Form.Item>*/}
 								<Form.Item>
-									<div style={{ display: 'flex' }}>
+									<div style={{ display: 'flex', width: '380px' }}>
 										<span className={Styles.gt}>Giới tính : </span>
-										<Radio.Group style={{ marginLeft: '10px', display: 'flex' }}>
-											<Radio style={radioStyle} value={1}>
+										<Radio.Group
+											name={'gender'}
+											style={{ marginLeft: '10px', display: 'flex' }}
+											disabled
+										>
+											<Radio style={radioStyle} value={'1'}>
 												Nam
 											</Radio>
-											<Radio style={radioStyle} value={2}>
+											<Radio style={radioStyle} value={'2'}>
 												Nữ
+											</Radio>
+											<Radio style={radioStyle} value={'3'}>
+												Khác
 											</Radio>
 										</Radio.Group>
 									</div>
@@ -206,7 +276,7 @@ function BuyProduct() {
 										},
 									]}
 								>
-									<Input placeholder="Email" style={styleInput} />
+									<Input placeholder="Email" style={styleInput} disabled />
 								</Form.Item>
 								<Form.Item name="diachi">
 									<div style={{ width: '400px', display: 'flex' }}>
@@ -242,12 +312,11 @@ function BuyProduct() {
 										</div>
 									</div>
 								</Form.Item>
-								<Form.Item name="sonha" rules={[{ required: true }]}>
-									<Input
-										placeholder="Số nhà, tòa nhà, đường, xã phường"
-										style={styleInput}
-									/>
-								</Form.Item>
+								<div className={Styles.textarea_diachi}>
+									<Form.Item name="address" rules={[{ required: true }]}>
+										<TextArea placeholder="Số nhà, tòa nhà, đường, xã phường" rows={3} />
+									</Form.Item>
+								</div>
 							</div>
 							<div className={Styles.thanh_toan}>
 								<span className={Styles.tieu_de}>Thời gian nhận hàng</span>
@@ -267,94 +336,49 @@ function BuyProduct() {
 										<Radio style={radioStyle} value={5}>
 											Thanh toán khi nhận hàng(COD)
 										</Radio>
-										<Radio style={radioStyle} value={6}>
-											Chuyển khoản qua ngân hàng
-										</Radio>
+										{/*<Radio style={radioStyle} value={6}>*/}
+										{/*	Chuyển khoản qua ngân hàng*/}
+										{/*</Radio>*/}
 									</Radio.Group>
 								</Form.Item>
-								<Form.Item>
-									<div style={{ width: '320px' }}>
+								<div className={Styles.textarea_message}>
+									<Form.Item name={'message'}>
 										<TextArea
 											rows={4}
 											placeholder="Viết ghi chú, yêu cầu đối với đơn hàng cho người giao hàng."
 										/>
-									</div>
-								</Form.Item>
+									</Form.Item>
+								</div>
 							</div>
 						</div>
 						<div className={Styles.right_order}>
 							<div style={{ marginLeft: '20px', width: '380px', display: 'flex' }}>
 								<span className={Styles.tieu_de}>
-									{' '}
 									Đơn hàng
 									<span className={Styles.so_luong}> ( 1 sản phẩm )</span>
 								</span>
 							</div>
-							<Form.Item>
-								<div className={Styles.item_cart}>
-									<div className={Styles.cart_img}>
-										<img
-											src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=100&height=100"
-											title="Bảng số có núm gỗ - BA101"
-											alt="Bảng số có núm gỗ - BA101"
-										/>
-									</div>
-									<div className={Styles.cart_name}>
-										<div className={Styles.name_box}>
-											<div className={Styles.name}>Bảng số có núm gỗ - BA101</div>
-											<div className={Styles.gia}>
-												<b>48.000đ</b>
-											</div>
-										</div>
-									</div>
-								</div>
-							</Form.Item>
-							<Form.Item>
-								<div className={Styles.cart_sl}>
-									<div style={{ display: 'flex', width: '380px' }}>
-										<div style={{ marginLeft: '120px', marginRight: '25px' }}>
-											Số lượng :
-										</div>
-										<div>
-											<Button size="small">
-												<MinusOutlined />
-											</Button>
-											<Button size="small">1</Button>
-											<Button size="small">
-												<PlusOutlined />
-											</Button>
-										</div>
-										<div style={{ marginLeft: '45px' }}>
-											<Button size="small" icon={<DeleteOutlined />} />
-										</div>
-									</div>
-								</div>
-							</Form.Item>
-							<Form.Item>
-								<div
-									style={{
-										width: '380px',
-										display: 'flex',
-										justifyContent: 'space-around',
-										marginLeft: '50px',
-										marginBottom: '20px',
-									}}
-								>
-									<div>Tạm tính</div>
-									<div>48.000đ</div>
-								</div>
-							</Form.Item>
-							<Form.Item>
-								<div className={Styles.line_order}>
-									<span className={Styles.total_text}>Thành tiền</span>
+							<div className={Styles.table_product}>
+								<Form.Item>
+									<Table
+										columns={columns}
+										dataSource={dataTable}
+										scroll={{ x: 1500, y: 200 }}
+										pagination={false}
+									/>
+								</Form.Item>
+							</div>
+							<div className={Styles.line_order}>
+								<span className={Styles.total_text}>Thành tiền :</span>
+								<Form.Item>
 									<span className={Styles.total_money}>48.000đ</span>
-								</div>
-							</Form.Item>
-							<Form.Item>
-								<div className={Styles.btn_finish}>
+								</Form.Item>
+							</div>
+							<div className={Styles.btn_finish}>
+								<Form.Item>
 									<Button className={Styles.xong}>ĐẶT HÀNG</Button>
-								</div>
-							</Form.Item>
+								</Form.Item>
+							</div>
 						</div>
 					</div>
 				</Form>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Button, Modal, Popconfirm, Table } from 'antd';
 import Styles from '../style.module.css';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const columnXemTatCa = [
 	{
@@ -31,38 +31,60 @@ const columnXemTatCa = [
 		width: '100px',
 	},
 ];
-const data = [];
-for (let i = 1; i < 11; i++) {
-	data.push({
-		key: i,
-		stt: i,
+
+function PopupBuyProduct(props) {
+	const { setModal2Visible, product, selectedRowKeys, carts } = props;
+
+	const handleHuy = () => {
+		setModal2Visible(false);
+	};
+	const sumMoney = () => {
+		let sum = 0;
+		selectedRowKeys.map((id) => {
+			sum =
+				(product &&
+					product[carts[id].product_id] &&
+					product[carts[id].product_id].price * 1000) + sum;
+		});
+		return sum;
+	};
+
+	const data = selectedRowKeys.map((id, index) => ({
+		key: id,
+		stt: index + 1,
 		name: (
 			<div style={{ display: 'flex', width: '500px' }}>
 				<Avatar
-					src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+					src="https://picsum.photos/200"
 					style={{ width: '50px', height: '50px' }}
 				/>
 				<div style={{ marginLeft: '15px' }}>
-					Ant Design, a design language for background applications, is refined by Ant UED
-					Team dtgfdgfghfhgjhhgj
+					{product && product[carts[id].product_id] && product[carts[id].product_id].name}
 				</div>
 			</div>
 		),
 		price: (
 			<div className={Styles.gia_item_cart}>
-				<span>45.000</span>
+				<span>
+					{`${
+						product &&
+						product[carts[id].product_id] &&
+						product[carts[id].product_id].price * 1000
+					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+				</span>
 			</div>
 		),
-		number: 2,
-		total: <span style={{ color: 'red' }}> 48.000</span>,
-	});
-}
-function PopupBuyProduct(props) {
-	const { setModal2Visible } = props;
-	console.log('setModal2Visible', setModal2Visible);
-	const handleHuy = () => {
-		setModal2Visible(false);
-	};
+		number: carts[id].amount,
+		total: (
+			<span style={{ color: 'red' }}>
+				{`${
+					product &&
+					product[carts[id].product_id] &&
+					product[carts[id].product_id].price * 1000 * carts[id].amount
+				}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+			</span>
+		),
+	}));
 	return (
 		<div>
 			<Table
@@ -74,12 +96,16 @@ function PopupBuyProduct(props) {
 			<div style={{ marginTop: '50px', display: 'flex' }}>
 				<div style={{ marginLeft: '320px' }}>
 					<b>Số sản phẩm đã chọn :</b>{' '}
-					<span style={{ color: 'red', fontSize: '18px' }}>10</span>
+					<span style={{ color: 'red', fontSize: '18px' }}>{selectedRowKeys.length}</span>
 					<span> sản phẩm</span>
 				</div>
 				<div style={{ marginLeft: '100px' }}>
 					<b>Tổng số tiền :</b>{' '}
-					<span style={{ color: 'red', fontSize: '18px' }}>150.000</span>
+					<span style={{ color: 'red', fontSize: '18px' }}>
+						{sumMoney()
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+					</span>
 					<span> nghìn đồng</span>
 				</div>
 			</div>
@@ -117,8 +143,14 @@ function PopupBuyProduct(props) {
 	);
 }
 
-PopupBuyProduct.propTypes = {};
+PopupBuyProduct.propTypes = {
+	selectedRowKeys: PropTypes.array,
+	product: PropTypes.object,
+};
 
-PopupBuyProduct.defaultProps = {};
+PopupBuyProduct.defaultProps = {
+	selectedRowKeys: [],
+	product: {},
+};
 
 export default PopupBuyProduct;

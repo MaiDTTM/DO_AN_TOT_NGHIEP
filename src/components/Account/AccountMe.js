@@ -13,6 +13,8 @@ import {
 import HoSo from './HoSo/HoSo';
 import DonHang from './DonHang/DonHang';
 import Chung from '../Header/Chung';
+import { useSelector } from 'react-redux';
+import { BASE_URL_IMAGE } from '../../util/TypeApi';
 // import PropTypes from 'prop-types';
 const Style = {
 	width: '100%',
@@ -24,6 +26,7 @@ const Style = {
 };
 function AccountMe() {
 	var slideIndex;
+	const dataMyUser = useSelector((state) => state.myUser);
 	const [disabled, setDisabled] = React.useState(true);
 	React.useEffect(() => {
 		document.getElementById('li_1').style.backgroundColor = '#93d4e5';
@@ -52,7 +55,6 @@ function AccountMe() {
 			showDivs((slideIndex = n));
 		}
 	};
-	console.log('disabled', disabled);
 	const showDivs = (value) => {
 		let i;
 		const x = document.getElementsByClassName('content');
@@ -84,9 +86,10 @@ function AccountMe() {
 							className={style.user_page_brief__avatar}
 							size={64}
 							icon={<UserOutlined />}
+							src={`${BASE_URL_IMAGE}${dataMyUser.image}`}
 						/>
 						<div className={style.user_page_brief__right}>
-							<div className={style.user_page_brief__username}>maisumule</div>
+							<div className={style.user_page_brief__username}>{dataMyUser.name}</div>
 							<div>
 								<Button icon={<EditOutlined />} onClick={() => currentDiv(5)} value="3">
 									Sửa hồ sơ
