@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Avatar, Table } from 'antd';
+import { Avatar, InputNumber, Table } from 'antd';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.scss';
 import logo from '../../../../img/logo-gcb.jpg';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, Radio, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -27,13 +28,13 @@ const columns = [
 		dataIndex: 'image',
 		key: 'image',
 		fixed: 'left',
-		width: 50,
+		width: 80,
 	},
 	{
 		title: 'Tên',
 		dataIndex: 'name',
 		key: '1',
-		width: 200,
+		width: 250,
 	},
 	{
 		title: 'Số lượng',
@@ -42,16 +43,16 @@ const columns = [
 		width: 200,
 	},
 	{
-		title: 'Giá',
+		title: 'Tổng tiền',
 		dataIndex: 'price',
 		key: '3',
-		width: 200,
+		width: 150,
 	},
 	{
 		title: 'Action',
 		key: 'operation',
 		fixed: 'right',
-		width: 50,
+		width: 80,
 		render: () => <a>action</a>,
 	},
 ];
@@ -73,6 +74,9 @@ function BuyProduct() {
 	// handle func
 	const onFinish = (values) => {
 		// console.log('Success:', values);
+	};
+	const handleChangeAmount = (value) => {
+		console.log('changed', value);
 	};
 
 	const onFinishFailed = (errorInfo) => {
@@ -97,17 +101,31 @@ function BuyProduct() {
 			Object.keys(product).length > 0 &&
 			selectedRowKeys.length
 		) {
-			const arrTable = selectedRowKeys.map((id) => ({
-				key: id,
+			const arrTable = selectedRowKeys.map((idCart) => ({
+				key: idCart,
 				image: (
-					<Avatar
+					<img
 						src="https://picsum.photos/200"
-						style={{ width: '50px', height: '50px' }}
+						style={{ width: '50px', height: '50px', objectFit: 'cover' }}
 					/>
 				),
-				name: <div>Tên</div>,
-				amount: `1`,
-				price: `1`,
+				name: <div>{product[carts[idCart].product_id].name}</div>,
+				amount: (
+					<InputNumber
+						min={0}
+						max={100}
+						// value={carts[idCart].amount}
+						defaultValue={carts[idCart].amount}
+						onChange={handleChangeAmount}
+					/>
+				),
+				price: (
+					<div>
+						{(product[carts[idCart].product_id].price * carts[idCart].amount * 1000)
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+					</div>
+				),
 			}));
 			setDataTable(arrTable);
 		}
@@ -363,7 +381,7 @@ function BuyProduct() {
 									<Table
 										columns={columns}
 										dataSource={dataTable}
-										scroll={{ x: 1500, y: 200 }}
+										scroll={{ x: 800, y: 200 }}
 										pagination={false}
 									/>
 								</Form.Item>
