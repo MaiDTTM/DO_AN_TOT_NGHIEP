@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import Login from './components/Login';
 
 //import react router
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Register from './components/Register/register';
 import MainLayout from './components/MainLayout';
 import TestAPI from './components/Demo/testMaiDao';
@@ -20,6 +20,7 @@ import { LoginUser } from './actions/userAction';
 import { ContextApp } from './context/contextApp';
 import LoginAdmin from './components/Admin/Login/LoginAdmin';
 import TatCaSP from './components/Content/GoiYChoBan/TatCaSP';
+import Test from './test';
 
 //style
 

@@ -11,13 +11,11 @@ import {
 	Select,
 } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import styles from './style.module.css';
-import UploadImg from './uploadImg/UploadIMG';
-import SelectDanhMucContainer from '../DanhMuc/SelectDanhMuc/SelectDanhMucContainer';
-import { Editor } from '@tinymce/tinymce-react';
-import tinymce from 'tinymce';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import EditorBase from '../../../../baseComponent/EditorBase';
+import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
+import useProductLogicData from '../../../../hooks/useProductLogicData';
 // import PropTypes from 'prop-types';
 
 const data = [];
@@ -38,16 +36,12 @@ const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
 
-const children = [];
-for (let i = 10; i < 36; i++) {
-	children.push(
-		<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>
-	);
-}
 const text = 'Are you sure to delete this task?';
 function SanPham() {
 	// hooks
 	const [form] = Form.useForm();
+	const {category} = useCategoryLogicData()
+	const {postProduct} = useProductLogicData()
 
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
@@ -65,12 +59,25 @@ function SanPham() {
 	function confirm() {
 		message.info('Clicked on Yes.');
 	}
+
 	const onFinish = (values) => {
-		console.log(values);
+		values['description'] = description;
+		values['image'] = linkFileUtil;
+
+		if(linkFileUtil) {
+			postProduct(values)
+			onReset();
+		} else {
+			message.warn('Thiếu ảnh đi kèm')
+		}
 	};
 
 	const onReset = () => {
 		form.resetFields();
+		setModalVisible(false);
+		setLinkFileUtil('');
+		setDescription('');
+		setFileListUtil([]);
 	};
 
 	const onFill = () => {
@@ -80,6 +87,12 @@ function SanPham() {
 		});
 	};
 	const handleModalAdd = () => {};
+
+	const handleSelect = (optionA, optionB) => {
+		console.log('optionA', optionA); // MongLV log fix bug
+		console.log('optionB', optionB); // MongLV log fix bug
+		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+	}
 
 	function handleChangeSelect(value) {
 		console.log(`selected ${value}`);
@@ -199,22 +212,28 @@ function SanPham() {
 						<Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
 							<Input />
 						</Form.Item>
-						<Form.Item name="image" label="Ảnh sản phẩm" rules={[{ required: true }]}>
+						<Form.Item name="image" label="Ảnh sản phẩm" >
 							<UploadFileView
 								linkFileUtil={linkFileUtil}
-								setLinkFileUtil={setLinkFileUtil}
 								fileListUtil={fileListUtil}
-								setFileListUtil={setLinkFileUtil}
+								setLinkFileUtil={setLinkFileUtil}
+								setFileListUtil={setFileListUtil}
 							/>
 						</Form.Item>
 						<Form.Item name="catalog_id" label="Danh mục" rules={[{ required: true }]}>
 							<Select
-								mode="tags"
-								style={{ width: '100%' }}
-								placeholder="Chọn Danh mục"
-								onChange={handleChangeSelect}
+								showSearch
+								style={{ width: 200 }}
+								placeholder="Search to Select"
+								optionFilterProp="children"
+								filterOption={(input, option) =>
+									option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								}
+								filterSort={handleSelect}
 							>
-								{children}
+								{
+									Object.values(category).map((item) => 	<Select.Option value={item._id}>{item.name}</Select.Option>)
+								}
 							</Select>
 						</Form.Item>
 						<Form.Item name="amount" label="Số lượng" rules={[{ required: true }]}>
@@ -223,14 +242,11 @@ function SanPham() {
 						<Form.Item name="Giá tiền" label="price" rules={[{ required: true }]}>
 							<InputNumber />
 						</Form.Item>
-						<Form.Item
-							name="Chi tiết sản phẩm"
-							label="description"
-							rules={[{ required: true }]}
-						>
-							<EditorBase content={description} setContent={setDescription} />
-						</Form.Item>
-						<EditorBase content={description} setContent={setDescription} />
+						<div style={{margin: 10}}>
+							<ErrorBoundary>
+								<EditorBase content={description} setContent={setDescription} />
+							</ErrorBoundary>
+						</div>
 						<Form.Item {...tailLayout}>
 							<Button type="primary" htmlType="submit">
 								Submit

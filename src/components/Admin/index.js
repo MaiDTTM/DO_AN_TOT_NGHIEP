@@ -4,6 +4,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/
 import MenuAdmin from './menu/MenuAdmin';
 import './style.css';
 import ContentAdmin from './Content/ContentAdmin';
+import useCategoryLogicData from '../../hooks/useCategoryLogicData';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -18,12 +19,21 @@ const objectKey = {
 };
 const { Search } = Input;
 function LayoutAdmin() {
+	// hooks
+	const {getListCategory} = useCategoryLogicData();
+
+	// state
 	const [collapsed, setCollapsed] = useState(false);
 	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
+
 	const toggle = () => {
 		setCollapsed(!collapsed);
 	};
 	const onSearch = (value) => console.log(value);
+
+	React.useEffect(() => {
+		getListCategory()
+	}, [])
 	return (
 		<Layout>
 			<Sider trigger={null} collapsible collapsed={collapsed}>
