@@ -7,16 +7,16 @@ import Slider from './Slider/Slider';
 import DanhMuc from './DanhMuc/DanhMuc';
 import SanPham from './SanPham/SanPham';
 import DonDatHang from './DonDatHang/DonDatHang';
-import HoaDonNhap from './HoaDonNhap/HoaDonNhap';
-import HoaDonXuat from './HoaDonXuat/HoaDonXuat';
+import KhachHang from './KhachHang/KhachHang';
+import CaiDat from './CaiDatTaiKhoan/CaiDat';
 function ContentAdmin(props) {
 	const { checkKey, objectKey } = props;
 	let componentContent;
 	switch (checkKey) {
-		case objectKey.HOME:
+		case objectKey.TRANG_CHU:
 			componentContent = <Home />;
 			break;
-		case objectKey.USER:
+		case objectKey.NHAN_VIEN:
 			componentContent = <User />;
 			break;
 		case objectKey.SLIDER:
@@ -28,14 +28,14 @@ function ContentAdmin(props) {
 		case objectKey.SAN_PHAM:
 			componentContent = <SanPham />;
 			break;
-		case objectKey.DON_DAT_HANG:
+		case objectKey.DON_HANG:
 			componentContent = <DonDatHang />;
 			break;
-		case objectKey.HOA_DON_NHAP:
-			componentContent = <HoaDonNhap />;
+		case objectKey.KHACH_HANG:
+			componentContent = <KhachHang />;
 			break;
-		case objectKey.HOA_DON_XUAT:
-			componentContent = <HoaDonXuat />;
+		case objectKey.CAI_DAT:
+			componentContent = <CaiDat />;
 			break;
 	}
 	return (

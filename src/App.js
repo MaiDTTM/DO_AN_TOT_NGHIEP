@@ -18,6 +18,8 @@ import LienHe from './components/Header/slider/LienHeChungToi/LienHe';
 import { useDispatch } from 'react-redux';
 import { LoginUser } from './actions/userAction';
 import { ContextApp } from './context/contextApp';
+import LoginAdmin from './components/Admin/Login/LoginAdmin';
+import TatCaSP from './components/Content/GoiYChoBan/TatCaSP';
 
 //style
 
@@ -41,12 +43,14 @@ function App() {
 					<Route path="/demo" exact component={TestAPI} />
 					<Route path="/" exact component={MainLayout} />
 					<Route path="/Admin" exact component={LayoutAdmin} />
+					<Route path="/login-admin" exact component={LoginAdmin} />
 					<Route path="/detail/:id" exact component={DetailProduct} />
 					<Route path="/gioithieu" exact component={IntroduceProduct} />
 					<Route path="/buyproduct" exact component={BuyProduct} />
 					<Route path="/cart" exact component={CartProduct} />
 					<Route path="/account" exact component={AccountMe} />
 					<Route path="/lienhe" exact component={LienHe} />
+					<Route path="/tatca" exact component={TatCaSP} />
 				</Switch>
 			</Router>
 		</ContextApp.Provider>

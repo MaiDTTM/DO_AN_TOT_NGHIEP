@@ -1,65 +1,79 @@
-import { Layout, Breadcrumb, Button } from 'antd';
 import React, { useState } from 'react';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import './style.css';
+import { Button, Input, Layout, Avatar } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import MenuAdmin from './menu/MenuAdmin';
-import HeaderAdmin from './Header/HeaderAdmin';
+import './style.css';
 import ContentAdmin from './Content/ContentAdmin';
-// import PropTypes from 'prop-types';
+const { Header, Sider, Content } = Layout;
 
-//const
-const { Header, Content, Footer, Sider } = Layout;
 const objectKey = {
-	HOME: 'Trang chủ',
-	USER: 'Tài khoản',
-	SLIDER: 'Slider',
+	TRANG_CHU: 'Trang chủ',
 	DANH_MUC: 'Danh mục',
 	SAN_PHAM: 'Sản phẩm',
-	DON_DAT_HANG: 'Đơn đặt hàng',
-	HOA_DON_NHAP: 'Hóa đơn nhập',
-	HOA_DON_XUAT: 'Hóa đơn xuất',
+	DON_HANG: 'Đơn hàng',
+	SLIDER: 'Slider',
+	KHACH_HANG: 'Khách hàng',
+	NHAN_VIEN: 'Nhân viên',
+	CAI_DAT: 'Cài đặt tài khoản',
 };
+const { Search } = Input;
 function LayoutAdmin() {
 	const [collapsed, setCollapsed] = useState(false);
-	const [checkKey, setCheckKey] = React.useState(objectKey.HOME);
-	const toggleCollapsed = () => {
-		setCollapsed({
-			collapsed: !collapsed.collapsed,
-		});
+	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
+	const toggle = () => {
+		setCollapsed(!collapsed);
 	};
+	const onSearch = (value) => console.log(value);
 	return (
 		<Layout>
-			<Header>
-				<HeaderAdmin />
-			</Header>
-			<Layout>
-				<Sider trigger={null} collapsible collapsed={collapsed.collapsed}>
-					<MenuAdmin objectKey={objectKey} setCheckKey={setCheckKey} />
-				</Sider>
-				<Content>
-					<Breadcrumb style={{ margin: '16px 0' }}>
-						<Button type="text" onClick={toggleCollapsed} style={{ marginRight: '25px' }}>
-							{React.createElement(
-								collapsed.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-								{
+			<Sider trigger={null} collapsible collapsed={collapsed}>
+				<div className="logo" />
+				<MenuAdmin objectKey={objectKey} setCheckKey={setCheckKey} />
+			</Sider>
+			<Layout className="site-layout">
+				<Header className="site-layout-background" style={{ padding: 0 }}>
+					<div
+						style={{
+							display: 'flex',
+							// marginTop: '25px',
+							justifyContent: 'space-between',
+						}}
+					>
+						{/*<Button type="text" style={{ border: 'none' }} />*/}
+						<div style={{ display: 'flex' }}>
+							<div style={{ padding: '0 10px' }}>
+								{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
 									className: 'trigger',
-									onClick: toggleCollapsed,
-								}
-							)}
-						</Button>
-						<Breadcrumb.Item
-							style={{ color: '#e7210d', fontFamily: "'Montserrat', sans-serif " }}
-						>
-							Admin
-						</Breadcrumb.Item>
-						<Breadcrumb.Item>{checkKey}</Breadcrumb.Item>
-					</Breadcrumb>
-					<div className="site-layout-background" style={{ padding: 24, minHeight: 800 }}>
-						<ContentAdmin checkKey={checkKey} objectKey={objectKey} />
+									onClick: toggle,
+								})}
+							</div>
+							<div>
+								<h1 style={{ color: '#0bb122' }}>CÔNG TY GCB</h1>
+							</div>
+						</div>
+						<Search
+							placeholder="input search text"
+							onSearch={onSearch}
+							enterButton
+							style={{ width: 350, marginTop: '15px' }}
+						/>
+						<div style={{ display: 'flex', marginRight: '30px' }}>
+							<div style={{ marginRight: '10px' }}>
+								<Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+							</div>
+							<div>ĐÀO THỊ THANH MAI</div>
+						</div>
 					</div>
-					<Footer style={{ textAlign: 'center' }}>
-						Ant Design ©2018 Created by Ant UED
-					</Footer>
+				</Header>
+				<Content
+					className="site-layout-background"
+					style={{
+						margin: '24px 16px',
+						padding: 24,
+						minHeight: 280,
+					}}
+				>
+					<ContentAdmin checkKey={checkKey} objectKey={objectKey} />
 				</Content>
 			</Layout>
 		</Layout>

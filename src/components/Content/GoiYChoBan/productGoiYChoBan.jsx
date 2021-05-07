@@ -91,9 +91,11 @@ function ProductListGoiYChoBan({ product }) {
 					</div>
 				</div>
 				<div className={Styles.xem_them}>
-					<Button type="primary" block className={Styles.btn_xem_them}>
-						Xem thêm
-					</Button>
+					<Link to={'/tatca'}>
+						<Button type="primary" block className={Styles.btn_xem_them}>
+							Xem thêm
+						</Button>
+					</Link>
 				</div>
 			</div>
 		</div>

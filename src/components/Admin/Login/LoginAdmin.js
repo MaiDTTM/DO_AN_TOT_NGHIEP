@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox, message as messageAnt } from 'antd';
-// style
-import styles from './index.module.css';
-import logo from '../../img/logotet2019.png';
 import { Link, useHistory } from 'react-router-dom';
+import logo from '../../../img/logotet2019.png';
+import styles from './index.module.css';
+import { Checkbox, message as messageAnt } from 'antd';
+import baseAPI from '../../../axios/baseAPI';
+import { TypeApi } from '../../../util/TypeApi';
+import { LoginUser } from '../../../actions/userAction';
 import { useDispatch } from 'react-redux';
-import baseAPI from '../../axios/baseAPI';
-import { TypeApi } from '../../util/TypeApi';
-import { LoginUser } from '../../actions/userAction';
+import { loginAdmin } from '../../../actions/adminAction';
+// import PropTypes from 'prop-types';
 
 const TypeInput = {
 	user: 'user',
 	password: 'password',
 };
-function Login() {
-	// state
-	const [user, setUser] = useState('');
-	const [password, setPassword] = useState('');
-
+function LoginAdmin() {
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
-
+	const [user, setUser] = useState('');
+	const [password, setPassword] = useState('');
 	// handle
 	const onChangeText = (event, type) => {
 		switch (type) {
@@ -38,10 +36,10 @@ function Login() {
 	const onSave = async () => {
 		const data = { user, password };
 		if (user && password) {
-			const { message, myUser } = await baseAPI.add(`${TypeApi.user}/login`, data);
+			const { message, myUser } = await baseAPI.add(`${TypeApi.admin}/login`, data);
 			if (message === 'SUCCESS') {
-				await dispatch(LoginUser(myUser));
-				history.push('/');
+				await dispatch(loginAdmin(myUser));
+				history.push('/Admin');
 			} else {
 				messageAnt.warn(message);
 			}
@@ -54,12 +52,10 @@ function Login() {
 	return (
 		<div className={styles.dang_nhap}>
 			<div className={styles.herader_dangnhap}>
-				<Link to={'/'}>
-					<img src={logo} />
-				</Link>
+				<img src={logo} />
 				<div className={styles.verticalLine}>
 					<p>
-						<b>Chào mừng bạn quay trở lại</b>
+						<b>Hãy đăng nhập để vào trang quản trị của bạn !</b>
 					</p>
 				</div>
 			</div>
@@ -112,4 +108,8 @@ function Login() {
 	);
 }
 
-export default Login;
+LoginAdmin.propTypes = {};
+
+LoginAdmin.defaultProps = {};
+
+export default LoginAdmin;
