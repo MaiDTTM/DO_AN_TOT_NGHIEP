@@ -126,6 +126,17 @@ function CartProduct() {
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: onSelectChange,
+		getCheckboxProps: (record) => {
+			const isCheck =
+				product[carts[record.key].product_id].amount -
+					product[carts[record.key].product_id].sold ===
+				0;
+			return {
+				disabled: isCheck,
+				checked: !isCheck,
+				name: record.name,
+			};
+		},
 		selections: [
 			Table.SELECTION_ALL,
 			Table.SELECTION_INVERT,
@@ -196,16 +207,28 @@ function CartProduct() {
 		),
 		action: (
 			<div className={Styles.action_item_cart}>
-				<Link to={'/buyproduct'}>
+				{product[item.product_id].amount - product[item.product_id].sold === 0 ? (
 					<Button
 						style={{
-							backgroundColor: '#ee4d2d',
+							backgroundColor: '#bcb2b2',
 							color: '#fff',
 						}}
+						disabled
 					>
-						Mua hàng
+						Đã hết hàng
 					</Button>
-				</Link>
+				) : (
+					<Link to={'/buyproduct'}>
+						<Button
+							style={{
+								backgroundColor: '#ee4d2d',
+								color: '#fff',
+							}}
+						>
+							Mua hàng
+						</Button>
+					</Link>
+				)}
 				<Popconfirm
 					placement="topLeft"
 					title={text}

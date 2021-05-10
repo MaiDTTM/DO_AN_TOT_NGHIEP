@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Button, Modal, Form, Input, Menu, Select, Upload, Table, message } from 'antd';
-import {
-	AppstoreOutlined,
-	MailOutlined,
-	PlusOutlined,
-	SettingOutlined,
-} from '@ant-design/icons';
+import { Button, Modal, Form, Input, Menu, Table, message, Image, Tag } from 'antd';
 import styles from './styles.module.css';
-import { columns, data } from './dataTableProduct/data';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
 import TitleDanhMuc from '../TitleDanhMuc';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import ConvertStringToVND from '../../../../util/ConvertStringToVND';
+import useProductLogicData from '../../../../hooks/useProductLogicData';
 
 const { SubMenu } = Menu;
 // submenu keys of first level
@@ -43,6 +38,7 @@ function DanhMuc() {
 		deleteCategory,
 		updateCategory,
 	} = useCategoryLogicData();
+	const { product } = useProductLogicData();
 
 	// state
 	const [openKeys, setOpenKeys] = React.useState(['sub1']);
@@ -75,6 +71,7 @@ function DanhMuc() {
 				onReset();
 			} else {
 				updateCategory({ ...dataEditCategoryModal, ...values });
+				onReset();
 			}
 		} else {
 			message.warn('Thiếu icon');
@@ -124,6 +121,99 @@ function DanhMuc() {
 			handleAdd={handleAddChildren}
 		/>
 	);
+	const columns = [
+		{
+			title: 'Ảnh',
+			width: 50,
+			dataIndex: 'image',
+			fixed: 'left',
+			align: 'center',
+			render: (image) => (
+				<Image
+					style={{ width: 80, height: 50, objectFit: 'cover' }}
+					src={BASE_URL_IMAGE + image}
+				/>
+			),
+		},
+		{
+			title: 'Tên sản phẩm',
+			width: 200,
+			dataIndex: 'name',
+			key: 'name',
+			align: 'center',
+			render: (name, data) => {
+				return (
+					<>
+						<p style={{ fontSize: 17, fontWeight: 'bold', color: 'green' }}>{name}</p>
+						<i style={{ fontSize: 12, fontWeight: 'bold', color: 'black' }}>
+							(
+							{data.catalog_id &&
+								category[data.catalog_id] &&
+								category[data.catalog_id].name &&
+								category[data.catalog_id].name}
+							)
+						</i>
+					</>
+				);
+			},
+		},
+		{
+			title: 'Giá',
+			dataIndex: 'price',
+			width: 125,
+			key: '1',
+			align: 'center',
+			render: (price) => (
+				<p style={{ fontSize: 14, fontWeight: 'bold', color: 'orange' }}>
+					{ConvertStringToVND(price)}
+				</p>
+			),
+		},
+		{
+			title: 'Số lượng',
+			dataIndex: 'amount',
+			key: '2',
+			align: 'center',
+			width: 80,
+		},
+		{
+			title: 'Đã bán',
+			dataIndex: 'sold',
+			width: 75,
+			key: '3',
+			align: 'center',
+		},
+		{
+			title: 'Trạng thái',
+			dataIndex: 'status',
+			width: 100,
+			key: '4',
+			align: 'center',
+			render: (_, data) => {
+				const isStatus = data.amount - data.sold === 0;
+				const text = isStatus ? 'Hết hàng' : 'Còn hàng';
+				return (
+					<p
+						style={{
+							fontSize: 14,
+							fontWeight: 'bold',
+							color: isStatus ? 'red' : 'green',
+						}}
+					>
+						{text}
+					</p>
+				);
+			},
+		},
+		{
+			title: 'SALE',
+			dataIndex: 'price_seo',
+			width: 75,
+			key: '5',
+			align: 'center',
+			render: (price_seo) => <Tag color="blue">{price_seo}</Tag>,
+		},
+	];
 	return (
 		<div className={styles.from_danh_muc}>
 			<div className={styles.danh_muc}>
@@ -219,13 +309,13 @@ function DanhMuc() {
 			<div className={styles.table_product}>
 				<Table
 					title={() => (
-						<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<div style={{ display: 'flex', justifyContent: 'center', height: 20 }}>
 							<h1>DANH SÁCH SẢN PHẨM THUỘC DANH MỤC</h1>
 						</div>
 					)}
 					columns={columns}
-					dataSource={data}
-					scroll={{ x: 1500, y: 400 }}
+					dataSource={Object.values(product).reverse()}
+					scroll={{ x: 1500, y: 360 }}
 					bordered={true}
 				/>
 			</div>

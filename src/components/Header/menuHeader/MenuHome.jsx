@@ -37,7 +37,10 @@ function MenuHome() {
 	const handleClick = (event) => {
 		switch (event.key) {
 			case 'USER':
-				history.push('/account');
+				history.push('/account?show=1');
+				break;
+			case 'DONHANG':
+				history.push('/account?show=2');
 				break;
 			case 'LOGOUT':
 				localStorage.clear();
@@ -152,7 +155,7 @@ function MenuHome() {
 			<Menu.Item key="USER">
 				<div>Tài khoản</div>
 			</Menu.Item>
-			<Menu.Item key="1">
+			<Menu.Item key="DONHANG">
 				<div>Đơn đặt hàng</div>
 			</Menu.Item>
 			<Menu.Item key="LOGOUT">

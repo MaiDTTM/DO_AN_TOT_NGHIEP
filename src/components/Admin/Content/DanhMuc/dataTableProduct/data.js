@@ -24,8 +24,8 @@ const columns = [
 	{
 		title: 'Số lượng',
 		dataIndex: 'amount',
-		key: '2',
 		width: 150,
+		key: '2',
 		align: 'center',
 	},
 	{
@@ -45,8 +45,8 @@ const columns = [
 	{
 		title: 'Đã bán',
 		dataIndex: 'sold',
-		key: '5',
 		width: 150,
+		key: '5',
 		align: 'center',
 	},
 ];

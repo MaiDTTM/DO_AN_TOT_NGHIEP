@@ -29,7 +29,7 @@
     color: black !important;
 }
 .footer_end{
-    padding-left: 150px;
+    padding-left: 60px;
     padding-top: 5px ;
     display: flex;
     height: 90px;
@@ -37,6 +37,9 @@
 .footer_end_item{
     width: 60%;
     height: 100%;
+}
+.footer_end_item p{
+    margin-bottom: 0px !important;
 }
 .footer_end_item_tow{
     width: 40%;

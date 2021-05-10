@@ -21,6 +21,7 @@ import { ContextApp } from './context/contextApp';
 import LoginAdmin from './components/Admin/Login/LoginAdmin';
 import TatCaSP from './components/Content/GoiYChoBan/TatCaSP';
 import Test from './test';
+import WatchCatagory from './components/AllProduct/WatchCatagory';
 
 //style
 
@@ -43,7 +44,7 @@ function App() {
 					<Route path="/register" exact component={Register} />
 					<Route path="/demo" exact component={TestAPI} />
 					<Route path="/" exact component={MainLayout} />
-					<Route path="/Admin" exact component={LayoutAdmin} />
+					<Route path="/admin" exact component={LayoutAdmin} />
 					<Route path="/login-admin" exact component={LoginAdmin} />
 					<Route path="/detail/:id" exact component={DetailProduct} />
 					<Route path="/gioithieu" exact component={IntroduceProduct} />
@@ -52,6 +53,7 @@ function App() {
 					<Route path="/account" exact component={AccountMe} />
 					<Route path="/lienhe" exact component={LienHe} />
 					<Route path="/tatca" exact component={TatCaSP} />
+					<Route path="/xemtheomenu" exact component={WatchCatagory} />
 				</Switch>
 			</Router>
 		</ContextApp.Provider>

@@ -4,9 +4,24 @@ import { Tabs, List, Avatar, Button, message, Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import style from './style.module.css';
 import reqwest from 'reqwest';
+import logo from '../../../../img/tong_tien.png';
 const { TabPane } = Tabs;
 const fakeDataUrl =
 	'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
+const datatest = [
+	{
+		title: 'Ant Design Title 1',
+	},
+	{
+		title: 'Ant Design Title 2',
+	},
+	{
+		title: 'Ant Design Title 3',
+	},
+	{
+		title: 'Ant Design Title 4',
+	},
+];
 function DonDatHang() {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -45,544 +60,316 @@ function DonDatHang() {
 		<div className={style.purchase_list_page__tabs_container}>
 			<div className={style.card_container}>
 				<Tabs type="card" className={style.tab_ant}>
-					<TabPane tab="Tất cả" key="1" className={style.panel}>
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+					<TabPane tab="Tất cả" key="1">
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
-											<div>
-												<Button style={{ marginRight: '25px' }}>Xem chi tiết</Button>
-											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Chờ lấy hàng
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
-						</div>
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 2</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
-											</div>
-											<div>
-												<Button style={{ marginRight: '25px' }}>Xem chi tiết</Button>
-											</div>
-										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Chờ lấy hàng
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
-										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 					<TabPane tab="Chờ xác nhận" key="2">
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
-											<div>
-												<Button style={{ marginRight: '25px' }}>Xác nhận đơn hàng</Button>
-											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Chờ xác nhận
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>Xác nhận đơn hàng</Button>
+											<Button>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 					<TabPane tab="Chờ lấy hàng" key="3">
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
-											<div>
-												<Button style={{ marginRight: '25px' }}>Xác nhận gửi hàng</Button>
-											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Đang giao
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>Đã chuẩn bị xong hàng</Button>
+											<Button>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 					<TabPane tab="Đang giao" key="4">
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
-											<div>
-												<Button style={{ marginRight: '25px' }}>
-													Xác nhận đã giao hàng thành công
-												</Button>
-											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Đã giao
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>Đã gửi hàng</Button>
+											<Button>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 					<TabPane tab="Đã giao" key="5">
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Đã giao
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>
+												Xác nhận giao hàng thành công
+											</Button>
+											<Button>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 					<TabPane tab="Đã hủy" key="6">
-						<div className={style.panel_item}>
-							<InfiniteScroll
-								initialLoad={false}
-								pageStart={0}
-								loadMore={() => handleInfiniteOnLoad}
-								hasMore={!loading.loading && hasMore.hasMore}
-								useWindow={false}
-							>
-								<List
-									header={<div className={style.header_panel_item}>ĐƠN HÀNG SỐ 1</div>}
-									footer={
-										<div className={style.footer_panel_item}>
-											<div className={style.item_panel_item}>
-												<div style={{ marginRight: '15px' }}>
-													<b>Tổng tiền đơn hàng :</b>
-												</div>
-												<div style={{ color: 'red' }}>100.000 VNĐ</div>
+						<div style={{ marginBottom: 20, border: '1px solid red' }}>
+							<List
+								size="small"
+								header={
+									<div className={style.header_list}>
+										<div className={style.header_don_hang}>Đơn hàng số 1</div>
+										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
+									</div>
+								}
+								footer={
+									<div className={style.footer_list}>
+										<div className={style.footer_list_one}>
+											<div className={style.footer_logo}>
+												<img src={logo} />
 											</div>
+											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+											<span className={style.footer_tien}>
+												30.000<sup>đ</sup>
+											</span>
 										</div>
-									}
-									itemLayout="horizontal"
-									dataSource={data}
-									renderItem={(item) => (
-										<List.Item
-											actions={[
-												<div style={{ display: 'flex' }}>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Giá :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 150 }}>
-														<div>
-															<b>Số lượng :</b> 2
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Tổng tiền :</b> 100.000 VNĐ
-														</div>
-													</div>
-													<div style={{ width: 200 }}>
-														<div>
-															<b>Trạng thái :</b> Đã giao
-														</div>
-													</div>
-												</div>,
-											]}
-										>
-											<List.Item.Meta
-												avatar={
-													<Avatar
-														src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-														style={{ width: '50px', height: '50px' }}
-													/>
-												}
-												title={
-													<div style={{ paddingTop: '15px', fontSize: '16px' }}>
-														{item.name.last}
-													</div>
-												}
-											/>
-										</List.Item>
-									)}
-								>
-									{loading.loading && hasMore.hasMore && (
-										<div className="demo-loading-container">
-											<Spin />
+										<div className={style.footer_action}>
+											<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
 										</div>
-									)}
-								</List>
-							</InfiniteScroll>
+									</div>
+								}
+								bordered
+								dataSource={datatest}
+								renderItem={(item) => (
+									<List.Item
+										actions={[
+											<div style={{ textDecoration: 'line-through' }}>
+												115.000<sup>đ</sup>
+											</div>,
+											<div style={{ color: ' #f05d40' }}>
+												59.000<sup>đ</sup>
+											</div>,
+										]}
+									>
+										<List.Item.Meta
+											avatar={
+												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+											}
+											title={<a href="https://ant.design">{item.title}</a>}
+											description={<div>x 1</div>}
+										/>
+									</List.Item>
+								)}
+							/>
 						</div>
 					</TabPane>
 				</Tabs>

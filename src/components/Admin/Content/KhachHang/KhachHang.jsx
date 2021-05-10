@@ -1,8 +1,10 @@
-import { Button, Table, Modal, Form, Popconfirm, message, Switch } from 'antd';
+import { Button, Table, Modal, Form, Popconfirm, message, Switch, Image } from 'antd';
 import React, { useState } from 'react';
 import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 // import PropTypes from 'prop-types';
 
 // const
@@ -14,34 +16,31 @@ const layout = {
 		span: 19,
 	},
 };
-const dataSource = [
-	{
-		key: '1',
-		name: 'Mike',
-		age: 32,
-		address: '10 Downing Street',
-	},
-	{
-		key: '2',
-		name: 'John',
-		age: 42,
-		address: '10 Downing Street',
-	},
-];
 function KhachHang() {
 	const [form2] = Form.useForm();
-	const dispatch = useDispatch();
 	const [visibleCopy, setVisibleCopy] = useState(false);
-	const [columnsTable, setColumnsTable] = React.useState([]);
 	const [status, setStatus] = useState(true);
-	const [keyEdit, setKeyEdit] = React.useState('');
-	const [previewVisible, setPreviewVisible] = useState(false);
 	const [modal1Visible, setModal1Visible] = React.useState(false);
-
+	const [dataCustomerEdit, setDataCustomerEdit] = useState(null);
+	const { customer, updateCustomer } = useCustomerLogicData();
 	const columns = [
+		{
+			title: 'Ảnh đại diện',
+			dataIndex: 'image',
+			key: 'image',
+			fixed: 'left',
+			width: 120,
+			render: (image) => (
+				<Image
+					style={{ width: 80, height: 50, objectFit: 'cover' }}
+					src={BASE_URL_IMAGE + image}
+				/>
+			),
+		},
 		{
 			title: 'Name',
 			dataIndex: 'name',
+			width: 220,
 			filters: [
 				{
 					text: 'Joe',
@@ -74,6 +73,7 @@ function KhachHang() {
 			title: 'Email',
 			dataIndex: 'email',
 			filters: [],
+			width: 250,
 			onFilter: (value, record) => record.email.indexOf(value) === 0,
 			sorter: (a, b) => a.email.length - b.email.length,
 			sortDirections: ['descend'],
@@ -87,6 +87,7 @@ function KhachHang() {
 		{
 			title: 'Gender',
 			dataIndex: 'gender',
+			width: 100,
 			filters: [
 				{
 					text: 'Nam',
@@ -135,22 +136,31 @@ function KhachHang() {
 			sortDirections: ['descend', 'ascend'],
 		},
 		{
-			title: 'Ảnh đại diện',
-			dataIndex: 'image',
+			title: 'Mật khẩu',
+			dataIndex: 'password',
 		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
+			render: (status) => {
+				if (status === true) {
+					return <div>Đang hoạt động</div>;
+				} else if (status === false) {
+					return <div>Tài khoản đã bị khóa</div>;
+				}
+			},
 		},
 		{
 			title: 'Action',
 			dataIndex: '',
-			key: 'x',
+			key: 'action',
+			fixed: 'right',
+			width: 80,
 			render: (record) => {
 				return (
 					<div style={{ display: 'flex', justifyContent: 'space-around' }}>
 						<Button
-							onClick={() => handleEdit(true, record._id)}
+							onClick={() => handleEdit(record)}
 							type="text"
 							style={{ color: '#4cd3d7' }}
 						>
@@ -171,25 +181,37 @@ function KhachHang() {
 			},
 		},
 	];
-
-	const handleDelete = () => {};
-	const handleEdit = (modal1Visible, key) => {
-		setKeyEdit(key);
-		setModal1Visible(modal1Visible);
+	const PassDefault = '12345@2021';
+	const handleDelete = (record) => {};
+	const handleEdit = (record) => {
+		setModal1Visible(true);
+		setDataCustomerEdit(record);
+		form2.setFieldsValue({ ...record });
 	};
-	const onFinishEdit = async (values) => {};
+	const onFinishEdit = (values) => {
+		updateCustomer({ ...dataCustomerEdit, ...values });
+		// handleSwitch();
+		setModal1Visible(false);
+	};
 	const handleSwitch = (checked) => {
-		console.log('checked', checked); // MongLV log fix bug
 		form2.setFieldsValue({
 			status: checked,
 		});
+	};
+	const handleResetPass = () => {
+		form2.setFieldsValue({
+			password: PassDefault,
+		});
+		setVisibleCopy(!visibleCopy);
+		message.success('Đã Reset');
 	};
 	//func
 	function onChange(pagination, filters, sorter, extra) {
 		console.log('params', pagination, filters, sorter, extra);
 	}
+
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column' }}>
+		<div style={{ display: 'flex', flexDirection: 'column', minHeight: 508 }}>
 			<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 				{/*modal edit*/}
 				<Modal
@@ -219,17 +241,17 @@ function KhachHang() {
 								title="Bạn muốn reset lại mật khẩu ?"
 								okText="Yes"
 								cancelText="No"
-								// onConfirm={handleResetPass}
+								onConfirm={handleResetPass}
 							>
 								<Button type={'danger'}>Reset</Button>
 							</Popconfirm>{' '}
 							{visibleCopy && (
-								<CopyToClipboard>
+								<CopyToClipboard text={PassDefault}>
 									<Button
 										type={'default'}
 										onClick={() => message.success('Copy thành công')}
 									>
-										<CopyOutlined />
+										{PassDefault} <CopyOutlined />
 									</Button>
 								</CopyToClipboard>
 							)}
@@ -253,9 +275,10 @@ function KhachHang() {
 				<Table
 					columns={columns}
 					// dataSource={columnsTable}
-					dataSource={dataSource}
+					dataSource={Object.values(customer).reverse()}
 					onChange={onChange}
 					style={{ marginTop: '20px' }}
+					scroll={{ x: 1500, y: 420 }}
 				/>
 			</div>
 		</div>

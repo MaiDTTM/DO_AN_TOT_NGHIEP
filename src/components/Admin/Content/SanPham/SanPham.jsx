@@ -9,6 +9,9 @@ import {
 	InputNumber,
 	Form,
 	Select,
+	Avatar,
+	Image,
+	Tag,
 } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
@@ -16,6 +19,8 @@ import EditorBase from '../../../../baseComponent/EditorBase';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 // import PropTypes from 'prop-types';
 
 const data = [];
@@ -36,39 +41,61 @@ const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
 
-const text = 'Are you sure to delete this task?';
+const text = 'Bạn chắc chắn với thao tác này ?';
+let dataSale = [];
+for (let i = 1; i <= 100; i++) {
+	dataSale.push(`${i} %`);
+}
+
 function SanPham() {
 	// hooks
 	const [form] = Form.useForm();
-	const {category} = useCategoryLogicData()
-	const {postProduct} = useProductLogicData()
-
+	const { category } = useCategoryLogicData();
+	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [description, setDescription] = useState('');
+	const [dataProductEdit, setDataProductEdit] = useState(null);
 
+	// handle func
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
 	};
-	const ModalVisible1 = (modalVisible1) => {
-		setModalVisible(modalVisible1);
+
+	const handleEditProduct = (item) => {
+		setDataProductEdit(item);
+		setModalVisible(true);
+		form.setFieldsValue({ ...item });
+		setLinkFileUtil(item.image);
+		setFileListUtil([
+			{
+				uid: item._id,
+				name: item.image,
+				status: 'done',
+				url: BASE_URL_IMAGE + item.image,
+			},
+		]);
 	};
-	//function
-	function confirm() {
-		message.info('Clicked on Yes.');
-	}
+
+	const confirm = (id) => {
+		id && deleteProduct(id);
+	};
 
 	const onFinish = (values) => {
 		values['description'] = description;
 		values['image'] = linkFileUtil;
 
-		if(linkFileUtil) {
-			postProduct(values)
+		if (linkFileUtil) {
+			if (!dataProductEdit) {
+				postProduct(values);
+			} else {
+				updateProduct({ ...dataProductEdit, ...values });
+			}
 			onReset();
 		} else {
-			message.warn('Thiếu ảnh đi kèm')
+			message.warn('Thiếu ảnh đi kèm');
 		}
 	};
 
@@ -78,41 +105,54 @@ function SanPham() {
 		setLinkFileUtil('');
 		setDescription('');
 		setFileListUtil([]);
+		setDataProductEdit(null);
 	};
-
-	const onFill = () => {
-		form.setFieldsValue({
-			note: 'Hello world!',
-			gender: 'male',
-		});
-	};
-	const handleModalAdd = () => {};
 
 	const handleSelect = (optionA, optionB) => {
-		console.log('optionA', optionA); // MongLV log fix bug
-		console.log('optionB', optionB); // MongLV log fix bug
-		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-	}
-
-	function handleChangeSelect(value) {
-		console.log(`selected ${value}`);
-	}
+		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase());
+	};
 
 	const columns = [
 		{
 			title: 'Ảnh',
-			width: 80,
+			width: 100,
 			dataIndex: 'image',
+			render: (image) => (
+				<Image
+					style={{ width: 80, height: 50, objectFit: 'cover' }}
+					src={BASE_URL_IMAGE + image}
+				/>
+			),
 		},
 		{
 			title: 'Tên sản phẩm',
 			width: 200,
 			dataIndex: 'name',
+			render: (name, data) => {
+				return (
+					<>
+						<p style={{ fontSize: 17, fontWeight: 'bold', color: 'green' }}>{name}</p>
+						<i style={{ fontSize: 12, fontWeight: 'bold', color: 'black' }}>
+							(
+							{data.catalog_id &&
+								category[data.catalog_id] &&
+								category[data.catalog_id].name &&
+								category[data.catalog_id].name}
+							)
+						</i>
+					</>
+				);
+			},
 		},
 		{
 			title: 'Giá',
 			dataIndex: 'price',
-			width: 100,
+			width: 125,
+			render: (price) => (
+				<p style={{ fontSize: 14, fontWeight: 'bold', color: 'orange' }}>
+					{ConvertStringToVND(price)}
+				</p>
+			),
 		},
 		{
 			title: 'Số lượng',
@@ -120,35 +160,51 @@ function SanPham() {
 			width: 80,
 		},
 		{
-			title: 'Trạng thái',
-			dataIndex: 'status',
-			width: 150,
-		},
-		{
-			title: 'Giá sale',
-			dataIndex: 'price_seo',
-			width: 150,
-		},
-		{
 			title: 'Đã bán',
 			dataIndex: 'sold',
+			width: 75,
+		},
+		{
+			title: 'Trạng thái',
+			dataIndex: 'status',
 			width: 100,
+			render: (_, data) => {
+				const isStatus = data.amount - data.sold === 0;
+				const text = isStatus ? 'Hết hàng' : 'Còn hàng';
+				return (
+					<p
+						style={{
+							fontSize: 14,
+							fontWeight: 'bold',
+							color: isStatus ? 'red' : 'green',
+						}}
+					>
+						{text}
+					</p>
+				);
+			},
+		},
+		{
+			title: 'SALE',
+			dataIndex: 'price_seo',
+			width: 75,
+			render: (price_seo) => <Tag color="blue">{price_seo}</Tag>,
 		},
 		{
 			title: 'Hành động',
 			width: 100,
-			render: () => (
+			render: (_, data) => (
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<Button
 						type="text"
 						icon={<EditOutlined />}
 						style={{ color: '#4cd3d7' }}
-						onClick={() => ModalVisible1(true)}
+						onClick={() => handleEditProduct(data)}
 					/>
 					<Popconfirm
 						placement="top"
 						title={text}
-						onConfirm={confirm}
+						onConfirm={() => confirm(data._id)}
 						okText="Yes"
 						cancelText="No"
 					>
@@ -212,7 +268,7 @@ function SanPham() {
 						<Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
 							<Input />
 						</Form.Item>
-						<Form.Item name="image" label="Ảnh sản phẩm" >
+						<Form.Item name="image" label="Ảnh sản phẩm">
 							<UploadFileView
 								linkFileUtil={linkFileUtil}
 								fileListUtil={fileListUtil}
@@ -231,18 +287,34 @@ function SanPham() {
 								}
 								filterSort={handleSelect}
 							>
-								{
-									Object.values(category).map((item) => 	<Select.Option value={item._id}>{item.name}</Select.Option>)
-								}
+								{Object.values(category).map((item) => (
+									<Select.Option value={item._id}>{item.name}</Select.Option>
+								))}
 							</Select>
 						</Form.Item>
 						<Form.Item name="amount" label="Số lượng" rules={[{ required: true }]}>
 							<InputNumber />
 						</Form.Item>
-						<Form.Item name="Giá tiền" label="price" rules={[{ required: true }]}>
+						<Form.Item name="price" label="Giá tiền" rules={[{ required: true }]}>
 							<InputNumber />
 						</Form.Item>
-						<div style={{margin: 10}}>
+						<Form.Item name="price_seo" label="SALE sản phẩm">
+							<Select
+								showSearch
+								style={{ width: 200 }}
+								placeholder="Chọn % giảm giá"
+								optionFilterProp="children"
+								filterOption={(input, option) =>
+									option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								}
+								filterSort={handleSelect}
+							>
+								{dataSale.map((item) => (
+									<Select.Option value={item}>{item}</Select.Option>
+								))}
+							</Select>
+						</Form.Item>
+						<div style={{ margin: 10 }}>
 							<ErrorBoundary>
 								<EditorBase content={description} setContent={setDescription} />
 							</ErrorBoundary>
@@ -258,7 +330,7 @@ function SanPham() {
 			<div style={{ border: '1px solid red' }}>
 				<Table
 					columns={columns}
-					dataSource={data}
+					dataSource={Object.values(product).reverse()}
 					pagination={{ pageSize: 50 }}
 					scroll={{ y: 380 }}
 					bordered={true}

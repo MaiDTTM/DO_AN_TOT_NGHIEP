@@ -24,7 +24,17 @@ function useCartLogicData() {
 		const data = await baseAPI.getAll(TypeApi.cart, dataPrams);
 		dispatch({ type: TYPE_ACTION.CART.GET_ALL_CART, payload: { data } });
 	};
-	return { carts, deleteCart, getListCart };
+	const updateCart = async (obj = {}) => {
+		const { message: messageAPI, data } = await baseAPI.update(
+			`${TypeApi.cart}/${obj._id}`,
+			obj
+		);
+		if (messageAPI === 'SUCCESS') {
+			carts[obj._id] = data;
+			dispatch({ type: TYPE_ACTION.CART.GET_ALL_CART, payload: { ...carts } });
+		} else message.warn('Lỗi không cập nhật được');
+	};
+	return { carts, deleteCart, getListCart, updateCart };
 }
 
 export default useCartLogicData;

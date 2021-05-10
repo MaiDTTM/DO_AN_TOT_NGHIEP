@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Form,
+	Image,
 	Input,
 	InputNumber,
 	message,
@@ -9,35 +10,12 @@ import {
 	Popconfirm,
 	Table,
 	Tag,
-	Upload,
 } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import ImgCrop from 'antd-img-crop';
+import UploadFileView from '../../../../baseComponent/UploadFileView';
+import useSliderLogicData from '../../../../hooks/useSliderLogicData';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 // import PropTypes from 'prop-types';
-
-const data = [
-	{
-		key: '1',
-		name: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-		tags: ['nice', 'developer'],
-	},
-	{
-		key: '2',
-		name: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		tags: ['loser'],
-	},
-	{
-		key: '3',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sidney No. 1 Lake Park',
-		tags: ['cool', 'teacher'],
-	},
-];
 const layout = {
 	labelCol: { span: 6 },
 	wrapperCol: { span: 18 },
@@ -50,19 +28,22 @@ function Slider() {
 	const [formEdit] = Form.useForm();
 	const [modalVisible, setModalVisible] = useState(false);
 	const [modalVisible1, setModalVisible1] = useState(false);
-	const [fileList, setFileList] = useState([
-		{
-			uid: '-1',
-			name: 'image.png',
-			status: 'done',
-			url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-		},
-	]);
+	const [linkFileUtil, setLinkFileUtil] = useState('');
+	const [fileListUtil, setFileListUtil] = useState([]);
+	const [dataSlidertEdit, setDataSlidertEdit] = useState(null);
+	const { slider, deleteSlider, postSlider, updateSlider } = useSliderLogicData();
 	const columns = [
 		{
 			title: 'Hình ảnh',
 			dataIndex: 'image_link',
 			key: 'image_link',
+			width: 200,
+			render: (image_link) => (
+				<Image
+					style={{ width: 168, height: 95, objectFit: 'cover' }}
+					src={BASE_URL_IMAGE + image_link}
+				/>
+			),
 		},
 		{
 			title: 'Tên',
@@ -73,12 +54,13 @@ function Slider() {
 			title: 'Vị trí',
 			dataIndex: 'index',
 			key: 'index',
+			width: 100,
 			return: () => <Tag color="cyan-inverse">1</Tag>,
 		},
 		{
-			title: 'Liên kết',
-			dataIndex: 'address',
-			key: 'address',
+			title: 'Mô tả',
+			dataIndex: 'destination',
+			key: 'destination',
 		},
 		{
 			title: 'Action',
@@ -90,11 +72,11 @@ function Slider() {
 						type="text"
 						style={{ color: '#4cd3d7' }}
 						icon={<EditOutlined />}
-						onClick={() => ModalVisible1(true)}
+						onClick={() => ModalVisible1(record)}
 					/>
 					<Popconfirm
 						title="Are you sure to delete this task?"
-						onConfirm={confirm}
+						onConfirm={() => confirm(record._id)}
 						onCancel={cancel}
 						okText="Yes"
 						cancelText="No"
@@ -105,61 +87,90 @@ function Slider() {
 			),
 		},
 	];
-	function confirm(e) {
-		console.log(e);
-		message.success('Click on Yes');
+	function confirm(id) {
+		id && deleteSlider(id);
 	}
-
 	function cancel(e) {
 		console.log(e);
 		message.error('Click on No');
 	}
-	const ModalVisible1 = (modalVisible1) => {
-		setModalVisible1(modalVisible1);
+	const ModalVisible1 = (record) => {
+		setModalVisible1(true);
+		setDataSlidertEdit(record);
+		formEdit.setFieldsValue({ ...record });
+		setLinkFileUtil(record.image_link);
+		setFileListUtil([
+			{
+				uid: record._id,
+				name: record.image_link,
+				status: 'done',
+				url: BASE_URL_IMAGE + record.image_link,
+			},
+		]);
 	};
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
 	};
 	const onFinishAdd = (values) => {
-		console.log(values);
+		values['image_link'] = linkFileUtil;
+		let isIndex = false;
+		Object.values(slider).map((item) => item.index === values.index && (isIndex = true));
+		if (!isIndex) {
+			if (linkFileUtil) {
+				postSlider(values);
+				onReset();
+			} else {
+				message.warn('Thiếu ảnh đi kèm');
+			}
+		} else {
+			message.warn('Vị trí đã tồn tại');
+		}
 	};
 	const onFinishEdit = (values) => {
-		console.log(values);
+		values['image_link'] = linkFileUtil;
+		let isIndex = false;
+		Object.values(slider).map((item) => item.index === values.index && (isIndex = true));
+		if (!isIndex) {
+			if (linkFileUtil) {
+				updateSlider({ ...dataSlidertEdit, ...values });
+				onReset();
+			} else {
+				message.warn('Thiếu ảnh đi kèm');
+			}
+		} else {
+			message.warn('Vị trí đã tồn tại');
+		}
 	};
 
 	const onReset = () => {
 		form.resetFields();
-	};
-	const onChange = ({ fileList: newFileList }) => {
-		setFileList(newFileList);
+		setLinkFileUtil('');
+		setFileListUtil([]);
+		setModalVisible(false);
+		setModalVisible1(false);
 	};
 	function onChangeInput(value) {
 		console.log('changed', value);
 	}
-	const onPreview = async (file) => {
-		let src = file.url;
-		if (!src) {
-			src = await new Promise((resolve) => {
-				const reader = new FileReader();
-				reader.readAsDataURL(file.originFileObj);
-				reader.onload = () => resolve(reader.result);
-			});
-		}
-		const image = new Image();
-		image.src = src;
-		const imgWindow = window.open(src);
-		imgWindow.document.write(image.outerHTML);
-	};
 	return (
 		<div>
 			<Button
-				style={{ marginBottom: 15, backgroundColor: '#ec6342', color: '#fff' }}
+				style={{
+					marginBottom: 15,
+					backgroundColor: '#ec6342',
+					color: '#fff',
+					borderRadius: 15,
+				}}
 				onClick={() => ModalVisible(true)}
 			>
 				Thêm slider
 			</Button>
 			<div style={{ height: 450 }}>
-				<Table columns={columns} dataSource={data} />
+				<Table
+					columns={columns}
+					dataSource={Object.values(slider).reverse()}
+					scroll={{ y: 380 }}
+				/>
 			</div>
 			{/*modal them*/}
 			<Modal
@@ -171,27 +182,28 @@ function Slider() {
 				centered
 				visible={modalVisible}
 				footer={null}
-				onCancel={() => setModalVisible(false)}
+				onCancel={() => {
+					setModalVisible(false);
+					onReset();
+				}}
 			>
 				<Form {...layout} form={form} name="control-hooks" onFinish={onFinishAdd}>
-					<Form.Item name="image_link" label="Ảnh :" rules={[{ required: true }]}>
-						<ImgCrop rotate>
-							<Upload
-								action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-								listType="picture-card"
-								fileList={fileList}
-								onChange={onChange}
-								onPreview={onPreview}
-							>
-								{fileList.length < 5 && '+ Upload'}
-							</Upload>
-						</ImgCrop>
+					<Form.Item name="image_link" label="Ảnh :">
+						<UploadFileView
+							linkFileUtil={linkFileUtil}
+							fileListUtil={fileListUtil}
+							setLinkFileUtil={setLinkFileUtil}
+							setFileListUtil={setFileListUtil}
+						/>
 					</Form.Item>
 					<Form.Item name="name" label="Tên slider :" rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
 					<Form.Item name="index" label="Vị trí :" rules={[{ required: true }]}>
-						<InputNumber min={1} max={10} defaultValue={3} onChange={onChangeInput} />
+						<InputNumber min={1} max={10} onChange={onChangeInput} />
+					</Form.Item>
+					<Form.Item name="destination" label="Mô tả :">
+						<Input />
 					</Form.Item>
 					<Form.Item {...tailLayout}>
 						<Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>
@@ -216,24 +228,22 @@ function Slider() {
 				onCancel={() => setModalVisible1(false)}
 			>
 				<Form {...layout} form={formEdit} name="control-hooks" onFinish={onFinishEdit}>
-					<Form.Item name="image_link" label="Ảnh :" rules={[{ required: true }]}>
-						<ImgCrop rotate>
-							<Upload
-								action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-								listType="picture-card"
-								fileList={fileList}
-								onChange={onChange}
-								onPreview={onPreview}
-							>
-								{fileList.length < 5 && '+ Upload'}
-							</Upload>
-						</ImgCrop>
+					<Form.Item name="image_link" label="Ảnh :">
+						<UploadFileView
+							linkFileUtil={linkFileUtil}
+							fileListUtil={fileListUtil}
+							setLinkFileUtil={setLinkFileUtil}
+							setFileListUtil={setFileListUtil}
+						/>
 					</Form.Item>
 					<Form.Item name="name" label="Tên slider :" rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
 					<Form.Item name="index" label="Vị trí :" rules={[{ required: true }]}>
-						<InputNumber min={1} max={10} defaultValue={3} onChange={onChangeInput} />
+						<InputNumber min={1} max={10} onChange={onChangeInput} />
+					</Form.Item>
+					<Form.Item name="destination" label="Mô tả :">
+						<Input />
 					</Form.Item>
 					<Form.Item {...tailLayout}>
 						<Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>

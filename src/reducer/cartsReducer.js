@@ -9,7 +9,7 @@ const cartsReducer = (carts = {}, action) => {
 		case TYPE_ACTION.CART.DELETE_CART:
 			return action.payload.data;
 		case TYPE_ACTION.CART.EDIT_CART:
-			return carts;
+			return action.payload.data;
 		default:
 			return carts;
 	}

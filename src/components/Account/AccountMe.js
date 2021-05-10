@@ -15,24 +15,28 @@ import DonHang from './DonHang/DonHang';
 import Chung from '../Header/Chung';
 import { useSelector } from 'react-redux';
 import { BASE_URL_IMAGE } from '../../util/TypeApi';
+import useQuery from '../../hooks/useQuery';
 // import PropTypes from 'prop-types';
-const Style = {
-	width: '100%',
-	height: '60px',
-	display: 'flex',
-	justifyContent: 'center',
-	backgroundColor: '#ea2190',
-	float: 'left',
-};
+
 function AccountMe() {
 	var slideIndex;
+
+	// hooks
+	const query = useQuery();
 	const dataMyUser = useSelector((state) => state.myUser);
+
+	// state
 	const [disabled, setDisabled] = React.useState(true);
+
 	React.useEffect(() => {
 		document.getElementById('li_1').style.backgroundColor = '#93d4e5';
 		document.getElementById('li_2').style.backgroundColor = '#ffffff';
 		document.getElementById('chu_y').style.display = 'none';
 	}, []);
+	React.useEffect(() => {
+		query.get('show') && currentDiv(Number(query.get('show')));
+	}, [query]);
+
 	const currentDiv = (n) => {
 		if (n === 1) {
 			setDisabled(true);

@@ -5,6 +5,9 @@ import MenuAdmin from './menu/MenuAdmin';
 import './style.css';
 import ContentAdmin from './Content/ContentAdmin';
 import useCategoryLogicData from '../../hooks/useCategoryLogicData';
+import useProductLogicData from '../../hooks/useProductLogicData';
+import useSliderLogicData from '../../hooks/useSliderLogicData';
+import useCustomerLogicData from '../../hooks/useCustomerLogicData';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -20,8 +23,10 @@ const objectKey = {
 const { Search } = Input;
 function LayoutAdmin() {
 	// hooks
-	const {getListCategory} = useCategoryLogicData();
-
+	const { getListCategory } = useCategoryLogicData();
+	const { getListProduct } = useProductLogicData();
+	const { getListSlider } = useSliderLogicData();
+	const { getListCustomer } = useCustomerLogicData();
 	// state
 	const [collapsed, setCollapsed] = useState(false);
 	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
@@ -32,8 +37,11 @@ function LayoutAdmin() {
 	const onSearch = (value) => console.log(value);
 
 	React.useEffect(() => {
-		getListCategory()
-	}, [])
+		getListCategory();
+		getListProduct();
+		getListSlider();
+		getListCustomer();
+	}, []);
 	return (
 		<Layout>
 			<Sider trigger={null} collapsible collapsed={collapsed}>

@@ -14,7 +14,6 @@ function useCategoryLogicData() {
 	// func
 	const getListCategory = async (dataPrams = {}) => {
 		const data = await baseAPI.getAll(TypeApi.catalog, dataPrams);
-		debugger; // MongLV
 		dispatch({ type: TYPE_ACTION.CATEGORY.GET_LIST, payload: { data } });
 	};
 	const postCategory = async (dataPrams = {}) => {

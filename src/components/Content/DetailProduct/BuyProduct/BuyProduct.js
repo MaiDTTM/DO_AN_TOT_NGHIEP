@@ -5,12 +5,14 @@ import Styles from './style.module.scss';
 import logo from '../../../../img/logo-gcb.jpg';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select, Radio, Modal } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import useCartLogicData from '../../../../hooks/useCartLogicData';
 import { useSelector } from 'react-redux';
 import { ContextApp } from '../../../../context/contextApp';
+import ConvertStringToVND from '../../../../util/ConvertStringToVND';
+import useTransactionData from '../../../../hooks/useTransactionData';
 const { TextArea } = Input;
 const { Option } = Select;
 const layout = {
@@ -52,17 +54,20 @@ const columns = [
 		title: 'Action',
 		key: 'operation',
 		fixed: 'right',
+		dataIndex: 'action',
 		width: 80,
-		render: () => <a>action</a>,
 	},
 ];
 
 const data = [];
 const styleInput = { width: '380px' };
+
 function BuyProduct() {
 	// hooks
 	const { product, getListProduct } = useProductLogicData();
-	const { carts, getListCart } = useCartLogicData();
+	const { carts, getListCart, updateCart } = useCartLogicData();
+	const { postTransaction } = useTransactionData();
+	const history = useHistory();
 	const [form] = Form.useForm();
 	const myUser = useSelector((state) => state['myUser']);
 	const { selectedRowKeys, setSelectedRowKeys } = useContext(ContextApp);
@@ -72,19 +77,43 @@ function BuyProduct() {
 	const [dataTable, setDataTable] = React.useState([]);
 
 	// handle func
-	const onFinish = (values) => {
-		// console.log('Success:', values);
+
+	const handleChangeAmount = (value, data) => {
+		updateCart({
+			_id: data._id,
+			amount: value,
+		});
 	};
-	const handleChangeAmount = (value) => {
-		console.log('changed', value);
+	const callBack = () => {
+		history.push('/account?show=2');
 	};
 
+	const onFinish = (values) => {
+		values['user_id'] = myUser._id;
+		values['carts_id'] = selectedRowKeys;
+		values['message'] = values['message'] ? values['message'] : '';
+		postTransaction(values, callBack);
+	};
 	const onFinishFailed = (errorInfo) => {
 		// console.log('Failed:', errorInfo);
 	};
-	function setModalVisible(modal2Visible) {
-		setModal2Visible({ modal2Visible });
-	}
+	const setModalVisible = (modal2Visible) => {
+		setModal2Visible(modal2Visible);
+	};
+	const handleSumMoney = () => {
+		let sumMoney = 0;
+		Object.values(selectedRowKeys).length > 0 &&
+			Object.values(selectedRowKeys).map(
+				(item) =>
+					(sumMoney =
+						sumMoney + product[carts[item].product_id].price * carts[item].amount)
+			);
+		return ConvertStringToVND(sumMoney);
+	};
+	const handleDeleteCart = (idDelete) => {
+		const result = selectedRowKeys.filter((id) => id !== idDelete);
+		setSelectedRowKeys(result);
+	};
 
 	// Vòng đời
 	React.useEffect(() => {
@@ -112,20 +141,22 @@ function BuyProduct() {
 				name: <div>{product[carts[idCart].product_id].name}</div>,
 				amount: (
 					<InputNumber
-						min={0}
+						min={1}
 						max={100}
 						// value={carts[idCart].amount}
 						defaultValue={carts[idCart].amount}
-						onChange={handleChangeAmount}
+						onChange={(value) => handleChangeAmount(value, carts[idCart])}
 					/>
 				),
 				price: (
 					<div>
-						{(product[carts[idCart].product_id].price * carts[idCart].amount * 1000)
-							.toString()
-							.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+						{carts[idCart].amount &&
+							(product[carts[idCart].product_id].price * carts[idCart].amount * 1000)
+								.toString()
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
 					</div>
 				),
+				action: <Button onClick={() => handleDeleteCart(idCart)}>Xóa</Button>,
 			}));
 			setDataTable(arrTable);
 		}
@@ -142,12 +173,7 @@ function BuyProduct() {
 						>
 							<img src={logo} style={{ width: '55%', height: '100%' }} />
 						</Button>
-						<Modal
-							centered
-							visible={modal2Visible.modal2Visible}
-							footer={null}
-							closable={false}
-						>
+						<Modal centered visible={modal2Visible} footer={null} closable={false}>
 							<span style={{ color: '#6dc6bf', marginLeft: '110px', fontSize: '18px' }}>
 								<ExclamationCircleOutlined
 									style={{ color: 'green', marginRight: '10px' }}
@@ -276,9 +302,8 @@ function BuyProduct() {
 									rules={[{ required: true, message: 'Please input your phone number!' }]}
 								>
 									<Input
-										style={{ width: '100%' }}
+										style={{ width: '100%', ...styleInput }}
 										placeholder="Số điện thoại giao hàng"
-										style={styleInput}
 									/>
 								</Form.Item>
 								<Form.Item
@@ -296,67 +321,80 @@ function BuyProduct() {
 								>
 									<Input placeholder="Email" style={styleInput} disabled />
 								</Form.Item>
-								<Form.Item name="diachi">
-									<div style={{ width: '400px', display: 'flex' }}>
-										<div style={{ width: '190px' }}>
-											<Form.Item name="tinhthanhpho" rules={[{ required: true }]}>
-												<Select
-													placeholder="Select a option and change input text above"
-													// onChange={this.onGenderChange}
-													allowClear
-													defaultValue="defaule"
-												>
-													<Option value="defaule">Tỉnh / Thành phố</Option>
-													<Option value="HaNoi">Hà Nội</Option>
-													<Option value="HungYen">Hưng Yên</Option>
-													<Option value="HaiDuong">Hải Dương</Option>
-												</Select>
-											</Form.Item>
-										</div>
-										<div style={{ width: '190px' }}>
-											<Form.Item name="quanhuyen" rules={[{ required: true }]}>
-												<Select
-													placeholder="Select a option and change input text above"
-													// onChange={this.onGenderChange}
-													allowClear
-													defaultValue="defaule"
-												>
-													<Option value="defaule">Quận / Huyện </Option>
-													<Option value="HaNoi">Hà Nội</Option>
-													<Option value="HungYen">Hưng Yên</Option>
-													<Option value="HaiDuong">Hải Dương</Option>
-												</Select>
-											</Form.Item>
-										</div>
-									</div>
-								</Form.Item>
+								{/*<Form.Item name="diachi">*/}
+								{/*	<div style={{ width: '400px', display: 'flex' }}>*/}
+								{/*		<div style={{ width: '190px' }}>*/}
+								{/*			<Form.Item name="tinhthanhpho" rules={[{ required: true }]}>*/}
+								{/*				<Select*/}
+								{/*					placeholder="Select a option and change input text above"*/}
+								{/*					// onChange={this.onGenderChange}*/}
+								{/*					allowClear*/}
+								{/*					defaultValue="defaule"*/}
+								{/*				>*/}
+								{/*					<Option value="defaule">Tỉnh / Thành phố</Option>*/}
+								{/*					<Option value="HaNoi">Hà Nội</Option>*/}
+								{/*					<Option value="HungYen">Hưng Yên</Option>*/}
+								{/*					<Option value="HaiDuong">Hải Dương</Option>*/}
+								{/*				</Select>*/}
+								{/*			</Form.Item>*/}
+								{/*		</div>*/}
+								{/*		<div style={{ width: '190px' }}>*/}
+								{/*			<Form.Item name="quanhuyen" rules={[{ required: true }]}>*/}
+								{/*				<Select*/}
+								{/*					placeholder="Select a option and change input text above"*/}
+								{/*					// onChange={this.onGenderChange}*/}
+								{/*					allowClear*/}
+								{/*					defaultValue="defaule"*/}
+								{/*				>*/}
+								{/*					<Option value="defaule">Quận / Huyện </Option>*/}
+								{/*					<Option value="HaNoi">Hà Nội</Option>*/}
+								{/*					<Option value="HungYen">Hưng Yên</Option>*/}
+								{/*					<Option value="HaiDuong">Hải Dương</Option>*/}
+								{/*				</Select>*/}
+								{/*			</Form.Item>*/}
+								{/*		</div>*/}
+								{/*	</div>*/}
+								{/*</Form.Item>*/}
 								<div className={Styles.textarea_diachi}>
-									<Form.Item name="address" rules={[{ required: true }]}>
+									<Form.Item
+										name="address"
+										rules={[{ required: true, message: 'Không được bỏ trống địa chỉ' }]}
+									>
 										<TextArea placeholder="Số nhà, tòa nhà, đường, xã phường" rows={3} />
 									</Form.Item>
 								</div>
 							</div>
 							<div className={Styles.thanh_toan}>
 								<span className={Styles.tieu_de}>Thời gian nhận hàng</span>
-								<Form.Item>
+								<Form.Item
+									name={'delivery_time'}
+									rules={[{ required: true, message: 'Không được trống trường này' }]}
+								>
 									<Radio.Group style={{ marginLeft: '10px' }}>
-										<Radio style={radioStyle} value={3}>
+										<Radio style={radioStyle} value={'Trong giờ hành chính'}>
 											Trong giờ hành chính
 										</Radio>
-										<Radio style={radioStyle} value={4}>
+										<Radio style={radioStyle} value={'Ngoài giờ hành chính'}>
 											Ngoài giờ hành chính
 										</Radio>
 									</Radio.Group>
 								</Form.Item>
 								<div className={Styles.tieu_de}>Hình thức thanh toán</div>
-								<Form.Item>
+								<Form.Item
+									name={'payment'}
+									rules={[{ required: true, message: 'Không được trống trường này' }]}
+								>
 									<Radio.Group style={{ marginLeft: '10px' }}>
-										<Radio style={radioStyle} value={5}>
+										<Radio style={radioStyle} value={'Thanh toán khi nhận hàng(COD)'}>
 											Thanh toán khi nhận hàng(COD)
 										</Radio>
-										{/*<Radio style={radioStyle} value={6}>*/}
-										{/*	Chuyển khoản qua ngân hàng*/}
-										{/*</Radio>*/}
+										<Radio
+											style={radioStyle}
+											value={'Chuyển khoản qua ngân hàng'}
+											disabled
+										>
+											Chuyển khoản qua ngân hàng
+										</Radio>
 									</Radio.Group>
 								</Form.Item>
 								<div className={Styles.textarea_message}>
@@ -373,7 +411,7 @@ function BuyProduct() {
 							<div style={{ marginLeft: '20px', width: '380px', display: 'flex' }}>
 								<span className={Styles.tieu_de}>
 									Đơn hàng
-									<span className={Styles.so_luong}> ( 1 sản phẩm )</span>
+									<span className={Styles.so_luong}> {selectedRowKeys.length}</span>
 								</span>
 							</div>
 							<div className={Styles.table_product}>
@@ -389,12 +427,14 @@ function BuyProduct() {
 							<div className={Styles.line_order}>
 								<span className={Styles.total_text}>Thành tiền :</span>
 								<Form.Item>
-									<span className={Styles.total_money}>48.000đ</span>
+									<span className={Styles.total_money}>{handleSumMoney()}</span>
 								</Form.Item>
 							</div>
 							<div className={Styles.btn_finish}>
 								<Form.Item>
-									<Button className={Styles.xong}>ĐẶT HÀNG</Button>
+									<Button className={Styles.xong} htmlType="submit">
+										ĐẶT HÀNG
+									</Button>
 								</Form.Item>
 							</div>
 						</div>
