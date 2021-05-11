@@ -2,7 +2,6 @@ import React from 'react';
 import style from '../styles.module.css';
 import moment from 'moment';
 import {
-	Avatar,
 	Button,
 	DatePicker,
 	Form,
@@ -13,12 +12,7 @@ import {
 	Select,
 	Upload,
 } from 'antd';
-import {
-	LoadingOutlined,
-	LockOutlined,
-	PlusOutlined,
-	UserOutlined,
-} from '@ant-design/icons';
+import { LockOutlined, PlusOutlined } from '@ant-design/icons';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import baseAPI from '../../../axios/baseAPI';

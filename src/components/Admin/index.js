@@ -8,6 +8,7 @@ import useCategoryLogicData from '../../hooks/useCategoryLogicData';
 import useProductLogicData from '../../hooks/useProductLogicData';
 import useSliderLogicData from '../../hooks/useSliderLogicData';
 import useCustomerLogicData from '../../hooks/useCustomerLogicData';
+import useUserAdminLogicData from '../../hooks/useUserAdminLogicData';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -27,6 +28,7 @@ function LayoutAdmin() {
 	const { getListProduct } = useProductLogicData();
 	const { getListSlider } = useSliderLogicData();
 	const { getListCustomer } = useCustomerLogicData();
+	const { getListAdmin } = useUserAdminLogicData();
 	// state
 	const [collapsed, setCollapsed] = useState(false);
 	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
@@ -41,6 +43,7 @@ function LayoutAdmin() {
 		getListProduct();
 		getListSlider();
 		getListCustomer();
+		getListAdmin();
 	}, []);
 	return (
 		<Layout>
