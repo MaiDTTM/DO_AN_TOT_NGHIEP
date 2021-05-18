@@ -9,10 +9,9 @@ import {
 	message as messageAnt,
 	Modal,
 	Radio,
-	Select,
 	Upload,
 } from 'antd';
-import { LockOutlined, PlusOutlined } from '@ant-design/icons';
+import { LockOutlined } from '@ant-design/icons';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import baseAPI from '../../../axios/baseAPI';
@@ -21,7 +20,6 @@ import { UpdateUser } from '../../../actions/userAction';
 // import PropTypes from 'prop-types';
 
 // const
-const { Option } = Select;
 const validateMessages = {
 	required: '${label} is required!',
 	types: {
@@ -33,23 +31,6 @@ const validateMessages = {
 	},
 };
 const dateFormat = 'DD-MM-YYYY';
-function getBase64(img, callback) {
-	const reader = new FileReader();
-	reader.addEventListener('load', () => callback(reader.result));
-	reader.readAsDataURL(img);
-}
-
-function beforeUpload(file) {
-	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-	if (!isJpgOrPng) {
-		messageAnt.error('You can only upload JPG/PNG file!');
-	}
-	const isLt2M = file.size / 1024 / 1024 < 2;
-	if (!isLt2M) {
-		messageAnt.error('Image must smaller than 2MB!');
-	}
-	return isJpgOrPng && isLt2M;
-}
 function HoSo(props) {
 	// hooks
 	const [form] = Form.useForm();
@@ -145,24 +126,6 @@ function HoSo(props) {
 		delete data.date_of_birth;
 		form.setFieldsValue({ ...data });
 	}, [myUser]);
-
-	// JSX
-	const prefixSelector = (
-		<Form.Item name="prefix" noStyle>
-			<Select style={{ width: 70 }} defaultValue="86">
-				<Option value="86">+86</Option>
-				<Option value="87">+87</Option>
-			</Select>
-		</Form.Item>
-	);
-
-	const uploadButton = (
-		<div>
-			<PlusOutlined />
-			<div style={{ marginTop: 8 }}>Upload</div>
-		</div>
-	);
-
 	return (
 		<div>
 			<div className={style.my_account_section__header}>
@@ -182,16 +145,6 @@ function HoSo(props) {
 				>
 					<div className={style.content_left}>
 						<div className={style.my_account_profile__left}>
-							{/*<div className={style.my_account_profile__left_item}>*/}
-							{/*	<div className={style.my_account_profile__left_item_title}>*/}
-							{/*		Tên đăng nhập :*/}
-							{/*	</div>*/}
-							{/*	<div className={style.my_account_profile__left_item_input}>*/}
-							{/*		<Form.Item>*/}
-							{/*			<div style={{ marginTop: '0px' }}>Maisumule</div>*/}
-							{/*		</Form.Item>*/}
-							{/*	</div>*/}
-							{/*</div>*/}
 							<div className={style.my_account_profile__left_item}>
 								<div className={style.my_account_profile__left_item_title}>Tên :</div>
 								<div className={style.my_account_profile__left_item_input}>

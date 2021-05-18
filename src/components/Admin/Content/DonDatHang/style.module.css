@@ -174,14 +174,22 @@
 }
 .footer_list{
 	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	justify-content: flex-end;
-	-webkit-box-align: end;
+	flex-direction: row;
+	justify-content: space-between;
 }
 .footer_list_one{
 	display: flex;
 	-webkit-box-pack: end;
+}
+.footer_list_left{
+	width: 40%;
+	color: #dd5a14;
+}
+.footer_list_ringth{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 .footer_tong_tien{
 	margin-top: 12px;

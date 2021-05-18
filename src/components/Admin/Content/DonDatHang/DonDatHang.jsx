@@ -24,8 +24,6 @@ const datatest = [
 ];
 function DonDatHang() {
 	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [hasMore, setHasMore] = useState(true);
 	const fetchData = (callback) => {
 		reqwest({
 			url: fakeDataUrl,
@@ -35,20 +33,6 @@ function DonDatHang() {
 			success: (res) => {
 				callback(res);
 			},
-		});
-	};
-	const handleInfiniteOnLoad = () => {
-		setLoading(true);
-		if (data.length > 14) {
-			message.warning('Infinite List loaded all');
-			setHasMore(false);
-			setLoading(false);
-			return;
-		}
-		fetchData((res) => {
-			const dataNew = data.concat(res.results);
-			setData(dataNew);
-			setLoading(false);
 		});
 	};
 	useEffect(() => {
@@ -72,17 +56,29 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>
+													Xem chi tiết đơn hàng
+												</Button>
+											</div>
 										</div>
 									</div>
 								}
@@ -123,18 +119,28 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>Xác nhận đơn hàng</Button>
-											<Button>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>Xác nhận đơn hàng</Button>
+												<Button>Xem chi tiết đơn hàng</Button>
+											</div>
 										</div>
 									</div>
 								}
@@ -175,18 +181,30 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>Đã chuẩn bị xong hàng</Button>
-											<Button>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>
+													Đã chuẩn bị xong hàng
+												</Button>
+												<Button>Xem chi tiết đơn hàng</Button>
+											</div>
 										</div>
 									</div>
 								}
@@ -227,18 +245,28 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>Đã gửi hàng</Button>
-											<Button>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>Đã gửi hàng</Button>
+												<Button>Xem chi tiết đơn hàng</Button>
+											</div>
 										</div>
 									</div>
 								}
@@ -279,20 +307,30 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>
-												Xác nhận giao hàng thành công
-											</Button>
-											<Button>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>
+													Xác nhận giao hàng thành công
+												</Button>
+												<Button>Xem chi tiết đơn hàng</Button>
+											</div>
 										</div>
 									</div>
 								}
@@ -333,17 +371,29 @@ function DonDatHang() {
 								}
 								footer={
 									<div className={style.footer_list}>
-										<div className={style.footer_list_one}>
-											<div className={style.footer_logo}>
-												<img src={logo} />
+										<div className={style.footer_list_left}>
+											<div>
+												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 											</div>
-											<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-											<span className={style.footer_tien}>
-												30.000<sup>đ</sup>
-											</span>
+											<div>
+												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+											</div>
 										</div>
-										<div className={style.footer_action}>
-											<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
+										<div className={style.footer_list_ringth}>
+											<div className={style.footer_list_one}>
+												<div className={style.footer_logo}>
+													<img src={logo} />
+												</div>
+												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+												<span className={style.footer_tien}>
+													30.000<sup>đ</sup>
+												</span>
+											</div>
+											<div className={style.footer_action}>
+												<Button className={style.btn_action}>
+													Xem chi tiết đơn hàng
+												</Button>
+											</div>
 										</div>
 									</div>
 								}
