@@ -29,9 +29,12 @@
 	margin: 15px 0;
 }
 .btn_xem {
-	color: #ee4d2d;
+	color: #ee4d2d !important;
+	font-size: 16px;
 	padding: 0.3125rem 0.4375rem;
-	margin: 9px 0;
+}
+.btn_xem:hover{
+	color: #ee4d2d;
 }
 .btn_xem:hover{
 	color: #ee4d2d;
@@ -107,6 +110,14 @@
 	height: 230px;
 	margin-top: 15px;
 }
+.card_item_all_flash{
+	width: 189px;
+	height: 280px;
+	padding: 0.3125rem 0.3125rem 0.625rem 0.3125rem;
+	flex: 0 0 auto;
+	margin-left: 0.4125rem;
+	margin-top: 1.2125rem;
+}
 .card_item:hover {
 	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
 }
@@ -139,4 +150,75 @@
 }
 ._17XqBU {
 	color: #fff;
+}
+.content_flash_sale{
+	margin-top: 160px;
+}
+.title_content_flash_sale{
+	padding: 15px 0;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	opacity: .95;
+	background: #fff;
+	display: flex;
+	/*box-shadow: 0 1px 1px rgb(0 0 0 / 5%);*/
+}
+.title_content_flash_sale_item{
+	-webkit-box-pack: center;
+	justify-content: center;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 30px;
+	line-height: 1.875rem;
+	margin: 0 auto;
+	position: relative;
+	pointer-events: all;
+}
+.title_content_flash_sale_item::before{
+	right: 100%;
+	margin-right: 14px;
+	content: "";
+	position: absolute;
+	border-bottom: 1px solid rgba(0,0,0,.6);
+	top: 40%;
+	width: 20px;
+}
+.title_content_flash_sale_item::after{
+	left: 100%;
+	margin-left: 14px;
+	content: "";
+	position: absolute;
+	border-bottom: 1px solid rgba(0,0,0,.6);
+	top: 40%;
+	width: 20px;
+}
+.item_content{
+	padding-left: 16px;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	text-transform: uppercase;
+	display: inline-block;
+	background: url('https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/fb1088de81e42c4e538967ec12cb5caa.png') 50% no-repeat;
+	background-size: contain;
+}
+.item_content_ketthuc{
+	width: auto;
+	background-size: 16px;
+	padding-left: 20px;
+	white-space: nowrap;
+	margin: 0 .625rem;
+	height: 30px;
+	line-height: 30px;
+	text-transform: uppercase;
+}
+.values_content_flash_sale{
+	width: 1200px;
+	margin: 20px auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
 }

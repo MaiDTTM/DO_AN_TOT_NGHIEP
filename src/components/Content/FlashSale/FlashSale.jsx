@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Styles from './Style.module.css';
 import { Link } from 'react-router-dom';
 const { Meta } = Card;
-const style = {};
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 2 + 1000 * 30; // Moment is also OK
 
@@ -55,8 +54,11 @@ function FlashSale({ product }) {
 						</div>
 					</div>
 					<div className={Styles.xem_tat_ca}>
-						<a>Xem tất cả</a>
-						<Button type="text" icon={<RightOutlined />} className={Styles.btn_xem} />
+						<Link to="/flashsale">
+							<Button type="text" className={Styles.btn_xem}>
+								Xem tất cả >
+							</Button>
+						</Link>
 					</div>
 				</div>
 				<div className={Styles.content_host_item}>

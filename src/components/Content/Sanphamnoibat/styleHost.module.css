@@ -195,13 +195,106 @@
 	padding: 0.3125rem 0.4375rem;
 	margin: 9px 0;
 }
-.xem_tat_ca_noi_bat a {
+.btn_xem {
 	color: #ee4d2d;
-	font-size: 18px;
+	font-size: 16px;
+	display: block;
+	margin: 15px 0;
+}
+.btn_xem:hover {
+	color: #ee4d2d;
+	font-size: 16px;
 	display: block;
 	margin: 15px 0;
 }
 .xem_tat_ca_noi_bat {
 	display: flex;
 	margin-right: 30px;
+}
+.item_noi_bat{
+	width: auto;
+	background-size: 16px;
+	padding-left: 20px;
+	white-space: nowrap;
+	margin: 0 .625rem;
+	height: 30px;
+	line-height: 30px;
+	text-transform: uppercase;
+}
+.content_all_noi_bat{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 160px;
+}
+.title_content_all_noi_bat{
+	padding: 15px 0;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	opacity: .95;
+	background: #fff;
+	display: flex;
+}
+.title_content_header_all_noi_bat{
+	-webkit-box-pack: center;
+	justify-content: center;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 30px;
+	line-height: 1.875rem;
+	margin: 0 auto;
+	position: relative;
+	pointer-events: all;
+}
+.values_content_all_noi_bat{
+	width: 1200px;
+	margin: 20px auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.card_item_all_noi_bat{
+	width: 189px;
+	height: 280px;
+	padding: 0.3125rem 0.3125rem 0.625rem 0.3125rem;
+	flex: 0 0 auto;
+	margin-left: 0.4125rem;
+	margin-top: 1.2125rem;
+}
+.label_page_header {
+	width: 1200px;
+	display: flex;
+	position: relative;
+	height: 3.5rem;
+}
+.label_page_header_label {
+	font-size: 1.25rem;
+	line-height: 1;
+	letter-spacing: 0.01em;
+	user-select: none;
+	cursor: default;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+	font-weight: 500;
+	color: #fff;
+	padding: 1.125rem 1.25rem;
+	display: inline-block;
+	background-color: #ee4d2d;
+	margin: auto;
+	z-index: 1;
+	border-radius: 0.625rem;
+	text-transform: capitalize;
+}
+.label_page_header_dotted_line {
+	position: absolute;
+	border-top: 1px dotted rgba(0, 0, 0, 0.26);
+	width: 100%;
+	left: 0;
+	top: 40%;
+	margin: 0;
 }

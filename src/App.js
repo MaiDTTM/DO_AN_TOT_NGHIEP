@@ -20,8 +20,9 @@ import { LoginUser } from './actions/userAction';
 import { ContextApp } from './context/contextApp';
 import LoginAdmin from './components/Admin/Login/LoginAdmin';
 import TatCaSP from './components/Content/GoiYChoBan/TatCaSP';
-import Test from './test';
 import WatchCatagory from './components/AllProduct/WatchCatagory';
+import AllFlashSale from './components/Content/FlashSale/AllFlashSale/AllFlashSale';
+import AllNoiBat from './components/Content/Sanphamnoibat/AllNoiBat/AllNoiBat';
 
 //style
 
@@ -54,6 +55,8 @@ function App() {
 					<Route path="/lienhe" exact component={LienHe} />
 					<Route path="/tatca" exact component={TatCaSP} />
 					<Route path="/xemtheomenu" exact component={WatchCatagory} />
+					<Route path="/flashsale" exact component={AllFlashSale} />
+					<Route path="/allnoibat" exact component={AllNoiBat} />
 				</Switch>
 			</Router>
 		</ContextApp.Provider>

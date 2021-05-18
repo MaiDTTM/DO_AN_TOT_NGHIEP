@@ -1,18 +1,11 @@
 import React from 'react';
-import { Button, Card, Carousel } from 'antd';
+import { Button, Card } from 'antd';
 //style
 import Styles from './styleHost.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Slider from './SliderNoiBat/Slider';
+import { Link } from 'react-router-dom';
 const { Meta } = Card;
-const contentStyle = {
-	height: '100%',
-	width: '30%',
-	color: '#fff',
-	lineHeight: '160px',
-	textAlign: 'center',
-	background: '#364d79',
-};
 ProductListHot.propTypes = {};
 
 function ProductListHot(props) {
@@ -35,12 +28,11 @@ function ProductListHot(props) {
 						</div>
 					</div>
 					<div className={Styles.xem_tat_ca_noi_bat}>
-						<a>Xem tất cả</a>
-						<Button
-							type="text"
-							icon={<RightOutlined />}
-							className={Styles.btn_xem_noi_bat}
-						/>
+						<Link to="/allnoibat">
+							<Button type="text" className={Styles.btn_xem}>
+								Xem tất cả >
+							</Button>
+						</Link>
 					</div>
 				</div>
 				<hr
