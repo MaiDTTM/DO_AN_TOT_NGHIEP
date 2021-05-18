@@ -1,425 +1,151 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Tabs, List, Avatar, Button, message, Spin } from 'antd';
-import InfiniteScroll from 'react-infinite-scroller';
+import { Tabs, List, Avatar, Button, message, Spin, Image } from 'antd';
 import style from './style.module.css';
-import reqwest from 'reqwest';
 import logo from '../../../../img/tong_tien.png';
+import useTransactionData from '../../../../hooks/useTransactionData';
+import useCartLogicData from '../../../../hooks/useCartLogicData';
+import useProductLogicData from '../../../../hooks/useProductLogicData';
+import ConvertStringToVND from '../../../../util/ConvertStringToVND';
+import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
+import useUserAdminLogicData from '../../../../hooks/useUserAdminLogicData';
 const { TabPane } = Tabs;
-const fakeDataUrl =
-	'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-const datatest = [
-	{
-		title: 'Ant Design Title 1',
-	},
-	{
-		title: 'Ant Design Title 2',
-	},
-	{
-		title: 'Ant Design Title 3',
-	},
-	{
-		title: 'Ant Design Title 4',
-	},
-];
+
 function DonDatHang() {
-	const [data, setData] = useState([]);
-	const fetchData = (callback) => {
-		reqwest({
-			url: fakeDataUrl,
-			type: 'json',
-			method: 'get',
-			contentType: 'application/json',
-			success: (res) => {
-				callback(res);
-			},
-		});
+	const { transaction, getListTransaction } = useTransactionData();
+	const { carts, getListCart } = useCartLogicData();
+	const { product, getListProduct } = useProductLogicData();
+
+	// state
+	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
+
+	const handleImage = (cartId) => {
+		return carts[cartId] && carts[cartId].product_id
+			? product[carts[cartId].product_id].image
+			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};
+
+	const callback = (key) => {
+		setType(key);
+	};
+
+	const transactionFilter = () => {
+		let arr = [...Object.values(transaction)];
+		if (type !== 'Tất cả') {
+			arr = Object.values(transaction).filter((item) => item.status_transaction === type);
+		}
+		return arr;
+	};
+
 	useEffect(() => {
-		fetchData((res) => {
-			setData(res.results);
-		});
+		getListTransaction();
+		getListCart();
+		getListTransaction();
 	}, []);
+
+	// JSX
+	const ListComponent = (item) => (
+		<List
+			size="small"
+			header={
+				<div className={style.header_list}>
+					<div className={style.header_don_hang}>Đơn hàng {item._id}</div>
+					<div className={style.header_trang_thai}>{item.status_transaction}</div>
+				</div>
+			}
+			footer={
+				<div className={style.footer_list}>
+					<div className={style.footer_list_left}>
+						<div>
+							Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
+						</div>
+						<div>
+							Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+						</div>
+					</div>
+					<div className={style.footer_list_ringth}>
+						<div className={style.footer_list_one}>
+							<div className={style.footer_logo}>
+								<img src={logo} />
+							</div>
+							<span className={style.footer_tong_tien}>Tổng số tiền : </span>
+							<span className={style.footer_tien}>{ConvertStringToVND(item.amount)}</span>
+						</div>
+						{/*<div className={style.footer_action}>*/}
+						{/*	<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>*/}
+						{/*</div>*/}
+					</div>
+				</div>
+			}
+			bordered
+			dataSource={item.carts_id}
+			renderItem={(cartId) => (
+				<List.Item
+					actions={[
+						<div style={{ textDecoration: 'line-through' }}>
+							{/*115.000<sup>đ</sup>*/}
+						</div>,
+						<div style={{ color: ' #f05d40' }}>
+							{ConvertStringToVND(
+								carts[cartId] &&
+									carts[cartId].product_id &&
+									product[carts[cartId].product_id].amount
+							)}
+							{/*<sup>đ</sup>*/}
+						</div>,
+					]}
+				>
+					<List.Item.Meta
+						avatar={<Image width={100} height={50} src={handleImage(cartId)} />}
+						title={
+							carts[cartId] &&
+							carts[cartId].product_id &&
+							product[carts[cartId].product_id].name
+						}
+						description={`Số lượng: ${carts[cartId] && carts[cartId].amount}`}
+					/>
+				</List.Item>
+			)}
+		/>
+	);
 	return (
 		<div className={style.purchase_list_page__tabs_container}>
 			<div className={style.card_container}>
-				<Tabs type="card" className={style.tab_ant}>
-					<TabPane tab="Tất cả" key="1">
+				<Tabs type="card" className={style.tab_ant} onChange={callback}>
+					<TabPane tab={TYPE_TRANSACTION.ALL} key={TYPE_TRANSACTION.ALL}>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>
-													Xem chi tiết đơn hàng
-												</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
-					<TabPane tab="Chờ xác nhận" key="2">
+					<TabPane
+						tab={TYPE_TRANSACTION.CHO_XAC_NHAN}
+						key={TYPE_TRANSACTION.CHO_XAC_NHAN}
+					>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>Xác nhận đơn hàng</Button>
-												<Button>Xem chi tiết đơn hàng</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
-					<TabPane tab="Chờ lấy hàng" key="3">
+					<TabPane
+						tab={TYPE_TRANSACTION.CHO_LAY_HANG}
+						key={TYPE_TRANSACTION.CHO_LAY_HANG}
+					>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>
-													Đã chuẩn bị xong hàng
-												</Button>
-												<Button>Xem chi tiết đơn hàng</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
-					<TabPane tab="Đang giao" key="4">
+					<TabPane tab={TYPE_TRANSACTION.DANG_GIAO} key={TYPE_TRANSACTION.DANG_GIAO}>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>Đã gửi hàng</Button>
-												<Button>Xem chi tiết đơn hàng</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
-					<TabPane tab="Đã giao" key="5">
+					<TabPane tab={TYPE_TRANSACTION.DA_GIAO} key={TYPE_TRANSACTION.DA_GIAO}>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>
-													Xác nhận giao hàng thành công
-												</Button>
-												<Button>Xem chi tiết đơn hàng</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
-					<TabPane tab="Đã hủy" key="6">
+					<TabPane tab={TYPE_TRANSACTION.DA_HUY} key={TYPE_TRANSACTION.DA_HUY}>
 						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							<List
-								size="small"
-								header={
-									<div className={style.header_list}>
-										<div className={style.header_don_hang}>Đơn hàng số 1</div>
-										<div className={style.header_trang_thai}>ĐÃ XÁC NHẬN</div>
-									</div>
-								}
-								footer={
-									<div className={style.footer_list}>
-										<div className={style.footer_list_left}>
-											<div>
-												Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-											</div>
-											<div>
-												Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-											</div>
-										</div>
-										<div className={style.footer_list_ringth}>
-											<div className={style.footer_list_one}>
-												<div className={style.footer_logo}>
-													<img src={logo} />
-												</div>
-												<span className={style.footer_tong_tien}>Tổng số tiền : </span>
-												<span className={style.footer_tien}>
-													30.000<sup>đ</sup>
-												</span>
-											</div>
-											<div className={style.footer_action}>
-												<Button className={style.btn_action}>
-													Xem chi tiết đơn hàng
-												</Button>
-											</div>
-										</div>
-									</div>
-								}
-								bordered
-								dataSource={datatest}
-								renderItem={(item) => (
-									<List.Item
-										actions={[
-											<div style={{ textDecoration: 'line-through' }}>
-												115.000<sup>đ</sup>
-											</div>,
-											<div style={{ color: ' #f05d40' }}>
-												59.000<sup>đ</sup>
-											</div>,
-										]}
-									>
-										<List.Item.Meta
-											avatar={
-												<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-											}
-											title={<a href="https://ant.design">{item.title}</a>}
-											description={<div>x 1</div>}
-										/>
-									</List.Item>
-								)}
-							/>
+							{transactionFilter().map((item) => ListComponent(item))}
 						</div>
 					</TabPane>
 				</Tabs>

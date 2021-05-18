@@ -16,6 +16,7 @@ function useCategoryLogicData() {
 		const data = await baseAPI.getAll(TypeApi.catalog, dataPrams);
 		dispatch({ type: TYPE_ACTION.CATEGORY.GET_LIST, payload: { data } });
 	};
+
 	const postCategory = async (dataPrams = {}) => {
 		const { message, data } = await baseAPI.add(TypeApi.catalog, dataPrams);
 		if (message === 'Thêm danh mục thành công!') {
@@ -29,6 +30,7 @@ function useCategoryLogicData() {
 			messageAnt.warn(message);
 		}
 	};
+
 	const deleteCategory = async (id) => {
 		const { message } = await baseAPI.delete(TypeApi.catalog, id);
 		if (message === 'SUCCESS') {
