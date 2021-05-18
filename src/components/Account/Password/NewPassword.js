@@ -9,7 +9,7 @@ const layout = {
 	wrapperCol: { span: 12 },
 };
 const tailLayout = {
-	wrapperCol: { offset: 8, span: 16 },
+	wrapperCol: { offset: 6, span: 18 },
 };
 function NewPassword() {
 	const [form] = Form.useForm();
@@ -45,7 +45,6 @@ function NewPassword() {
 							placeholder="Password"
 						/>
 					</Form.Item>
-					Xác nhận đơn hàng
 					<Form.Item {...tailLayout}>
 						<Button
 							type="primary"
