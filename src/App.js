@@ -23,12 +23,14 @@ import TatCaSP from './components/Content/GoiYChoBan/TatCaSP';
 import WatchCatagory from './components/AllProduct/WatchCatagory';
 import AllFlashSale from './components/Content/FlashSale/AllFlashSale/AllFlashSale';
 import AllNoiBat from './components/Content/Sanphamnoibat/AllNoiBat/AllNoiBat';
+import useProductLogicData from './hooks/useProductLogicData';
 
 //style
 
 function App() {
 	// hooks
 	const dispatch = useDispatch();
+	const { getListProduct } = useProductLogicData();
 
 	// state
 	const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
@@ -36,6 +38,7 @@ function App() {
 	// Vòng đời
 	React.useEffect(() => {
 		localStorage && dispatch(LoginUser(localStorage));
+		getListProduct();
 	}, []);
 	return (
 		<ContextApp.Provider value={{ selectedRowKeys, setSelectedRowKeys }}>

@@ -1,12 +1,11 @@
 .wrap {
-	margin-top: 160px;
+	margin-top: 191px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 }
 .width_common {
 	width: 1170px;
-	/*float: left;*/
 	display: flex;
 	flex-direction: column;
 }
