@@ -8,11 +8,10 @@ import useCartLogicData from '../../../../hooks/useCartLogicData';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
-import useUserAdminLogicData from '../../../../hooks/useUserAdminLogicData';
 const { TabPane } = Tabs;
 
 function DonDatHang() {
-	const { transaction, getListTransaction } = useTransactionData();
+	const { transaction, getListTransaction, putTransaction } = useTransactionData();
 	const { carts, getListCart } = useCartLogicData();
 	const { product, getListProduct } = useProductLogicData();
 
@@ -29,6 +28,28 @@ function DonDatHang() {
 		setType(key);
 	};
 
+	const updateStatus = (item) => {
+		switch (item['status_transaction']) {
+			case TYPE_TRANSACTION.CHO_XAC_NHAN:
+				item['status_transaction'] = TYPE_TRANSACTION.CHO_LAY_HANG;
+				break;
+			case TYPE_TRANSACTION.CHO_LAY_HANG:
+				item['status_transaction'] = TYPE_TRANSACTION.DANG_GIAO;
+				break;
+			case TYPE_TRANSACTION.DANG_GIAO:
+				item['status_transaction'] = TYPE_TRANSACTION.DA_GIAO;
+				break;
+			case TYPE_TRANSACTION.DA_HUY:
+				item['status_transaction'] = TYPE_TRANSACTION.CHO_XAC_NHAN;
+				break;
+			default:
+				item['status_transaction'] = TYPE_TRANSACTION.CHO_XAC_NHAN;
+				break;
+		}
+		console.log('item', item); // MongLV log fix bug
+		putTransaction(item);
+	};
+
 	const transactionFilter = () => {
 		let arr = [...Object.values(transaction)];
 		if (type !== 'Tất cả') {
@@ -38,9 +59,9 @@ function DonDatHang() {
 	};
 
 	useEffect(() => {
-		getListTransaction();
+		getListTransaction({}, true);
 		getListCart();
-		getListTransaction();
+		getListProduct();
 	}, []);
 
 	// JSX
@@ -56,11 +77,34 @@ function DonDatHang() {
 			footer={
 				<div className={style.footer_list}>
 					<div className={style.footer_list_left}>
+						{item['status_transaction'] !== TYPE_TRANSACTION.DA_GIAO ? (
+							<>
+								<div>
+									<Button
+										type="primary"
+										disabled={type === TYPE_TRANSACTION.ALL}
+										onClick={() => updateStatus(item)}
+									>
+										Xác nhận
+									</Button>
+								</div>
+								<div>
+									<Button danger type="primary" disabled={type === TYPE_TRANSACTION.ALL}>
+										Hủy đơn
+									</Button>
+								</div>
+							</>
+						) : (
+							<div></div>
+						)}
+
 						<div>
-							Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-						</div>
-						<div>
-							Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+							<div>
+								Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
+							</div>
+							<div>
+								Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+							</div>
 						</div>
 					</div>
 					<div className={style.footer_list_ringth}>

@@ -20,7 +20,7 @@ function useTransactionData() {
 			transaction[data._id] = data;
 			dispatch({
 				type: TYPE_ACTION.TRANSACTION.POST_TRANSACTION,
-				payload: { data: transaction },
+				payload: { data: { ...transaction } },
 			});
 			messageAnt.success('Đặt hàng thành công');
 			handleSuccess();
@@ -28,13 +28,30 @@ function useTransactionData() {
 			messageAnt.warn(message);
 		}
 	};
-	const getListTransaction = async (dataPrams = {}) => {
-		dataPrams['user_id'] = myUser._id;
+	const putTransaction = async (dataPrams = {}, handleSuccess = () => {}) => {
+		const { message, data } = await baseAPI.update(
+			`${TypeApi.transaction}/${dataPrams._id && dataPrams._id}`,
+			dataPrams
+		);
+		if (message === 'SUCCESS') {
+			transaction[data._id] = data;
+			dispatch({
+				type: TYPE_ACTION.TRANSACTION.PUT_TRANSACTION,
+				payload: { data: { ...transaction } },
+			});
+			messageAnt.success('Cập nhật thành công');
+			handleSuccess();
+		} else {
+			messageAnt.warn(message);
+		}
+	};
+	const getListTransaction = async (dataPrams = {}, isAdmin = false) => {
+		!isAdmin && (dataPrams['user_id'] = myUser._id);
 		const data = await baseAPI.getAll(TypeApi.transaction, dataPrams);
 		dispatch({ type: TYPE_ACTION.TRANSACTION.GET_LIST, payload: { data } });
 		getListCart();
 	};
-	return { transaction, postTransaction, getListTransaction };
+	return { transaction, postTransaction, getListTransaction, putTransaction };
 }
 
 useTransactionData.propTypes = {};

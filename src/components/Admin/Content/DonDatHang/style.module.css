@@ -184,6 +184,9 @@
 .footer_list_left{
 	width: 40%;
 	color: #dd5a14;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
 .footer_list_ringth{
 	display: flex;
