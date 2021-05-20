@@ -9,7 +9,8 @@ function EditorBase({ content, setContent }) {
 
 	return (
 		<Editor
-			apiKey='4k95hdk87th2mmwysccl9lvu2ap1ehtwjn1hd7qnkk4d6ziv'
+			value={content}
+			apiKey="4k95hdk87th2mmwysccl9lvu2ap1ehtwjn1hd7qnkk4d6ziv"
 			onChange={onChange}
 			init={{
 				// height: heightApp || windowSize.heightApp,
@@ -58,7 +59,7 @@ function EditorBase({ content, setContent }) {
 									registry. In the next release this part hopefully won't be
 									necessary, as we are looking to handle it internally.
 								*/
-								var id = 'blobid' + (new Date()).getTime();
+								var id = 'blobid' + new Date().getTime();
 								var blobCache = window.tinymce.activeEditor.editorUpload.blobCache;
 								var base64 = reader.result.split(',')[1];
 								var blobInfo = blobCache.create(id, file, base64);
@@ -71,11 +72,9 @@ function EditorBase({ content, setContent }) {
 						};
 
 						input.click();
-					} catch (e) {
-
-					}
+					} catch (e) {}
 				},
-				content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+				content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
 			}}
 		/>
 	);

@@ -10,7 +10,7 @@ import _styles from './styles/index.module.scss';
 import baseAPI from '../axios/baseAPI';
 
 // const
-const getBase64 = (file) => {
+const getBase64 = async (file) => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
@@ -18,7 +18,6 @@ const getBase64 = (file) => {
 		reader.onerror = (error) => reject(error);
 	});
 };
-
 function UploadFileView(props) {
 	const {
 		refFunc,
@@ -30,16 +29,22 @@ function UploadFileView(props) {
 		linkFileUtil,
 		setLinkFileUtil,
 		setFileListUtil,
+		limit,
+		listLinkFileUtil,
 	} = props;
 	const [linkFile, setLinkFile] = React.useState('');
+	const [listLinkFile, setListLinkFile] = React.useState([]);
 	const [fileList, setFileList] = React.useState([]);
+	const [isNext, setIsNext] = React.useState(true);
 
-	const linkFileView = linkFile ? BASE_URL_IMAGE + linkFile : imgDefault;
+	// const linkFileView = linkFile ? BASE_URL_IMAGE + linkFile : imgDefault;
 
 	// handle func
 	const onChange = (info) => {
 		setFileList(info.fileList);
 		setFileListUtil(info.fileList);
+		setIsNext(false);
+
 		switch (info.file.status) {
 			case 'uploading':
 				break;
@@ -47,6 +52,15 @@ function UploadFileView(props) {
 				// message.success('Thêm thành công');
 				setLinkFile(info.file.response.fileNameInServer);
 				setLinkFileUtil(info.file.response.fileNameInServer);
+
+				// Note:
+				setIsNext(true);
+				listLinkFile.push(info.file.response.fileNameInServer);
+				setListLinkFile([...listLinkFile]);
+				break;
+			case 'removed':
+				setListLinkFile([...listLinkFile.slice(0, listLinkFile.length - 1)]);
+				setIsNext(true);
 				break;
 			default:
 				// message.error(`${info.file.name}`);
@@ -54,6 +68,13 @@ function UploadFileView(props) {
 				setLinkFileUtil('');
 				break;
 		}
+	};
+
+	const handleResetState = () => {
+		setLinkFile('');
+		setListLinkFile([]);
+		setFileList([]);
+		setIsNext(true);
 	};
 
 	// Props
@@ -71,24 +92,26 @@ function UploadFileView(props) {
 			linkFile,
 			setLinkFile,
 			setFileList,
+			handleResetState,
 		};
 	});
 	React.useEffect(() => {
 		linkFile && callback(linkFile);
-	}, [linkFile, fileList]);
+	}, [linkFile, fileList, listLinkFile]);
 
 	React.useEffect(() => {
 		setFileList(fileListUtil);
 		setLinkFile(linkFileUtil);
-	}, [fileListUtil, linkFileUtil]);
+		setListLinkFile(listLinkFileUtil);
+	}, [fileListUtil, linkFileUtil, listLinkFileUtil]);
 
 	return (
 		<div className={styles.upload_file}>
 			<Upload {...UpFile} fileList={fileList} listType="picture-card">
-				{linkFile.length <= 0 ? (
+				{fileList.length <= limit && isNext ? (
 					<img
 						alt="example"
-						src={linkFileView}
+						src={imgDefault}
 						style={{ width: Img.width, height: Img.height }}
 					/>
 				) : null}
@@ -107,8 +130,13 @@ UploadFileView.propTypes = {
 	callback: PropTypes.func,
 	setLinkFileUtil: PropTypes.func,
 	setFileListUtil: PropTypes.func,
+	setListLinkFileUtil: PropTypes.func,
+
 	fileListUtil: PropTypes.array,
+	listLinkFileUtil: PropTypes.array,
+
 	// refFunc, Img, styles, imgDefault, callback = () => {}
+	limit: PropTypes.number,
 };
 
 UploadFileView.defaultProps = {
@@ -118,7 +146,10 @@ UploadFileView.defaultProps = {
 	imgDefault: 'https://img.icons8.com/cotton/344/image--v1.png',
 	setLinkFileUtil: () => {},
 	setFileListUtil: () => {},
+	setListLinkFileUtil: () => {},
 	linkFileUtil: '',
 	fileListUtil: [],
+	listLinkFileUtil: [],
+	limit: 0,
 };
 export default React.memo(UploadFileView);

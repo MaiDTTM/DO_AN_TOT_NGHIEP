@@ -38,12 +38,19 @@ function WatchCatagory() {
 		return '#ffffff';
 	};
 	const onClickCategory = (id) => {
-		console.log('idOld.current', idOld.current); // MongLV log fix bug
-		console.log('id', id); // MongLV log fix bug
-		console.log('idOld.current === id', idOld.current === id); // MongLV log fix bug
-		`${idOld.current}` === `${id}` ? setCategoryId('') : setCategoryId(id);
-		idOld.current = id;
+		// console.log('idOld.current', idOld.current); // MongLV log fix bug
+		// console.log('id', id); // MongLV log fix bug
+		// console.log('idOld.current === id', idOld.current === id); // MongLV log fix bug
+		if (`${idOld.current}` === `${id}`) {
+			categoryId ? setCategoryId('') : setCategoryId(id);
+		} else {
+			setCategoryId(id);
+			idOld.current = id;
+		}
 	};
+
+	console.log('categoryId', categoryId); // MongLV log fix bug
+	console.log('idOld.current', idOld.current); // MongLV log fix bug
 
 	// Vòng đời
 	React.useEffect(() => {
@@ -120,4 +127,4 @@ WatchCatagory.propTypes = {};
 
 WatchCatagory.defaultProps = {};
 
-export default WatchCatagory;
+export default React.memo(WatchCatagory);

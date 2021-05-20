@@ -40,6 +40,7 @@ function App() {
 		localStorage && dispatch(LoginUser(localStorage));
 		getListProduct();
 	}, []);
+
 	return (
 		<ContextApp.Provider value={{ selectedRowKeys, setSelectedRowKeys }}>
 			<Router>

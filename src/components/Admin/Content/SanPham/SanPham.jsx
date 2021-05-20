@@ -43,7 +43,7 @@ const tailLayout = {
 
 const text = 'Bạn chắc chắn với thao tác này ?';
 let dataSale = [];
-for (let i = 1; i <= 100; i++) {
+for (let i = 0; i <= 100; i++) {
 	dataSale.push(`${i} %`);
 }
 
@@ -52,10 +52,16 @@ function SanPham() {
 	const [form] = Form.useForm();
 	const { category } = useCategoryLogicData();
 	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
+
+	const refCallBack = React.useRef();
+	const refCallBack2 = React.useRef();
+
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
+	const [fileListContentUtil, setFileListContentUtil] = useState([]); // [{}]
+	const [listLinkFileUtil, setListLinkFileUtil] = useState([]); // ['image']
 	const [description, setDescription] = useState('');
 	const [dataProductEdit, setDataProductEdit] = useState(null);
 
@@ -77,6 +83,17 @@ function SanPham() {
 				url: BASE_URL_IMAGE + item.image,
 			},
 		]);
+		setListLinkFileUtil(item.image_destination);
+		const arrObjImg =
+			item.image_destination &&
+			item.image_destination.map((item) => ({
+				uid: item,
+				name: item,
+				status: 'done',
+				url: BASE_URL_IMAGE + item,
+			}));
+		setFileListContentUtil([...arrObjImg]);
+		setDescription(item.description);
 	};
 
 	const confirm = (id) => {
@@ -86,8 +103,9 @@ function SanPham() {
 	const onFinish = (values) => {
 		values['description'] = description;
 		values['image'] = linkFileUtil;
+		values['image_destination'] = listLinkFileUtil;
 
-		if (linkFileUtil) {
+		if (linkFileUtil && listLinkFileUtil.length > 0) {
 			if (!dataProductEdit) {
 				postProduct(values);
 			} else {
@@ -106,6 +124,10 @@ function SanPham() {
 		setDescription('');
 		setFileListUtil([]);
 		setDataProductEdit(null);
+		setListLinkFileUtil([]);
+		setFileListContentUtil([]);
+		refCallBack.current && refCallBack.current.handleResetState();
+		refCallBack2.current && refCallBack2.current.handleResetState();
 	};
 
 	const handleSelect = (optionA, optionB) => {
@@ -214,7 +236,7 @@ function SanPham() {
 			),
 		},
 	];
-
+	const title = linkFileUtil.length > 0 ? 'Sửa sản phẩm' : 'Thêm sản phẩm';
 	return (
 		<div>
 			<div>
@@ -256,7 +278,7 @@ function SanPham() {
 				<Modal
 					title={
 						<div style={{ display: 'flex', justifyContent: 'center', fontSize: '18px' }}>
-							THÊM SẢN PHẨM
+							{title}
 						</div>
 					}
 					centered
@@ -274,6 +296,19 @@ function SanPham() {
 								fileListUtil={fileListUtil}
 								setLinkFileUtil={setLinkFileUtil}
 								setFileListUtil={setFileListUtil}
+								refFunc={refCallBack}
+							/>
+						</Form.Item>
+						<Form.Item name="image_destination" label="Ảnh đi kèm">
+							<UploadFileView
+								// linkFileUtil={linkFileUtil}
+								fileListUtil={fileListContentUtil}
+								setListLinkFileUtil={setListLinkFileUtil}
+								listLinkFileUtil={listLinkFileUtil}
+								// setLinkFileUtil={setLinkFileUtil}
+								setFileListUtil={setFileListContentUtil}
+								limit={10}
+								refFunc={refCallBack2}
 							/>
 						</Form.Item>
 						<Form.Item name="catalog_id" label="Danh mục" rules={[{ required: true }]}>
