@@ -58,11 +58,9 @@
     -webkit-box-pack: center;
     justify-content: center;
     padding-left: 15px;
-    overflow: hidden;
 }
 .user_page_brief__username {
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     min-height: 1rem;
     font-weight: 600;
@@ -98,7 +96,6 @@
     flex-direction: column;
     padding: 0 30px 20px;
     background: #fff;
-    overflow: visible;
     font-family: Helvetica Neue, Helvetica, Arial, æ–‡æ³‰é©›æ­£é»‘, WenQuanYi Zen Hei,
     Hiragino Sans GB, å„·é»‘ Pro, LiHei Pro, Heiti TC, å¾®è»Ÿæ­£é»‘é«”,
     Microsoft JhengHei UI, Microsoft JhengHei, sans-serif;
@@ -140,7 +137,6 @@
     width: 410px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     border-left: 1px solid #efefef;
     margin-left: 10px;
     padding-left: 20px;

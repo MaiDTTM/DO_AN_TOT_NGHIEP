@@ -32,7 +32,9 @@ function CartProduct() {
 	const arrSelect = Object.values(carts).filter(
 		(item) => parsed && parsed.id === item._id
 	);
-	const arrCartTable = arrSelect.concat(arrCarts.reverse());
+	const arrCartTable = arrSelect
+		.concat(arrCarts.reverse())
+		.filter((item) => !item.status);
 
 	// handle func
 	const onSelectChange = (selectedRowKeys) => {

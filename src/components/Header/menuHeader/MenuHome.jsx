@@ -29,7 +29,7 @@ function MenuHome() {
 	const history = useHistory();
 
 	// const
-	const arrCarts = Object.values(carts);
+	const arrCarts = Object.values(carts).filter((item) => !item.status);
 
 	// handle func
 	const onSearch = (value) => console.log(value);

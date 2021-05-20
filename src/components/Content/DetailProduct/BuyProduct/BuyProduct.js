@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { ContextApp } from '../../../../context/contextApp';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useTransactionData from '../../../../hooks/useTransactionData';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 const { TextArea } = Input;
 const { Option } = Select;
 const layout = {
@@ -91,6 +92,7 @@ function BuyProduct() {
 	const onFinish = (values) => {
 		values['user_id'] = myUser._id;
 		values['carts_id'] = selectedRowKeys;
+		values['amount'] = handleSumMoney(true);
 		values['message'] = values['message'] ? values['message'] : '';
 		postTransaction(values, callBack);
 	};
@@ -100,7 +102,7 @@ function BuyProduct() {
 	const setModalVisible = (modal2Visible) => {
 		setModal2Visible(modal2Visible);
 	};
-	const handleSumMoney = () => {
+	const handleSumMoney = (typeNumber = false) => {
 		let sumMoney = 0;
 		Object.values(selectedRowKeys).length > 0 &&
 			Object.values(selectedRowKeys).map(
@@ -108,11 +110,17 @@ function BuyProduct() {
 					(sumMoney =
 						sumMoney + product[carts[item].product_id].price * carts[item].amount)
 			);
+		if (typeNumber) return sumMoney;
 		return ConvertStringToVND(sumMoney);
 	};
 	const handleDeleteCart = (idDelete) => {
 		const result = selectedRowKeys.filter((id) => id !== idDelete);
 		setSelectedRowKeys(result);
+	};
+	const handleImage = (cartId) => {
+		return carts[cartId] && carts[cartId].product_id
+			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
+			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};
 
 	// Vòng đời
@@ -134,7 +142,7 @@ function BuyProduct() {
 				key: idCart,
 				image: (
 					<img
-						src="https://picsum.photos/200"
+						src={handleImage(idCart)}
 						style={{ width: '50px', height: '50px', objectFit: 'cover' }}
 					/>
 				),

@@ -8,6 +8,7 @@ import useCartLogicData from '../../../hooks/useCartLogicData';
 import useProductLogicData from '../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../util/TypeDoDatHang';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 const { TabPane } = Tabs;
 const data = [
 	{
@@ -40,7 +41,7 @@ function DonHang() {
 	};
 	const handleImage = (cartId) => {
 		return carts[cartId] && carts[cartId].product_id
-			? product[carts[cartId].product_id].image
+			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
 			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};
 

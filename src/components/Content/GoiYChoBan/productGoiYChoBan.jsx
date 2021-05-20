@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 //style
 import Styles from './styleGoiY.module.css';
 import { Link } from 'react-router-dom';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 const { Meta } = Card;
 
 ProductListGoiYChoBan.propTypes = {};
@@ -73,7 +74,7 @@ function ProductListGoiYChoBan({ product }) {
 										cover={
 											<img
 												alt="Đồ chơi ô tô thả hình số đếm XE30a"
-												src="https://picsum.photos/200"
+												src={BASE_URL_IMAGE + item.image}
 											/>
 										}
 									>

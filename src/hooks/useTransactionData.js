@@ -4,12 +4,14 @@ import baseAPI from '../axios/baseAPI';
 import { TYPE_STORE, TypeApi } from '../util/TypeApi';
 import { TYPE_ACTION } from '../actions/TypeAction';
 import { message as messageAnt } from 'antd';
+import useCartLogicData from './useCartLogicData';
 // import PropTypes from 'prop-types';
 
 function useTransactionData() {
 	const dispatch = useDispatch();
 	const transaction = useSelector((state) => state[TYPE_STORE.transaction]);
 	const myUser = useSelector((state) => state[TYPE_STORE.myUser]);
+	const { getListCart } = useCartLogicData();
 
 	// handle func
 	const postTransaction = async (dataPrams = {}, handleSuccess = () => {}) => {
@@ -30,6 +32,7 @@ function useTransactionData() {
 		dataPrams['user_id'] = myUser._id;
 		const data = await baseAPI.getAll(TypeApi.transaction, dataPrams);
 		dispatch({ type: TYPE_ACTION.TRANSACTION.GET_LIST, payload: { data } });
+		getListCart();
 	};
 	return { transaction, postTransaction, getListTransaction };
 }

@@ -97,7 +97,6 @@ function DetailProduct() {
 		showDivs((slideIndex = n));
 	};
 	const showDivs = (value) => {
-		console.log('value', value);
 		let i;
 		const x = document.getElementsByClassName('mySlides');
 		const dots = document.getElementsByClassName('demo');
