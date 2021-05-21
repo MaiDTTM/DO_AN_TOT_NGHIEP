@@ -10,7 +10,7 @@
 .content_detail {
 	width: 100%;
 	position: static;
-	margin-top: 161px;
+	margin-top: 171px;
 	padding-top: 15px;
 	display: flex;
 	flex-direction: column;
@@ -215,25 +215,28 @@
 	margin-right: 5px;
 }
 .btn_detail {
-	width: 150px !important;
+	width: 200px !important;
 	height: 40px;
 	color: #282c34;
 	background: rgba(255, 87, 34, 0.1);
 	border: 1px solid #ee4d2d;
+	margin-right: 30px;
 }
 .btn_detail_them_vao_gio {
-	width: 150px !important;
+	width: 200px !important;
 	height: 40px;
-	margin-right: 15px;
 	font-size: 14px;
 	color: #fff;
 	background: #ee4d2d;
+	border: 1px solid #fff;
 }
-/*.btn_detail_them_vao_gio:hover {*/
-/*	background-color: #cbc9a4 !important;*/
-/*}*/
 .footer_detail {
 	background-color: #d9f3f4;
+}
+.btn_detail_them_vao_gio:hover{
+	color: #fff;
+	background: #ee4d2d;
+	border: 1px solid #fff;
 }
 .comment {
 	width: 90%;
@@ -297,8 +300,21 @@
 }
 .action_header_detail {
 	display: flex;
-	margin-left: 50px;
-	margin-top: 15px;
+}
+.action_binh_luan{
+	margin-right: 15px;
+	padding-right: 15px;
+	font-family: -moz-initial;
+	border-right: 1px solid #86dbd8;
+	color: #86dbd8;
+	cursor: pointer;
+}
+.action_thuong_hieu{
+	margin-right: 15px;
+	padding-right: 15px;
+	font-family: -moz-initial;
+	border-right: 1px solid #86dbd8;
+	cursor: pointer;
 }
 /*image*/
 .App {
@@ -325,12 +341,65 @@
 
 .copy {
 	background-color: #fff;
-	float: right;
 	width: 66.5%;
-	height: 100%;
 	padding: 20px;
 	font-family: sans-serif;
 	margin-left: 10px;
+	display: flex;
+	flex-direction: column;
+}
+.copy_header_detail{
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #de774e;
+}
+.action_header_detail_item{
+	font-size: 18px;
+	margin-right: 10px;
+	display: flex;
+	justify-content: space-between
+}
+.copy_content_detail{
+	display: flex;
+	flex-direction: column;
+	margin-left: 50px;
+	margin-top: 5px;
+}
+.copy_content_detail_item{
+	font-family: -moz-initial;
+	padding-top: 10px;
+	width: 100%;
+	display: flex;
+}
+.copy_content_detail_title{
+	width: 25%;
+	font-size: 20px;
+	margin: auto;
+}
+.copy_content_detail_values{
+	width: 75%;
+	font-size: 30px;
+	font-weight: bold;
+	color: #fd6a02;
+}
+.copy_content_detail_tinh_trang{
+	width: 75%;
+	color: #5abb5c;
+	font-weight: bold;
+	font-size: 18px;
+}
+.copy_content_detail_van_chuyen{
+	width: 75%;
+	font-size: 18px;
+}
+.copy_action_mua{
+}
+.copy_action_gio{
+}
+.copy_action_detail{
+	display: flex;
+	margin-bottom: 25px;
+	padding-top: 15px;
 }
 .copy >h1 {
 	color: #414141!important;

@@ -118,6 +118,10 @@
 	margin-left: 0.4125rem;
 	margin-top: 1.2125rem;
 }
+.card_item_all_flash:hover{
+	box-shadow: rgb(226, 104, 210) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px,
+	rgba(17, 17, 26, 0.1) 0px 16px 56px !important;
+}
 .card_item:hover {
 	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
 }

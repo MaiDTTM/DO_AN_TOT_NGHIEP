@@ -68,25 +68,46 @@ function ProductListGoiYChoBan({ product }) {
 							.slice(0, 40)
 							.map((item) => (
 								<Link to={`/detail/${item._id}`}>
-									<Card
-										hoverable
-										className={Styles.card_item_goi_y}
-										cover={
-											<img
-												alt="Đồ chơi ô tô thả hình số đếm XE30a"
-												src={BASE_URL_IMAGE + item.image}
+									{item['price_seo'] !== '0 %' ? (
+										<Card
+											hoverable
+											className={Styles.card_item_goi_y}
+											cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
+										>
+											<Meta
+												title={item.name}
+												description={
+													(item.price * 1000)
+														.toString()
+														.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
+												}
 											/>
-										}
-									>
-										<Meta
-											title={item.name}
-											description={
-												(item.price * 1000)
-													.toString()
-													.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
+											<div className={Styles._2TDZGE}>
+												<div className={Styles.percent}>{item['price_seo']}</div>
+												<div className={Styles._17XqBU}>giảm</div>
+											</div>
+										</Card>
+									) : (
+										<Card
+											hoverable
+											className={Styles.card_item_goi_y}
+											cover={
+												<img
+													alt="Đồ chơi ô tô thả hình số đếm XE30a"
+													src={BASE_URL_IMAGE + item.image}
+												/>
 											}
-										/>
-									</Card>
+										>
+											<Meta
+												title={item.name}
+												description={
+													(item.price * 1000)
+														.toString()
+														.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
+												}
+											/>
+										</Card>
+									)}
 								</Link>
 							))}
 					</div>

@@ -16,7 +16,7 @@ function FlashSale({ product }) {
 
 	// const
 	const arraySale = Object.values(product).filter((item) => item['price_seo'].length > 0);
-
+	const newArraySale = arraySale.filter((item) => item['price_seo'] !== '0 %');
 	// handle func
 	const onFinish = () => {
 		console.log('finished!');
@@ -79,7 +79,7 @@ function FlashSale({ product }) {
 							position: 'relative',
 						}}
 					>
-						{arraySale.slice(numberStart, numberEnd).map((item) => (
+						{newArraySale.slice(numberStart, numberEnd).map((item) => (
 							<Link to={`/detail/${item._id}`}>
 								<Card
 									hoverable

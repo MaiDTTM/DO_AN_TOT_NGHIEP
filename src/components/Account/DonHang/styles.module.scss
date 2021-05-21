@@ -101,47 +101,215 @@
 .header_trang_thai {
 	color: #ee4d2d;
 }
-.footer_logo{
-    width: 1.375rem;
-    height: 1.375rem;
-    margin-right: .3125rem;
+.footer_logo {
+	width: 1.375rem;
+	height: 1.375rem;
+	margin-right: 0.3125rem;
 }
-.footer_tien{
-    color: #ee4d2d;
-    font-size: 1.075rem;
-    line-height: 2rem;
+.footer_tien {
+	color: #ee4d2d;
+	font-size: 1.075rem;
+	line-height: 2rem;
 }
-.footer_list{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    -webkit-box-align: end;
+.footer_list {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: flex-end;
+	-webkit-box-align: end;
 }
-.footer_list_one{
-    display: flex;
-    -webkit-box-pack: end;
+.footer_list_one {
+	display: flex;
+	-webkit-box-pack: end;
 }
-.footer_tong_tien{
-    margin-top: 12px;
-    margin-right: 10px;
+.footer_tong_tien {
+	margin-top: 12px;
+	margin-right: 10px;
 }
-.footer_action{
-    display: flex;
+.footer_action {
+	display: flex;
 }
-.btn_action{
-    margin-left: 10px;
-    background-color: #f05d40;
-    padding: 0 .625rem;
-    box-sizing: border-box;
-    font-weight: 300;
-    color: #fff;
-    transition: opacity .2s ease;
-    border-radius: 2px;
-    user-select: none;
+.btn_action {
+	margin-left: 10px;
+	background-color: #f05d40;
+	padding: 0 0.625rem;
+	box-sizing: border-box;
+	font-weight: 300;
+	color: #fff;
+	transition: opacity 0.2s ease;
+	border-radius: 2px;
+	user-select: none;
 }
-.btn_action:hover{
-    background-color: #61dafb;
-    color: #fff;
-    border: none;
+.btn_action:hover {
+	background-color: #61dafb;
+	color: #fff;
+	border: none;
+}
+.modal_xem_detail {
+	display: flex;
+	flex-direction: column;
+}
+.top_order_detail {
+	float: left;
+	width: 698px;
+	background: #f9f9f9;
+	border-bottom: 1px solid #ededed;
+	padding-left: 33px;
+	display: flex;
+	flex-direction: column;
+}
+.content_order_detail {
+	float: left;
+	width: 100%;
+}
+.title_order {
+	background: #f9f9f9;
+	border-bottom: 1px solid #e4e4e4;
+	float: left;
+	width: 654px;
+	height: 37px;
+	line-height: 40px;
+	font-size: 18px;
+	color: #222;
+}
+.title_order > b {
+	font-family: Arial, Tahoma;
+	font-weight: bold !important;
+}
+.order_info {
+	width: 654px;
+	float: left;
+	padding: 5px 0 5px 5px;
+}
+.add_giaohang {
+	width: 654px;
+	float: left;
+	padding: 5px 0 5px 5px;
+	display: flex;
+}
+.line_order_info {
+	width: 100%;
+	float: left;
+	display: flex;
+	flex-direction: row;
+	line-height: 35px;
+	border-bottom: 1px solid #ededed;
+}
+.line_order_info_left{
+	display: flex;
+	width: 40%;
+}
+.line_order_info_right{
+	display: flex;
+	width: 60%;
+}
+.left_order_info {
+	width: 110px;
+	float: left;
+	white-space: nowrap;
+}
+.right_order_info {
+	width: 190px;
+	float: left;
+}
+.right_order_info > b {
+	font-family: Arial, Tahoma;
+	font-weight: bold !important;
+}
+.line_add_gh {
+	height: 35px;
+	line-height: 35px;
+}
+.header_manage_order {
+	width: 100%;
+	float: left;
+	border-bottom: 1px solid #cdcdcd;
+	padding: 0 16px;
+	height: 38px;
+	line-height: 48px;
+}
+.header_manage_order > span {
+	font-size: 13px;
+}
+.head_col1 {
+	float: left;
+	width: 465px;
+	text-transform: uppercase;
+	padding-left: 3px;
+}
+.head_col2 {
+	float: left;
+	width: 103px;
+	text-transform: uppercase;
+}
+.head_col3 {
+	float: left;
+	text-transform: uppercase;
+}
+.inside_order_detail {
+	float: left;
+	width: 100%;
+	padding: 0 16px;
+	display: flex;
+	flex-direction: column;
+}
+.item_order {
+	float: left;
+	width: 100%;
+	border-bottom: 1px solid #f2f2f2;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+}
+.item_order_name {
+	width: 386px;
+	float: left;
+}
+.bottom_order {
+	float: left;
+	width: 100%;
+	margin: 10px 0 0 !important;
+}
+.bottom_order b {
+	font-family: Arial,Tahoma;
+	font-weight: bold!important;
+}
+.bottom_order > span {
+	font-size: 13px;
+}
+.item_order > img {
+	float: left;
+	width: 63px;
+	height: 63px;
+}
+.name_order_detail {
+	display: block;
+	margin: 13px 0 0 10px;
+}
+.item_order_gia {
+	margin: 15px 0 0 15px;
+	float: left;
+}
+.item_order_tien {
+	margin: 15px 0 0 57px;
+	float: left;
+}
+.bottom_order {
+	float: left;
+	width: 100%;
+	margin: 0 0 0;
+}
+.count_pro_order {
+	float: left;
+	margin-left: 31px;
+}
+.total_price_order {
+	float: right;
+	padding-right: 26px;
+	border-bottom: 1px solid #f2f2f2;
+}
+.total_price_order_clear{
+	float: right;
+	padding-right: 26px;
+	clear: both;
 }

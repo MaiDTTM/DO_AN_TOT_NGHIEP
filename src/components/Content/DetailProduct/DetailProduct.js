@@ -203,146 +203,47 @@ function DetailProduct() {
 							</div>
 						</div>
 						<div className={Styles.copy}>
-							<div>
-								<div>
-									<h1>{objDetail.name}</h1>
-								</div>
+							<div className={Styles.copy_header_detail}>
+								<h1>{objDetail.name}</h1>
 								<div className={Styles.action_header_detail}>
-									<div
-										style={{
-											borderRight: '2px solid #f1f1f1',
-											marginRight: '10px',
-											display: 'flex',
-											justifyContent: 'space-between',
-										}}
-									>
-										<Rate
-											allowHalf
-											defaultValue={2.5}
-											style={{ fontSize: '18px', marginRight: '20px' }}
-										/>
-										<div
-											style={{
-												fontSize: '20px',
-												marginRight: '15px',
-												fontFamily: '-moz-initial',
-												color: '#86dbd8',
-												cursor: 'pointer',
-											}}
-										>
+									<div className={Styles.action_header_detail_item}>
+										<Rate allowHalf defaultValue={2.5} style={{ fontSize: '18px' }} />
+										<div className={Styles.action_binh_luan} style={{ marginLeft: 10 }}>
 											Bình luận
 										</div>
+										<div className={Styles.action_thuong_hieu}>Thương hiệu : GCB</div>
+										<div className={Styles.action_thuong_hieu}>
+											Mã SP : <span>DCG-69782</span>
+										</div>
 									</div>
-									<p
-										style={{
-											fontSize: '20px',
-											marginRight: '20px',
-											fontFamily: '-moz-initial',
-										}}
-									>
-										Thương hiệu : GCB Mã SP : DCG-69782
-									</p>
 								</div>
 							</div>
-							<hr
-								style={{
-									height: '2px',
-									borderWidth: '0',
-									color: '#5deccf',
-									backgroundColor: '#efdada',
-								}}
-							/>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'column',
-									// width: '70%',
-									height: 'auto',
-									marginLeft: '50px',
-									marginTop: '30px',
-								}}
-							>
-								<div style={{ display: 'flex', width: '80%' }}>
-									<div
-										style={{
-											fontSize: '20px',
-											fontFamily: '-moz-initial',
-											paddingTop: '30px',
-										}}
-									>
-										Giá :
-									</div>
-									<div
-										style={{
-											fontSize: '40px',
-											fontWeight: 'bold',
-											color: '#fd6a02',
-											marginLeft: '100px',
-										}}
-									>
+							<div className={Styles.copy_content_detail}>
+								<div className={Styles.copy_content_detail_item}>
+									<div className={Styles.copy_content_detail_title}>Giá :</div>
+									<div className={Styles.copy_content_detail_values}>
 										{(objDetail.price * 1000)
 											.toString()
 											.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
 									</div>
 								</div>
-								<div style={{ display: 'flex', width: '80%' }}>
-									<div
-										style={{
-											fontSize: '20px',
-											fontFamily: '-moz-initial',
-											paddingTop: '10px',
-										}}
-									>
-										Tình trạng :
-									</div>
-									<div
-										style={{
-											color: '#5abb5c',
-											fontWeight: 'bold',
-											fontSize: '24px',
-											marginLeft: '50px',
-										}}
-									>
+								<div className={Styles.copy_content_detail_item}>
+									<div className={Styles.copy_content_detail_title}>Tình trạng :</div>
+									<div className={Styles.copy_content_detail_tinh_trang}>
 										{objDetail.amount - objDetail['sold'] > 0 ? 'Còn hàng' : 'Hết hàng'}
 									</div>
 								</div>
-								<div style={{ display: 'flex', width: '80%' }}>
-									<div
-										style={{
-											fontSize: '20px',
-											fontFamily: '-moz-initial',
-										}}
-									>
-										Vận chuyển :
-									</div>
-									<div
-										style={{
-											fontFamily: '-moz-initial',
-											marginLeft: '80px',
-											marginTop: '10px',
-											fontSize: '18px',
-										}}
-									>
-										<b style={{ fontSize: '22px' }}>Miễn phí vận chuyển</b> cho đơn hàng
-										từ 100.000đ
+								<div className={Styles.copy_content_detail_item}>
+									<div className={Styles.copy_content_detail_title}>Vận chuyển :</div>
+									<div className={Styles.copy_content_detail_van_chuyen}>
+										<span>
+											<strong>Miễn phí vận chuyển </strong>
+											cho đơn hàng 100.000đ
+										</span>
 									</div>
 								</div>
-								<div
-									style={{
-										display: 'flex',
-										width: '80%',
-										marginBottom: '25px',
-										paddingTop: '15px',
-									}}
-								>
-									<div
-										style={{
-											marginLeft: '10%',
-											width: '100%',
-											display: 'flex',
-											justifyContent: 'flex-start',
-										}}
-									>
+								<div className={Styles.copy_action_detail}>
+									<div className={Styles.copy_action_mua}>
 										<Button
 											type="primary"
 											className={Styles.btn_detail}
@@ -351,7 +252,7 @@ function DetailProduct() {
 											Mua ngay
 										</Button>
 									</div>
-									<div style={{ width: '40%' }}>
+									<div className={Styles.copy_action_gio}>
 										<Button
 											className={Styles.btn_detail_them_vao_gio}
 											onClick={handleAddCart}
@@ -362,7 +263,9 @@ function DetailProduct() {
 									</div>
 								</div>
 								<div>
-									Tổng đài mua hàng miễn cước 1800 6066 ( Từ 8h đến 21h30 hằng ngày )
+									Tổng đài mua hàng miễn cước{' '}
+									<span style={{ color: '#ff3600', fontWeight: 'bold' }}>1800 6066</span>{' '}
+									( Từ 8h đến 21h30 hằng ngày )
 								</div>
 								<div className={Styles.box_icon}>
 									<div className={Styles.box_icon_item}>

@@ -7,6 +7,7 @@ import { Card } from 'antd';
 import Styles from '../Style.module.css';
 import { useSelector } from 'react-redux';
 import Footer from '../../../Footer/footer';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 const { Meta } = Card;
 // import PropTypes from 'prop-types';
 const deadline = Date.now() + 1000 * 60 * 60 * 2 + 1000 * 30; // Moment is also OK
@@ -15,6 +16,7 @@ function AllFlashSale() {
 	// state
 	// const
 	const arraySale = Object.values(product).filter((item) => item['price_seo'].length > 0);
+	const newArraySale = arraySale.filter((item) => item['price_seo'] !== '0 %');
 	const onFinish = () => {
 		console.log('finished!');
 	};
@@ -35,17 +37,12 @@ function AllFlashSale() {
 					</div>
 				</div>
 				<div className={style.values_content_flash_sale}>
-					{arraySale.map((item) => (
+					{newArraySale.map((item) => (
 						<Link to={`/detail/${item._id}`}>
 							<Card
 								hoverable
 								className={Styles.card_item_all_flash}
-								cover={
-									<img
-										alt="Bảng số có núm gỗ - BA101"
-										src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400"
-									/>
-								}
+								cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
 							>
 								<Meta
 									title={item.name}

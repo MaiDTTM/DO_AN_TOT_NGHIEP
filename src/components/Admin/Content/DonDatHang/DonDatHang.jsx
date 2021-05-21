@@ -97,12 +97,6 @@ function DonDatHang() {
 						<div>
 							Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
 						</div>
-						{/*{item['status_transaction'] === TYPE_TRANSACTION.DA_HUY && (*/}
-						{/*	<div>*/}
-						{/*		Nguyên nhân hủy :{' '}*/}
-						{/*		<span style={{ marginLeft: 5 }}>{item.messageError}</span>*/}
-						{/*	</div>*/}
-						{/*)}*/}
 					</div>
 					<div className={style.footer_list_ringth}>
 						<div className={style.footer_list_one}>

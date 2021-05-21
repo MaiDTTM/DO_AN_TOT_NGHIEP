@@ -1,5 +1,10 @@
 import React from 'react';
 import { Card } from 'antd';
+import img1 from '../../../img/xau-vong-trang-suc-dong-ho-5.jpg';
+import img2 from '../../../img/do-choi-go-doan-tau-cho-thu-3.jpg';
+import img3 from '../../../img/ban-tinh-hoc-toan-cho-be-1.jpg';
+import img4 from '../../../img/bo-so-dem-toan-hoc-2.jpg';
+import img5 from '../../../img/domino-toan-hoc-do04-3.jpg';
 //style
 import './styleXuHuong.css';
 
@@ -25,47 +30,47 @@ function ProductListXuHuong(props) {
 				<div className="content_tim_kien">
 					<div className="content_tim_kien_item">
 						<div className="title">
-							<div>Sandal Nữ</div>
+							<div>Xâu vòng trang sức</div>
 							<div>409k+ sản phẩm</div>
 						</div>
 						<div className="img">
-							<img src="https://dochoigovn.com/wp-content/uploads/2019/05/Vai-tr%C3%B2-c%E1%BB%A7a-%C4%91%E1%BB%93-ch%C6%A1i-g%E1%BB%97-tr%C3%AD-tu%E1%BB%87-%E1%BA%A3nh-h%C6%B0%E1%BB%9Fng-%C4%91%E1%BA%BFn-tr%E1%BA%BB-nh%E1%BB%8F.jpg" />
+							<img src={img1} />
 						</div>
 					</div>
 					<div className="content_tim_kien_item">
 						<div className="title">
-							<div>Váy Trắng</div>
-							<div>74k+ sản phẩm</div>
+							<div>Đoàn tàu chở thứ</div>
+							<div>185k+ sản phẩm</div>
 						</div>
 						<div className="img">
-							<img src="https://cf.shopee.vn/file/b2ca659b0b32171695df84336560ffcc" />
+							<img src={img2} />
 						</div>
 					</div>
 					<div className="content_tim_kien_item">
 						<div className="title">
-							<div>Balo Nữ</div>
+							<div>Bàn tính học toán BA01</div>
+							<div>70k+ sản phẩm</div>
+						</div>
+						<div className="img">
+							<img src={img3} />
+						</div>
+					</div>
+					<div className="content_tim_kien_item">
+						<div className="title">
+							<div>Bảng số đếm</div>
+							<div>159k+ sản phẩm</div>
+						</div>
+						<div className="img">
+							<img src={img4} />
+						</div>
+					</div>
+					<div className="content_tim_kien_item">
+						<div className="title">
+							<div>Domino Toán học</div>
 							<div>279k+ sản phẩm</div>
 						</div>
 						<div className="img">
-							<img src="https://cf.shopee.vn/file/b2ca659b0b32171695df84336560ffcc" />
-						</div>
-					</div>
-					<div className="content_tim_kien_item">
-						<div className="title">
-							<div>Balo Nữ</div>
-							<div>279k+ sản phẩm</div>
-						</div>
-						<div className="img">
-							<img src="https://cf.shopee.vn/file/b2ca659b0b32171695df84336560ffcc" />
-						</div>
-					</div>
-					<div className="content_tim_kien_item">
-						<div className="title">
-							<div>Balo Nữ</div>
-							<div>279k+ sản phẩm</div>
-						</div>
-						<div className="img">
-							<img src="https://cf.shopee.vn/file/b2ca659b0b32171695df84336560ffcc" />
+							<img src={img5} />
 						</div>
 					</div>
 				</div>
