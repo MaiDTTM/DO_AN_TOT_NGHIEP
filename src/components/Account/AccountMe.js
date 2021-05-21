@@ -1,5 +1,4 @@
 import React from 'react';
-import Styles from '../Content/DetailProduct/Style.module.css';
 import style from './styles.module.css';
 import { Avatar, Button, Menu } from 'antd';
 import {
@@ -78,7 +77,7 @@ function AccountMe() {
 		history.push(`/account?show=${key.key}`);
 	};
 	return (
-		<div className={Styles.header_home}>
+		<React.Fragment>
 			<Chung />
 			<div className={style.content_account}>
 				<div className={style.user_page_sidebar}>
@@ -131,7 +130,7 @@ function AccountMe() {
 								className="content"
 								style={{ display: 'none', backgroundColor: '#ffffff' }}
 							>
-								<DonHang />
+								{/*<DonHang />*/}
 							</div>
 							{/*content 3*/}
 							<div
@@ -151,7 +150,7 @@ function AccountMe() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</React.Fragment>
 	);
 }
 

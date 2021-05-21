@@ -6,6 +6,7 @@ import { Card, Pagination } from 'antd';
 import Footer from '../../Footer/footer';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 const { Meta } = Card;
 function TatCaSP() {
 	const product = useSelector((state) => state['product']);
@@ -32,7 +33,7 @@ function TatCaSP() {
 									cover={
 										<img
 											alt="Đồ chơi ô tô thả hình số đếm XE30a"
-											src="https://picsum.photos/200"
+											src={BASE_URL_IMAGE + item.image}
 										/>
 									}
 								>

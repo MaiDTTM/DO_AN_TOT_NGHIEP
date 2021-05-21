@@ -27,7 +27,8 @@ function WatchCatagory() {
 	// const
 	const parsed = queryString.parse(history.location.search);
 	const id = parsed['_id'];
-	const title = categoryId ? category[categoryId].name : 'Tất cả sản phẩm';
+	const title =
+		categoryId && category[categoryId] ? category[categoryId].name : 'Tất cả sản phẩm';
 	const arrProduct = categoryId
 		? Object.values(product).filter((item) => item['catalog_id'] === categoryId)
 		: Object.values(product);
@@ -38,9 +39,6 @@ function WatchCatagory() {
 		return '#ffffff';
 	};
 	const onClickCategory = (id) => {
-		// console.log('idOld.current', idOld.current); // MongLV log fix bug
-		// console.log('id', id); // MongLV log fix bug
-		// console.log('idOld.current === id', idOld.current === id); // MongLV log fix bug
 		if (`${idOld.current}` === `${id}`) {
 			categoryId ? setCategoryId('') : setCategoryId(id);
 		} else {
@@ -48,9 +46,6 @@ function WatchCatagory() {
 			idOld.current = id;
 		}
 	};
-
-	console.log('categoryId', categoryId); // MongLV log fix bug
-	console.log('idOld.current', idOld.current); // MongLV log fix bug
 
 	// Vòng đời
 	React.useEffect(() => {

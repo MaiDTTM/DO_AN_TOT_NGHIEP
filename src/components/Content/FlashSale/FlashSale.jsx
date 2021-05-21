@@ -4,6 +4,7 @@ import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import Styles from './Style.module.css';
 import { Link } from 'react-router-dom';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 const { Meta } = Card;
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 2 + 1000 * 30; // Moment is also OK
@@ -83,12 +84,7 @@ function FlashSale({ product }) {
 								<Card
 									hoverable
 									className={Styles.card_item}
-									cover={
-										<img
-											alt="Bảng số có núm gỗ - BA101"
-											src="https://media.shoptretho.com.vn/upload/image/product/20170524/bang-so-co-num-ba101-1.jpg?mode=max&width=400&height=400"
-										/>
-									}
+									cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
 								>
 									<Meta
 										title={item.name}

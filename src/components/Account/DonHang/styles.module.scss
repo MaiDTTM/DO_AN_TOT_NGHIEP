@@ -27,6 +27,13 @@
 }
 .card_container {
 	width: 100%;
+	:global {
+		.ant-list-bordered {
+			//border-radius: 20px;
+			margin: 10px;
+			border: 1px solid red;
+		}
+	}
 }
 .ant-tabs-tab {
 	width: 50px !important;
@@ -123,7 +130,7 @@
     display: flex;
 }
 .btn_action{
-    margin-right: 10px;
+    margin-left: 10px;
     background-color: #f05d40;
     padding: 0 .625rem;
     box-sizing: border-box;

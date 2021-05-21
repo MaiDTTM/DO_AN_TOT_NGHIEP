@@ -9,6 +9,8 @@ import useProductLogicData from '../../hooks/useProductLogicData';
 import useSliderLogicData from '../../hooks/useSliderLogicData';
 import useCustomerLogicData from '../../hooks/useCustomerLogicData';
 import useUserAdminLogicData from '../../hooks/useUserAdminLogicData';
+import useCartLogicData from '../../hooks/useCartLogicData';
+import useTransactionData from '../../hooks/useTransactionData';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -29,6 +31,8 @@ function LayoutAdmin() {
 	const { getListSlider } = useSliderLogicData();
 	const { getListCustomer } = useCustomerLogicData();
 	const { getListAdmin } = useUserAdminLogicData();
+	const { getListCart } = useCartLogicData();
+	const { getListTransaction } = useTransactionData();
 	// state
 	const [collapsed, setCollapsed] = useState(false);
 	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
@@ -44,6 +48,8 @@ function LayoutAdmin() {
 		getListSlider();
 		getListCustomer();
 		getListAdmin();
+		getListTransaction({}, true);
+		getListCart();
 	}, []);
 	return (
 		<Layout>

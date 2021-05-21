@@ -1,32 +1,21 @@
 import React from 'react';
-import Advertisement from '../../Header/advertisement/advertisement';
-import MenuHome from '../../Header/menuHeader/MenuHome';
 import '../../Header/advertisement/style.scss';
 import '../../Header/menuHeader/style.module.css';
-import Styles from './Style.module.css';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import Styles from './Style.module.scss';
 import { Button, Card, Rate, Pagination, message, Empty } from 'antd';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import CommentProduct from './Comment/Comment';
 import Footer from '../../Footer/footer';
-import BuyProduct from './BuyProduct/BuyProduct';
 import Chung from '../../Header/Chung';
 import { useDispatch, useSelector } from 'react-redux';
 import baseAPI from '../../../axios/baseAPI';
-import { TypeApi } from '../../../util/TypeApi';
+import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
 import { TYPE_ACTION } from '../../../actions/TypeAction';
 import ReactImageMagnify from 'react-image-magnify';
 const { Meta } = Card;
 const key = 'updatable';
 // import PropTypes from 'prop-types';
-const Style = {
-	width: '100%',
-	height: '60px',
-	display: 'flex',
-	justifyContent: 'center',
-	backgroundColor: '#ea2190',
-	float: 'left',
-};
+
 const imageBaseUrl = 'https://s3-us-west-1.amazonaws.com/react-package-assets/images/';
 const images = [
 	{ name: 'wristwatch_355.jpg', vw: '355w' },
@@ -56,6 +45,7 @@ function DetailProduct() {
 	// state
 	const [objDetail, setObjDetail] = React.useState({});
 	const [productSuggest, setProductSuggest] = React.useState([]);
+	const [imageActive, setImageActive] = React.useState('');
 	const handleBuyProduct = () => {
 		myUser.email
 			? history.push('/buyproduct')
@@ -128,18 +118,20 @@ function DetailProduct() {
 			: getProduct({ _id: id }, setObjDetail, 'getId');
 	}, [id]);
 	React.useEffect(() => {
-		Object.values(objDetail).length > 0 &&
+		if (Object.values(objDetail).length > 0) {
 			getProduct({ catalog_id: objDetail.catalog_id }, setProductSuggest);
+			setImageActive(objDetail.image_destination[0]);
+		}
 	}, [objDetail]);
 
 	// const image
-	const srcSet = () => {
-		return images
-			.map((image) => {
-				return `${imageBaseUrl}${image.name} ${image.vw}`;
-			})
-			.join(', ');
-	};
+	// const srcSet = () => {
+	// 	return images
+	// 		.map((image) => {
+	// 			return `${imageBaseUrl}${image.name} ${image.vw}`;
+	// 		})
+	// 		.join(', ');
+	// };
 	return (
 		<div>
 			<Chung />
@@ -168,16 +160,16 @@ function DetailProduct() {
 									smallImage: {
 										alt: 'Wristwatch by Ted Baker London',
 										isFluidWidth: true,
-										src: `${imageBaseUrl}wristwatch_1033.jpg`,
-										srcSet: srcSet,
+										src: `${BASE_URL_IMAGE}${imageActive}`,
+										// srcSet: srcSet,
 										sizes: '(min-width: 800px) 33.5vw, (min-width: 415px) 50vw, 100vw',
 										className: 'mySlides',
 									},
 									largeImage: {
 										alt: '',
-										src: `${imageBaseUrl}wristwatch_1200.jpg`,
+										src: `${BASE_URL_IMAGE}${imageActive}`,
 										width: 1200,
-										height: 1800,
+										height: 1200,
 									},
 									enlargedImageContainerStyle: {
 										zIndex: '1500',
@@ -189,6 +181,26 @@ function DetailProduct() {
 									isHintEnabled: true,
 								}}
 							/>
+							<div
+								className={'flex_row'}
+								style={{ marginTop: 10, justifyContent: 'center' }}
+							>
+								{objDetail.image_destination &&
+									objDetail.image_destination.map((name) => (
+										<img
+											src={BASE_URL_IMAGE + name}
+											style={{
+												width: 65,
+												height: 65,
+												cursor: 'pointer',
+												border: imageActive === name ? '1px solid red' : '1px solid #fff',
+												objectFit: 'cover',
+												marginLeft: 5,
+											}}
+											onClick={() => setImageActive(name)}
+										/>
+									))}
+							</div>
 						</div>
 						<div className={Styles.copy}>
 							<div>
@@ -291,7 +303,7 @@ function DetailProduct() {
 											marginLeft: '50px',
 										}}
 									>
-										{objDetail.status}
+										{objDetail.amount - objDetail['sold'] > 0 ? 'Còn hàng' : 'Hết hàng'}
 									</div>
 								</div>
 								<div style={{ display: 'flex', width: '80%' }}>
@@ -405,14 +417,14 @@ function DetailProduct() {
 						</div>
 					</div>
 					<div className={Styles.content_3}>
-						<div className={Styles._3wdEZ5}>
-							<div className={Styles._2pGc2E}>CHI TIẾT SẢN PHẨM</div>
-							<div className={Styles._1afiLm}>{objDetail.product_detail}</div>
-						</div>
+						{/*<div className={Styles._3wdEZ5}>*/}
+						{/*	<div className={Styles._2pGc2E}>CHI TIẾT SẢN PHẨM</div>*/}
+						{/*	<div className={Styles._1afiLm}>{objDetail.product_detail}</div>*/}
+						{/*</div>*/}
 						<div className={Styles._3wdEZ5_2}>
 							<div className={Styles._2pGc2E}>MÔ TẢ SẢN PHẨM</div>
 							<div className={Styles._1afiLm_1}>
-								<div className={Styles._3yZnxJ}>{objDetail.description}</div>
+								<div dangerouslySetInnerHTML={{ __html: objDetail.description }} />
 							</div>
 						</div>
 					</div>

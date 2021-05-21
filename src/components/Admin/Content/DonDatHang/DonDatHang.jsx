@@ -1,33 +1,50 @@
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Tabs, List, Avatar, Button, message, Spin, Image } from 'antd';
-import style from './style.module.css';
+import { Tabs, List, Button, Image, Modal, Input } from 'antd';
+import style from './style.module.scss';
 import logo from '../../../../img/tong_tien.png';
 import useTransactionData from '../../../../hooks/useTransactionData';
 import useCartLogicData from '../../../../hooks/useCartLogicData';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 const { TabPane } = Tabs;
-
+const { TextArea } = Input;
 function DonDatHang() {
-	const { transaction, getListTransaction, putTransaction } = useTransactionData();
-	const { carts, getListCart } = useCartLogicData();
-	const { product, getListProduct } = useProductLogicData();
+	const { transaction, putTransaction } = useTransactionData();
+	const { carts } = useCartLogicData();
+	const { product } = useProductLogicData();
 
 	// state
 	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
-
+	const [itemCancel, setItemCancel] = React.useState(null);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [valuesCancel, setValuesCancel] = useState('');
+	// handleFunction
 	const handleImage = (cartId) => {
 		return carts[cartId] && carts[cartId].product_id
-			? product[carts[cartId].product_id].image
+			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
 			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
+	};
+	const handleCancel = () => {
+		setIsModalVisible(false);
+		setItemCancel(null);
+		setValuesCancel('');
+	};
+
+	const handleOk = () => {
+		itemCancel['status_transaction'] = TYPE_TRANSACTION.DA_HUY;
+		valuesCancel && (itemCancel['messageError'] = valuesCancel);
+		putTransaction(itemCancel, handleCancel);
 	};
 
 	const callback = (key) => {
 		setType(key);
 	};
-
+	const onChangeCancel = (e) => {
+		setValuesCancel(e.target.value);
+	};
 	const updateStatus = (item) => {
 		switch (item['status_transaction']) {
 			case TYPE_TRANSACTION.CHO_XAC_NHAN:
@@ -46,8 +63,11 @@ function DonDatHang() {
 				item['status_transaction'] = TYPE_TRANSACTION.CHO_XAC_NHAN;
 				break;
 		}
-		console.log('item', item); // MongLV log fix bug
 		putTransaction(item);
+	};
+	const handleHuyDon = (item) => {
+		setItemCancel(item);
+		setIsModalVisible(true);
 	};
 
 	const transactionFilter = () => {
@@ -55,14 +75,8 @@ function DonDatHang() {
 		if (type !== 'Tất cả') {
 			arr = Object.values(transaction).filter((item) => item.status_transaction === type);
 		}
-		return arr;
+		return arr.reverse();
 	};
-
-	useEffect(() => {
-		getListTransaction({}, true);
-		getListCart();
-		getListProduct();
-	}, []);
 
 	// JSX
 	const ListComponent = (item) => (
@@ -77,35 +91,18 @@ function DonDatHang() {
 			footer={
 				<div className={style.footer_list}>
 					<div className={style.footer_list_left}>
-						{item['status_transaction'] !== TYPE_TRANSACTION.DA_GIAO ? (
-							<>
-								<div>
-									<Button
-										type="primary"
-										disabled={type === TYPE_TRANSACTION.ALL}
-										onClick={() => updateStatus(item)}
-									>
-										Xác nhận
-									</Button>
-								</div>
-								<div>
-									<Button danger type="primary" disabled={type === TYPE_TRANSACTION.ALL}>
-										Hủy đơn
-									</Button>
-								</div>
-							</>
-						) : (
-							<div></div>
-						)}
-
 						<div>
-							<div>
-								Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
-							</div>
-							<div>
-								Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
-							</div>
+							Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
 						</div>
+						<div>
+							Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+						</div>
+						{/*{item['status_transaction'] === TYPE_TRANSACTION.DA_HUY && (*/}
+						{/*	<div>*/}
+						{/*		Nguyên nhân hủy :{' '}*/}
+						{/*		<span style={{ marginLeft: 5 }}>{item.messageError}</span>*/}
+						{/*	</div>*/}
+						{/*)}*/}
 					</div>
 					<div className={style.footer_list_ringth}>
 						<div className={style.footer_list_one}>
@@ -115,9 +112,46 @@ function DonDatHang() {
 							<span className={style.footer_tong_tien}>Tổng số tiền : </span>
 							<span className={style.footer_tien}>{ConvertStringToVND(item.amount)}</span>
 						</div>
-						{/*<div className={style.footer_action}>*/}
-						{/*	<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>*/}
-						{/*</div>*/}
+						<div className={style.footer_action}>
+							{item['status_transaction'] !== TYPE_TRANSACTION.DA_GIAO &&
+							item['status_transaction'] !== TYPE_TRANSACTION.DA_HUY ? (
+								<>
+									<div>
+										<Button
+											type="primary"
+											disabled={type === TYPE_TRANSACTION.ALL}
+											onClick={() => updateStatus(item)}
+										>
+											Xác nhận
+										</Button>
+									</div>
+									<div style={{ marginLeft: 10 }}>
+										<Button
+											danger
+											type="primary"
+											disabled={type === TYPE_TRANSACTION.ALL}
+											onClick={() => handleHuyDon(item)}
+										>
+											Hủy đơn
+										</Button>
+									</div>
+								</>
+							) : (
+								<div />
+							)}
+							{/*{item['status_transaction'] === TYPE_TRANSACTION.DA_HUY && (*/}
+							{/*	<div style={{ marginLeft: 10 }}>*/}
+							{/*		<Button*/}
+							{/*			type="primary"*/}
+							{/*			disabled={type === TYPE_TRANSACTION.ALL}*/}
+							{/*			onClick={() => updateStatus(item)}*/}
+							{/*		>*/}
+							{/*			Đặt lại*/}
+							{/*		</Button>*/}
+							{/*	</div>*/}
+							{/*)}*/}
+							<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
+						</div>
 					</div>
 				</div>
 			}
@@ -157,43 +191,39 @@ function DonDatHang() {
 			<div className={style.card_container}>
 				<Tabs type="card" className={style.tab_ant} onChange={callback}>
 					<TabPane tab={TYPE_TRANSACTION.ALL} key={TYPE_TRANSACTION.ALL}>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 					<TabPane
 						tab={TYPE_TRANSACTION.CHO_XAC_NHAN}
 						key={TYPE_TRANSACTION.CHO_XAC_NHAN}
 					>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 					<TabPane
 						tab={TYPE_TRANSACTION.CHO_LAY_HANG}
 						key={TYPE_TRANSACTION.CHO_LAY_HANG}
 					>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 					<TabPane tab={TYPE_TRANSACTION.DANG_GIAO} key={TYPE_TRANSACTION.DANG_GIAO}>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 					<TabPane tab={TYPE_TRANSACTION.DA_GIAO} key={TYPE_TRANSACTION.DA_GIAO}>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 					<TabPane tab={TYPE_TRANSACTION.DA_HUY} key={TYPE_TRANSACTION.DA_HUY}>
-						<div style={{ marginBottom: 20, border: '1px solid red' }}>
-							{transactionFilter().map((item) => ListComponent(item))}
-						</div>
+						{transactionFilter().map((item) => ListComponent(item))}
 					</TabPane>
 				</Tabs>
 			</div>
+			<Modal
+				title="Lý do hủy đơn ?"
+				visible={isModalVisible}
+				onOk={handleOk}
+				onCancel={handleCancel}
+			>
+				<TextArea placeholder="Lý do hủy đơn của bạn là gì ?" onChange={onChangeCancel} />
+			</Modal>
 		</div>
 	);
 }

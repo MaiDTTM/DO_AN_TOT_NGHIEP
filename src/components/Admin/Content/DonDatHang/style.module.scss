@@ -19,7 +19,15 @@
 	text-transform: uppercase;
 	color: white;
 	border-radius: var(--border-width);
+	:global {
+		.ant-list-bordered {
+			border-radius: 20px;
+			margin: 10px;
+			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		}
+	}
 }
+
 .card_container :after {
 	position: absolute;
 	content: '';
@@ -184,9 +192,6 @@
 .footer_list_left{
 	width: 40%;
 	color: #dd5a14;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
 }
 .footer_list_ringth{
 	display: flex;
@@ -200,9 +205,10 @@
 }
 .footer_action{
 	display: flex;
+	flex-direction: row;
 }
 .btn_action{
-	margin-right: 10px;
+	margin-left: 10px;
 	background-color: #f05d40;
 	padding: 0 .625rem;
 	box-sizing: border-box;
