@@ -15,9 +15,6 @@ const myUserReducer = (user = {}, action) => {
 		case TYPE_ACTION.USER.EDIT_USER:
 			setLocalStore(action.payload.data);
 			return action.payload.data;
-		case TYPE_ACTION.ADMIN.LOGIN:
-			setLocalStore(action.payload.data);
-			return action.payload.data;
 		default:
 			return user;
 	}

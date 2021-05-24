@@ -49,8 +49,8 @@ function App() {
 					<Route path="/register" exact component={Register} />
 					<Route path="/demo" exact component={TestAPI} />
 					<Route path="/" exact component={MainLayout} />
-					<Route path="/admin" exact component={LayoutAdmin} />
-					<Route path="/login-admin" exact component={LoginAdmin} />
+					<Route path="/homeAdmin" exact component={LayoutAdmin} />
+					<Route path="/admin" exact component={LoginAdmin} />
 					<Route path="/detail/:id" exact component={DetailProduct} />
 					<Route path="/gioithieu" exact component={IntroduceProduct} />
 					<Route path="/buyproduct" exact component={BuyProduct} />

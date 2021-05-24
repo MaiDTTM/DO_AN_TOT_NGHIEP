@@ -18,6 +18,7 @@ const TYPE_STORE = {
 	slider: 'slider',
 	transaction: 'transaction',
 	userAdmin: 'admin',
+	accountAdmin: 'accountAdmin',
 };
 const BASE_URL = 'http://localhost:1999/api';
 const BASE_URL_IMAGE = `${BASE_URL}/file/`;

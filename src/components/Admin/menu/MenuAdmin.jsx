@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
 import logo from '../../../img/logotet2019.png';
-import { Menu, Switch } from 'antd';
+import { Menu } from 'antd';
 import {
 	BarsOutlined,
 	ContainerOutlined,
@@ -13,10 +13,20 @@ import {
 	UserOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
+import { TYPE_ACTION } from '../../../actions/TypeAction';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 function MenuAdmin(props) {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const { setCheckKey, objectKey } = props;
 	const handleClick = ({ key }) => {
 		setCheckKey(key);
+		if (key === 'Đăng xuất') {
+			localStorage.clear();
+			dispatch({ type: TYPE_ACTION.ADMIN.LOGOUT });
+			history.push('/admin');
+		}
 	};
 	return (
 		<Menu
@@ -52,16 +62,16 @@ function MenuAdmin(props) {
 			<Menu.Item key={objectKey.CAI_DAT} icon={<SnippetsOutlined />}>
 				Cài đặt tài khoản
 			</Menu.Item>
-			<Menu.Item icon={<SnippetsOutlined />}>Đăng xuất</Menu.Item>
+			<Menu.Item icon={<SnippetsOutlined />} key={objectKey.LOGOUT}>
+				Đăng xuất
+			</Menu.Item>
 		</Menu>
 	);
 }
-
 MenuAdmin.propTypes = {
 	objKeyMenu: PropTypes.object,
 	setCheckKey: PropTypes.func,
 };
-
 MenuAdmin.defaultProps = {
 	objKeyMenu: {
 		TRANG_CHU: 'Trang chủ',
@@ -72,8 +82,8 @@ MenuAdmin.defaultProps = {
 		KHACH_HANG: 'Khách hàng',
 		NHAN_VIEN: 'Nhân viên',
 		CAI_DAT: 'Cài đặt tài khoản',
+		LOGOUT: 'Đăng xuất',
 	},
 	setCheckKey: () => {},
 };
-
 export default MenuAdmin;

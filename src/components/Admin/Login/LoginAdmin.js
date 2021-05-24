@@ -5,7 +5,6 @@ import styles from './index.module.css';
 import { Checkbox, message as messageAnt } from 'antd';
 import baseAPI from '../../../axios/baseAPI';
 import { TypeApi } from '../../../util/TypeApi';
-import { LoginUser } from '../../../actions/userAction';
 import { useDispatch } from 'react-redux';
 import { loginAdmin } from '../../../actions/adminAction';
 // import PropTypes from 'prop-types';
@@ -18,13 +17,13 @@ function LoginAdmin() {
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [user, setUser] = useState('');
+	const [userAdmin, setUserAdmin] = useState('');
 	const [password, setPassword] = useState('');
 	// handle
 	const onChangeText = (event, type) => {
 		switch (type) {
 			case TypeInput.user:
-				setUser(event.target.value);
+				setUserAdmin(event.target.value);
 				break;
 			case TypeInput.password:
 				setPassword(event.target.value);
@@ -34,19 +33,19 @@ function LoginAdmin() {
 		}
 	};
 	const onSave = async () => {
-		const data = { user, password };
-		if (user && password) {
-			const { message, myUser } = await baseAPI.add(`${TypeApi.admin}/login`, data);
+		const data = { userAdmin, password };
+		if (userAdmin && password) {
+			const { message, Admin } = await baseAPI.add(`${TypeApi.admin}/login`, data);
 			if (message === 'SUCCESS') {
-				await dispatch(loginAdmin(myUser));
-				history.push('/Admin');
+				await dispatch(loginAdmin(Admin));
+				history.push('/homeAdmin');
 			} else {
 				messageAnt.warn(message);
 			}
 		} else {
 			messageAnt.warn('Không được bỏ trống thông tin nào !');
 		}
-		setUser('');
+		setUserAdmin('');
 		setPassword('');
 	};
 	return (
@@ -70,7 +69,7 @@ function LoginAdmin() {
 					<div className={styles.input_field}>
 						<input
 							id="email"
-							value={user}
+							value={userAdmin}
 							onChange={(e) => onChangeText(e, TypeInput.user)}
 							required
 						/>

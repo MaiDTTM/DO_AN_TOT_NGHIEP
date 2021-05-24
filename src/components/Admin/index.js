@@ -11,6 +11,8 @@ import useCustomerLogicData from '../../hooks/useCustomerLogicData';
 import useUserAdminLogicData from '../../hooks/useUserAdminLogicData';
 import useCartLogicData from '../../hooks/useCartLogicData';
 import useTransactionData from '../../hooks/useTransactionData';
+import { useSelector } from 'react-redux';
+import { BASE_URL_IMAGE } from '../../util/TypeApi';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -22,10 +24,13 @@ const objectKey = {
 	KHACH_HANG: 'Khách hàng',
 	NHAN_VIEN: 'Nhân viên',
 	CAI_DAT: 'Cài đặt tài khoản',
+	LOGOUT: 'Đăng xuất',
 };
 const { Search } = Input;
 function LayoutAdmin() {
 	// hooks
+	const accountAdmin = useSelector((state) => state['accountAdmin']);
+	console.log('accountAdmin', accountAdmin); // MongLV log fix bug
 	const { getListCategory } = useCategoryLogicData();
 	const { getListProduct } = useProductLogicData();
 	const { getListSlider } = useSliderLogicData();
@@ -86,9 +91,13 @@ function LayoutAdmin() {
 						/>
 						<div style={{ display: 'flex', marginRight: '30px' }}>
 							<div style={{ marginRight: '10px' }}>
-								<Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+								<Avatar
+									style={{ width: '30px', height: '30px' }}
+									icon={<UserOutlined />}
+									src={`${BASE_URL_IMAGE}${accountAdmin.avatar}`}
+								/>
 							</div>
-							<div>ĐÀO THỊ THANH MAI</div>
+							<div>{accountAdmin.name}</div>
 						</div>
 					</div>
 				</Header>

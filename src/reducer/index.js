@@ -10,6 +10,7 @@ import sliderReducer from './sliderReducer';
 import transactionReducer from './transactionReducer';
 import customerReducer from './customerReducer';
 import adminReducer from './adminReducer';
+import accountAdimReducer from './accountAdimReducer';
 
 const store = {};
 const listState = [
@@ -48,6 +49,10 @@ const listState = [
 	{
 		name: TYPE_STORE.userAdmin,
 		value: adminReducer,
+	},
+	{
+		name: TYPE_STORE.accountAdmin,
+		value: accountAdimReducer,
 	},
 ];
 listState.map((item) => (store[item.name] = item.value));

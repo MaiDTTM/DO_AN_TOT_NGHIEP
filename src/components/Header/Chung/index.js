@@ -3,7 +3,6 @@ import Advertisement from '../advertisement/advertisement';
 import MenuHome from '../menuHeader/MenuHome';
 // import PropTypes from 'prop-types';
 import './styles.css';
-import khuyenmai from '../../../img/khuyen-mai.png';
 import { Link } from 'react-router-dom';
 import {
 	GiftOutlined,
@@ -12,7 +11,7 @@ import {
 	SmileTwoTone,
 	StarOutlined,
 } from '@ant-design/icons';
-import { Avatar, Button, Image, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 
 const Style = {
 	width: '1200px',
