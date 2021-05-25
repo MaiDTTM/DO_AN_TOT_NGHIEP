@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Input, Layout, Avatar } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import MenuAdmin from './menu/MenuAdmin';
-import './style.css';
+import './style.module.scss';
 import ContentAdmin from './Content/ContentAdmin';
 import useCategoryLogicData from '../../hooks/useCategoryLogicData';
 import useProductLogicData from '../../hooks/useProductLogicData';
@@ -13,6 +13,7 @@ import useCartLogicData from '../../hooks/useCartLogicData';
 import useTransactionData from '../../hooks/useTransactionData';
 import { useSelector } from 'react-redux';
 import { BASE_URL_IMAGE } from '../../util/TypeApi';
+import Style from './style.module.scss';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -41,9 +42,12 @@ function LayoutAdmin() {
 	// state
 	const [collapsed, setCollapsed] = useState(false);
 	const [checkKey, setCheckKey] = useState(objectKey.TRANG_CHU);
+	const [sizeLayout, setSizeLayout] = useState(200);
 
 	const toggle = () => {
 		setCollapsed(!collapsed);
+		collapsed === true ? setSizeLayout(200) : setSizeLayout(77);
+		// setSizeLayout(77);
 	};
 	const onSearch = (value) => console.log(value);
 
@@ -57,21 +61,34 @@ function LayoutAdmin() {
 		getListCart();
 	}, []);
 	return (
-		<Layout>
-			<Sider trigger={null} collapsible collapsed={collapsed}>
-				<div className="logo" />
-				<MenuAdmin objectKey={objectKey} setCheckKey={setCheckKey} />
+		<Layout style={{ minHeight: '100vh' }}>
+			<Sider
+				style={{
+					overflow: 'auto',
+					height: '100vh',
+					position: 'fixed',
+					left: 0,
+				}}
+				collapsible
+				collapsed={collapsed}
+				onCollapse={() => toggle()}
+			>
+				<div className={Style.logo} />
+				<div className={Style.menu_admin}>
+					<MenuAdmin objectKey={objectKey} setCheckKey={setCheckKey} />
+				</div>
 			</Sider>
-			<Layout className="site-layout">
-				<Header className="site-layout-background" style={{ padding: 0 }}>
+			<Layout className={Style.site_layout} style={{ marginLeft: sizeLayout }}>
+				<Header
+					className={Style.site_layout_background}
+					style={{ position: 'fixed', zIndex: 1, width: '89.5%' }}
+				>
 					<div
 						style={{
 							display: 'flex',
-							// marginTop: '25px',
 							justifyContent: 'space-between',
 						}}
 					>
-						{/*<Button type="text" style={{ border: 'none' }} />*/}
 						<div style={{ display: 'flex' }}>
 							<div style={{ padding: '0 10px' }}>
 								{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -102,9 +119,9 @@ function LayoutAdmin() {
 					</div>
 				</Header>
 				<Content
-					className="site-layout-background"
+					className={Style.site_layout_background}
 					style={{
-						margin: '24px 16px',
+						margin: '80px 24px 24px 24px',
 						padding: 24,
 						minHeight: 280,
 					}}

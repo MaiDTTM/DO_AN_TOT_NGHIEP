@@ -5,10 +5,15 @@ import logo from '../../../img/logotet2019.png';
 import { Menu } from 'antd';
 import {
 	BarsOutlined,
+	ContactsOutlined,
 	ContainerOutlined,
 	DesktopOutlined,
 	FormOutlined,
 	HomeOutlined,
+	LogoutOutlined,
+	OrderedListOutlined,
+	SettingOutlined,
+	SlidersOutlined,
 	SnippetsOutlined,
 	UserOutlined,
 	WalletOutlined,
@@ -41,7 +46,7 @@ function MenuAdmin(props) {
 			<Menu.Item key={objectKey.TRANG_CHU} icon={<HomeOutlined />}>
 				Trang chủ
 			</Menu.Item>
-			<Menu.Item key={objectKey.DANH_MUC} icon={<UserOutlined />}>
+			<Menu.Item key={objectKey.DANH_MUC} icon={<OrderedListOutlined />}>
 				Danh mục
 			</Menu.Item>
 			<Menu.Item key={objectKey.SAN_PHAM} icon={<DesktopOutlined />}>
@@ -50,19 +55,19 @@ function MenuAdmin(props) {
 			<Menu.Item key={objectKey.DON_HANG} icon={<ContainerOutlined />}>
 				Đơn hàng
 			</Menu.Item>
-			<Menu.Item key={objectKey.SLIDER} icon={<BarsOutlined />}>
+			<Menu.Item key={objectKey.SLIDER} icon={<SlidersOutlined />}>
 				Slider
 			</Menu.Item>
-			<Menu.Item key={objectKey.KHACH_HANG} icon={<WalletOutlined />}>
+			<Menu.Item key={objectKey.KHACH_HANG} icon={<ContactsOutlined />}>
 				Khách hàng
 			</Menu.Item>
 			<Menu.Item key={objectKey.NHAN_VIEN} icon={<FormOutlined />}>
 				Nhân viên
 			</Menu.Item>
-			<Menu.Item key={objectKey.CAI_DAT} icon={<SnippetsOutlined />}>
+			<Menu.Item key={objectKey.CAI_DAT} icon={<SettingOutlined />}>
 				Cài đặt tài khoản
 			</Menu.Item>
-			<Menu.Item icon={<SnippetsOutlined />} key={objectKey.LOGOUT}>
+			<Menu.Item icon={<LogoutOutlined />} key={objectKey.LOGOUT}>
 				Đăng xuất
 			</Menu.Item>
 		</Menu>

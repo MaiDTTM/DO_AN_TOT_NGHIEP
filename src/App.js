@@ -24,6 +24,9 @@ import WatchCatagory from './components/AllProduct/WatchCatagory';
 import AllFlashSale from './components/Content/FlashSale/AllFlashSale/AllFlashSale';
 import AllNoiBat from './components/Content/Sanphamnoibat/AllNoiBat/AllNoiBat';
 import useProductLogicData from './hooks/useProductLogicData';
+import RegisterAdmin from './components/Admin/Register/registerAdmin';
+import MenuAntd from './components/Admin/TestAntd/menuAntd';
+import ShoppingGuider from './components/Header/ ShoppingGuide/ ShoppingGuide';
 
 //style
 
@@ -48,9 +51,11 @@ function App() {
 					<Route path="/login" exact component={Login} />
 					<Route path="/register" exact component={Register} />
 					<Route path="/demo" exact component={TestAPI} />
+					<Route path="/test" exact component={MenuAntd} />
 					<Route path="/" exact component={MainLayout} />
 					<Route path="/homeAdmin" exact component={LayoutAdmin} />
 					<Route path="/admin" exact component={LoginAdmin} />
+					<Route path="/registerAdmin" exact component={RegisterAdmin} />
 					<Route path="/detail/:id" exact component={DetailProduct} />
 					<Route path="/gioithieu" exact component={IntroduceProduct} />
 					<Route path="/buyproduct" exact component={BuyProduct} />
@@ -61,6 +66,7 @@ function App() {
 					<Route path="/xemtheomenu" exact component={WatchCatagory} />
 					<Route path="/flashsale" exact component={AllFlashSale} />
 					<Route path="/allnoibat" exact component={AllNoiBat} />
+					<Route path="/guider" exact component={ShoppingGuider} />
 				</Switch>
 			</Router>
 		</ContextApp.Provider>

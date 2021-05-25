@@ -49,12 +49,14 @@ function Chung() {
 									<SmileTwoTone style={{ fontSize: '14px', marginRight: 5 }} /> Giới thiệu
 								</div>
 							</Link>
-							<div className="nav_item_right">
-								<QuestionCircleOutlined
-									style={{ color: '#25e0ab', fontSize: '14px', marginRight: 5 }}
-								/>
-								Hướng dẫn mua hàng
-							</div>
+							<Link to={'/guider'}>
+								<div className="nav_item_right">
+									<QuestionCircleOutlined
+										style={{ color: '#25e0ab', fontSize: '14px', marginRight: 5 }}
+									/>
+									Hướng dẫn mua hàng
+								</div>
+							</Link>
 							<div className="nav_item_right">
 								<StarOutlined
 									style={{ color: '#e31a42', fontSize: '14px', marginRight: 5 }}

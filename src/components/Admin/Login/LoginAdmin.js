@@ -57,8 +57,7 @@ function LoginAdmin() {
 						<b>Hãy đăng nhập để vào trang quản trị của bạn !</b>
 					</p>
 				</div>
-			</div>
-			<div>
+				<div></div>
 				<hr />
 			</div>
 			<div className={styles.title}>
@@ -95,6 +94,17 @@ function LoginAdmin() {
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>
 					<div className={styles.action_dang_nhap}>
 						<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
+						<Link to={'/registerAdmin'}>
+							<div
+								style={{
+									color: '#45c326',
+									textDecoration: 'underline',
+									cursor: 'pointer',
+								}}
+							>
+								Register now !
+							</div>
+						</Link>
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap}>

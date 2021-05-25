@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from '../util/TypeApi';
+import { BASE_URL } from '../../../util/TypeApi';
 const axiosClient = axios.create({
 	baseURL: BASE_URL,
 	headers: { 'X-Custom-Header': '', 'Content-Type': 'application/json' },
