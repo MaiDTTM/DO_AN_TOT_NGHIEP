@@ -42,13 +42,22 @@ function AllFlashSale() {
 							<Card
 								hoverable
 								className={Styles.card_item_all_flash}
-								cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
+								cover={
+									<img
+										alt={item.image}
+										src={BASE_URL_IMAGE + item.image}
+										style={{ width: 178, height: 150 }}
+									/>
+								}
 							>
 								<Meta
 									title={item.name}
 									description={
-										(item.price * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-										' VNĐ'
+										<div style={{ color: '#ff6b00', fontSize: 14, fontWeight: 'bold' }}>
+											{(item.price * 1000)
+												.toString()
+												.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+										</div>
 									}
 								/>
 								<div className={Styles._2TDZGE}>

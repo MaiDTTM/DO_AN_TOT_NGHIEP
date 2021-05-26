@@ -1,20 +1,9 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import {
-	SmileTwoTone,
-	MenuFoldOutlined,
-	HomeOutlined,
-	PhoneOutlined,
-	QuestionCircleOutlined,
-} from '@ant-design/icons';
+import { MenuFoldOutlined } from '@ant-design/icons';
 //style
 import hot from '../../../img/hot.gif';
 //import slider
-import slider1 from '../../../img/slider1.jpg';
-import slider2 from '../../../img/giam-gia-do-choi-go.jpg';
-import slider3 from '../../../img/slider3.jpg';
-import slider4 from '../../../img/slider4.jpg';
-import slider5 from '../../../img/slider6.jpg';
 import { Link } from 'react-router-dom';
 import Styles from './styleSlider.module.css';
 import useCategoryLogicData from '../../../hooks/useCategoryLogicData';
@@ -139,6 +128,7 @@ function Slider() {
 										style={{
 											width: '33px',
 											height: '33px',
+											marginLeft: '10px',
 											marginRight: '10px',
 										}}
 									>
