@@ -12,8 +12,9 @@ import {
 	Avatar,
 	Image,
 	Tag,
+	Upload,
 } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import EditorBase from '../../../../baseComponent/EditorBase';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
@@ -59,9 +60,9 @@ function SanPham() {
 			try {
 				item.catalog_id = category[item.catalog_id].name;
 			} catch (e) {
-				console.log('item.catalog_id', item.catalog_id);
-				console.log('category[item.catalog_id]', category[item.catalog_id]);
-				console.log('e', e);
+				// console.log('item.catalog_id', item.catalog_id);
+				// console.log('category[item.catalog_id]', category[item.catalog_id]);
+				// console.log('e', e);
 			}
 			return item;
 		});
@@ -77,11 +78,14 @@ function SanPham() {
 	const [description, setDescription] = useState('');
 	const [dataProductEdit, setDataProductEdit] = useState(null);
 	const [customers, setCustomers] = useState(arrProduct());
-	// console.log(
-	// 	'resut',
-	// 	customers.map((item) => arrCategory.find((a) => a._id === item.catalog_id && a.name))
-	// );
-	console.log('customers', customers);
+	const [fileList, setFileList] = useState([
+		// {
+		// 	uid: '-1',
+		// 	name: 'List_product.xlsx',
+		// 	status: 'done',
+		// 	url: 'http://www.baidu.com/List_product.xlsx',
+		// },
+	]);
 	// handle func
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
@@ -163,7 +167,39 @@ function SanPham() {
 	const handleSelect = (optionA, optionB) => {
 		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase());
 	};
+	// import excel
+	const props = {
+		action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+		multiple: true,
+		beforeUpload: (file) => {
+			if (
+				file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			) {
+				message.error(`${file.name} is not a excel file`);
+			}
+			return file.type ===
+				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+				? true
+				: Upload.LIST_IGNORE;
+		},
+		onChange: (info) => {
+			let fileList = [...info.fileList];
 
+			// 1. Limit the number of uploaded files
+			// Only to show two recent uploaded files, and old ones will be replaced by the new
+			fileList = fileList.slice(-1);
+
+			// 2. Read from response and show file link
+			fileList = fileList.map((file) => {
+				if (file.response) {
+					// Component will show file.url as link
+					file.url = file.response.url;
+				}
+				return file;
+			});
+			setFileList(fileList);
+		},
+	};
 	const columns = [
 		{
 			title: 'Ảnh',
@@ -283,16 +319,19 @@ function SanPham() {
 					>
 						Thêm sản phẩm
 					</Button>
-					<Button
-						style={{
-							marginBottom: 15,
-							marginRight: 5,
-							backgroundColor: '#42ecec',
-							borderRadius: 15,
-						}}
-					>
-						Import excel
-					</Button>
+					<Upload {...props} fileList={fileList}>
+						<Button icon={<UploadOutlined />}>Import excel</Button>
+					</Upload>
+					{/*<Button*/}
+					{/*	style={{*/}
+					{/*		marginBottom: 15,*/}
+					{/*		marginRight: 5,*/}
+					{/*		backgroundColor: '#42ecec',*/}
+					{/*		borderRadius: 15,*/}
+					{/*	}}*/}
+					{/*>*/}
+					{/*	Import excel*/}
+					{/*</Button>*/}
 					<ExportCSV csvData={customers} fileName="List_product" wscols={wscols} />
 					{/*<Button*/}
 					{/*	style={{*/}
