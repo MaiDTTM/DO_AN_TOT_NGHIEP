@@ -11,6 +11,7 @@
     "antd": "^4.13.0",
     "axios": "^0.21.1",
     "chart.js": "^3.2.1",
+    "file-saver": "^2.0.5",
     "moment": "^2.29.1",
     "prettier": "^2.2.1",
     "query-string": "^4.3.4",
@@ -56,6 +57,7 @@
   "devDependencies": {
     "antd-img-crop": "^3.14.1",
     "reqwest": "^2.0.5",
-    "sass": "^1.32.8"
+    "sass": "^1.32.8",
+    "xlsx": "^0.17.0"
   }
 }

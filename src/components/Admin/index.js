@@ -31,7 +31,6 @@ const { Search } = Input;
 function LayoutAdmin() {
 	// hooks
 	const accountAdmin = useSelector((state) => state['accountAdmin']);
-	console.log('accountAdmin', accountAdmin); // MongLV log fix bug
 	const { getListCategory } = useCategoryLogicData();
 	const { getListProduct } = useProductLogicData();
 	const { getListSlider } = useSliderLogicData();

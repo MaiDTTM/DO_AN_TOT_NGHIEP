@@ -21,6 +21,8 @@ import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
+import ExportCSV from './ExportCSV/ExportCSV';
+import { log10 } from 'chart.js/helpers';
 // import PropTypes from 'prop-types';
 
 const data = [];
@@ -52,10 +54,20 @@ function SanPham() {
 	const [form] = Form.useForm();
 	const { category } = useCategoryLogicData();
 	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
-
+	const arrProduct = () =>
+		Object.values(product).map((item) => {
+			try {
+				item.catalog_id = category[item.catalog_id].name;
+			} catch (e) {
+				console.log('item.catalog_id', item.catalog_id);
+				console.log('category[item.catalog_id]', category[item.catalog_id]);
+				console.log('e', e);
+			}
+			return item;
+		});
 	const refCallBack = React.useRef();
 	const refCallBack2 = React.useRef();
-
+	const arrCategory = Object.values(category);
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
@@ -64,12 +76,30 @@ function SanPham() {
 	const [listLinkFileUtil, setListLinkFileUtil] = useState([]); // ['image']
 	const [description, setDescription] = useState('');
 	const [dataProductEdit, setDataProductEdit] = useState(null);
-
+	const [customers, setCustomers] = useState(arrProduct());
+	// console.log(
+	// 	'resut',
+	// 	customers.map((item) => arrCategory.find((a) => a._id === item.catalog_id && a.name))
+	// );
+	console.log('customers', customers);
 	// handle func
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
 	};
-
+	const wscols = [
+		{ wch: Math.max(...customers.map((customer) => customer._id.length)) },
+		{ wch: Math.max(...customers.map((customer) => customer.name.length)) },
+		{ wch: 70 },
+		{ wch: 20 },
+		{ wch: 20 },
+		{ wch: 20 },
+		{ wch: 30 },
+		{ wch: 20 },
+		{ wch: 30 },
+		{ wch: 30 },
+		{ wch: 30 },
+		{ wch: 30 },
+	];
 	const handleEditProduct = (item) => {
 		setDataProductEdit(item);
 		setModalVisible(true);
@@ -263,16 +293,17 @@ function SanPham() {
 					>
 						Import excel
 					</Button>
-					<Button
-						style={{
-							marginBottom: 15,
-							backgroundColor: '#42ec53',
-							color: '#fff',
-							borderRadius: 15,
-						}}
-					>
-						Export excel
-					</Button>
+					<ExportCSV csvData={customers} fileName="List_product" wscols={wscols} />
+					{/*<Button*/}
+					{/*	style={{*/}
+					{/*		marginBottom: 15,*/}
+					{/*		backgroundColor: '#42ec53',*/}
+					{/*		color: '#fff',*/}
+					{/*		borderRadius: 15,*/}
+					{/*	}}*/}
+					{/*>*/}
+					{/*	Export excel*/}
+					{/*</Button>*/}
 				</div>
 				{/*modal them*/}
 				<Modal
