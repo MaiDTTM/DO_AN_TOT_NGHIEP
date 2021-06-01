@@ -70,7 +70,7 @@ function App() {
 					<Route path="/guider" exact component={ShoppingGuider} />
 				</Switch>
 			</Router>
-			<MessengerCustomerChat pageId="806932376075524" appId="1161415030873260" />
+			<MessengerCustomerChat pageId="106941058270737" appId="168962168507958" />
 		</ContextApp.Provider>
 	);
 }
