@@ -143,21 +143,21 @@ function Login() {
 						<div className={styles._3svg61}></div>
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-						<SocialButton
-							provider="facebook"
-							appId="YOUR_APP_ID"
-							onLoginSuccess={handleSocialLogin}
-							onLoginFailure={handleSocialLoginFailure}
-						>
-							<div className={styles.login_fb}>
-								<a>
-									<span className={styles.login_social_icon}>
-										<IconFont type="icon-facebook" />
-									</span>
-									<span className={styles.login_social_text}>Facebook</span>
-								</a>
-							</div>
-						</SocialButton>
+						{/*<SocialButton*/}
+						{/*	provider="facebook"*/}
+						{/*	appId="YOUR_APP_ID"*/}
+						{/*	onLoginSuccess={handleSocialLogin}*/}
+						{/*	onLoginFailure={handleSocialLoginFailure}*/}
+						{/*>*/}
+						<div className={styles.login_fb}>
+							<a>
+								<span className={styles.login_social_icon}>
+									<IconFont type="icon-facebook" />
+								</span>
+								<span className={styles.login_social_text}>Facebook</span>
+							</a>
+						</div>
+						{/*</SocialButton>*/}
 						<GoogleLogin
 							clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
 							render={(renderProps) => (
