@@ -6,7 +6,7 @@
  * @student_code: 68DCHT20091
  * @university: UTT (Đại học Công Nghệ Giao Thông Vận Tải)
  */
-
+/* eslint-disable */
 import React from 'react';
 import IndexHeader from './Header/index_header';
 import Content from './Content/Content';
@@ -34,8 +34,9 @@ function MainLayout() {
 		const data = await baseAPI.getAll(TypeApi.product);
 		dispatch({ type: TYPE_ACTION.PRODUCT.GET_ALL_PRODUCT, payload: { data } });
 	};
+
 	React.useEffect(() => {
-		handleGetList();
+		handleGetList().then();
 	}, []);
 	return (
 		<div style={styleForm}>
