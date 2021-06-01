@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd-img-crop": "^3.14.1",
+    "reqwest": "^2.0.5",
+    "sass": "^1.32.8",
+    "xlsx": "^0.17.0",
     "@ant-design/icons": "^4.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -58,9 +62,5 @@
     ]
   },
   "devDependencies": {
-    "antd-img-crop": "^3.14.1",
-    "reqwest": "^2.0.5",
-    "sass": "^1.32.8",
-    "xlsx": "^0.17.0"
   }
 }
