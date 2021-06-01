@@ -8,7 +8,13 @@ import { useDispatch } from 'react-redux';
 import baseAPI from '../../axios/baseAPI';
 import { TypeApi } from '../../util/TypeApi';
 import { LoginUser } from '../../actions/userAction';
-
+import { GoogleLogin } from 'react-google-login';
+import { createFromIconfontCN, GooglePlusOutlined } from '@ant-design/icons';
+import SocialLogin from 'react-social-login';
+//const
+const IconFont = createFromIconfontCN({
+	scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+});
 const TypeInput = {
 	user: 'user',
 	password: 'password',
@@ -50,6 +56,17 @@ function Login() {
 		}
 		setUser('');
 		setPassword('');
+	};
+	//login
+	const responseGoogle = (response) => {
+		console.log(response);
+	};
+	const handleSocialLogin = (user) => {
+		console.log(user);
+	};
+
+	const handleSocialLoginFailure = (err) => {
+		console.error(err);
 	};
 	return (
 		<div className={styles.dang_nhap}>
@@ -103,8 +120,61 @@ function Login() {
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap}>
-					<div className={styles.action_dang_nhap}>
-						<button onClick={onSave}>Đăng nhập</button>
+					<div className={styles.input_field}>
+						<button
+							onClick={onSave}
+							style={{
+								width: '90%',
+								backgroundColor: '#fe6a00',
+								color: '#fff',
+								cursor: 'pointer',
+								borderRadius: 5,
+								fontSize: 18,
+							}}
+						>
+							Đăng nhập
+						</button>
+					</div>
+				</div>
+				<div className={styles.login_social}>
+					<div className={styles.IFLxoY}>
+						<div className={styles._3svg61}></div>
+						<span className={styles._1ZEpVL}>HOẶC</span>
+						<div className={styles._3svg61}></div>
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<SocialButton
+							provider="facebook"
+							appId="YOUR_APP_ID"
+							onLoginSuccess={handleSocialLogin}
+							onLoginFailure={handleSocialLoginFailure}
+						>
+							<div className={styles.login_fb}>
+								<a>
+									<span className={styles.login_social_icon}>
+										<IconFont type="icon-facebook" />
+									</span>
+									<span className={styles.login_social_text}>Facebook</span>
+								</a>
+							</div>
+						</SocialButton>
+						<GoogleLogin
+							clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+							render={(renderProps) => (
+								<div className={styles.login_gg} onClick={renderProps.onClick}>
+									<a href="">
+										<span className={styles.login_social_icon}>
+											<GooglePlusOutlined />
+										</span>
+										<span className={styles.login_social_text}>Google</span>
+									</a>
+								</div>
+							)}
+							buttonText="Login"
+							onSuccess={responseGoogle}
+							onFailure={responseGoogle}
+							cookiePolicy={'single_host_origin'}
+						/>
 					</div>
 				</div>
 			</div>
