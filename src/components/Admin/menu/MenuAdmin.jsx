@@ -1,97 +1,94 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
-import { Menu, Switch } from 'antd';
+import logo from '../../../img/logotet2019.png';
+import { Menu } from 'antd';
 import {
 	BarsOutlined,
+	ContactsOutlined,
 	ContainerOutlined,
 	DesktopOutlined,
 	FormOutlined,
 	HomeOutlined,
+	LogoutOutlined,
+	OrderedListOutlined,
+	SettingOutlined,
+	SlidersOutlined,
 	SnippetsOutlined,
 	UserOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
+import { TYPE_ACTION } from '../../../actions/TypeAction';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 function MenuAdmin(props) {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const { setCheckKey, objectKey } = props;
-	const [collapsed, setCollapsed] = useState(false);
-	const [theme, setTheme] = React.useState('dark');
-	const [current, setCurrent] = React.useState('HOME');
-	const changeTheme = (value) => {
-		setTheme({
-			theme: value ? 'dark' : 'light',
-		});
-	};
 	const handleClick = ({ key }) => {
 		setCheckKey(key);
+		if (key === 'Đăng xuất') {
+			localStorage.clear();
+			dispatch({ type: TYPE_ACTION.ADMIN.LOGOUT });
+			history.push('/admin');
+		}
 	};
 	return (
 		<Menu
-			theme={theme.theme}
-			inlineCollapsed={collapsed.collapsed}
-			onClick={handleClick}
-			style={{
-				paddingTop: '15px',
-			}}
-			defaultSelectedKeys={['1']}
-			defaultOpenKeys={['sub1']}
-			selectedKeys={[current.current]}
+			theme="dark"
 			mode="inline"
+			defaultSelectedKeys={objectKey.TRANG_CHU}
+			onClick={handleClick}
 		>
-			<Switch
-				checked={theme.theme === 'dark'}
-				onChange={changeTheme}
-				checkedChildren="Dark"
-				unCheckedChildren="Light"
-				style={{ marginLeft: '12px', paddingBottom: '20px' }}
-			/>
-			<br />
-			<br />
-			<Menu.Item key={objectKey.HOME} icon={<HomeOutlined />}>
-				Home
+			<div className="logo" style={{ width: '100%', height: 63 }}>
+				<img src={logo} style={{ width: '100%' }} />
+			</div>
+			<Menu.Item key={objectKey.TRANG_CHU} icon={<HomeOutlined />}>
+				Trang chủ
 			</Menu.Item>
-			<Menu.Item key={objectKey.USER} icon={<UserOutlined />}>
-				User
-			</Menu.Item>
-			<Menu.Item key={objectKey.SLIDER} icon={<DesktopOutlined />}>
-				Slider
-			</Menu.Item>
-			<Menu.Item key={objectKey.DANH_MUC} icon={<ContainerOutlined />}>
+			<Menu.Item key={objectKey.DANH_MUC} icon={<OrderedListOutlined />}>
 				Danh mục
 			</Menu.Item>
-			<Menu.Item key={objectKey.SAN_PHAM} icon={<BarsOutlined />}>
+			<Menu.Item key={objectKey.SAN_PHAM} icon={<DesktopOutlined />}>
 				Sản phẩm
 			</Menu.Item>
-			<Menu.Item key={objectKey.DON_DAT_HANG} icon={<WalletOutlined />}>
-				Đơn đặt hàng
+			<Menu.Item key={objectKey.DON_HANG} icon={<ContainerOutlined />}>
+				Đơn hàng
 			</Menu.Item>
-			<Menu.Item key={objectKey.HOA_DON_NHAP} icon={<FormOutlined />}>
-				Hóa đơn nhập
+			<Menu.Item key={objectKey.SLIDER} icon={<SlidersOutlined />}>
+				Slider
 			</Menu.Item>
-			<Menu.Item key={objectKey.HOA_DON_XUAT} icon={<SnippetsOutlined />}>
-				Hóa đơn xuất
+			<Menu.Item key={objectKey.KHACH_HANG} icon={<ContactsOutlined />}>
+				Khách hàng
+			</Menu.Item>
+			<Menu.Item key={objectKey.NHAN_VIEN} icon={<FormOutlined />}>
+				Nhân viên
+			</Menu.Item>
+			<Menu.Item key={objectKey.CAI_DAT} icon={<SettingOutlined />}>
+				Cài đặt tài khoản
+			</Menu.Item>
+			<Menu.Item icon={<LogoutOutlined />} key={objectKey.LOGOUT}>
+				Đăng xuất
 			</Menu.Item>
 		</Menu>
 	);
 }
-
 MenuAdmin.propTypes = {
 	objKeyMenu: PropTypes.object,
 	setCheckKey: PropTypes.func,
 };
-
 MenuAdmin.defaultProps = {
 	objKeyMenu: {
-		HOME: 'Trang chủ',
-		USER: 'Tài khoản',
-		SLIDER: 'Slider',
+		TRANG_CHU: 'Trang chủ',
 		DANH_MUC: 'Danh mục',
 		SAN_PHAM: 'Sản phẩm',
-		DON_DAT_HANG: 'Đơn đặt hàng',
-		HOA_DON_NHAP: 'Hóa đơn nhập',
-		HOA_DON_XUAT: 'Hóa đơn xuất',
+		DON_HANG: 'Đơn hàng',
+		SLIDER: 'Slider',
+		KHACH_HANG: 'Khách hàng',
+		NHAN_VIEN: 'Nhân viên',
+		CAI_DAT: 'Cài đặt tài khoản',
+		LOGOUT: 'Đăng xuất',
 	},
 	setCheckKey: () => {},
 };
-
 export default MenuAdmin;

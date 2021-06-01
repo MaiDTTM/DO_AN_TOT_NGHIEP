@@ -2,192 +2,220 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { MenuFoldOutlined } from '@ant-design/icons';
 //style
-import './styleSlider.css';
 import hot from '../../../img/hot.gif';
 //import slider
-import slider1 from '../../../img/slider1.jpg';
-import slider2 from '../../../img/slider2.jpg';
-import slider3 from '../../../img/slider3.jpg';
-import slider4 from '../../../img/slider4.jpg';
-import slider5 from '../../../img/slider5.png';
+import { Link } from 'react-router-dom';
+import Styles from './styleSlider.module.css';
+import useCategoryLogicData from '../../../hooks/useCategoryLogicData';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
+import useSliderLogicData from '../../../hooks/useSliderLogicData';
 
 const contentStyle = {
-    width: '950px',
-    height: '518px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
+	width: '666px',
+	height: '350px',
+	color: '#fff',
+	lineHeight: '160px',
+	textAlign: 'center',
+	background: '#364d79',
+	objectFit: 'cover',
 };
 
 function Slider() {
-    return (
-        <div className='slider_center'>
-            <div className='menu_slider'>
-                <ul className='hot_sale'>
-                    <div className='menu_danhmuc'>
-                        <li className='danhmuc'>
-                            <MenuFoldOutlined className={'icon__category'} />
-                            <h2>DANH MỤC</h2>
-                        </li>
-                    </div>
-                    <div className='menu_hotsale'>
-                        <div className='dososinh'>
-                            <li className='hot_sale_one'>
-                                <i>
-                                    <img src={hot} />
-                                </i>
-                                <a>Đồ sơ sinh</a>
-                                <i>
-                                    <img src={hot} />
-                                </i>
-                            </li>
-                        </div>
-                        <div className='suabot_ta_bim'>
-                            <li className='hot_sale_tow'>
-                                <div>
-                                    <i>
-                                        <img src={hot} />
-                                    </i>
-                                </div>
-                                <div>
-                                    <a>Sữa bột</a>
-                                    <a>- Tã bỉm</a>
-                                    <a>- Máy hút sữa [Có quà]</a>
-                                </div>
-                                <div>
-                                    <i>
-                                        <img src={hot} />
-                                    </i>
-                                </div>
-                            </li>
-                        </div>
-                        <div className='khuyenmai_hangmoi'>
-                            <li className='hot_sale_fire'>
-                                <div>
-                                    <i>
-                                        <img src={hot} />
-                                    </i>
-                                </div>
-                                <div>
-                                    <a>Khuyến mại</a>
-                                    <a>- Hàng mới về</a>
-                                </div>
-                                <div>
-                                    <i>
-                                        <img src={hot} />
-                                    </i>
-                                </div>
-                            </li>
-                        </div>
-                    </div>
-                </ul>
-            </div>
-            <div className='slider'>
-                <div className='left_slider'>
-                    <div>
-                        <i>
-                            <img src='https://shoptretho.com.vn/Content/images/khuyen-mai.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Khuyến mại</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/be-an-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Cho bé ăn</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/be-mac-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Cho bé mặc</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/be-di-choi-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Cho bé đi chơi</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/be-ngu-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Cho bé ngủ</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/ve-sinh-cho-be-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Vệ sinh cho bé</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20151027/be-khoe-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Bé khỏe & an toàn</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/do-choi-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Đồ chơi trẻ em</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/qua-tang-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Quà tặng</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20150803/do-dung-cho-me-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Đồ dùng cho mẹ</a>
-                    </div>
-                    <div>
-                        <i>
-                            <img src='https://media.shoptretho.com.vn/upload/image/menu/20151027/do-gia-dung-1.png?mode=max&width=60&height=60' />
-                        </i>
-                        <a>Đồ dùng gia đình</a>
-                    </div>
-                </div>
-                <div className='center_slider'>
-                    <Carousel autoplay className='picture_slider'>
-                        <div>
-                            <h3 style={contentStyle}>
-                                <img src={slider1} alt='Bỉm Moony' />
-                            </h3>
-                        </div>
-                        <div>
-                            <h3 style={contentStyle}>
-                                <img src={slider2} alt='Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé' />
-                            </h3>
-                        </div>
-                        <div>
-                            <h3 style={contentStyle}>
-                                <img src={slider3} alt='Joie giá tốt quà chất' />
-                            </h3>
-                        </div>
-                        <div>
-                            <h3 style={contentStyle}>
-                                <img src={slider4} alt='Quét VNPay giảm 15k' />
-                            </h3>
-                        </div>
-                        <div>
-                            <h3 style={contentStyle}>
-                                <img src={slider5} alt='Uống sữa Friso nhận ngàn quà tặng MB' />
-                            </h3>
-                        </div>
-                    </Carousel>
-                </div>
-                <div className='right_slider'>
-                    <img src='https://media.shoptretho.com.vn/upload/image/banner/20210301/quet-vnpay-giam-15k-190-x-204.png' alt='Quét VNPay giảm 15k' />
-                    <img src='https://media.shoptretho.com.vn/upload/image/banner/20210301/chuc-mung-8-3-uu-dai-cho-me-qua-tang-cho-be-190-x-204-1.png' alt='Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé' />
-                </div>
-            </div>
-        </div>
-    );
+	// hooks
+	const { getListCategory, category } = useCategoryLogicData();
+	const { getListSlider, slider } = useSliderLogicData();
+
+	// const
+	const listCategory = Object.values(category);
+	const categoryOther = listCategory.length > 7 ? listCategory[6] : null;
+
+	// Vong dong
+	React.useEffect(() => {
+		getListCategory();
+		getListSlider();
+	}, []);
+	return (
+		<div className={Styles.slider_center}>
+			{/*khong dong*/}
+			<div className={Styles.menu_slider}>
+				<ul className={Styles.hot_sale}>
+					<div className={Styles.menu_danhmuc}>
+						<li className={Styles.danhmuc}>
+							<MenuFoldOutlined className={Styles.icon__category} />
+							<h2>DANH MỤC</h2>
+						</li>
+					</div>
+					<div className={Styles.menu_hotsale}>
+						<div className={Styles.dososinh}>
+							<li className={Styles.hot_sale_one}>
+								<i>
+									<img src={hot} />
+								</i>
+								<a>Top đầu tìm kiếm</a>
+								<i>
+									<img src={hot} />
+								</i>
+							</li>
+						</div>
+						<div className={Styles.suabot_ta_bim}>
+							<li className={Styles.hot_sale_tow}>
+								<div>
+									<i>
+										<img src={hot} />
+									</i>
+								</div>
+								<div>
+									<a>Xếp hình</a>
+									<a>- Xe</a>
+									<a>- Máy súc [Có quà]</a>
+								</div>
+								<div>
+									<i>
+										<img src={hot} />
+									</i>
+								</div>
+							</li>
+						</div>
+						<div className={Styles.khuyenmai_hangmoi}>
+							<li className={Styles.hot_sale_fire}>
+								<div>
+									<i>
+										<img src={hot} />
+									</i>
+								</div>
+								<div>
+									<a>Khuyến mại</a>
+									<a>- Hàng mới về</a>
+								</div>
+								<div>
+									<i>
+										<img src={hot} />
+									</i>
+								</div>
+							</li>
+						</div>
+					</div>
+				</ul>
+			</div>
+			{/*khong dong*/}
+			<div className={Styles.slider}>
+				<div className={Styles.left_slider}>
+					<ul className={Styles.content_category_list}>
+						{listCategory.slice(0, 6).map((item) => (
+							<li style={{ paddingTop: '6px' }}>
+								<Link to={`/xemtheomenu?_id=${item._id}`}>
+									<i
+										style={{
+											width: '33px',
+											height: '33px',
+											marginLeft: '10px',
+											marginRight: '10px',
+										}}
+									>
+										<img
+											src={BASE_URL_IMAGE + item.icon}
+											style={{ color: '#d219e7', fontSize: '20px' }}
+										/>
+									</i>
+									{item.name}
+								</Link>
+							</li>
+						))}
+						{categoryOther && (
+							<li style={{ paddingTop: '6px' }}>
+								<Link to={`/xemtheomenu?_id=${categoryOther._id}`}>
+									<i
+										style={{
+											width: '33px',
+											height: '33px',
+											marginLeft: '10px',
+											marginRight: '10px',
+										}}
+									>
+										<img
+											src={BASE_URL_IMAGE + categoryOther.icon}
+											style={{ color: '#d219e7', fontSize: '20px' }}
+										/>
+									</i>
+									{categoryOther.name}
+								</Link>
+								<div className={Styles.menu_hover}>
+									<ul>
+										<div style={{ display: 'flex' }}>
+											<div
+												className={Styles.menu_hover_row}
+												style={{ borderRight: '1px solid #e0e0e0' }}
+											>
+												{listCategory.slice(7, 14).map((item) => (
+													<li className={Styles.menu_hover_row_item}>
+														<Link
+															to={`/xemtheomenu?_id=${item._id}`}
+															className={Styles.menu_hover_link}
+														>
+															{item.name}
+														</Link>
+													</li>
+												))}
+											</div>
+											<div className={Styles.menu_hover_row}>
+												{listCategory.slice(14, 20).map((item) => (
+													<li className={Styles.menu_hover_row_item}>
+														<Link
+															to={`/xemtheomenu?_id=${item._id}`}
+															className={Styles.menu_hover_link}
+														>
+															{item.name}
+														</Link>
+													</li>
+												))}
+												{listCategory.length > 19 && (
+													<li className={Styles.menu_hover_row_item}>
+														<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
+															Xem tất cả >>
+														</Link>
+													</li>
+												)}
+											</div>
+										</div>
+									</ul>
+								</div>
+							</li>
+						)}
+					</ul>
+				</div>
+				<div className={Styles.center_slider}>
+					<Carousel autoplay className={Styles.picture_slider}>
+						{Object.values(slider)
+							.sort((item1, item2) => item1.index - item2.index)
+							.slice(0, 6)
+							.map((item) => (
+								<div>
+									<h3 style={contentStyle}>
+										<img
+											style={{ width: '666px', height: '350px' }}
+											src={BASE_URL_IMAGE + item.image_link}
+											alt={item.name}
+										/>
+									</h3>
+								</div>
+							))}
+					</Carousel>
+				</div>
+				<div className={Styles.right_slider}>
+					<img
+						style={{ width: '100%', height: '175px' }}
+						src="https://media.shoptretho.com.vn/upload/image/banner/20210301/quet-vnpay-giam-15k-190-x-204.png"
+						alt="Quét VNPay giảm 15k"
+					/>
+					<img
+						style={{ width: '100%', height: '175px' }}
+						src="https://media.shoptretho.com.vn/upload/image/banner/20210301/chuc-mung-8-3-uu-dai-cho-me-qua-tang-cho-be-190-x-204-1.png"
+						alt="Chúc mừng 8/3 - Ưu đãi cho mẹ - Qùa tặng cho bé"
+					/>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Slider;

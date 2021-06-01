@@ -1,387 +1,182 @@
-import React from 'react';
-import {
-	Form,
-	Select,
-	Modal,
-	Table,
-	Space,
-	Button,
-	Tooltip,
-	Popconfirm,
-	Input,
-	Row,
-	Col,
-	DatePicker,
-} from 'antd';
-import {
-	EditOutlined,
-	DeleteOutlined,
-	UserAddOutlined,
-	HeartTwoTone,
-	SearchOutlined,
-} from '@ant-design/icons';
-import './style.css';
-// import PropTypes from 'prop-types';
-const data = [];
-const { Search } = Input;
-for (let i = 0; i < 100; i++) {
-	data.push({
-		key: i,
-		name: `Name ${i}`,
-		gender: 32,
-		birthday: '21-11-1999',
-		email: 'sukhacbiet1199@gmail.com',
-		password: '*******',
-		number: '0966382406',
-		address: `London Park no. ${i}`,
-	});
-}
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, message, Modal, Select, Tabs } from 'antd';
+import FormChung from './FormChung';
+import style from './style.module.scss';
+import { useSelector } from 'react-redux';
+import { TYPE_STORE } from '../../../../util/TypeApi';
+import { HeartTwoTone, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
+import UploadFileView from '../../../../baseComponent/UploadFileView';
+import useUserAdminLogicData from '../../../../hooks/useUserAdminLogicData';
+const { Option } = Select;
 const layout = {
-	labelCol: { span: 8 },
-	wrapperCol: { span: 16 },
+	labelCol: { span: 6 },
+	wrapperCol: { span: 18 },
 };
 const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
-const style = { padding: '8px 0' };
-const { Option } = Select;
-const config = {
-	rules: [{ type: 'object', required: true, message: 'Please select time!' }],
-};
+const { TabPane } = Tabs;
+// import PropTypes from 'prop-types';
 function User() {
-	const [modalVisible, setModalVisible] = React.useState(false);
-	const [modal2Visible, setModal2Visible] = React.useState(false);
-	const onFinish = (values) => {
-		console.log('Success:', values);
-	};
-
-	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
-	};
-	function setModal0Visible(modalVisible) {
-		setModalVisible({ modalVisible });
-		const remo = document.getElementsByClassName('ant-modal-footer');
-		remo.innerHTML = '';
-	}
-	function setModal1Visible(modal2Visible) {
-		setModal2Visible({ modal2Visible });
-	}
-	const prefixSelector = (
-		<Form.Item name="prefix" noStyle>
-			<Select style={{ width: 70 }}>
-				<Option value="86">+86</Option>
-				<Option value="87">+87</Option>
-			</Select>
-		</Form.Item>
-	);
-	const columns = [
-		{
-			title: 'Full Name',
-			width: 100,
-			dataIndex: 'name',
-			key: 'name',
-			fixed: 'left',
-		},
-		{
-			title: 'Gender',
-			width: 100,
-			dataIndex: 'gender',
-			key: '1',
-			fixed: 'left',
-		},
-		{
-			title: 'Birthday',
-			dataIndex: 'birthday',
-			key: '2',
-			width: 150,
-		},
-		{
-			title: 'Email',
-			dataIndex: 'email',
-			key: '3',
-			width: 150,
-		},
-		{
-			title: 'Password',
-			dataIndex: 'password',
-			key: '4',
-			width: 150,
-		},
-		{
-			title: 'Number phone',
-			dataIndex: 'number',
-			key: '5',
-			width: 150,
-		},
-		{
-			title: 'Address',
-			dataIndex: 'address',
-			key: '6',
-			width: 150,
-		},
-		{
-			title: 'Action',
-			key: 'operation',
-			fixed: 'right',
-			width: 100,
-			render: () => {
-				return (
-					<Space size="middle" style={{ marginLeft: '20px' }}>
-						<Button
-							icon={<EditOutlined />}
-							type="text"
-							onClick={() => setModal1Visible(true)}
-						/>
-						<Modal
-							title="EDIT USER"
-							centered
-							visible={modal2Visible.modal2Visible}
-							onOk={() => setModal2Visible(false)}
-							onCancel={() => setModal2Visible(false)}
-						>
-							<Form
-								name="basic"
-								initialValues={{ remember: true }}
-								onFinish={onFinish}
-								onFinishFailed={onFinishFailed}
-							>
-								<Form.Item
-									label="Username"
-									name="username"
-									rules={[{ required: true, message: 'Please input your username!' }]}
-								>
-									<Input />
-								</Form.Item>
-
-								<Form.Item
-									label="Password"
-									name="password"
-									rules={[{ required: true, message: 'Please input your password!' }]}
-								>
-									<Input.Password />
-								</Form.Item>
-								<Form.Item
-									name="phone"
-									label="Phone Number"
-									rules={[{ required: true, message: 'Please input your phone number!' }]}
-								>
-									<Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-								</Form.Item>
-								<Form.Item
-									name="email"
-									label="E-mail"
-									rules={[
-										{
-											type: 'email',
-											message: 'The input is not valid E-mail!',
-										},
-										{
-											required: true,
-											message: 'Please input your E-mail!',
-										},
-									]}
-								>
-									<Input />
-								</Form.Item>
-							</Form>
-						</Modal>
-						<Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
-							<Button icon={<DeleteOutlined />} type="text" />
-						</Popconfirm>
-					</Space>
-				);
-			},
-		},
-	];
-	const onSearch = (value) => console.log(value);
-	// document.getElementById('add_search').style.display = 'block';
-	const handleClick = () => {
-		const input = document.getElementById('add_search');
-		const button = document.getElementById('button_search');
-		input.style.display === 'block'
-			? (input.style.display = 'none')
-			: (input.style.display = 'block');
-		// (input.style.display = 'none')
-		// 	? (button.style.display = 'block')
-		// 	: (button.style.display = 'none');
-	};
 	const [form] = Form.useForm();
-	const onGenderChange = (value) => {
-		switch (value) {
-			case 'male':
-				form.setFieldsValue({ note: 'Hi, man!' });
-				return;
-			case 'female':
-				form.setFieldsValue({ note: 'Hi, lady!' });
-				return;
-			case 'other':
-				form.setFieldsValue({ note: 'Hi there!' });
+	const [data, setData] = useState(null);
+	const [visibleCopy, setVisibleCopy] = useState(false);
+	const [linkFileUtil, setLinkFileUtil] = useState('');
+	const [fileListUtil, setFileListUtil] = useState([]);
+	const [modal2Visible, setModal2Visible] = useState(false);
+	const { postUserAdmin } = useUserAdminLogicData();
+	const [status, setStatus] = useState(true);
+	const userAdmin = useSelector((state) => state[TYPE_STORE.userAdmin]);
+	const newUserAdmin = Object.values(userAdmin).reverse();
+	const findManager = newUserAdmin.filter((item) => item.position === 'Quản lý');
+	const findAccountant = newUserAdmin.filter((item) => item.position === 'Kế toán');
+	const findStaff = newUserAdmin.filter((item) => item.position === 'Nhân viên');
+	const PassDefault = '12345@2021';
+	const callback = (key) => {
+		switch (key) {
+			case '1':
+				setData({ newUserAdmin });
+			case '2':
+				setData([...findManager]);
+				break;
+			case '3':
+				setData([...findAccountant]);
+				break;
+			case '4':
+				setData([...findStaff]);
+				break;
+			default:
+				return newUserAdmin;
 		}
 	};
+	const setModalVisible2 = (modal2Visible) => {
+		setModal2Visible(modal2Visible);
+	};
+	const onFinishAdd = (values) => {
+		values['avatar'] = linkFileUtil;
+		values['password'] = PassDefault;
+		values['status'] = status;
+		if (linkFileUtil) {
+			postUserAdmin(values);
+		} else {
+			message.warn('Thiếu ảnh đi kèm');
+		}
+		onReset();
+	};
+	const onReset = () => {
+		form.resetFields();
+		setLinkFileUtil('');
+		setFileListUtil([]);
+		setModal2Visible(false);
+	};
+	useEffect(() => {
+		callback();
+	}, [data]);
 	return (
-		<div className="content_user">
-			<div className="filter_user_content">
-				<div style={{ display: 'flex' }}>
-					<div id="add_search">
-						<Search
-							placeholder="input search text"
-							onSearch={onSearch}
-							style={{ width: 200 }}
-						/>
+		<div>
+			<div className={style.filter_user_content}>
+				<div className={style.box}>
+					<div className={style.container_2}>
+						<span className={style.icon}>
+							<SearchOutlined className={style.icon_search} />
+						</span>
+						<input type="search" className={style.input_search} placeholder="Search..." />
 					</div>
-					<Tooltip title="search">
-						<Button
-							type="primary"
-							shape="circle"
-							icon={<SearchOutlined />}
-							onClick={handleClick}
-							id="button_search"
-						/>
-					</Tooltip>
 				</div>
-				<Button
-					icon={<UserAddOutlined />}
-					className="button_user_add"
-					onClick={() => setModal0Visible(true)}
-				>
-					Add user
-				</Button>
-				<Modal
-					title="ADD DEVICE"
-					centered
-					visible={modalVisible.modalVisible}
-					onOk={() => setModalVisible(false)}
-					onCancel={() => setModalVisible(false)}
-				>
-					<Form
-						name="basic"
-						form={form}
-						initialValues={{ remember: true }}
-						onFinish={onFinish}
-						onFinishFailed={onFinishFailed}
+				<div>
+					<Button
+						icon={<UserAddOutlined />}
+						className={style.button_user_add}
+						onClick={() => setModalVisible2(true)}
 					>
-						<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item
-										name={['user', 'name']}
-										// label="Name"
-										rules={[{ required: true }]}
-									>
-										<Input placeholder="Full name" />
-									</Form.Item>
-								</div>
-							</Col>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item name="gender" rules={[{ required: true }]}>
-										<Select
-											placeholder="Select gender"
-											onChange={onGenderChange}
-											allowClear
-										>
-											<Option value="male">male</Option>
-											<Option value="female">female</Option>
-											<Option value="other">other</Option>
-										</Select>
-									</Form.Item>
-								</div>
-							</Col>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item name="date-picker" {...config}>
-										<DatePicker placeholder="Birthday" />
-									</Form.Item>
-								</div>
-							</Col>
-						</Row>
-						<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item
-										name={['user', 'email']}
-										// label="Email"
-										rules={[{ type: 'email' }]}
-									>
-										<Input placeholder="Email" />
-									</Form.Item>
-								</div>
-							</Col>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item
-										name="password"
-										// label="Password"
-										rules={[
-											{
-												required: true,
-												message: 'Please input your password!',
-											},
-										]}
-										hasFeedback
-									>
-										<Input.Password placeholder="Password" />
-									</Form.Item>
-								</div>
-							</Col>
-							<Col className="gutter-row" span={8}>
-								<div style={style}>
-									<Form.Item
-										name="phone"
-										// label="Phone Number"
-										rules={[
-											{ required: true, message: 'Please input your phone number!' },
-										]}
-									>
-										<Input
-											addonBefore={prefixSelector}
-											style={{ width: '100%' }}
-											placeholder="Phone Number"
-										/>
-									</Form.Item>
-								</div>
-							</Col>
-						</Row>
-						<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-							<Col span={8}>
-								<div style={style}>
-									<Form.Item label="Address">
-										<Input.Group compact>
-											<Form.Item
-												name={['address', 'province']}
-												noStyle
-												rules={[{ required: true, message: 'Province is required' }]}
-											>
-												<Select placeholder="Select province">
-													<Option value="Zhejiang">Zhejiang</Option>
-													<Option value="Jiangsu">Jiangsu</Option>
-												</Select>
-											</Form.Item>
-											<Form.Item
-												name={['address', 'street']}
-												noStyle
-												rules={[{ required: true, message: 'Street is required' }]}
-											>
-												<Input style={{ width: '50%' }} placeholder="Input street" />
-											</Form.Item>
-										</Input.Group>
-									</Form.Item>
-								</div>
-							</Col>
-						</Row>
-					</Form>
-				</Modal>
-				<HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '30px' }} />
+						Add user
+					</Button>
+					{/*Modal add*/}
+					<Modal
+						title={
+							<div style={{ display: 'flex', justifyContent: 'center' }}>
+								THÊM NHÂN VIÊN
+							</div>
+						}
+						centered
+						visible={modal2Visible}
+						footer={null}
+						onCancel={() => setModal2Visible(false)}
+					>
+						<Form {...layout} form={form} name="control-hooks" onFinish={onFinishAdd}>
+							<Form.Item name="avatar" label="Ảnh :">
+								<UploadFileView
+									linkFileUtil={linkFileUtil}
+									fileListUtil={fileListUtil}
+									setLinkFileUtil={setLinkFileUtil}
+									setFileListUtil={setFileListUtil}
+								/>
+							</Form.Item>
+							<Form.Item name="name" label="Tên :" rules={[{ required: true }]}>
+								<Input />
+							</Form.Item>
+							<Form.Item name="gender" label="Giới tính :">
+								<Select allowClear placeholder="Chọn...">
+									<Option value="Nam">Nam</Option>
+									<Option value="Nữ">Nữ</Option>
+									<Option value="Khác">Khác</Option>
+								</Select>
+							</Form.Item>
+							{/*<Form.Item name="date_of_birth" label="Ngày sinh : ">*/}
+							{/*	<DatePicker />*/}
+							{/*</Form.Item>*/}
+							<Form.Item name="email" label="Email :" rules={[{ type: 'email' }]}>
+								<Input />
+							</Form.Item>
+							<Form.Item label="Mật khẩu :" name="password">
+								<Input defaultValue={PassDefault} disabled={true} />
+							</Form.Item>
+							<Form.Item
+								name="phone"
+								label="Số điện thoại :"
+								rules={[{ required: true, message: 'Please input your phone number!' }]}
+							>
+								<Input style={{ width: '100%' }} />
+							</Form.Item>
+							<Form.Item name="address" label="Địa chỉ :">
+								<Input.TextArea />
+							</Form.Item>
+							<Form.Item name="position" label="Chức vụ :" rules={[{ required: true }]}>
+								<Select allowClear placeholder="Chọn...">
+									<Option value="Quản lý">Quản lý </Option>
+									<Option value="Kế toán">Kế toán </Option>
+									<Option value="Nhân viên">Nhân viên </Option>
+								</Select>
+							</Form.Item>
+							<Form.Item {...tailLayout}>
+								<Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>
+									Lưu
+								</Button>
+								<Button htmlType="button" onClick={onReset}>
+									Reset
+								</Button>
+							</Form.Item>
+						</Form>
+					</Modal>
+				</div>
+				<div>
+					<HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '30px' }} />
+				</div>
 			</div>
-			<div className="table_user">
-				<Table
-					columns={columns}
-					dataSource={data}
-					scroll={{ x: 1500, y: 510 }}
-					sticky
-					style={{ height: '100%', width: '100%' }}
-				/>
-			</div>
+			<Tabs defaultActiveKey="1" onChange={(key) => callback(key)}>
+				<TabPane tab="Tất cả" key="1">
+					<FormChung userAdmin={newUserAdmin} />
+				</TabPane>
+				<TabPane tab="Quản lý" key="2">
+					<FormChung userAdmin={data} />
+				</TabPane>
+				<TabPane tab="Kế toán" key="3">
+					<FormChung userAdmin={data} />
+				</TabPane>
+				<TabPane tab="Nhân viên" key="4">
+					<FormChung userAdmin={data} />
+				</TabPane>
+			</Tabs>
 		</div>
 	);
 }
