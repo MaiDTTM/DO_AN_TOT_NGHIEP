@@ -28,7 +28,7 @@ import useProductLogicData from './hooks/useProductLogicData';
 import RegisterAdmin from './components/Admin/Register/registerAdmin';
 import MenuAntd from './components/Admin/TestAntd/menuAntd';
 import ShoppingGuider from './components/Header/ ShoppingGuide/ ShoppingGuide';
-
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 //style
 
 function App() {
@@ -70,6 +70,7 @@ function App() {
 					<Route path="/guider" exact component={ShoppingGuider} />
 				</Switch>
 			</Router>
+			<MessengerCustomerChat pageId="806932376075524" appId="1161415030873260" />
 		</ContextApp.Provider>
 	);
 }
