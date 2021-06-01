@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Card } from 'antd';
 import img1 from '../../../img/xau-vong-trang-suc-dong-ho-5.jpg';

@@ -5,6 +5,7 @@ const setLocalStore = (accountAdmin, name = '') => {
 			name.length > 0
 				? localStorage.setItem(`${item}_${name}`, accountAdmin[item])
 				: localStorage.setItem(item, accountAdmin[item]);
+			return null;
 		});
 };
 const accountAdminReducer = (accountAdmin = {}, action) => {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Modal, Form, Input, Menu, Table, message, Image, Tag } from 'antd';

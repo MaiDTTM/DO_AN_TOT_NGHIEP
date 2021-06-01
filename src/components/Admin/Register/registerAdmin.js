@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { Checkbox, message as messageAnt } from 'antd';
 import { useDispatch } from 'react-redux';

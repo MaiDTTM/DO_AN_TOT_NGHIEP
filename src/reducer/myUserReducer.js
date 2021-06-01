@@ -3,6 +3,7 @@ const setLocalStore = (myUser) => {
 	myUser &&
 		Object.keys(myUser).map((item) => {
 			localStorage.setItem(item, myUser[item]);
+			return null;
 		});
 };
 const myUserReducer = (user = {}, action) => {

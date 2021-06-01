@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Button, Input, Dropdown, Menu, Badge, message } from 'antd';
 import { UserOutlined, HeartTwoTone, ShoppingCartOutlined } from '@ant-design/icons';

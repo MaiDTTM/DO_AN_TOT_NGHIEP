@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, message, Modal, Select, Tabs } from 'antd';
 import FormChung from './FormChung';

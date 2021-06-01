@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { createElement, useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Comment, Avatar, Form, Button, List, Input, Tooltip } from 'antd';

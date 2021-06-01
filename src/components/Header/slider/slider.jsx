@@ -3,7 +3,6 @@ import { Carousel } from 'antd';
 import { MenuFoldOutlined } from '@ant-design/icons';
 //style
 import hot from '../../../img/hot.gif';
-//import slider
 import { Link } from 'react-router-dom';
 import Styles from './styleSlider.module.css';
 import useCategoryLogicData from '../../../hooks/useCategoryLogicData';
@@ -19,6 +18,7 @@ const contentStyle = {
 	background: '#364d79',
 	objectFit: 'cover',
 };
+/* eslint-disable */
 
 function Slider() {
 	// hooks
@@ -31,8 +31,8 @@ function Slider() {
 
 	// Vong dong
 	React.useEffect(() => {
-		getListCategory();
-		getListSlider();
+		getListCategory().then().catch();
+		getListSlider().then().catch();
 	}, []);
 	return (
 		<div className={Styles.slider_center}>
@@ -51,8 +51,9 @@ function Slider() {
 								<i>
 									<img src={hot} />
 								</i>
-								<a>Top đầu tìm kiếm</a>
+								<p>Top đầu tìm kiếm</p>
 								<i>
+									s
 									<img src={hot} />
 								</i>
 							</li>
@@ -65,9 +66,9 @@ function Slider() {
 									</i>
 								</div>
 								<div>
-									<a>Xếp hình</a>
-									<a>- Xe</a>
-									<a>- Máy súc [Có quà]</a>
+									<p>Xếp hình</p>
+									<p>- Xe</p>
+									<p>- Máy súc [Có quà]</p>
 								</div>
 								<div>
 									<i>
@@ -84,8 +85,8 @@ function Slider() {
 									</i>
 								</div>
 								<div>
-									<a>Khuyến mại</a>
-									<a>- Hàng mới về</a>
+									<p>Khuyến mại</p>
+									<p>- Hàng mới về</p>
 								</div>
 								<div>
 									<i>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Button, Table, Modal, Form, Popconfirm, message, Switch, Image } from 'antd';
 import React, { useState } from 'react';
 import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';

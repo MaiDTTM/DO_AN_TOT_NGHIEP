@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import logo from '../../../img/tong_tien.png';
 // import PropTypes from 'prop-types';

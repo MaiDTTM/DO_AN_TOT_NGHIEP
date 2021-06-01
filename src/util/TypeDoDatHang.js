@@ -12,8 +12,6 @@
  * @modifier abc@bkav.com on xx/xx/xxxx đã chỉnh sửa abcxyx (Chỉ các thay đổi quan trọng mới cần ghi lại note này)
  */
 
-'use strict';
-
 const TYPE_TRANSACTION = {
 	ALL: 'Tất cả',
 	CHO_XAC_NHAN: 'Chờ xác nhận',

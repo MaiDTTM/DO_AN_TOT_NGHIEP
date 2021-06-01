@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import style from '../styles.module.css';
 import moment from 'moment';

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Avatar, Button, Modal, Popconfirm, Table } from 'antd';
 import Styles from '../style.module.css';

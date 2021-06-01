@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext } from 'react';
 import { Avatar, InputNumber, Table } from 'antd';
 // import PropTypes from 'prop-types';

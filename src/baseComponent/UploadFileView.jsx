@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Upload, message } from 'antd';
 import PropTypes from 'prop-types';

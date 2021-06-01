@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, message as messageAnt } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { AddUser } from '../../actions/userAction';
 import baseAPI from '../../axios/baseAPI';
@@ -28,7 +28,6 @@ function Register() {
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
-
 	const onChangeText = (event, type) => {
 		switch (type) {
 			case TypeInput.name:
@@ -79,7 +78,7 @@ function Register() {
 		<div className={style.dang_ky}>
 			<div className={style.herader_dangky}>
 				<Link to={'/'}>
-					<img src={logo} />
+					<img src={logo} alt={'xx'} />
 				</Link>
 				<div className={style.verticalLine}>
 					<p>

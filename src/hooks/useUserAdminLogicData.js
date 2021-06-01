@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import baseAPI from '../axios/baseAPI';
 import { TYPE_STORE, TypeApi } from '../util/TypeApi';
 import { TYPE_ACTION } from '../actions/TypeAction';

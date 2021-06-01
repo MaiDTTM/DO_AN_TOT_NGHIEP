@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import '../../Header/advertisement/style.scss';
 import '../../Header/menuHeader/style.module.css';
