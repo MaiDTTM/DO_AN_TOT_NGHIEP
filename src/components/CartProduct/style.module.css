@@ -50,6 +50,7 @@
 }
 .content_wart_cart {
 	width: 1200px;
+	min-height: 500px;
 	margin-top: 50px;
 }
 .content_cart {

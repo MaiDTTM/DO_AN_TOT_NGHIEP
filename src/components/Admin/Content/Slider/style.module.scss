@@ -1,0 +1,29 @@
+.table_slider {
+	:global {
+		.ant-table-wrapper {
+			box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+			border-radius: 10px;
+		}
+		.ant-spin-nested-loading {
+			.ant-spin-container {
+				.ant-table-pagination-right {
+					padding: 15px 20px !important;
+				}
+			}
+		}
+		.ant-table-cell {
+			background-color: #fff;
+		}
+		.ant-table-thead {
+			.ant-table-cell {
+				background: #d99fbe;
+			}
+          .ant-table-cell:first-child{
+            border-radius: 10px 0 0 0;
+          }
+          .ant-table-cell:last-child{
+            border-radius: 0 10px 0 0;
+          }
+		}
+	}
+}

@@ -15,6 +15,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import useSliderLogicData from '../../../../hooks/useSliderLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import style from './style.module.scss';
 // import PropTypes from 'prop-types';
 const layout = {
 	labelCol: { span: 6 },
@@ -165,9 +166,10 @@ function Slider() {
 			>
 				Thêm slider
 			</Button>
-			<div style={{ height: 450 }}>
+			<div style={{ height: 450 }} className={style.table_slider}>
 				<Table
 					columns={columns}
+					bordered
 					dataSource={Object.values(slider).reverse()}
 					scroll={{ y: 380 }}
 				/>

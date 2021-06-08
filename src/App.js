@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
+import 'ant-design-pro/dist/ant-design-pro.css';
 import Login from './components/Login';
 
 //import react router

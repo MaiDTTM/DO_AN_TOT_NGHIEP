@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Input, Popconfirm, Avatar, Button, message, Table, Modal } from 'antd';
 import queryString from 'query-string';
 // import PropTypes from 'prop-types';
@@ -10,6 +10,8 @@ import Footer from '../Footer/footer';
 import useCartLogicData from '../../hooks/useCartLogicData';
 import useProductLogicData from '../../hooks/useProductLogicData';
 import { ContextApp } from '../../context/contextApp';
+import { BASE_URL_IMAGE } from '../../util/TypeApi';
+import Draggable from 'react-draggable';
 const { Search } = Input;
 const text = 'Are you sure to delete this task?';
 
@@ -22,9 +24,11 @@ function CartProduct() {
 
 	// state
 	const [modal2Visible, setModal2Visible] = React.useState(false);
+	const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
 
 	// const
 	const { location } = history;
+	const draggleRef = React.createRef();
 	const parsed = queryString.parse(location.search);
 	const arrCarts = Object.values(carts).filter(
 		(item) => parsed && parsed.id !== item._id
@@ -58,6 +62,16 @@ function CartProduct() {
 		if (parsed && parsed.id) {
 			setSelectedRowKeys([parsed.id]);
 		}
+	};
+	const onStart = (event, uiData) => {
+		const { clientWidth, clientHeight } = window?.document?.documentElement;
+		const targetRect = draggleRef?.current?.getBoundingClientRect();
+		setBounds({
+			left: -targetRect?.left + uiData?.x,
+			right: clientWidth - (targetRect?.right - uiData?.x),
+			top: -targetRect?.top + uiData?.y,
+			bottom: clientHeight - (targetRect?.bottom - uiData?.y),
+		});
 	};
 
 	// Vòng đời
@@ -95,6 +109,14 @@ function CartProduct() {
 							onCancel={() => setModal2Visible(false)}
 							className={Styles.modal_xem_tat_ca}
 							style={{ width: '1200px' }}
+							modalRender={(modal) => (
+								<Draggable
+									bounds={bounds}
+									onStart={(event, uiData) => onStart(event, uiData)}
+								>
+									<div ref={draggleRef}>{modal}</div>
+								</Draggable>
+							)}
 						>
 							<PopupBuyProduct
 								setModal2Visible={setModal2Visible}
@@ -180,7 +202,11 @@ function CartProduct() {
 		name: (
 			<div style={{ display: 'flex', width: '500px' }}>
 				<Avatar
-					src="https://picsum.photos/200"
+					src={
+						product &&
+						product[item.product_id] &&
+						BASE_URL_IMAGE + product[item.product_id].image
+					}
 					style={{ width: '50px', height: '50px' }}
 				/>
 				<div style={{ marginLeft: '15px' }}>

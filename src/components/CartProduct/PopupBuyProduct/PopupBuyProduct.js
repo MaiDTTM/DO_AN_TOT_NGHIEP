@@ -3,6 +3,7 @@ import { Avatar, Button, Modal, Popconfirm, Table } from 'antd';
 import Styles from '../style.module.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 
 const columnXemTatCa = [
 	{
@@ -55,7 +56,11 @@ function PopupBuyProduct(props) {
 		name: (
 			<div style={{ display: 'flex', width: '500px' }}>
 				<Avatar
-					src="https://picsum.photos/200"
+					src={
+						product &&
+						product[carts[id].product_id] &&
+						BASE_URL_IMAGE + product[carts[id].product_id].image
+					}
 					style={{ width: '50px', height: '50px' }}
 				/>
 				<div style={{ marginLeft: '15px' }}>

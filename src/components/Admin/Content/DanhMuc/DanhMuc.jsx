@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Modal, Form, Input, Menu, Table, message, Image, Tag } from 'antd';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
 import TitleDanhMuc from '../TitleDanhMuc';
@@ -12,6 +12,14 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 const { SubMenu } = Menu;
 // submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+const responsiveMap = {
+	xs: '(max-width: 575px)',
+	sm: '(min-width: 576px)',
+	md: '(min-width: 768px)',
+	lg: '(min-width: 992px)',
+	xl: '(min-width: 1200px)',
+	xxl: '(min-width: 1600px)',
+};
 const layout = {
 	labelCol: {
 		span: 6,
@@ -223,16 +231,13 @@ function DanhMuc() {
 					openKeys={openKeys}
 					onOpenChange={onOpenChange}
 					style={{ width: 256 }}
+					className={styles.menu_danh_muc}
 				>
 					{Object.values(category).length > 0 &&
 						Object.values(category).map(
 							(item) =>
 								item.paramId === '-1' && (
-									<SubMenu
-										key={item._id}
-										// icon={<AppstoreOutlined />}
-										title={TitleCategory(item)}
-									>
+									<SubMenu key={item._id} title={TitleCategory(item)}>
 										{Object.values(category).map((itemChildren) => {
 											if (itemChildren.paramId === item._id) {
 												return (
@@ -260,6 +265,7 @@ function DanhMuc() {
 						centered
 						visible={modal2Visible}
 						onCancel={handleCancelModal}
+						maskClosable={false}
 						footer={null}
 					>
 						<Form {...layout} form={formAdd} onFinish={onFinishAdd}>
@@ -315,7 +321,7 @@ function DanhMuc() {
 					)}
 					columns={columns}
 					dataSource={Object.values(product).reverse()}
-					scroll={{ x: 1500, y: 360 }}
+					scroll={{ x: { responsiveMap } }}
 					bordered={true}
 				/>
 			</div>

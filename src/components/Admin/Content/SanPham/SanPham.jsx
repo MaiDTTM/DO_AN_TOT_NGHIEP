@@ -23,6 +23,7 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import ExportCSV from './ExportCSV/ExportCSV';
+import style from './style.module.scss';
 import { log10 } from 'chart.js/helpers';
 // import PropTypes from 'prop-types';
 
@@ -302,7 +303,7 @@ function SanPham() {
 			),
 		},
 	];
-	const title = linkFileUtil.length > 0 ? 'Sửa sản phẩm' : 'Thêm sản phẩm';
+	const title = linkFileUtil.length > 0 ? 'SỬA SẢN PHẨM' : 'THÊM SẢN PHẨM';
 	return (
 		<div>
 			<div>
@@ -320,7 +321,17 @@ function SanPham() {
 						Thêm sản phẩm
 					</Button>
 					<Upload {...props} fileList={fileList}>
-						<Button icon={<UploadOutlined />}>Import excel</Button>
+						<Button
+							style={{
+								marginBottom: 15,
+								marginRight: 5,
+								backgroundColor: '#42ecec',
+								borderRadius: 15,
+							}}
+							icon={<UploadOutlined />}
+						>
+							Import excel
+						</Button>
 					</Upload>
 					{/*<Button*/}
 					{/*	style={{*/}
@@ -353,6 +364,7 @@ function SanPham() {
 					}
 					centered
 					visible={modalVisible}
+					maskClosable={false}
 					footer={null}
 					onCancel={() => setModalVisible(false)}
 				>
@@ -432,7 +444,7 @@ function SanPham() {
 					</Form>
 				</Modal>
 			</div>
-			<div style={{ border: '1px solid red' }}>
+			<div className={style.table_product} style={{ border: '1px solid red' }}>
 				<Table
 					columns={columns}
 					dataSource={Object.values(product).reverse()}

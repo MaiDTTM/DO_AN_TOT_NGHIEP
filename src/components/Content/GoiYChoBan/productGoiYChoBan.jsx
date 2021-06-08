@@ -65,7 +65,7 @@ function ProductListGoiYChoBan({ product }) {
 					<div className={Styles.content_host_item_goi_y}>
 						{Object.values(product)
 							.concat(Object.values(product))
-							.slice(0, 40)
+							.slice(0, 45)
 							.map((item) => (
 								<Link to={`/detail/${item._id}`}>
 									{item['price_seo'] !== '0 %' ? (

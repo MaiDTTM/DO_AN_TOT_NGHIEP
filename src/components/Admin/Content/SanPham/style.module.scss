@@ -59,3 +59,10 @@
     justify-content: flex-start;
     align-items: center;
 }
+.table_product{
+    :global{
+        .ant-table-pagination-right{
+            padding: 15px 20px !important;
+        }
+    }
+}
