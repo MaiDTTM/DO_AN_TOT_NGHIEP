@@ -20,7 +20,6 @@ const { TabPane } = Tabs;
 function User() {
 	const [form] = Form.useForm();
 	const [data, setData] = useState(null);
-	const [visibleCopy, setVisibleCopy] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);

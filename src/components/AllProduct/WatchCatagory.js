@@ -40,6 +40,8 @@ function WatchCatagory() {
 		return '#ffffff';
 	};
 	const onClickCategory = (id) => {
+		console.log('idOld.current', idOld.current);
+		console.log('id', id);
 		if (`${idOld.current}` === `${id}`) {
 			categoryId ? setCategoryId('') : setCategoryId(id);
 		} else {
@@ -111,11 +113,27 @@ function WatchCatagory() {
 												title={item.name}
 												description={
 													<div
-														style={{ color: '#ff6b00', fontSize: 14, fontWeight: 'bold' }}
+														style={{
+															color: '#ff6b00',
+															fontSize: 14,
+															fontWeight: 'bold',
+														}}
 													>
-														{(item.price * 1000)
-															.toString()
-															.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+														<div>
+															{(
+																(
+																	item.price -
+																	(item.price * item.price_seo.split(' ')[0]) / 100
+																).toFixed(2) * 1000
+															)
+																.toString()
+																.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+														</div>
+														<span className={Styles.old_price}>
+															{(item.price * 1000)
+																.toString()
+																.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+														</span>
 													</div>
 												}
 											/>

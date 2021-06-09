@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import style from './style.module.scss';
 // import PropTypes from 'prop-types';
 
 // const
@@ -74,66 +75,24 @@ function KhachHang() {
 			dataIndex: 'email',
 			filters: [],
 			width: 250,
-			onFilter: (value, record) => record.email.indexOf(value) === 0,
-			sorter: (a, b) => a.email.length - b.email.length,
-			sortDirections: ['descend'],
 		},
 		{
 			title: 'Phone',
 			dataIndex: 'phone',
-			defaultSortOrder: 'descend',
-			sorter: (a, b) => a.age - b.age,
 		},
 		{
 			title: 'Gender',
 			dataIndex: 'gender',
 			width: 100,
-			filters: [
-				{
-					text: 'Nam',
-					value: 'nam',
-				},
-				{
-					text: 'Nữ',
-					value: 'nu',
-				},
-				{
-					text: 'Khác',
-					value: 'khac',
-				},
-				{
-					text: 'Submenu',
-					value: 'Submenu',
-					children: [
-						{
-							text: 'Green',
-							value: 'Green',
-						},
-						{
-							text: 'Black',
-							value: 'Black',
-						},
-					],
-				},
-			],
-			onFilter: (value, record) => record.gender.indexOf(value) === 0,
-			sorter: (a, b) => a.gender.length - b.gender.length,
-			sortDirections: ['descend'],
 		},
 		{
 			title: 'Ngày sinh',
 			dataIndex: 'date_of_birth',
 			defaultSortOrder: 'descend',
-			sorter: (a, b) => a.age - b.age,
 		},
 		{
 			title: 'Address',
 			dataIndex: 'address',
-			filters: [],
-			filterMultiple: false,
-			onFilter: (value, record) => record.address.indexOf(value) === 0,
-			sorter: (a, b) => a.address.length - b.address.length,
-			sortDirections: ['descend', 'ascend'],
 		},
 		{
 			title: 'Mật khẩu',
@@ -271,7 +230,7 @@ function KhachHang() {
 					</Form>
 				</Modal>
 			</div>
-			<div style={{ height: 480 }}>
+			<div className={style.table_customer}>
 				<Table
 					columns={columns}
 					// dataSource={columnsTable}

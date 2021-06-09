@@ -24,7 +24,7 @@ const productHot = {
 };
 const flashSale = {
 	width: '1200px',
-	height: '350px',
+	height: '370px',
 	paddingTop: '25px',
 	display: 'flex',
 	justifyContent: 'center',

@@ -4,9 +4,6 @@ import {
 	CopyOutlined,
 	DeleteOutlined,
 	EditOutlined,
-	HeartTwoTone,
-	SearchOutlined,
-	UserAddOutlined,
 	UserOutlined,
 } from '@ant-design/icons';
 import {

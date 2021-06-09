@@ -9,7 +9,6 @@ import {
 	InputNumber,
 	Form,
 	Select,
-	Avatar,
 	Image,
 	Tag,
 	Upload,
@@ -24,18 +23,7 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import ExportCSV from './ExportCSV/ExportCSV';
 import style from './style.module.scss';
-import { log10 } from 'chart.js/helpers';
 // import PropTypes from 'prop-types';
-
-const data = [];
-for (let i = 0; i < 100; i++) {
-	data.push({
-		key: i,
-		name: `Edward King ${i}`,
-		age: 32,
-		address: `London, Park Lane no. ${i}`,
-	});
-}
 
 const layout = {
 	labelCol: { span: 8 },
@@ -56,20 +44,18 @@ function SanPham() {
 	const [form] = Form.useForm();
 	const { category } = useCategoryLogicData();
 	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
-	const arrProduct = () =>
-		Object.values(product).map((item) => {
-			try {
-				item.catalog_id = category[item.catalog_id].name;
-			} catch (e) {
-				// console.log('item.catalog_id', item.catalog_id);
-				// console.log('category[item.catalog_id]', category[item.catalog_id]);
-				// console.log('e', e);
-			}
-			return item;
-		});
+	console.log('product', product); // MongLV log fix bug
+	const arrProduct = [];
+	Object.values(product).map((item) => {
+		try {
+			arrProduct.push({ ...item, catalog_id: category[item.catalog_id].name });
+		} catch (e) {
+			console.log('e', e);
+		}
+		return item;
+	});
 	const refCallBack = React.useRef();
 	const refCallBack2 = React.useRef();
-	const arrCategory = Object.values(category);
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
@@ -78,15 +64,8 @@ function SanPham() {
 	const [listLinkFileUtil, setListLinkFileUtil] = useState([]); // ['image']
 	const [description, setDescription] = useState('');
 	const [dataProductEdit, setDataProductEdit] = useState(null);
-	const [customers, setCustomers] = useState(arrProduct());
-	const [fileList, setFileList] = useState([
-		// {
-		// 	uid: '-1',
-		// 	name: 'List_product.xlsx',
-		// 	status: 'done',
-		// 	url: 'http://www.baidu.com/List_product.xlsx',
-		// },
-	]);
+	const [customers, setCustomers] = useState(arrProduct);
+	const [fileList, setFileList] = useState([]);
 	// handle func
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
@@ -444,7 +423,7 @@ function SanPham() {
 					</Form>
 				</Modal>
 			</div>
-			<div className={style.table_product} style={{ border: '1px solid red' }}>
+			<div className={style.table_product}>
 				<Table
 					columns={columns}
 					dataSource={Object.values(product).reverse()}

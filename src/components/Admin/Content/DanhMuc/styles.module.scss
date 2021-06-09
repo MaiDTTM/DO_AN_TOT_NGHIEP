@@ -65,13 +65,42 @@
 	color: #0c48db;
 }
 .table_product {
-	:global{
-		.ant-table-pagination-right{
-			padding: 15px 20px !important;
+	:global {
+		.ant-table-container {
+			border-radius: 25px !important;
+		}
+		.ant-table-thead {
+			.ant-table-cell {
+				background-color: #28e0c9 !important;
+			}
+			.ant-table-cell:first-child {
+				border-top-left-radius: 24px !important;
+			}
+			.ant-table-cell:last-child {
+				border-top-right-radius: 24px !important;
+			}
+		}
+		.ant-table-has-fix-left {
+			//border: 2px solid #28e0c9;
+			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+			border-radius: 25px !important;
+		}
+		.ant-table-content {
+			.ant-table-tbody {
+				.ant-table-cell:first-child {
+					border-bottom-left-radius: 24px !important;
+				}
+				.ant-table-cell:last-child {
+					border-bottom-right-radius: 24px !important;
+				}
+			}
+		}
+		.ant-table-pagination-right {
+			padding: 20px;
+			justify-content: center !important;
 		}
 	}
-	margin-left: 20px;
-	border: 1px solid #db0cd1;
+	margin-left: 35px;
 }
 .from_danh_muc {
 	display: flex;

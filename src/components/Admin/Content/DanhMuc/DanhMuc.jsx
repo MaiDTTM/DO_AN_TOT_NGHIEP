@@ -47,17 +47,19 @@ function DanhMuc() {
 		updateCategory,
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
-
+	const newArrProduct = Object.values(product);
+	console.log('newArrProduct', newArrProduct); // MongLV log fix bug
 	// state
-	const [openKeys, setOpenKeys] = React.useState(['sub1']);
+	const [openKeys, setOpenKeys] = React.useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);
 	const [paramId, setParamId] = useState('-1'); // Note: -1 là quy chuẩn với server
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiễn thị modal add, tồn tại -> hiễn tị modal edit
-
+	const [listProduct, setListProduct] = useState({ ...newArrProduct });
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+		console.log('latestOpenKey', latestOpenKey); // MongLV log fix bug
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
 			setOpenKeys(keys);
 		} else {
@@ -88,7 +90,7 @@ function DanhMuc() {
 	const onReset = () => {
 		formAdd.resetFields();
 		setDataEditCategoryModal(null);
-		setModal2Visible(false);
+		// setModal2Visible(false);
 	};
 
 	const handleCancelModal = () => {
@@ -129,6 +131,13 @@ function DanhMuc() {
 			handleAdd={handleAddChildren}
 		/>
 	);
+	const handleClick = ({ item, key, keyPath, domEvent }) => {
+		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
+	};
+	const handleSubmenuClick = ({ key, domEvent }) => {
+		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
+		setOpenKeys(key);
+	};
 	const columns = [
 		{
 			title: 'Ảnh',
@@ -227,17 +236,22 @@ function DanhMuc() {
 			<div className={styles.danh_muc}>
 				<div className={styles.title_danh_muc}>DANH SÁCH DANH MỤC</div>
 				<Menu
+					className={styles.menu_danh_muc}
 					mode="inline"
 					openKeys={openKeys}
-					onOpenChange={onOpenChange}
+					onOpenChange={(keys) => onOpenChange(keys)}
 					style={{ width: 256 }}
-					className={styles.menu_danh_muc}
+					onClick={(key) => handleClick(key)}
 				>
 					{Object.values(category).length > 0 &&
-						Object.values(category).map(
-							(item) =>
+						Object.values(category).map((item, index) => {
+							return (
 								item.paramId === '-1' && (
-									<SubMenu key={item._id} title={TitleCategory(item)}>
+									<SubMenu
+										key={item._id}
+										title={TitleCategory(item)}
+										onTitleClick={handleSubmenuClick}
+									>
 										{Object.values(category).map((itemChildren) => {
 											if (itemChildren.paramId === item._id) {
 												return (
@@ -249,7 +263,8 @@ function DanhMuc() {
 										})}
 									</SubMenu>
 								)
-						)}
+							);
+						})}
 				</Menu>
 				<div className={styles.danh_muc_action}>
 					<Search placeholder="input search text" onSearch={onSearch} enterButton />
@@ -313,14 +328,20 @@ function DanhMuc() {
 				</div>
 			</div>
 			<div className={styles.table_product}>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						height: 20,
+						fontSize: 18,
+						marginBottom: 32,
+					}}
+				>
+					<h1>DANH SÁCH SẢN PHẨM THUỘC DANH MỤC</h1>
+				</div>
 				<Table
-					title={() => (
-						<div style={{ display: 'flex', justifyContent: 'center', height: 20 }}>
-							<h1>DANH SÁCH SẢN PHẨM THUỘC DANH MỤC</h1>
-						</div>
-					)}
 					columns={columns}
-					dataSource={Object.values(product).reverse()}
+					dataSource={Object.values(listProduct).reverse()}
 					scroll={{ x: { responsiveMap } }}
 					bordered={true}
 				/>

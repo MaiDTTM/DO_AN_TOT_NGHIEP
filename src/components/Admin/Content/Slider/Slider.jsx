@@ -169,7 +169,6 @@ function Slider() {
 			<div style={{ height: 450 }} className={style.table_slider}>
 				<Table
 					columns={columns}
-					bordered
 					dataSource={Object.values(slider).reverse()}
 					scroll={{ y: 380 }}
 				/>
