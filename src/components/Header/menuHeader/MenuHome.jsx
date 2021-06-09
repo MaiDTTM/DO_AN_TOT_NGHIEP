@@ -88,7 +88,6 @@ function MenuHome() {
 					fontSize: '16px',
 				}}
 			>
-				{' '}
 				SẢN PHẨM MỚI THÊM
 			</span>
 			<hr
@@ -106,7 +105,15 @@ function MenuHome() {
 					<Menu.Item key={item._id} style={{ marginTop: '20px' }}>
 						<div className={Styles.hover_cart}>
 							<div className={Styles.img_hover_cart}>
-								<img src={img} className={Styles.img_hover_cart} />
+								<img
+									alt={item.image}
+									src={
+										product &&
+										product[item.product_id] &&
+										BASE_URL_IMAGE + product[item.product_id].image
+									}
+									className={Styles.img_hover_cart}
+								/>
 							</div>
 							<div className={Styles.span_hover_cart}>
 								{product && product[item.product_id] && product[item.product_id].name}

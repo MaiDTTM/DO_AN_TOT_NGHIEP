@@ -3,7 +3,7 @@ import React from 'react';
 import '../../Header/advertisement/style.scss';
 import '../../Header/menuHeader/style.module.css';
 import Styles from './Style.module.scss';
-import { Button, Card, Rate, Pagination, message, Empty } from 'antd';
+import { Button, Card, Rate, Pagination, message, Empty, InputNumber } from 'antd';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import CommentProduct from './Comment/Comment';
 import Footer from '../../Footer/footer';
@@ -45,6 +45,7 @@ function DetailProduct() {
 
 	// state
 	const [objDetail, setObjDetail] = React.useState({});
+	console.log('objDetail', objDetail); // MongLV log fix bug
 	const [productSuggest, setProductSuggest] = React.useState([]);
 	const [imageActive, setImageActive] = React.useState('');
 	const handleBuyProduct = () => {
@@ -133,6 +134,9 @@ function DetailProduct() {
 	// 		})
 	// 		.join(', ');
 	// };
+	const onChangeNumber = (value) => {
+		console.log('changed', value);
+	};
 	return (
 		<div>
 			<Chung />
@@ -214,7 +218,10 @@ function DetailProduct() {
 										</div>
 										<div className={Styles.action_thuong_hieu}>Thương hiệu : GCB</div>
 										<div className={Styles.action_thuong_hieu}>
-											Mã SP : <span>DCG-69782</span>
+											Mã SP :
+											<span style={{ fontWeight: 'bold', color: '#e76633' }}>
+												{objDetail._id}
+											</span>
 										</div>
 									</div>
 								</div>
@@ -223,15 +230,57 @@ function DetailProduct() {
 								<div className={Styles.copy_content_detail_item}>
 									<div className={Styles.copy_content_detail_title}>Giá :</div>
 									<div className={Styles.copy_content_detail_values}>
-										{(objDetail.price * 1000)
+										{(
+											(
+												objDetail.price -
+												(objDetail.price * objDetail.price_seo.split(' ')[0]) / 100
+											).toFixed(2) * 1000
+										)
 											.toString()
 											.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
 									</div>
+									{objDetail.price_seo !== '0 %' ? (
+										<div style={{ width: '50%' }}>
+											<span
+												className={Styles.old_price}
+												style={{
+													textDecoration: 'line-through',
+													color: '#6b6b6b',
+													fontSize: '18px',
+													marginLeft: 8,
+												}}
+											>
+												{(objDetail.price * 1000)
+													.toString()
+													.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+											</span>
+											<span className={Styles.label_km}>
+												Tiết kiệm{' '}
+												<span id="discount">
+													{((objDetail.price * objDetail.price_seo.split(' ')[0]) / 100)
+														.toString()
+														.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' k'}
+												</span>
+											</span>
+										</div>
+									) : (
+										<div style={{ width: '50%' }} />
+									)}
 								</div>
 								<div className={Styles.copy_content_detail_item}>
 									<div className={Styles.copy_content_detail_title}>Tình trạng :</div>
 									<div className={Styles.copy_content_detail_tinh_trang}>
 										{objDetail.amount - objDetail['sold'] > 0 ? 'Còn hàng' : 'Hết hàng'}
+									</div>
+									<div className={Styles.copy_content_detail_title}>Số lượng :</div>
+									<div className={Styles.copy_content_detail_tinh_trang}>
+										<InputNumber
+											min={1}
+											max={8}
+											bordered
+											defaultValue={1}
+											onChange={() => onChangeNumber()}
+										/>
 									</div>
 								</div>
 								<div className={Styles.copy_content_detail_item}>
@@ -239,7 +288,7 @@ function DetailProduct() {
 									<div className={Styles.copy_content_detail_van_chuyen}>
 										<span>
 											<strong>Miễn phí vận chuyển </strong>
-											cho đơn hàng 100.000đ
+											cho đơn hàng trên <span style={{ color: 'red' }}>200.000đ</span>
 										</span>
 									</div>
 								</div>
@@ -297,25 +346,76 @@ function DetailProduct() {
 						<div className={Styles.content_banthich}>
 							{productSuggest.slice(0, 6).map((item) => (
 								<Link to={`/detail/${item._id}`}>
-									<Card
-										hoverable
-										className={Styles.card_item_banthich}
-										cover={
-											<img
-												alt="Bảng số và phép tính BA127b (1-20 số)"
-												src="https://media.shoptretho.com.vn/upload/image/product/20190508/bang-so-va-phep-tinh-ba127b-2.png?mode=max&width=400&height=400"
-											/>
-										}
-									>
-										<Meta
-											title={item.name}
-											description={
-												(item.price * 1000)
-													.toString()
-													.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
+									{item['price_seo'] !== '0 %' ? (
+										<Card
+											hoverable
+											className={Styles.card_item_goi_y}
+											cover={
+												<img
+													alt={item.image}
+													src={BASE_URL_IMAGE + item.image}
+													style={{ width: 178, height: 150 }}
+												/>
 											}
-										/>
-									</Card>
+										>
+											<Meta
+												title={item.name}
+												description={
+													<div
+														style={{
+															color: '#ff6b00',
+															fontWeight: 'bold',
+														}}
+													>
+														<div>
+															{(
+																(
+																	item.price -
+																	(item.price * item.price_seo.split(' ')[0]) / 100
+																).toFixed(2) * 1000
+															)
+																.toString()
+																.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+														</div>
+														<span className={Styles.old_price}>
+															{(item.price * 1000)
+																.toString()
+																.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+														</span>
+													</div>
+												}
+											/>
+											<div className={Styles._2TDZGE}>
+												<div className={Styles.percent}>{item['price_seo']}</div>
+												<div className={Styles._17XqBU}>giảm</div>
+											</div>
+										</Card>
+									) : (
+										<Card
+											hoverable
+											className={Styles.card_item_goi_y}
+											cover={
+												<img
+													alt="Đồ chơi ô tô thả hình số đếm XE30a"
+													src={BASE_URL_IMAGE + item.image}
+													style={{ width: 178, height: 150 }}
+												/>
+											}
+										>
+											<Meta
+												title={item.name}
+												description={
+													<div
+														style={{ color: '#ff6b00', fontSize: 14, fontWeight: 'bold' }}
+													>
+														{(item.price * 1000)
+															.toString()
+															.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+													</div>
+												}
+											/>
+										</Card>
+									)}
 								</Link>
 							))}
 						</div>
@@ -339,7 +439,7 @@ function DetailProduct() {
 								<CommentProduct />
 							</div>
 							<div className={Styles.pagination}>
-								<Pagination size="small" total={50} className={Styles.pa} />
+								<Pagination defaultCurrent={1} total={50} />
 							</div>
 						</div>
 					</div>

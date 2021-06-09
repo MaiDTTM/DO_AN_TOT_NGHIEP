@@ -41,9 +41,9 @@
 	margin-left: 0.4125rem;
 	margin-top: 1.2125rem;
 }
-.content_page{
-    display: flex;
-    justify-content: center;
+.content_page {
+	display: flex;
+	justify-content: center;
 }
 .card_item_goi_y:hover {
 	box-shadow: rgb(226, 104, 210) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px,
@@ -84,7 +84,20 @@
 	/*background-color: #61dafb !important;*/
 	width: 300px !important;
 	padding-bottom: 50px;
+	padding-top: 20px;
 	border-radius: 15px;
+}
+.old_price {
+	color: #6b6b6b;
+	text-decoration: line-through;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	vertical-align: baseline;
+	background: transparent;
+	font-family: Arial, Tahoma;
+	font-size: 10px;
 }
 .btn_xem_them {
 	background-color: #fff !important;
@@ -155,7 +168,7 @@
 .page_row {
 	padding: 2.5rem 0;
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
 	width: 1200px;
 	-webkit-box-flex: 0;
 	-webkit-box-direction: normal;

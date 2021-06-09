@@ -2,6 +2,7 @@ import React from 'react';
 import FileSaver from 'file-saver';
 import XLSX from 'xlsx';
 import { Button } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 
 const ExportCSV = ({ csvData, fileName, wscols }) => {
 	// ******** XLSX with object key as header *************
@@ -84,7 +85,17 @@ const ExportCSV = ({ csvData, fileName, wscols }) => {
 	};
 
 	return (
-		<Button variant="warning" onClick={(e) => exportToCSV(csvData, fileName, wscols)}>
+		<Button
+			style={{
+				marginBottom: 15,
+				marginRight: 5,
+				backgroundColor: '#94ea95',
+				borderRadius: 15,
+			}}
+			variant="warning"
+			onClick={(e) => exportToCSV(csvData, fileName, wscols)}
+			icon={<DownloadOutlined />}
+		>
 			Export XLSX
 		</Button>
 	);

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Modal, Form, Input, Menu, Table, message, Image, Tag } from 'antd';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
 import TitleDanhMuc from '../TitleDanhMuc';
@@ -13,6 +13,14 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 const { SubMenu } = Menu;
 // submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+const responsiveMap = {
+	xs: '(max-width: 575px)',
+	sm: '(min-width: 576px)',
+	md: '(min-width: 768px)',
+	lg: '(min-width: 992px)',
+	xl: '(min-width: 1200px)',
+	xxl: '(min-width: 1600px)',
+};
 const layout = {
 	labelCol: {
 		span: 6,
@@ -40,17 +48,19 @@ function DanhMuc() {
 		updateCategory,
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
-
+	const newArrProduct = Object.values(product);
+	console.log('newArrProduct', newArrProduct); // MongLV log fix bug
 	// state
-	const [openKeys, setOpenKeys] = React.useState(['sub1']);
+	const [openKeys, setOpenKeys] = React.useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);
 	const [paramId, setParamId] = useState('-1'); // Note: -1 là quy chuẩn với server
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiễn thị modal add, tồn tại -> hiễn tị modal edit
-
+	const [listProduct, setListProduct] = useState({ ...newArrProduct });
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+		console.log('latestOpenKey', latestOpenKey); // MongLV log fix bug
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
 			setOpenKeys(keys);
 		} else {
@@ -81,7 +91,7 @@ function DanhMuc() {
 	const onReset = () => {
 		formAdd.resetFields();
 		setDataEditCategoryModal(null);
-		setModal2Visible(false);
+		// setModal2Visible(false);
 	};
 
 	const handleCancelModal = () => {
@@ -122,6 +132,13 @@ function DanhMuc() {
 			handleAdd={handleAddChildren}
 		/>
 	);
+	const handleClick = ({ item, key, keyPath, domEvent }) => {
+		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
+	};
+	const handleSubmenuClick = ({ key, domEvent }) => {
+		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
+		setOpenKeys(key);
+	};
 	const columns = [
 		{
 			title: 'Ảnh',
@@ -220,19 +237,21 @@ function DanhMuc() {
 			<div className={styles.danh_muc}>
 				<div className={styles.title_danh_muc}>DANH SÁCH DANH MỤC</div>
 				<Menu
+					className={styles.menu_danh_muc}
 					mode="inline"
 					openKeys={openKeys}
-					onOpenChange={onOpenChange}
+					onOpenChange={(keys) => onOpenChange(keys)}
 					style={{ width: 256 }}
+					onClick={(key) => handleClick(key)}
 				>
 					{Object.values(category).length > 0 &&
-						Object.values(category).map(
-							(item) =>
+						Object.values(category).map((item, index) => {
+							return (
 								item.paramId === '-1' && (
 									<SubMenu
 										key={item._id}
-										// icon={<AppstoreOutlined />}
 										title={TitleCategory(item)}
+										onTitleClick={handleSubmenuClick}
 									>
 										{Object.values(category).map((itemChildren) => {
 											if (itemChildren.paramId === item._id) {
@@ -245,7 +264,8 @@ function DanhMuc() {
 										})}
 									</SubMenu>
 								)
-						)}
+							);
+						})}
 				</Menu>
 				<div className={styles.danh_muc_action}>
 					<Search placeholder="input search text" onSearch={onSearch} enterButton />
@@ -261,6 +281,7 @@ function DanhMuc() {
 						centered
 						visible={modal2Visible}
 						onCancel={handleCancelModal}
+						maskClosable={false}
 						footer={null}
 					>
 						<Form {...layout} form={formAdd} onFinish={onFinishAdd}>
@@ -308,15 +329,21 @@ function DanhMuc() {
 				</div>
 			</div>
 			<div className={styles.table_product}>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						height: 20,
+						fontSize: 18,
+						marginBottom: 32,
+					}}
+				>
+					<h1>DANH SÁCH SẢN PHẨM THUỘC DANH MỤC</h1>
+				</div>
 				<Table
-					title={() => (
-						<div style={{ display: 'flex', justifyContent: 'center', height: 20 }}>
-							<h1>DANH SÁCH SẢN PHẨM THUỘC DANH MỤC</h1>
-						</div>
-					)}
 					columns={columns}
-					dataSource={Object.values(product).reverse()}
-					scroll={{ x: 1500, y: 360 }}
+					dataSource={Object.values(listProduct).reverse()}
+					scroll={{ x: { responsiveMap } }}
 					bordered={true}
 				/>
 			</div>

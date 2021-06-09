@@ -146,6 +146,15 @@
     display: flex;
     width: 100%;
 }
+.form_account_admin{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: start;
+    align-items: flex-start;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 0.5px solid #e7e7db;
+}
 .my_account_profile__left_item_title {
     margin-right: 10px;
     padding-top: 5px;
@@ -156,6 +165,7 @@
 }
 .content_left{
     display: flex;
+    margin-top: 20px;
 }
 .avatar-uploader > .ant-upload {
     width: 128px;

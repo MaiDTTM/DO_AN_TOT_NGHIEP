@@ -2,6 +2,18 @@
 	width: 1200px;
 	height: 100%;
 }
+.old_price{
+	color: #6b6b6b;
+	text-decoration: line-through;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	vertical-align: baseline;
+	background: transparent;
+	font-family: Arial,Tahoma;
+	font-size: 10px;
+}
 .header_hot {
 	display: flex;
 	justify-content: space-between;
@@ -107,7 +119,7 @@
 }
 .card_item {
 	width: 150px;
-	height: 230px;
+	height: 250px;
 	margin-top: 15px;
 }
 .card_item_all_flash{

@@ -20,8 +20,14 @@
 .table_user {
 	height: 92%;
 	:global {
-		.ant-table-header {
-			background-color: red;
+		.ant-table-thead {
+			.ant-table-cell {
+				background-color: #28e0c9 !important;
+			}
+		}
+		.ant-table-pagination-right {
+			padding: 20px;
+			justify-content: center !important;
 		}
 	}
 }

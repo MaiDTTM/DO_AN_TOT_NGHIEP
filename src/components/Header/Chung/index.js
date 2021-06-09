@@ -57,12 +57,14 @@ function Chung() {
 									Hướng dẫn mua hàng
 								</div>
 							</Link>
-							<div className="nav_item_right">
-								<StarOutlined
-									style={{ color: '#e31a42', fontSize: '14px', marginRight: 5 }}
-								/>
-								Khuyến mại
-							</div>
+							<Link to={'/flashsale'}>
+								<div className="nav_item_right">
+									<StarOutlined
+										style={{ color: '#e31a42', fontSize: '14px', marginRight: 5 }}
+									/>
+									Khuyến mại
+								</div>
+							</Link>
 							<Link to={'/lienhe'}>
 								<div className="nav_item_right_LH">
 									<PhoneOutlined

@@ -73,36 +73,65 @@ function FlashSale({ product }) {
 					<div
 						style={{
 							width: '95%',
-							height: '100%',
+							height: '98%',
 							display: 'flex',
 							justifyContent: 'space-around',
 							position: 'relative',
 						}}
 					>
-						{newArraySale.slice(numberStart, numberEnd).map((item) => (
-							<Link to={`/detail/${item._id}`}>
-								<Card
-									hoverable
-									className={Styles.card_item}
-									cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
-								>
-									<Meta
-										title={item.name}
-										description={
-											<div style={{ color: '#ff6b00', fontSize: 14, fontWeight: 'bold' }}>
-												{(item.price * 1000)
-													.toString()
-													.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
-											</div>
+						{newArraySale.slice(numberStart, numberEnd).map((item) => {
+							const test = item.price_seo.split(' ');
+							console.log('test', item.price_seo.split(' ')[0]);
+							console.log('test2', item.price);
+							return (
+								<Link to={`/detail/${item._id}`}>
+									<Card
+										hoverable
+										className={Styles.card_item}
+										cover={
+											<img
+												alt={item.image}
+												src={BASE_URL_IMAGE + item.image}
+												style={{ width: 150, height: 150 }}
+											/>
 										}
-									/>
-									<div className={Styles._2TDZGE}>
-										<div className={Styles.percent}>{item['price_seo']}</div>
-										<div className={Styles._17XqBU}>giảm</div>
-									</div>
-								</Card>
-							</Link>
-						))}
+									>
+										<Meta
+											title={item.name}
+											description={
+												<div
+													style={{
+														color: '#ff6b00',
+														fontSize: 14,
+														fontWeight: 'bold',
+													}}
+												>
+													<div>
+														{(
+															(
+																item.price -
+																(item.price * item.price_seo.split(' ')[0]) / 100
+															).toFixed(2) * 1000
+														)
+															.toString()
+															.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+													</div>
+													<span className={Styles.old_price}>
+														{(item.price * 1000)
+															.toString()
+															.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+													</span>
+												</div>
+											}
+										/>
+										<div className={Styles._2TDZGE}>
+											<div className={Styles.percent}>{item['price_seo']}</div>
+											<div className={Styles._17XqBU}>giảm</div>
+										</div>
+									</Card>
+								</Link>
+							);
+						})}
 					</div>
 					<Button
 						type="primary"

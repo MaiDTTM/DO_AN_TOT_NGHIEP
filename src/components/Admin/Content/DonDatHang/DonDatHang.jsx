@@ -10,6 +10,7 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import ModalDetail from '../../../Account/DonHang/Modal/ModalDetail';
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 function DonDatHang() {
@@ -22,6 +23,7 @@ function DonDatHang() {
 	const [itemCancel, setItemCancel] = React.useState(null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [valuesCancel, setValuesCancel] = useState('');
+	const [isModalVisible2, setIsModalVisible2] = useState(false);
 	// handleFunction
 	const handleImage = (cartId) => {
 		return carts[cartId] && carts[cartId].product_id
@@ -78,7 +80,9 @@ function DonDatHang() {
 		}
 		return arr.reverse();
 	};
-
+	const HandleDetailTransaction = () => {
+		setIsModalVisible2(true);
+	};
 	// JSX
 	const ListComponent = (item) => (
 		<List
@@ -145,7 +149,12 @@ function DonDatHang() {
 							{/*		</Button>*/}
 							{/*	</div>*/}
 							{/*)}*/}
-							<Button className={style.btn_action}>Xem chi tiết đơn hàng</Button>
+							<Button
+								className={style.btn_action}
+								onClick={() => HandleDetailTransaction()}
+							>
+								Xem chi tiết đơn hàng
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -219,6 +228,10 @@ function DonDatHang() {
 			>
 				<TextArea placeholder="Lý do hủy đơn của bạn là gì ?" onChange={onChangeCancel} />
 			</Modal>
+			<ModalDetail
+				isModalVisible2={isModalVisible2}
+				setIsModalVisible2={setIsModalVisible2}
+			/>
 		</div>
 	);
 }
