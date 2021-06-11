@@ -162,7 +162,6 @@ function FormChung(props) {
 		deleteUserAdmin(id);
 	};
 	const onFinishEdit = (values) => {
-		console.log('values', values); // MongLV log fix bug
 		values['avatar'] = linkFileUtil;
 		if (linkFileUtil) {
 			updateUserAdmin({ ...dataUserAdminEdit, ...values });

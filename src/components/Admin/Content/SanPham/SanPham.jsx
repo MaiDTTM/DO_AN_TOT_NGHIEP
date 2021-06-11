@@ -45,7 +45,6 @@ function SanPham() {
 	const [form] = Form.useForm();
 	const { category } = useCategoryLogicData();
 	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
-	console.log('product', product); // MongLV log fix bug
 	const arrProduct = [];
 	Object.values(product).map((item) => {
 		try {

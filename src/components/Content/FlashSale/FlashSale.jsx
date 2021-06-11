@@ -80,9 +80,6 @@ function FlashSale({ product }) {
 						}}
 					>
 						{newArraySale.slice(numberStart, numberEnd).map((item) => {
-							const test = item.price_seo.split(' ');
-							console.log('test', item.price_seo.split(' ')[0]);
-							console.log('test2', item.price);
 							return (
 								<Link to={`/detail/${item._id}`}>
 									<Card

@@ -81,7 +81,7 @@ function LayoutAdmin() {
 			<Layout className={Style.site_layout} style={{ marginLeft: sizeLayout }}>
 				<Header
 					className={Style.site_layout_background}
-					style={{ position: 'fixed', zIndex: 1, width: '89.5%' }}
+					style={{ position: 'fixed', zIndex: 1, width: '85.5%' }}
 				>
 					<div
 						style={{

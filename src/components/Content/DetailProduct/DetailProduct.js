@@ -45,7 +45,6 @@ function DetailProduct() {
 
 	// state
 	const [objDetail, setObjDetail] = React.useState({});
-	console.log('objDetail', objDetail); // MongLV log fix bug
 	const [productSuggest, setProductSuggest] = React.useState([]);
 	const [imageActive, setImageActive] = React.useState('');
 	const handleBuyProduct = () => {

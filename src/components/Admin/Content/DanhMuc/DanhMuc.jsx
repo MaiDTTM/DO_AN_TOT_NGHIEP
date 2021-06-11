@@ -39,7 +39,7 @@ const { Search } = Input;
 
 function DanhMuc() {
 	// hooks
-	const [formAdd] = Form.useForm();
+	const [form] = Form.useForm();
 	const {
 		category,
 		getListCategory,
@@ -49,7 +49,6 @@ function DanhMuc() {
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
 	const newArrProduct = Object.values(product);
-	console.log('newArrProduct', newArrProduct); // MongLV log fix bug
 	// state
 	const [openKeys, setOpenKeys] = React.useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);
@@ -60,7 +59,6 @@ function DanhMuc() {
 	const [listProduct, setListProduct] = useState({ ...newArrProduct });
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-		console.log('latestOpenKey', latestOpenKey); // MongLV log fix bug
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
 			setOpenKeys(keys);
 		} else {
@@ -79,24 +77,31 @@ function DanhMuc() {
 				// Add
 				values['paramId'] = paramId;
 				postCategory(values);
-				onReset();
+				onCancel();
 			} else {
 				updateCategory({ ...dataEditCategoryModal, ...values });
-				onReset();
+				onCancel();
 			}
 		} else {
 			message.warn('Thiếu icon');
 		}
 	};
 	const onReset = () => {
-		formAdd.resetFields();
+		form.resetFields();
 		setDataEditCategoryModal(null);
-		// setModal2Visible(false);
+		setLinkFileUtil('');
+		setFileListUtil([]);
+	};
+
+	const onCancel = () => {
+		onReset();
+		setModal2Visible(false);
 	};
 
 	const handleCancelModal = () => {
 		setModal2Visible(false);
 		setParamId('-1');
+		onReset();
 	};
 
 	const handleEditModal = (item) => {
@@ -112,7 +117,7 @@ function DanhMuc() {
 			},
 		]);
 		setLinkFileUtil(item.icon);
-		formAdd.setFieldsValue({ ...item });
+		form.setFieldsValue({ ...item });
 	};
 	const handleAddChildren = (id) => {
 		setModalVisible2(true);
@@ -142,7 +147,7 @@ function DanhMuc() {
 	const columns = [
 		{
 			title: 'Ảnh',
-			width: 50,
+			width: 100,
 			dataIndex: 'image',
 			fixed: 'left',
 			align: 'center',
@@ -178,7 +183,7 @@ function DanhMuc() {
 		{
 			title: 'Giá',
 			dataIndex: 'price',
-			width: 125,
+			width: 100,
 			key: '1',
 			align: 'center',
 			render: (price) => (
@@ -192,12 +197,12 @@ function DanhMuc() {
 			dataIndex: 'amount',
 			key: '2',
 			align: 'center',
-			width: 80,
+			width: 75,
 		},
 		{
 			title: 'Đã bán',
 			dataIndex: 'sold',
-			width: 75,
+			width: 60,
 			key: '3',
 			align: 'center',
 		},
@@ -284,7 +289,7 @@ function DanhMuc() {
 						maskClosable={false}
 						footer={null}
 					>
-						<Form {...layout} form={formAdd} onFinish={onFinishAdd}>
+						<Form {...layout} form={form} onFinish={onFinishAdd}>
 							<Form.Item
 								name={'name'}
 								label="Tên danh mục"

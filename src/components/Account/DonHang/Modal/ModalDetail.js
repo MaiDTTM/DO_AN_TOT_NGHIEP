@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import style from '../styles.module.scss';
 import { Modal } from 'antd';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import ConvertStringToVND from '../../../../util/ConvertStringToVND';
+import useCartLogicData from '../../../../hooks/useCartLogicData';
+import useProductLogicData from '../../../../hooks/useProductLogicData';
+import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 
 function ModalDetail(props) {
-	const { isModalVisible2, setIsModalVisible2 } = props;
+	const { item, setItem } = props;
+
+	// hooks
+	const { carts } = useCartLogicData();
+	const { product } = useProductLogicData();
 	const draggleRef = React.createRef();
 	const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
 
@@ -20,15 +28,17 @@ function ModalDetail(props) {
 		});
 	};
 	const handleCancelDetail = () => {
-		setIsModalVisible2(false);
+		setItem();
 	};
+	if (!item && Object.keys(product).length === 0 && Object.keys(carts).length === 0)
+		return <React.Fragment />;
 	return (
 		<Modal
-			title="CHI TIẾT ĐƠN HÀNG CỦA BẠN"
-			visible={isModalVisible2}
+			title={'CHI TIẾT ĐƠN HÀNG CỦA BẠN'}
+			visible={!!item}
 			onCancel={handleCancelDetail}
 			footer={null}
-			width="750px"
+			width={'750px'}
 			modalRender={(modal) => (
 				<Draggable bounds={bounds} onStart={(event, uiData) => onStart(event, uiData)}>
 					<div ref={draggleRef}>{modal}</div>
@@ -44,39 +54,43 @@ function ModalDetail(props) {
 						<div className={style.line_order_info}>
 							<span className={style.left_order_info}>Mã đơn hàng:</span>
 							<span className={style.right_order_info}>
-								<b>PC36529905D53D4</b>
+								<b>{item._id}</b>
 							</span>
 						</div>
 						<div className={style.line_order_info}>
 							<span className={style.left_order_info}>Ngày đặt hàng:</span>
-							<span className={style.right_order_info}>21/33/21 10:33</span>
+							<span className={style.right_order_info}>
+								{new Date(item.created).toLocaleDateString()}
+							</span>
 						</div>
 						<div className={style.line_order_info}>
 							<span className={style.left_order_info}>Tổng giá trị:</span>
-							<span className={style.right_order_info}>54.000đ</span>
+							<span className={style.right_order_info}>
+								{ConvertStringToVND(item.amount)}
+							</span>
 						</div>
 						<div className={style.line_order_info}>
 							<div className={style.line_order_info_left}>
 								<span className={style.left_order_info}>Trạng thái:</span>
 								<span className={style.right_order_info} style={{ fontWeight: 'bold' }}>
-									Chờ xác nhận
+									{item.status_transaction}
 								</span>
 							</div>
-							<div className={style.line_order_info_right}>
-								<span style={{ color: '#c32d2d', width: '20%', paddingLeft: 10 }}>
-									Lý do hủy :
-								</span>
-								<span style={{ width: '80%', paddingLeft: 10 }}>
-									sdfffffffffffffffffffffffffffsdfffffffffffffffffffffffffffffffffffffffffffffffffffff
-								</span>
-							</div>
+							{item.messageError && (
+								<div className={style.line_order_info_right}>
+									<span style={{ color: '#c32d2d', width: '20%', paddingLeft: 10 }}>
+										Lý do hủy :
+									</span>
+									<span style={{ width: '80%', paddingLeft: 10 }}>
+										{item.messageError}
+									</span>
+								</div>
+							)}
 						</div>
 					</div>
 					<div className={style.add_giaohang}>
 						<span style={{ textTransform: 'uppercase' }}>Địa chỉ giao hàng :</span>
-						<span style={{ marginLeft: 10 }}>
-							Cuối ngõ 68 Triều Khúc - Tân Triều - Hà Nội{' '}
-						</span>
+						<span style={{ marginLeft: 10 }}>{item.address}</span>
 					</div>
 				</div>
 				<div className={style.content_order_detail}>
@@ -86,28 +100,45 @@ function ModalDetail(props) {
 						<span className={style.head_col3}>Thành tiền</span>
 					</div>
 					<div className={style.inside_order_detail}>
-						<div className={style.item_order}>
-							<img src="https://media.shoptretho.com.vn/upload/image/product/20200616/body-coc-tay-be-trai-ubb1007-mau-ghi-1.jpg?mode=max&width=63&height=63" />
-							<div className={style.item_order_name}>
-								<span className={style.name_order_detail}>
-									Body cộc tay bé trai Uri&Finn UBB1007 (ghi)
-								</span>
-								<span style={{ marginLeft: 10 }}>Số lượng: 1</span>
-							</div>
-							<span className={style.item_order_gia}>54.000đ</span>
-							<span className={style.item_order_tien}>54.000đ</span>
-						</div>
-						<div className={style.bottom_order}>
-							<span className={style.count_pro_order}>
-								Tổng cộng: <b>1 sản phẩm</b>
-							</span>
-							<span className={style.total_price_order}>
-								Tạm tính: <b>54.000đ</b>
-							</span>
-							<span className={style.total_price_order_clear}>
-								Tổng tiền: <b>54.000đ</b>
-							</span>
-						</div>
+						{item.carts_id.map(
+							(cartId) =>
+								carts[cartId] &&
+								product[carts[cartId].product_id] && (
+									<div className={style.item_order} key={cartId}>
+										<img
+											src={BASE_URL_IMAGE + product[carts[cartId].product_id].image}
+											alt={cartId}
+										/>
+										<div className={style.item_order_name}>
+											<span className={style.name_order_detail}>
+												{product[carts[cartId].product_id].name}
+											</span>
+											<span style={{ marginLeft: 10 }}>
+												Số lượng: {carts[cartId].amount}
+											</span>
+										</div>
+										<span className={style.item_order_gia}>
+											{ConvertStringToVND(product[carts[cartId].product_id].amount)}
+										</span>
+										<span className={style.item_order_tien}>
+											{ConvertStringToVND(
+												carts[cartId].amount * product[carts[cartId].product_id].amount
+											)}
+										</span>
+									</div>
+								)
+						)}
+						{/*<div className={style.bottom_order}>*/}
+						{/*	<span className={style.count_pro_order}>*/}
+						{/*		Tổng cộng: <b>1 sản phẩm</b>*/}
+						{/*	</span>*/}
+						{/*	<span className={style.total_price_order}>*/}
+						{/*		Tạm tính: <b>54.000đ</b>*/}
+						{/*	</span>*/}
+						{/*	<span className={style.total_price_order_clear}>*/}
+						{/*		Tổng tiền: <b>54.000đ</b>*/}
+						{/*	</span>*/}
+						{/*</div>*/}
 					</div>
 				</div>
 			</div>
@@ -115,8 +146,14 @@ function ModalDetail(props) {
 	);
 }
 
-ModalDetail.propTypes = {};
+ModalDetail.propTypes = {
+	item: PropTypes.string,
+	setItem: PropTypes.func,
+};
 
-ModalDetail.defaultProps = {};
+ModalDetail.defaultProps = {
+	item: '',
+	setItem: () => null,
+};
 
-export default ModalDetail;
+export default React.memo(ModalDetail);

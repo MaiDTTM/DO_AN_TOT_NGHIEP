@@ -8,6 +8,7 @@ import Styles from './styleSlider.module.css';
 import useCategoryLogicData from '../../../hooks/useCategoryLogicData';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 import useSliderLogicData from '../../../hooks/useSliderLogicData';
+import khac from '../../../img/be-di-choi-1.png';
 
 const contentStyle = {
 	width: '666px',
@@ -27,13 +28,33 @@ function Slider() {
 
 	// const
 	const listCategory = Object.values(category);
-	const categoryOther = listCategory.length > 7 ? listCategory[6] : null;
-
 	// Vong dong
 	React.useEffect(() => {
 		getListCategory().then().catch();
 		getListSlider().then().catch();
 	}, []);
+
+	// JSX
+	const componentChildren = (rootId) => {
+		const arr = listCategory.filter((item) => item.paramId === rootId);
+		const arrComponent = arr.slice(0, 6).map((item) => (
+			<li key={item._id} className={Styles.menu_hover_row_item}>
+				<Link to={`/xemtheomenu?_id=${item._id}`} className={Styles.menu_hover_link}>
+					{item.name}
+				</Link>
+			</li>
+		));
+		arr.length > 6 &&
+			arrComponent.push(
+				<li className={Styles.menu_hover_row_item}>
+					<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
+						<span style={{ color: 'red' }}>Xem tất cả >></span>
+					</Link>
+				</li>
+			);
+		return arrComponent;
+	};
+	const componentPa = (id) => {};
 	return (
 		<div className={Styles.slider_center}>
 			{/*khong dong*/}
@@ -53,7 +74,6 @@ function Slider() {
 								</i>
 								<p>Top đầu tìm kiếm</p>
 								<i>
-									s
 									<img src={hot} />
 								</i>
 							</li>
@@ -65,7 +85,7 @@ function Slider() {
 										<img src={hot} />
 									</i>
 								</div>
-								<div>
+								<div style={{ display: 'flex' }}>
 									<p>Xếp hình</p>
 									<p>- Xe</p>
 									<p>- Máy súc [Có quà]</p>
@@ -84,7 +104,7 @@ function Slider() {
 										<img src={hot} />
 									</i>
 								</div>
-								<div>
+								<div style={{ display: 'flex' }}>
 									<p>Khuyến mại</p>
 									<p>- Hàng mới về</p>
 								</div>
@@ -119,69 +139,78 @@ function Slider() {
 										/>
 									</i>
 									{item.name}
-								</Link>
-							</li>
-						))}
-						{categoryOther && (
-							<li style={{ paddingTop: '6px' }}>
-								<Link to={`/xemtheomenu?_id=${categoryOther._id}`}>
-									<i
-										style={{
-											width: '33px',
-											height: '33px',
-											marginLeft: '10px',
-											marginRight: '10px',
-										}}
-									>
-										<img
-											src={BASE_URL_IMAGE + categoryOther.icon}
-											style={{ color: '#d219e7', fontSize: '20px' }}
-										/>
-									</i>
-									{categoryOther.name}
-								</Link>
-								<div className={Styles.menu_hover}>
-									<ul>
-										<div style={{ display: 'flex' }}>
+									<div className={Styles.menu_hover_six}>
+										<ul>
 											<div
 												className={Styles.menu_hover_row}
 												style={{ borderRight: '1px solid #e0e0e0' }}
 											>
-												{listCategory.slice(7, 14).map((item) => (
-													<li className={Styles.menu_hover_row_item}>
-														<Link
-															to={`/xemtheomenu?_id=${item._id}`}
-															className={Styles.menu_hover_link}
-														>
-															{item.name}
-														</Link>
-													</li>
-												))}
+												{componentChildren(item._id)}
 											</div>
-											<div className={Styles.menu_hover_row}>
-												{listCategory.slice(14, 20).map((item) => (
-													<li className={Styles.menu_hover_row_item}>
-														<Link
-															to={`/xemtheomenu?_id=${item._id}`}
-															className={Styles.menu_hover_link}
-														>
-															{item.name}
-														</Link>
-													</li>
-												))}
-												{listCategory.length > 19 && (
-													<li className={Styles.menu_hover_row_item}>
-														<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
-															Xem tất cả >>
-														</Link>
-													</li>
-												)}
-											</div>
-										</div>
-									</ul>
-								</div>
+										</ul>
+									</div>
+								</Link>
 							</li>
-						)}
+						))}
+						<li style={{ paddingTop: '6px' }}>
+							<i
+								style={{
+									width: '33px',
+									height: '33px',
+									marginLeft: '10px',
+									marginRight: '10px',
+								}}
+							>
+								<img src={khac} style={{ color: '#d219e7', fontSize: '20px' }} />
+							</i>
+							Đồ chơi gỗ khác
+							<div className={Styles.menu_hover}>
+								<ul>
+									<div style={{ display: 'flex' }}>
+										<div
+											className={Styles.menu_hover_row}
+											style={{ borderRight: '1px solid #e0e0e0' }}
+										>
+											{listCategory
+												.filter((item) => item.paramId === '-1')
+												.slice(6, 13)
+												.map((item) => (
+													<li className={Styles.menu_hover_row_item}>
+														<Link
+															to={`/xemtheomenu?_id=${item._id}`}
+															className={Styles.menu_hover_link}
+														>
+															{item.name}
+														</Link>
+													</li>
+												))}
+										</div>
+										<div className={Styles.menu_hover_row}>
+											{listCategory
+												.filter((item) => item.paramId === '-1')
+												.slice(13, 19)
+												.map((item) => (
+													<li className={Styles.menu_hover_row_item}>
+														<Link
+															to={`/xemtheomenu?_id=${item._id}`}
+															className={Styles.menu_hover_link}
+														>
+															{item.name}
+														</Link>
+													</li>
+												))}
+											{listCategory.length > 19 && (
+												<li className={Styles.menu_hover_row_item}>
+													<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
+														<span style={{ color: 'red' }}>Xem tất cả >></span>
+													</Link>
+												</li>
+											)}
+										</div>
+									</div>
+								</ul>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div className={Styles.center_slider}>

@@ -10,7 +10,6 @@ import useProductLogicData from '../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
-import Draggable from 'react-draggable';
 import ModalDetail from './Modal/ModalDetail';
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -24,7 +23,7 @@ function DonHang() {
 	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
 	const [itemCancel, setItemCancel] = React.useState(null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [isModalVisible2, setIsModalVisible2] = useState(false);
+	const [itemTransaction, setItemTransaction] = useState(null);
 	const [valuesCancel, setValuesCancel] = useState('');
 
 	const transactionFilter = () => {
@@ -45,8 +44,8 @@ function DonHang() {
 		setValuesCancel('');
 	};
 
-	const HandleDetailTransaction = () => {
-		setIsModalVisible2(true);
+	const HandleDetailTransaction = (item = null) => {
+		setItemTransaction(item);
 	};
 	const onChangeCancel = (e) => {
 		setValuesCancel(e.target.value);
@@ -121,7 +120,7 @@ function DonHang() {
 								)}
 								<Button
 									className={style.btn_action}
-									onClick={() => HandleDetailTransaction()}
+									onClick={() => HandleDetailTransaction(item)}
 								>
 									Xem chi tiết đơn hàng
 								</Button>
@@ -199,12 +198,12 @@ function DonHang() {
 				onOk={handleOk}
 				onCancel={handleCancel}
 			>
-				<TextArea placeholder="Lý do hủy đơn của bạn là gì ?" onChange={onChangeCancel} />
+				<TextArea
+					placeholder={'Lý do hủy đơn của bạn là gì ?'}
+					onChange={onChangeCancel}
+				/>
 			</Modal>
-			<ModalDetail
-				isModalVisible2={isModalVisible2}
-				setIsModalVisible2={setIsModalVisible2}
-			/>
+			<ModalDetail item={itemTransaction} setItem={setItemTransaction} />
 		</div>
 	);
 }

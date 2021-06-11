@@ -1,56 +1,26 @@
-import React, {
-	useContext,
-	useState
-} from 'react';
-import {
-	Input,
-	Popconfirm,
-	Avatar,
-	Button,
-	message,
-	Table,
-	Modal
-} from 'antd';
+import React, { useContext, useState } from 'react';
+import { Input, Popconfirm, Avatar, Button, message, Table, Modal } from 'antd';
 import queryString from 'query-string';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.css';
 import logo from '../../img/logotet2019.png';
-import {
-	Link,
-	useHistory
-} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PopupBuyProduct from './PopupBuyProduct/PopupBuyProduct';
 import Footer from '../Footer/footer';
 import useCartLogicData from '../../hooks/useCartLogicData';
 import useProductLogicData from '../../hooks/useProductLogicData';
-import {
-	ContextApp
-} from '../../context/contextApp';
-import {
-	BASE_URL_IMAGE
-} from '../../util/TypeApi';
+import { ContextApp } from '../../context/contextApp';
+import { BASE_URL_IMAGE } from '../../util/TypeApi';
 import Draggable from 'react-draggable';
-const {
-	Search
-} = Input;
+const { Search } = Input;
 const text = 'Are you sure to delete this task?';
 
 function CartProduct() {
 	// hooks
-	const {
-		carts,
-		deleteCart,
-		getListCart
-	} = useCartLogicData();
-	const {
-		product,
-		getListProduct
-	} = useProductLogicData();
+	const { carts, deleteCart, getListCart } = useCartLogicData();
+	const { product, getListProduct } = useProductLogicData();
 	const history = useHistory();
-	const {
-		selectedRowKeys,
-		setSelectedRowKeys
-	} = useContext(ContextApp);
+	const { selectedRowKeys, setSelectedRowKeys } = useContext(ContextApp);
 
 	// state
 	const [modal2Visible, setModal2Visible] = React.useState(false);
@@ -58,13 +28,11 @@ function CartProduct() {
 		left: 0,
 		top: 0,
 		bottom: 0,
-		right: 0
+		right: 0,
 	});
 
 	// const
-	const {
-		location
-	} = history;
+	const { location } = history;
 	const draggleRef = React.createRef();
 	const parsed = queryString.parse(location.search);
 	const arrCarts = Object.values(carts).filter(
@@ -101,16 +69,15 @@ function CartProduct() {
 		}
 	};
 	const onStart = (event, uiData) => {
-		const {
-			clientWidth,
-			clientHeight
-		} = window ? .document ? .documentElement;
-		const targetRect = draggleRef ? .current ? .getBoundingClientRect();
+		const { clientWidth, clientHeight } =
+			window && window.document && window.document.documentElement;
+		const targetRect =
+			draggleRef && draggleRef.current && draggleRef.current.getBoundingClientRect();
 		setBounds({
-			left: -targetRect ? .left + uiData ? .x,
-			right: clientWidth - (targetRect ? .right - uiData ? .x),
-			top: -targetRect ? .top + uiData ? .y,
-			bottom: clientHeight - (targetRect ? .bottom - uiData ? .y),
+			left: -targetRect && -targetRect.left + uiData && uiData.x,
+			right: clientWidth - (targetRect && targetRect.right - uiData && uiData.x),
+			top: -targetRect.top + uiData.y,
+			bottom: clientHeight - (targetRect.bottom - uiData.y),
 		});
 	};
 
@@ -122,102 +89,70 @@ function CartProduct() {
 	}, []);
 
 	// JSX
-	const columns = [{
+	const columns = [
+		{
 			title: 'STT',
 			dataIndex: 'stt',
 		},
 		{
-			title: ( <
-				div style = {
-					{
+			title: (
+				<div
+					style={{
 						display: 'flex',
-						justifyContent: 'space-between'
-					}
-				} >
-				<
-				div > Tên sản phẩm < /div> <
-				div >
-				<
-				Button onClick = {
-					handleDeleteOption
-				}
-				style = {
-					{
-						marginRight: '5px'
-					}
-				}
-				danger >
-				Xóa sản phẩm đã chọn <
-				/Button> <
-				Button onClick = {
-					handleClickBuyAllProduct
-				} > Xem sản phẩm đã chọn < /Button> <
-				Modal title = {
-					<
-					div style = {
-						{
-							color: '#e728ce',
-							marginLeft: '400px',
-							fontSize: '18px'
-						}
-					} >
-					DANH SÁCH CÁC SẢN PHẨM ĐÃ CHỌN <
-					/div>
-				}
-				centered visible = {
-					modal2Visible
-				}
-				onOk = {
-					() => setModal2Visible(false)
-				}
-				footer = {
-					null
-				}
-				onCancel = {
-					() => setModal2Visible(false)
-				}
-				className = {
-					Styles.modal_xem_tat_ca
-				}
-				style = {
-					{
-						width: '1200px'
-					}
-				}
-				modalRender = {
-					(modal) => ( <
-						Draggable bounds = {
-							bounds
-						}
-						onStart = {
-							(event, uiData) => onStart(event, uiData)
-						} >
-						<
-						div ref = {
-							draggleRef
-						} > {
-							modal
-						} < /div> <
-						/Draggable>
-					)
-				} >
-				<
-				PopupBuyProduct setModal2Visible = {
-					setModal2Visible
-				}
-				selectedRowKeys = {
-					selectedRowKeys
-				}
-				product = {
-					product
-				}
-				carts = {
-					carts
-				}
-				/> <
-				/Modal> <
-				/div> <
-				/div>
+						justifyContent: 'space-between',
+					}}
+				>
+					<div> Tên sản phẩm </div>{' '}
+					<div>
+						<Button
+							onClick={handleDeleteOption}
+							style={{
+								marginRight: '5px',
+							}}
+							danger
+						>
+							Xóa sản phẩm đã chọn{' '}
+						</Button>{' '}
+						<Button onClick={handleClickBuyAllProduct}> Xem sản phẩm đã chọn </Button>{' '}
+						<Modal
+							title={
+								<div
+									style={{
+										color: '#e728ce',
+										marginLeft: '400px',
+										fontSize: '18px',
+									}}
+								>
+									DANH SÁCH CÁC SẢN PHẨM ĐÃ CHỌN{' '}
+								</div>
+							}
+							centered
+							visible={modal2Visible}
+							onOk={() => setModal2Visible(false)}
+							footer={null}
+							onCancel={() => setModal2Visible(false)}
+							className={Styles.modal_xem_tat_ca}
+							style={{
+								width: '1200px',
+							}}
+							modalRender={(modal) => (
+								<Draggable
+									bounds={bounds}
+									onStart={(event, uiData) => onStart(event, uiData)}
+								>
+									<div ref={draggleRef}> {modal} </div>{' '}
+								</Draggable>
+							)}
+						>
+							<PopupBuyProduct
+								setModal2Visible={setModal2Visible}
+								selectedRowKeys={selectedRowKeys}
+								product={product}
+								carts={carts}
+							/>{' '}
+						</Modal>{' '}
+					</div>{' '}
+				</div>
 			),
 			dataIndex: 'name',
 		},
@@ -244,7 +179,7 @@ function CartProduct() {
 		getCheckboxProps: (record) => {
 			const isCheck =
 				product[carts[record.key].product_id].amount -
-				product[carts[record.key].product_id].sold ===
+					product[carts[record.key].product_id].sold ===
 				0;
 			return {
 				disabled: isCheck,
@@ -290,212 +225,152 @@ function CartProduct() {
 	const dataTable = arrCartTable.map((item, i) => ({
 		key: item._id,
 		stt: i + 1,
-		name: ( <
-			div style = {
-				{
+		name: (
+			<div
+				style={{
 					display: 'flex',
-					width: '500px'
-				}
-			} >
-			<
-			Avatar src = {
-				product &&
-				product[item.product_id] &&
-				BASE_URL_IMAGE + product[item.product_id].image
-			}
-			style = {
-				{
-					width: '50px',
-					height: '50px'
-				}
-			}
-			/> <
-			div style = {
-				{
-					marginLeft: '15px'
-				}
-			} > {
-				product && product[item.product_id] && product[item.product_id].name
-			} <
-			/div> <
-			/div>
+					width: '500px',
+				}}
+			>
+				<Avatar
+					src={
+						product &&
+						product[item.product_id] &&
+						BASE_URL_IMAGE + product[item.product_id].image
+					}
+					style={{
+						width: '50px',
+						height: '50px',
+					}}
+				/>{' '}
+				<div
+					style={{
+						marginLeft: '15px',
+					}}
+				>
+					{' '}
+					{product && product[item.product_id] && product[item.product_id].name}{' '}
+				</div>{' '}
+			</div>
 		),
-		price: ( <
-			div className = {
-				Styles.gia_item_cart
-			} >
-			<
-			span > {
-				`${
+		price: (
+			<div className={Styles.gia_item_cart}>
+				<span>
+					{' '}
+					{`${
 						product && product[item.product_id] && product[item.product_id].price * 1000
-					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
-			} <
-			/span> <
-			/div>
+					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
+				</span>{' '}
+			</div>
 		),
 		number: item.amount,
-		total: ( <
-			span style = {
-				{
-					color: 'red'
-				}
-			} > {
-				`${
+		total: (
+			<span
+				style={{
+					color: 'red',
+				}}
+			>
+				{' '}
+				{`${
 					product &&
 					product[item.product_id] &&
 					product[item.product_id].price * 1000 * item.amount
-				}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'
-			} <
-			/span>
+				}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
+			</span>
 		),
-		action: ( <
-			div className = {
-				Styles.action_item_cart
-			} > {
-				product[item.product_id].amount - product[item.product_id].sold === 0 ? ( <
-					Button style = {
-						{
+		action: (
+			<div className={Styles.action_item_cart}>
+				{' '}
+				{product[item.product_id].amount - product[item.product_id].sold === 0 ? (
+					<Button
+						style={{
 							backgroundColor: '#bcb2b2',
 							color: '#fff',
-						}
-					}
-					disabled >
-					Đã hết hàng <
-					/Button>
-				) : ( <
-					Link to = {
-						'/buyproduct'
-					} >
-					<
-					Button style = {
-						{
-							backgroundColor: '#ee4d2d',
-							color: '#fff',
-						}
-					} >
-					Mua hàng <
-					/Button> <
-					/Link>
-				)
-			} <
-			Popconfirm placement = "topLeft"
-			title = {
-				text
-			}
-			onConfirm = {
-				() => deleteCart(item._id)
-			}
-			okText = "Yes"
-			cancelText = "No" >
-			<
-			Button type = "text"
-			style = {
-				{
-					color: '#9f643c'
-				}
-			} >
-			Xoá <
-			/Button> <
-			/Popconfirm> <
-			/div>
+						}}
+						disabled
+					>
+						Đã hết hàng{' '}
+					</Button>
+				) : (
+					<Link to={'/buyproduct'}>
+						<Button
+							style={{
+								backgroundColor: '#ee4d2d',
+								color: '#fff',
+							}}
+						>
+							Mua hàng{' '}
+						</Button>{' '}
+					</Link>
+				)}{' '}
+				<Popconfirm
+					placement="topLeft"
+					title={text}
+					onConfirm={() => deleteCart(item._id)}
+					okText="Yes"
+					cancelText="No"
+				>
+					<Button
+						type="text"
+						style={{
+							color: '#9f643c',
+						}}
+					>
+						Xoá{' '}
+					</Button>{' '}
+				</Popconfirm>{' '}
+			</div>
 		),
 	}));
-	return ( <
-		div >
-		<
-		div className = {
-			Styles.form_cart
-		} >
-		<
-		div className = {
-			Styles.header_cart
-		} >
-		<
-		div className = {
-			Styles.container_wrapper
-		} >
-		<
-		div className = {
-			Styles.container
-		} >
-		<
-		div style = {
-			{
-				display: 'flex',
-				alignItems: 'center'
-			}
-		} >
-		<
-		div className = {
-			Styles.img_header_cart
-		} >
-		<
-		Link to = {
-			'/'
-		} >
-		<
-		img src = {
-			logo
-		}
-		/> <
-		/Link> <
-		div className = {
-			Styles.gio_hang
-		} > Giỏ hàng < /div> <
-		/div> <
-		div className = {
-			Styles.search_header_cart
-		} >
-		<
-		Search placeholder = "input search text"
-		allowClear enterButton = "Search"
-		size = "large"
-		onSearch = {
-			onSearch
-		}
-		style = {
-			{
-				backgroundColor: '#f05d40'
-			}
-		}
-		/> <
-		/div> <
-		/div> <
-		/div> <
-		/div> <
-		/div> <
-		div className = {
-			Styles.content_wart_cart
-		} >
-		<
-		div className = {
-			Styles.content_cart
-		} >
-		<
-		Table rowSelection = {
-			rowSelection
-		}
-		columns = {
-			columns
-		}
-		dataSource = {
-			dataTable
-		}
-		pagination = {
-			false
-		}
-		/> <
-		/div> <
-		/div> <
-		/div> <
-		div className = {
-			Styles.footer_wart_cart
-		} >
-		<
-		Footer / >
-		<
-		/div> <
-		/div>
+	return (
+		<div>
+			<div className={Styles.form_cart}>
+				<div className={Styles.header_cart}>
+					<div className={Styles.container_wrapper}>
+						<div className={Styles.container}>
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+								}}
+							>
+								<div className={Styles.img_header_cart}>
+									<Link to={'/'}>
+										<img src={logo} />{' '}
+									</Link>{' '}
+									<div className={Styles.gio_hang}> Giỏ hàng </div>{' '}
+								</div>{' '}
+								<div className={Styles.search_header_cart}>
+									<Search
+										placeholder="input search text"
+										allowClear
+										enterButton="Search"
+										size="large"
+										onSearch={onSearch}
+										style={{
+											backgroundColor: '#f05d40',
+										}}
+									/>{' '}
+								</div>{' '}
+							</div>{' '}
+						</div>{' '}
+					</div>{' '}
+				</div>{' '}
+				<div className={Styles.content_wart_cart}>
+					<div className={Styles.content_cart}>
+						<Table
+							rowSelection={rowSelection}
+							columns={columns}
+							dataSource={dataTable}
+							pagination={false}
+						/>{' '}
+					</div>{' '}
+				</div>{' '}
+			</div>{' '}
+			<div className={Styles.footer_wart_cart}>
+				<Footer />
+			</div>{' '}
+		</div>
 	);
 }
 

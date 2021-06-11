@@ -17,6 +17,9 @@
 			}
 			span:nth-child(2){
 				width: 159px !important;
+				text-overflow: ellipsis !important;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 			span:last-child{
 				margin-top: 10px;
@@ -71,6 +74,7 @@
 		}
 		.ant-table-thead {
 			.ant-table-cell {
+				z-index: 0 !important;
 				background-color: #28e0c9 !important;
 			}
 			.ant-table-cell:first-child {
@@ -87,6 +91,9 @@
 		}
 		.ant-table-content {
 			.ant-table-tbody {
+				.ant-table-cell{
+					z-index: 0 !important;
+				}
 				.ant-table-cell:first-child {
 					border-bottom-left-radius: 24px !important;
 				}

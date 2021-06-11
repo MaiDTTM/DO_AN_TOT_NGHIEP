@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Tabs, List, Button, Image, Modal, Input } from 'antd';
 import style from './style.module.scss';
@@ -23,8 +23,12 @@ function DonDatHang() {
 	const [itemCancel, setItemCancel] = React.useState(null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [valuesCancel, setValuesCancel] = useState('');
-	const [isModalVisible2, setIsModalVisible2] = useState(false);
+	const [itemTransactionDetail, setItemTransactionDetail] = useState(null);
+
 	// handleFunction
+	const _setItemTransactionDetail = (value = null) => {
+		setItemTransactionDetail(value);
+	};
 	const handleImage = (cartId) => {
 		return carts[cartId] && carts[cartId].product_id
 			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
@@ -80,8 +84,8 @@ function DonDatHang() {
 		}
 		return arr.reverse();
 	};
-	const HandleDetailTransaction = () => {
-		setIsModalVisible2(true);
+	const handleDetailTransaction = (item = null) => {
+		setItemTransactionDetail(item);
 	};
 	// JSX
 	const ListComponent = (item) => (
@@ -106,7 +110,7 @@ function DonDatHang() {
 					<div className={style.footer_list_ringth}>
 						<div className={style.footer_list_one}>
 							<div className={style.footer_logo}>
-								<img src={logo} />
+								<img src={logo} alt={'logo'} />
 							</div>
 							<span className={style.footer_tong_tien}>Tổng số tiền : </span>
 							<span className={style.footer_tien}>{ConvertStringToVND(item.amount)}</span>
@@ -151,7 +155,7 @@ function DonDatHang() {
 							{/*)}*/}
 							<Button
 								className={style.btn_action}
-								onClick={() => HandleDetailTransaction()}
+								onClick={() => handleDetailTransaction(item)}
 							>
 								Xem chi tiết đơn hàng
 							</Button>
@@ -228,10 +232,7 @@ function DonDatHang() {
 			>
 				<TextArea placeholder="Lý do hủy đơn của bạn là gì ?" onChange={onChangeCancel} />
 			</Modal>
-			<ModalDetail
-				isModalVisible2={isModalVisible2}
-				setIsModalVisible2={setIsModalVisible2}
-			/>
+			<ModalDetail item={itemTransactionDetail} setItem={_setItemTransactionDetail} />
 		</div>
 	);
 }
