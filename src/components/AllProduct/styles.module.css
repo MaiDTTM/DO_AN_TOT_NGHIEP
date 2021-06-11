@@ -19,6 +19,9 @@
 	width: 18.9%;
 	height: 57px;
 }
+.menu_children_li:first-child{
+	border-top: 1px solid #ddd;
+}
 .menu_item {
 	width: 19.2%;
 }
@@ -31,7 +34,7 @@
 	border-left: 1px solid #ddd;
 }
 .menu_item ul li {
-    padding: 8px;
+	padding: 8px;
 	border-bottom: 1px solid #ddd;
 	list-style: none;
 }

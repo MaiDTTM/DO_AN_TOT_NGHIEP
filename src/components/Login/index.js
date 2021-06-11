@@ -136,11 +136,24 @@ function Login() {
 						</button>
 					</div>
 				</div>
+				<Link to={'/register'}>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							color: '#39ae05',
+							marginTop: 5,
+							textDecorationLine: 'underline',
+						}}
+					>
+						Register
+					</div>
+				</Link>
 				<div className={styles.login_social}>
 					<div className={styles.IFLxoY}>
-						<div className={styles._3svg61}></div>
+						<div className={styles._3svg61} />
 						<span className={styles._1ZEpVL}>HOẶC</span>
-						<div className={styles._3svg61}></div>
+						<div className={styles._3svg61} />
 					</div>
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 						{/* <SocialButton*/}

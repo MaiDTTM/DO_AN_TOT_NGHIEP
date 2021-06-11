@@ -10,6 +10,9 @@ import { TypeApi } from '../../util/TypeApi';
 import logo from '../../img/logotet2019.png';
 import style from './style.module.css';
 import 'antd/dist/antd.css';
+import styles from '../Login/index.module.css';
+import { GoogleLogin } from 'react-google-login';
+import { createFromIconfontCN, GooglePlusOutlined } from '@ant-design/icons';
 
 // const
 const TypeInput = {
@@ -18,6 +21,9 @@ const TypeInput = {
 	phone: 'phone',
 	password: 'password',
 };
+const IconFont = createFromIconfontCN({
+	scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+});
 function Register() {
 	// state
 	const [name, setName] = useState('');
@@ -73,6 +79,9 @@ function Register() {
 			messageAnt.warn('Không được bỏ trống thông tin nào !');
 		}
 		handleReset();
+	};
+	const responseGoogle = (response) => {
+		console.log(response);
 	};
 	return (
 		<div className={style.dang_ky}>
@@ -162,6 +171,59 @@ function Register() {
 				<div className={style.item_form_dang_ky}>
 					<div className={style.action_dang_ky}>
 						<button onClick={onCreate}>Tạo một tài khoản mới</button>
+					</div>
+				</div>
+				<Link to={'/login'}>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							color: '#39ae05',
+							textDecorationLine: 'underline',
+						}}
+					>
+						Login
+					</div>
+				</Link>
+				<div className={styles.login_social}>
+					<div className={styles.IFLxoY}>
+						<div className={styles._3svg61} />
+						<span className={styles._1ZEpVL}>HOẶC</span>
+						<div className={styles._3svg61} />
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+						{/* <SocialButton*/}
+						{/*	provider="facebook"*/}
+						{/*	appId="YOUR_APP_ID"*/}
+						{/*	onLoginSuccess={handleSocialLogin}*/}
+						{/*	onLoginFailure={handleSocialLoginFailure}*/}
+						{/* >*/}
+						<div className={styles.login_fb}>
+							<div>
+								<span className={styles.login_social_icon}>
+									<IconFont type="icon-facebook" />
+								</span>
+								<span className={styles.login_social_text}>Facebook</span>
+							</div>
+						</div>
+						{/*</SocialButton>*/}
+						<GoogleLogin
+							clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+							render={(renderProps) => (
+								<div className={styles.login_gg} onClick={renderProps.onClick}>
+									<div>
+										<span className={styles.login_social_icon}>
+											<GooglePlusOutlined />
+										</span>
+										<span className={styles.login_social_text}>Google</span>
+									</div>
+								</div>
+							)}
+							buttonText="Login"
+							onSuccess={responseGoogle}
+							onFailure={responseGoogle}
+							cookiePolicy={'single_host_origin'}
+						/>
 					</div>
 				</div>
 				{/*</form>*/}

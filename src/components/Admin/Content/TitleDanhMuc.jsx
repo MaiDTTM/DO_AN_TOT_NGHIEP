@@ -10,16 +10,17 @@ import {
 } from '@ant-design/icons';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 
-function TitleDanhMuc({ item, handleAdd, handleDelete, handleEdit }) {
+function TitleDanhMuc({ item, handleAdd, handleDelete, handleEdit, setDisplay }) {
 	const handleConfirm = () => {
 		handleDelete(item._id);
 	};
 	const handleAddChildren = (event) => {
 		event.stopPropagation();
 		handleAdd(item._id);
+		setDisplay('none');
 	};
-
 	const onEdit = () => {
+		item.paramId === '-1' ? setDisplay('block') : setDisplay('none');
 		handleEdit(item);
 	};
 	const content = (
@@ -32,7 +33,6 @@ function TitleDanhMuc({ item, handleAdd, handleDelete, handleEdit }) {
 			}}
 		>
 			<EditTwoTone style={{ cursor: 'pointer', marginRight: 7 }} onClick={onEdit} />
-
 			<Popconfirm
 				placement="right"
 				title={'Bạn có chắc chắn muốn xóa nó ?'}

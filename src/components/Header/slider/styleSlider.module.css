@@ -18,6 +18,11 @@
 	flex-direction: column;
 	justify-content: space-between;
 }
+.li_danh_muc {
+	text-overflow: ellipsis !important;
+	white-space: nowrap;
+	overflow: hidden;
+}
 .menu_slider {
 	width: 1200px;
 	height: 50px;
@@ -161,61 +166,63 @@
 	transition: all 0.2s ease-in-out;
 	display: block;
 }
-.content_category_list > li:hover .menu_hover{
+.content_category_list > li:hover .menu_hover {
 	display: block;
 }
-.content_category_list > li:hover .menu_hover_six{
+.content_category_list > li:hover .menu_hover_six {
 	display: block;
 }
 .content_category_list > li {
 	display: block;
 	text-align: left;
 }
-.menu_hover{
+.menu_hover {
 	width: 534px;
 	height: 100%;
 	position: absolute;
 	top: 0;
-	left: 267px;/*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
+	left: 267px; /*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
 	display: none;
 	z-index: 999999;
 	background-color: #ffffff;
-	box-shadow:0 0 10px 4px #e0e0e0;border:1px solid #daf1ff;
+	box-shadow: 0 0 10px 4px #e0e0e0;
+	border: 1px solid #daf1ff;
 }
-.menu_hover_six{
+.menu_hover_six {
 	width: 267px;
 	height: 100%;
 	position: absolute;
 	top: 0;
-	left: 267px;/*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
+	left: 267px; /*cho ngang hàng với menu cha, vì menu cha có border - 1 nên ta phải trừ đi 1*/
 	display: none;
 	z-index: 999999;
 	background-color: #ffffff;
-	box-shadow:0 0 10px 4px #e0e0e0;border:1px solid #daf1ff;
+	box-shadow: 0 0 10px 4px #e0e0e0;
+	border: 1px solid #daf1ff;
 }
 .content_category_list > li:hover {
 	display: block;
 }
-.menu_hover:hover{
+.menu_hover:hover {
 	display: flex;
 }
-.menu_hover_six:hover{
+.menu_hover_six:hover {
 	display: flex;
 }
-.menu_hover_row{
+.menu_hover_row {
 	width: 267px;
 	height: 100%;
 }
-.menu_hover ul, .menu_hover_six ul{
+.menu_hover ul,
+.menu_hover_six ul {
 	list-style: none;
 }
-.menu_hover_row_item:hover{
+.menu_hover_row_item:hover {
 	background-color: #93cfd6;
 	cursor: pointer;
 	color: red;
 }
-.menu_hover_link{
-
+.menu_hover_link {
 }
 /*.menu_hover_link {*/
 /*	display: block;*/

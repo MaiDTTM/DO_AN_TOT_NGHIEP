@@ -18,6 +18,11 @@ function WatchCatagory() {
 	// hooks
 	const { product } = useProductLogicData();
 	const { category, getListCategory } = useCategoryLogicData();
+	const categoryArr = Object.values(category);
+	const categoryPaPa = categoryArr.filter((item) => item.paramId === '-1');
+	const categoryPaPaSort = categoryPaPa.sort(function (a, b) {
+		return a.index - b.index;
+	});
 	const history = useHistory();
 
 	// ref
@@ -40,9 +45,11 @@ function WatchCatagory() {
 		if (categoryId === _id) return '#b9c6f3';
 		return '#ffffff';
 	};
+	const isActiveColor = (_id) => {
+		if (categoryId === _id) return '#dddad6';
+		return '#ffffff';
+	};
 	const onClickCategory = (id) => {
-		console.log('idOld.current', idOld.current);
-		console.log('id', id);
 		if (`${idOld.current}` === `${id}`) {
 			categoryId ? setCategoryId('') : setCategoryId(id);
 		} else {
@@ -76,23 +83,36 @@ function WatchCatagory() {
 					<div style={{ display: 'flex', flexDirection: 'row' }}>
 						<div className={style.menu_item}>
 							<ul>
-								{Object.values(category).map(
-									(item) =>
-										item.name !== 'Đồ chơi gỗ khác' && (
-											<li
-												style={{ cursor: 'pointer', backgroundColor: isActive(item._id) }}
-												onClick={() => onClickCategory(item._id)}
-											>
-												{/*<i style={{ marginRight: 10 }}>*/}
-												{/*	<img*/}
-												{/*		src={BASE_URL_IMAGE + item.icon}*/}
-												{/*		style={{ width: 20, height: 20 }}*/}
-												{/*	/>*/}
-												{/*</i>*/}
-												{item.name}
-											</li>
-										)
-								)}
+								{categoryPaPaSort.map((item) => (
+									<li
+										style={{
+											cursor: 'pointer',
+											backgroundColor: isActiveColor(item._id),
+										}}
+										onClick={() => onClickCategory(item._id)}
+									>
+										<div style={{ fontWeight: 'bold', fontSize: 16 }}>{item.name}</div>
+										{categoryArr.filter((item_item) => item_item.paramId === item._id)
+											.length > 0 && (
+											<ul style={{ marginTop: 10 }}>
+												{categoryArr
+													.filter((item_item) => item_item.paramId === item._id)
+													.map((item) => (
+														<li
+															className={style.menu_children_li}
+															style={{
+																cursor: 'pointer',
+																backgroundColor: isActive(item._id),
+															}}
+															// onClick={() => onClickCategory(item._id)}
+														>
+															{item.name}
+														</li>
+													))}
+											</ul>
+										)}
+									</li>
+								))}
 							</ul>
 						</div>
 						<div className={style.page_row}>

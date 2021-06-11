@@ -1,7 +1,18 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Button, Modal, Form, Input, Menu, Table, message, Image, Tag } from 'antd';
+import {
+	Button,
+	Modal,
+	Form,
+	Input,
+	Menu,
+	Table,
+	message,
+	Image,
+	Tag,
+	InputNumber,
+} from 'antd';
 import styles from './styles.module.scss';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
@@ -49,6 +60,12 @@ function DanhMuc() {
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
 	const newArrProduct = Object.values(product);
+	const categoryArr = Object.values(category);
+	const categoryPaPa = categoryArr.filter((item) => item.paramId === '-1');
+	const categoryPaPaSort = categoryPaPa.sort(function (a, b) {
+		return a.index - b.index;
+	});
+
 	// state
 	const [openKeys, setOpenKeys] = React.useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);
@@ -57,6 +74,9 @@ function DanhMuc() {
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiễn thị modal add, tồn tại -> hiễn tị modal edit
 	const [listProduct, setListProduct] = useState({ ...newArrProduct });
+	const [display, setDisplay] = useState('none');
+	const [valueIndex, setValueIndex] = useState(null); // gia tri thay doi trong o input
+	const [valueIndexOld, setValueIndexOld] = useState(null); // gia tri cu lay duoc khi click edit
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -68,19 +88,32 @@ function DanhMuc() {
 	const onSearch = (value) => console.log(value);
 	const setModalVisible2 = (modal2Visible) => {
 		setModal2Visible(modal2Visible);
+		setDisplay('none');
 	};
 	const onFinishAdd = (values) => {
 		if (linkFileUtil) {
 			values['icon'] = linkFileUtil;
-
 			if (!dataEditCategoryModal) {
 				// Add
 				values['paramId'] = paramId;
+				values['index'] = categoryPaPa.length + 1;
 				postCategory(values);
 				onCancel();
 			} else {
-				updateCategory({ ...dataEditCategoryModal, ...values });
-				onCancel();
+				if (valueIndex !== valueIndexOld) {
+					// Nếu giá trị index thay đổi thì tìm trong mảng category phần tử có index = gia tri thay doi và cap nhat lai
+					const filter = categoryPaPa.filter((item) => item.index === valueIndex);
+					const newObjFilter = Object.assign(...filter);
+					newObjFilter['index'] = valueIndexOld;
+					updateCategory({ ...newObjFilter });
+					values['index'] = valueIndex;
+					updateCategory({ ...dataEditCategoryModal, ...values });
+					onCancel();
+				} else if (valueIndex === valueIndexOld) {
+					values['index'] = valueIndex;
+					updateCategory({ ...dataEditCategoryModal, ...values });
+					onCancel();
+				}
 			}
 		} else {
 			message.warn('Thiếu icon');
@@ -107,7 +140,6 @@ function DanhMuc() {
 	const handleEditModal = (item) => {
 		setModal2Visible(true);
 		setDataEditCategoryModal(item);
-
 		setFileListUtil([
 			{
 				uid: '-1',
@@ -118,6 +150,7 @@ function DanhMuc() {
 		]);
 		setLinkFileUtil(item.icon);
 		form.setFieldsValue({ ...item });
+		item.index && setValueIndexOld(item.index);
 	};
 	const handleAddChildren = (id) => {
 		setModalVisible2(true);
@@ -128,15 +161,18 @@ function DanhMuc() {
 		getListCategory();
 	}, []);
 
-	const TitleCategory = (item) => (
-		<TitleDanhMuc
-			item={item}
-			setModal={setModalVisible2}
-			handleDelete={deleteCategory}
-			handleEdit={handleEditModal}
-			handleAdd={handleAddChildren}
-		/>
-	);
+	const TitleCategory = (item) => {
+		return (
+			<TitleDanhMuc
+				item={item}
+				setModal={setModalVisible2}
+				handleDelete={deleteCategory}
+				handleEdit={handleEditModal}
+				handleAdd={handleAddChildren}
+				setDisplay={setDisplay}
+			/>
+		);
+	};
 	const handleClick = ({ item, key, keyPath, domEvent }) => {
 		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
 	};
@@ -144,6 +180,9 @@ function DanhMuc() {
 		setListProduct(newArrProduct.filter((word) => word.catalog_id === key));
 		setOpenKeys(key);
 	};
+	function onChange(value) {
+		setValueIndex(value);
+	}
 	const columns = [
 		{
 			title: 'Ảnh',
@@ -249,8 +288,8 @@ function DanhMuc() {
 					style={{ width: 256 }}
 					onClick={(key) => handleClick(key)}
 				>
-					{Object.values(category).length > 0 &&
-						Object.values(category).map((item, index) => {
+					{categoryPaPaSort.length > 0 &&
+						categoryPaPaSort.map((item, index) => {
 							return (
 								item.paramId === '-1' && (
 									<SubMenu
@@ -258,7 +297,7 @@ function DanhMuc() {
 										title={TitleCategory(item)}
 										onTitleClick={handleSubmenuClick}
 									>
-										{Object.values(category).map((itemChildren) => {
+										{Object.values(category).map((itemChildren, index) => {
 											if (itemChildren.paramId === item._id) {
 												return (
 													<Menu.Item key={itemChildren._id}>
@@ -313,13 +352,24 @@ function DanhMuc() {
 									linkFileUtil={linkFileUtil}
 								/>
 							</Form.Item>
-							<div style={{ marginLeft: 120, marginBottom: 20 }}>
+							<div style={{ marginLeft: 120, marginBottom: 5 }}>
 								Dung lượng file tối đa 2 MB
 								<br />
 								Định dạng:.JPEG, .PNG
 							</div>
-							<div style={{ color: '#f65353', display: 'none' }} id="chu_y">
+							<div
+								style={{ color: '#f65353', marginLeft: 120, marginBottom: 10 }}
+								id="chu_y"
+							>
 								* Click vào ảnh để thay đổi avatar
+							</div>
+							<div style={{ display: display }}>
+								<Form.Item name={'index'} label="Vị trí :">
+									<InputNumber min={1} max={categoryPaPa.length} onChange={onChange} />
+								</Form.Item>
+								<div style={{ marginLeft: 120, marginBottom: 20 }} id="chu_y">
+									* Vị trí hiển thị trên trang khách hàng
+								</div>
 							</div>
 							<Form.Item {...tailLayout}>
 								<Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>
