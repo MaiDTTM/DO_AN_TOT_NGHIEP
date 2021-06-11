@@ -73,5 +73,4 @@ function App() {
 		</ContextApp.Provider>
 	);
 }
-
 export default App;

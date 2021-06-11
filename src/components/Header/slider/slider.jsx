@@ -121,66 +121,126 @@ function Slider() {
 								</Link>
 							</li>
 						))}
-						{categoryOther && (
-							<li style={{ paddingTop: '6px' }}>
-								<Link to={`/xemtheomenu?_id=${categoryOther._id}`}>
-									<i
-										style={{
-											width: '33px',
-											height: '33px',
-											marginLeft: '10px',
-											marginRight: '10px',
-										}}
-									>
-										<img
-											src={BASE_URL_IMAGE + categoryOther.icon}
-											style={{ color: '#d219e7', fontSize: '20px' }}
-										/>
-									</i>
-									{categoryOther.name}
-								</Link>
-								<div className={Styles.menu_hover}>
-									<ul>
-										<div style={{ display: 'flex' }}>
-											<div
-												className={Styles.menu_hover_row}
-												style={{ borderRight: '1px solid #e0e0e0' }}
-											>
-												{listCategory.slice(7, 14).map((item) => (
-													<li className={Styles.menu_hover_row_item}>
-														<Link
-															to={`/xemtheomenu?_id=${item._id}`}
-															className={Styles.menu_hover_link}
-														>
-															{item.name}
-														</Link>
-													</li>
-												))}
-											</div>
-											<div className={Styles.menu_hover_row}>
-												{listCategory.slice(14, 20).map((item) => (
-													<li className={Styles.menu_hover_row_item}>
-														<Link
-															to={`/xemtheomenu?_id=${item._id}`}
-															className={Styles.menu_hover_link}
-														>
-															{item.name}
-														</Link>
-													</li>
-												))}
-												{listCategory.length > 19 && (
-													<li className={Styles.menu_hover_row_item}>
-														<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
-															Xem tất cả >>
-														</Link>
-													</li>
-												)}
-											</div>
+						<li style={{ paddingTop: '6px' }}>
+							{/*<Link to={`/xemtheomenu?_id=${categoryOther._id}`}>*/}
+							<i
+								style={{
+									width: '33px',
+									height: '33px',
+									marginLeft: '10px',
+									marginRight: '10px',
+								}}
+							>
+								<img
+									src={
+										'https://media.shoptretho.com.vn/upload/image/menu/20150803/be-di-choi-1.png?mode=max&width=60&height=60'
+									}
+									style={{ color: '#d219e7', fontSize: '20px' }}
+								/>
+								<span style={{}}>Đồ chơi gỗ khác</span>
+							</i>
+							{/*</Link>*/}
+							<div className={Styles.menu_hover}>
+								<ul>
+									<div style={{ display: 'flex' }}>
+										<div
+											className={Styles.menu_hover_row}
+											style={{ borderRight: '1px solid #e0e0e0' }}
+										>
+											{listCategory.slice(7, 14).map((item) => (
+												<li className={Styles.menu_hover_row_item}>
+													<Link
+														to={`/xemtheomenu?_id=${item._id}`}
+														className={Styles.menu_hover_link}
+													>
+														{item.name}
+													</Link>
+												</li>
+											))}
 										</div>
-									</ul>
-								</div>
-							</li>
-						)}
+										<div className={Styles.menu_hover_row}>
+											{listCategory.slice(14, 20).map((item) => (
+												<li className={Styles.menu_hover_row_item}>
+													<Link
+														to={`/xemtheomenu?_id=${item._id}`}
+														className={Styles.menu_hover_link}
+													>
+														{item.name}
+													</Link>
+												</li>
+											))}
+											{listCategory.length > 19 && (
+												<li className={Styles.menu_hover_row_item}>
+													<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
+														Xem tất cả >>
+													</Link>
+												</li>
+											)}
+										</div>
+									</div>
+								</ul>
+							</div>
+						</li>
+						{/*{categoryOther && (*/}
+						{/*	<li style={{ paddingTop: '6px' }}>*/}
+						{/*		<Link to={`/xemtheomenu?_id=${categoryOther._id}`}>*/}
+						{/*			<i*/}
+						{/*				style={{*/}
+						{/*					width: '33px',*/}
+						{/*					height: '33px',*/}
+						{/*					marginLeft: '10px',*/}
+						{/*					marginRight: '10px',*/}
+						{/*				}}*/}
+						{/*			>*/}
+						{/*				<img*/}
+						{/*					src={BASE_URL_IMAGE + categoryOther.icon}*/}
+						{/*					style={{ color: '#d219e7', fontSize: '20px' }}*/}
+						{/*				/>*/}
+						{/*			</i>*/}
+						{/*			{categoryOther.name}*/}
+						{/*		</Link>*/}
+						{/*		<div className={Styles.menu_hover}>*/}
+						{/*			<ul>*/}
+						{/*				<div style={{ display: 'flex' }}>*/}
+						{/*					<div*/}
+						{/*						className={Styles.menu_hover_row}*/}
+						{/*						style={{ borderRight: '1px solid #e0e0e0' }}*/}
+						{/*					>*/}
+						{/*						{listCategory.slice(7, 14).map((item) => (*/}
+						{/*							<li className={Styles.menu_hover_row_item}>*/}
+						{/*								<Link*/}
+						{/*									to={`/xemtheomenu?_id=${item._id}`}*/}
+						{/*									className={Styles.menu_hover_link}*/}
+						{/*								>*/}
+						{/*									{item.name}*/}
+						{/*								</Link>*/}
+						{/*							</li>*/}
+						{/*						))}*/}
+						{/*					</div>*/}
+						{/*					<div className={Styles.menu_hover_row}>*/}
+						{/*						{listCategory.slice(14, 20).map((item) => (*/}
+						{/*							<li className={Styles.menu_hover_row_item}>*/}
+						{/*								<Link*/}
+						{/*									to={`/xemtheomenu?_id=${item._id}`}*/}
+						{/*									className={Styles.menu_hover_link}*/}
+						{/*								>*/}
+						{/*									{item.name}*/}
+						{/*								</Link>*/}
+						{/*							</li>*/}
+						{/*						))}*/}
+						{/*						{listCategory.length > 19 && (*/}
+						{/*							<li className={Styles.menu_hover_row_item}>*/}
+						{/*								<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>*/}
+						{/*									Xem tất cả >>*/}
+						{/*								</Link>*/}
+						{/*							</li>*/}
+						{/*						)}*/}
+						{/*					</div>*/}
+						{/*				</div>*/}
+						{/*			</ul>*/}
+						{/*		</div>*/}
+						{/*	</li>*/}
+						{/*)}*/}
 					</ul>
 				</div>
 				<div className={Styles.center_slider}>

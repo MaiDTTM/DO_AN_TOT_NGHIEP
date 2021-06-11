@@ -48,18 +48,16 @@ function DanhMuc() {
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
 	const newArrProduct = Object.values(product);
-	console.log('newArrProduct', newArrProduct); // MongLV log fix bug
 	// state
 	const [openKeys, setOpenKeys] = React.useState([]);
 	const [modal2Visible, setModal2Visible] = useState(false);
 	const [paramId, setParamId] = useState('-1'); // Note: -1 là quy chuẩn với server
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
-	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiễn thị modal add, tồn tại -> hiễn tị modal edit
+	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiển thị modal add, tồn tại -> hiển thị modal edit
 	const [listProduct, setListProduct] = useState({ ...newArrProduct });
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-		console.log('latestOpenKey', latestOpenKey); // MongLV log fix bug
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
 			setOpenKeys(keys);
 		} else {
@@ -78,19 +76,25 @@ function DanhMuc() {
 				// Add
 				values['paramId'] = paramId;
 				postCategory(values);
-				onReset();
+				onCancel();
 			} else {
 				updateCategory({ ...dataEditCategoryModal, ...values });
-				onReset();
+				onCancel();
 			}
 		} else {
 			message.warn('Thiếu icon');
 		}
 	};
+	const onCancel = () => {
+		formAdd.resetFields();
+		setDataEditCategoryModal(null);
+		setModal2Visible(false);
+		setLinkFileUtil('');
+		setFileListUtil([]);
+	};
 	const onReset = () => {
 		formAdd.resetFields();
 		setDataEditCategoryModal(null);
-		// setModal2Visible(false);
 	};
 
 	const handleCancelModal = () => {
