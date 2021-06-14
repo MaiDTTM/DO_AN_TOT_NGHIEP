@@ -21,9 +21,9 @@ const layout = {
 function KhachHang() {
 	const [form2] = Form.useForm();
 	const [visibleCopy, setVisibleCopy] = useState(false);
-	const [status, setStatus] = useState(true);
+	const [status, setStatus] = useState(null);
 	const [modal1Visible, setModal1Visible] = React.useState(false);
-	const [dataCustomerEdit, setDataCustomerEdit] = useState(null);
+	const [dataEditModal, setDataEditModal] = useState(null);
 	const { customer, updateCustomer } = useCustomerLogicData();
 	const columns = [
 		{
@@ -144,19 +144,19 @@ function KhachHang() {
 	const PassDefault = '12345@2021';
 	const handleDelete = (record) => {};
 	const handleEdit = (record) => {
+		setStatus(record.state);
 		setModal1Visible(true);
-		setDataCustomerEdit(record);
+		setDataEditModal(record);
 		form2.setFieldsValue({ ...record });
 	};
 	const onFinishEdit = (values) => {
-		updateCustomer({ ...dataCustomerEdit, ...values });
+		values['_id'] = dataEditModal._id;
+		updateCustomer({ ...values });
 		// handleSwitch();
 		setModal1Visible(false);
 	};
 	const handleSwitch = (checked) => {
-		form2.setFieldsValue({
-			status: checked,
-		});
+		setStatus(checked);
 	};
 	const handleResetPass = () => {
 		form2.setFieldsValue({

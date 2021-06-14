@@ -4,7 +4,6 @@ import axios from 'axios';
 
 function TestAPI() {
 	const [dataObj, setDataObj] = React.useState({});
-	console.log('data', dataObj);
 	const getAPI = async () => {
 		return await axios
 			.get('http://localhost:1999/api/slider')

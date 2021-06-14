@@ -14,11 +14,14 @@ function useCustomerLogicData() {
 		dispatch({ type: TYPE_ACTION.CUSTOMER.GET_LIST, payload: { data } });
 	};
 	const updateCustomer = async (obj) => {
-		const { message } = await baseAPI.update(`${TypeApi.adminuser}/${obj._id}`, obj);
+		const { message, user } = await baseAPI.update(
+			`${TypeApi.adminuser}/${obj._id}`,
+			obj
+		);
 		if (message === 'SUCCESS') {
-			customer[obj._id] = obj;
+			customer[obj._id] = user;
 			dispatch({
-				type: TYPE_ACTION.TRANSACTION.PUT_TRANSACTION,
+				type: TYPE_ACTION.CUSTOMER.PUT_CUSTOMER,
 				payload: { data: { ...customer } },
 			});
 			messageAnt.success('Cập nhật thành công !');
