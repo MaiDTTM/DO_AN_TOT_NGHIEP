@@ -16,6 +16,7 @@
     "moment": "^2.29.1",
     "numeral": "^2.0.6",
     "prettier": "^2.2.1",
+    "prop-types": "^15.7.2",
     "query-string": "^4.3.4",
     "react": "^17.0.1",
     "react-chartjs-2": "^3.0.3",
@@ -62,6 +63,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }

@@ -12,7 +12,7 @@ const categoryReducer = (category = {}, action) => {
 		case TYPE_ACTION.CATEGORY.DELETE_CATEGORY:
 			return { ...action.payload.data };
 		case TYPE_ACTION.CATEGORY.PUT_CATEGORY:
-			return category;
+			return { ...action.payload.data };
 		default:
 			return category;
 	}

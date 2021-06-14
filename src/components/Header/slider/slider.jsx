@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Carousel } from 'antd';
 import { MenuFoldOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
 //style
 import hot from '../../../img/hot.gif';
 import { Link } from 'react-router-dom';
@@ -29,10 +30,14 @@ function Slider() {
 	//state
 	// const
 	const listCategory = Object.values(category);
-	const categoryPaPa = listCategory.filter((item) => item.paramId === '-1');
-	const categoryPaPaSort = categoryPaPa.sort(function (a, b) {
-		return a.index - b.index;
-	});
+	const categoryPaPa = React.useCallback(
+		(paramId = '-1') =>
+			listCategory.filter((item) => item.paramId === paramId && item['status']),
+		[listCategory]
+	);
+	const categoryPaPaSort = (paramId) =>
+		categoryPaPa(paramId).sort((a, b) => a.index - b.index);
+
 	// Vong dong
 	React.useEffect(() => {
 		getListCategory().then().catch();
@@ -40,8 +45,8 @@ function Slider() {
 	}, []);
 
 	// JSX
-	const componentChildren = (rootId) => {
-		const arr = listCategory.filter((item) => item.paramId === rootId);
+	const componentChildren = (rootId = '-1') => {
+		const arr = categoryPaPaSort(rootId);
 		const arrComponent = arr.slice(0, 6).map((item) => (
 			<li key={item._id} className={Styles.menu_hover_row_item}>
 				<Link to={`/xemtheomenu?_id=${item._id}`} className={Styles.menu_hover_link}>
@@ -126,36 +131,44 @@ function Slider() {
 			<div className={Styles.slider}>
 				<div className={Styles.left_slider}>
 					<ul className={Styles.content_category_list}>
-						{categoryPaPaSort.slice(0, 6).map((item) => (
-							<li className={Styles.li_danh_muc} style={{ paddingTop: '6px' }}>
-								<Link to={`/xemtheomenu?_id=${item._id}`}>
-									<i
-										style={{
-											width: '33px',
-											height: '33px',
-											marginLeft: '10px',
-											marginRight: '10px',
-										}}
-									>
-										<img
-											src={BASE_URL_IMAGE + item.icon}
-											style={{ color: '#d219e7', fontSize: '20px' }}
-										/>
-									</i>
-									{item.name}
-									<div className={Styles.menu_hover_six}>
-										<ul>
-											<div
-												className={Styles.menu_hover_row}
-												style={{ borderRight: '1px solid #e0e0e0' }}
-											>
-												{componentChildren(item._id)}
-											</div>
-										</ul>
-									</div>
-								</Link>
-							</li>
-						))}
+						{categoryPaPaSort()
+							.slice(0, 6)
+							.map((item) => (
+								<li className={Styles.li_danh_muc} style={{ paddingTop: '6px' }}>
+									<Link to={`/xemtheomenu?_id=${item._id}`}>
+										<i
+											style={{
+												width: '33px',
+												height: '33px',
+												marginLeft: '10px',
+												marginRight: '10px',
+											}}
+										>
+											<img
+												src={BASE_URL_IMAGE + item.icon}
+												style={{ color: '#d219e7', fontSize: '20px' }}
+											/>
+										</i>
+										{item.name}
+										<div
+											className={classNames(
+												categoryPaPaSort(item._id).length > 0
+													? Styles.menu_hover_six
+													: Styles.menu_hover_six_none
+											)}
+										>
+											<ul>
+												<div
+													className={Styles.menu_hover_row}
+													style={{ borderRight: '1px solid #e0e0e0' }}
+												>
+													{componentChildren(item._id)}
+												</div>
+											</ul>
+										</div>
+									</Link>
+								</li>
+							))}
 						<li style={{ paddingTop: '6px', fontFamily: 'Arial, Tahoma' }}>
 							<i
 								style={{
@@ -175,8 +188,7 @@ function Slider() {
 											className={Styles.menu_hover_row}
 											style={{ borderRight: '1px solid #e0e0e0' }}
 										>
-											{categoryPaPaSort
-												.filter((item) => item.paramId === '-1')
+											{categoryPaPaSort()
 												.slice(6, 13)
 												.map((item) => (
 													<li className={Styles.menu_hover_row_item}>
@@ -190,8 +202,7 @@ function Slider() {
 												))}
 										</div>
 										<div className={Styles.menu_hover_row}>
-											{categoryPaPaSort
-												.filter((item) => item.paramId === '-1')
+											{categoryPaPaSort()
 												.slice(13, 19)
 												.map((item) => (
 													<li className={Styles.menu_hover_row_item}>
@@ -203,7 +214,7 @@ function Slider() {
 														</Link>
 													</li>
 												))}
-											{categoryPaPaSort.length > 19 && (
+											{categoryPaPaSort().length > 19 && (
 												<li className={Styles.menu_hover_row_item}>
 													<Link to={`/xemtheomenu`} className={Styles.menu_hover_link}>
 														<span style={{ color: 'red' }}>Xem tất cả >></span>

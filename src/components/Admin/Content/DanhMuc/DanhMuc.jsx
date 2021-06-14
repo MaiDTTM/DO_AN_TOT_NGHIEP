@@ -61,10 +61,10 @@ function DanhMuc() {
 	const { product } = useProductLogicData();
 	const newArrProduct = Object.values(product);
 	const categoryArr = Object.values(category);
-	const categoryPaPa = categoryArr.filter((item) => item.paramId === '-1');
-	const categoryPaPaSort = categoryPaPa.sort(function (a, b) {
-		return a.index - b.index;
-	});
+	const categoryPaPa = (paramId = '-1') =>
+		categoryArr.filter((item) => item.paramId === paramId);
+	const categoryPaPaSort = (paramId = '-1') =>
+		categoryPaPa(paramId).sort((a, b) => a.index - b.index);
 
 	// state
 	const [openKeys, setOpenKeys] = React.useState([]);
@@ -74,9 +74,10 @@ function DanhMuc() {
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [dataEditCategoryModal, setDataEditCategoryModal] = useState(null); // Note: '' -> hiễn thị modal add, tồn tại -> hiễn tị modal edit
 	const [listProduct, setListProduct] = useState({ ...newArrProduct });
-	const [display, setDisplay] = useState('none');
 	const [valueIndex, setValueIndex] = useState(null); // gia tri thay doi trong o input
 	const [valueIndexOld, setValueIndexOld] = useState(null); // gia tri cu lay duoc khi click edit
+
+	// handle func
 	const onOpenChange = (keys) => {
 		const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
 		if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -88,7 +89,6 @@ function DanhMuc() {
 	const onSearch = (value) => console.log(value);
 	const setModalVisible2 = (modal2Visible) => {
 		setModal2Visible(modal2Visible);
-		setDisplay('none');
 	};
 	const onFinishAdd = (values) => {
 		if (linkFileUtil) {
@@ -96,20 +96,26 @@ function DanhMuc() {
 			if (!dataEditCategoryModal) {
 				// Add
 				values['paramId'] = paramId;
-				values['index'] = categoryPaPa.length + 1;
-				postCategory(values);
+				values['index'] = categoryPaPa(values['paramId']).length + 1; // Check phải là cấp cha thì mới cho index mới tự tăng vào
+				console.log();
+				postCategory(values).catch((e) => console.log('e: ', e));
 				onCancel();
 			} else {
-				if (valueIndex !== valueIndexOld) {
+				// Edit
+				if (valueIndex && valueIndexOld && valueIndex !== valueIndexOld) {
 					// Nếu giá trị index thay đổi thì tìm trong mảng category phần tử có index = gia tri thay doi và cap nhat lai
-					const filter = categoryPaPa.filter((item) => item.index === valueIndex);
+					const filter = categoryPaPa(dataEditCategoryModal.paramId).filter(
+						(item) => item.index === valueIndex
+					); // tìm ra vị trị cũ đang chiếm index đó
 					const newObjFilter = Object.assign(...filter);
 					newObjFilter['index'] = valueIndexOld;
-					updateCategory({ ...newObjFilter });
+					updateCategory({ ...newObjFilter }, false); // Update lại vị trí của index đang chiếm thành index củ của index cập nhật
+
+					// Update phần tử cập nhật
 					values['index'] = valueIndex;
 					updateCategory({ ...dataEditCategoryModal, ...values });
 					onCancel();
-				} else if (valueIndex === valueIndexOld) {
+				} else {
 					values['index'] = valueIndex;
 					updateCategory({ ...dataEditCategoryModal, ...values });
 					onCancel();
@@ -124,6 +130,8 @@ function DanhMuc() {
 		setDataEditCategoryModal(null);
 		setLinkFileUtil('');
 		setFileListUtil([]);
+		setValueIndexOld(null);
+		setValueIndex(null);
 	};
 
 	const onCancel = () => {
@@ -158,7 +166,7 @@ function DanhMuc() {
 	};
 
 	React.useEffect(() => {
-		getListCategory();
+		getListCategory().catch((e) => console.log('e', e));
 	}, []);
 
 	const TitleCategory = (item) => {
@@ -169,7 +177,7 @@ function DanhMuc() {
 				handleDelete={deleteCategory}
 				handleEdit={handleEditModal}
 				handleAdd={handleAddChildren}
-				setDisplay={setDisplay}
+				listCategoryFollowParamId={categoryPaPa}
 			/>
 		);
 	};
@@ -288,8 +296,8 @@ function DanhMuc() {
 					style={{ width: 256 }}
 					onClick={(key) => handleClick(key)}
 				>
-					{categoryPaPaSort.length > 0 &&
-						categoryPaPaSort.map((item, index) => {
+					{categoryPaPaSort().length > 0 &&
+						categoryPaPaSort().map((item) => {
 							return (
 								item.paramId === '-1' && (
 									<SubMenu
@@ -297,15 +305,11 @@ function DanhMuc() {
 										title={TitleCategory(item)}
 										onTitleClick={handleSubmenuClick}
 									>
-										{Object.values(category).map((itemChildren, index) => {
-											if (itemChildren.paramId === item._id) {
-												return (
-													<Menu.Item key={itemChildren._id}>
-														{TitleCategory(itemChildren)}
-													</Menu.Item>
-												);
-											}
-										})}
+										{categoryPaPaSort(item._id).map((itemChildren) => (
+											<Menu.Item key={itemChildren._id}>
+												{TitleCategory(itemChildren)}
+											</Menu.Item>
+										))}
 									</SubMenu>
 								)
 							);
@@ -363,9 +367,17 @@ function DanhMuc() {
 							>
 								* Click vào ảnh để thay đổi avatar
 							</div>
-							<div style={{ display: display }}>
+							<div style={{ display: dataEditCategoryModal ? 'block' : 'none' }}>
 								<Form.Item name={'index'} label="Vị trí :">
-									<InputNumber min={1} max={categoryPaPa.length} onChange={onChange} />
+									<InputNumber
+										min={1}
+										max={
+											categoryPaPa(
+												dataEditCategoryModal ? dataEditCategoryModal.paramId : '-1'
+											).length
+										}
+										onChange={onChange}
+									/>
 								</Form.Item>
 								<div style={{ marginLeft: 120, marginBottom: 20 }} id="chu_y">
 									* Vị trí hiển thị trên trang khách hàng

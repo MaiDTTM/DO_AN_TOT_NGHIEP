@@ -12,6 +12,11 @@ function useCategoryLogicData() {
 	const dispatch = useDispatch();
 
 	// func
+	const categoryArraySort = (paramId = '-1') =>
+		Object.values(category)
+			.filter((item) => item.paramId === paramId)
+			.sort((a, b) => a.index - b.index);
+
 	const getListCategory = async (dataPrams = {}) => {
 		const data = await baseAPI.getAll(TypeApi.catalog, dataPrams);
 		dispatch({ type: TYPE_ACTION.CATEGORY.GET_LIST, payload: { data } });
@@ -34,7 +39,17 @@ function useCategoryLogicData() {
 	const deleteCategory = async (id) => {
 		const { message } = await baseAPI.delete(TypeApi.catalog, id);
 		if (message === 'SUCCESS') {
+			// Sắp xếp lại index
+			const paramId = category[id].paramId;
 			delete category[id];
+			categoryArraySort(paramId).map((item, index) => {
+				item.index = index + 1;
+				dispatch({
+					type: TYPE_ACTION.CATEGORY.PUT_CATEGORY,
+					payload: { data: { ...item } },
+				});
+			});
+
 			dispatch({
 				type: TYPE_ACTION.CATEGORY.DELETE_CATEGORY,
 				payload: { data: { ...category } },
@@ -42,15 +57,15 @@ function useCategoryLogicData() {
 			messageAnt.success('Xóa thành công');
 		}
 	};
-	const updateCategory = async (obj) => {
+	const updateCategory = async (obj, isMessage = true) => {
 		const { message } = await baseAPI.update(`${TypeApi.catalog}/${obj._id}`, obj);
 		if (message === 'Sửa thông tin sản phẩm thành công !') {
 			category[obj._id] = obj;
 			dispatch({
-				type: TYPE_ACTION.CATEGORY.DELETE_CATEGORY,
+				type: TYPE_ACTION.CATEGORY.PUT_CATEGORY,
 				payload: { data: { ...category } },
 			});
-			messageAnt.success('Cập nhật thành công');
+			isMessage && messageAnt.success('Cập nhật thành công');
 		}
 	};
 	return { category, getListCategory, postCategory, deleteCategory, updateCategory };

@@ -49,7 +49,8 @@ function WatchCatagory() {
 		if (categoryId === _id) return '#dddad6';
 		return '#ffffff';
 	};
-	const onClickCategory = (id) => {
+	const onClickCategory = (id, event) => {
+		event && event.stopPropagation();
 		if (`${idOld.current}` === `${id}`) {
 			categoryId ? setCategoryId('') : setCategoryId(id);
 		} else {
@@ -104,7 +105,7 @@ function WatchCatagory() {
 																cursor: 'pointer',
 																backgroundColor: isActive(item._id),
 															}}
-															// onClick={() => onClickCategory(item._id)}
+															onClick={(event) => onClickCategory(item._id, event)}
 														>
 															{item.name}
 														</li>

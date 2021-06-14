@@ -7,44 +7,95 @@ import {
 	SettingOutlined,
 	EditTwoTone,
 	FolderAddFilled,
+	EyeInvisibleOutlined,
+	EyeOutlined,
 } from '@ant-design/icons';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
+import useProductLogicData from '../../../hooks/useProductLogicData';
+import useCategoryLogicData from '../../../hooks/useCategoryLogicData';
 
-function TitleDanhMuc({ item, handleAdd, handleDelete, handleEdit, setDisplay }) {
+// const
+const stylesContent = {
+	display: 'flex',
+	flexDirection: 'row',
+	justifyContent: 'center',
+	alignItems: 'center',
+};
+const stylesIndex = { cursor: 'pointer', marginRight: 7 };
+const stylesDelete = { color: 'red', ...stylesIndex };
+
+const defaultFunc = () => {};
+
+function TitleDanhMuc({
+	item,
+	handleAdd,
+	handleDelete,
+	handleEdit,
+	listCategoryFollowParamId,
+}) {
+	// hooks
+	const { product } = useProductLogicData();
+	const { updateCategory } = useCategoryLogicData();
+
+	const numberProduct = Object.values(product).filter(
+		(itemProduct) => itemProduct.catalog_id === item._id
+	).length;
+
+	const numberCategory = listCategoryFollowParamId(item._id).length;
+	const isStatus = !!item['status'];
+	const stylesName = isStatus
+		? {}
+		: {
+				textDecorationLine: 'line-through',
+				color: 'red',
+		  };
+
 	const handleConfirm = () => {
 		handleDelete(item._id);
+	};
+	const hiddenItem = () => {
+		item['status'] = !isStatus;
+		updateCategory(item).catch((err) => console.log('error', err));
 	};
 	const handleAddChildren = (event) => {
 		event.stopPropagation();
 		handleAdd(item._id);
-		setDisplay('none');
 	};
 	const onEdit = () => {
-		item.paramId === '-1' ? setDisplay('block') : setDisplay('none');
 		handleEdit(item);
 	};
 	const content = (
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}
-		>
+		<div style={stylesContent}>
 			<EditTwoTone style={{ cursor: 'pointer', marginRight: 7 }} onClick={onEdit} />
-			<Popconfirm
-				placement="right"
-				title={'Bạn có chắc chắn muốn xóa nó ?'}
-				onConfirm={handleConfirm}
-				okText="Phải"
-				cancelText="Không"
-			>
-				<DeleteFilled
-					style={{ cursor: 'pointer', color: 'red', marginRight: 7 }}
-					// onClick={(event) => event.stopPropagation()}
-				/>
-			</Popconfirm>
+			{numberProduct === 0 && numberCategory === 0 ? (
+				<Popconfirm
+					placement="right"
+					title={'Bạn có chắc chắn muốn xóa nó ?'}
+					onConfirm={handleConfirm}
+					okText="Phải"
+					cancelText="Không"
+				>
+					<DeleteFilled
+						style={stylesDelete}
+						// onClick={(event) => event.stopPropagation()}
+					/>
+				</Popconfirm>
+			) : (
+				<Popconfirm
+					placement={'right'}
+					title={`Bạn có chắc chắn muốn ${!isStatus ? 'mở' : 'ẩn'} không?`}
+					onConfirm={hiddenItem}
+					okText={'Phải'}
+					cancelText={'Không'}
+				>
+					{!isStatus ? (
+						<EyeOutlined style={{ color: 'blue', ...stylesIndex }} />
+					) : (
+						<EyeInvisibleOutlined style={stylesDelete} />
+					)}
+				</Popconfirm>
+			)}
+
 			{item.paramId === '-1' && (
 				<FolderAddFilled
 					style={{ cursor: 'pointer', color: 'green' }}
@@ -61,7 +112,7 @@ function TitleDanhMuc({ item, handleAdd, handleDelete, handleEdit, setDisplay })
 					icon={<AppstoreOutlined />}
 					src={BASE_URL_IMAGE + item.icon}
 				/>
-				<span style={{ marginLeft: 5 }}>{item && item.name}</span>
+				<span style={{ marginLeft: 5, ...stylesName }}>{item && item.name}</span>
 				<Popover placement={'right'} content={content} title={null}>
 					<SettingOutlined style={{ marginLeft: 10 }} />
 				</Popover>
@@ -76,13 +127,15 @@ TitleDanhMuc.propTypes = {
 	setModal: PropTypes.func,
 	setParamId: PropTypes.func,
 	handleEdit: PropTypes.func,
+	listCategoryFollowParamId: PropTypes.func,
 };
 
 TitleDanhMuc.defaultProps = {
 	item: {},
-	handleDelete: () => {},
-	handleAdd: () => {},
-	handleEdit: () => {},
+	handleDelete: defaultFunc,
+	handleAdd: defaultFunc,
+	handleEdit: defaultFunc,
+	listCategoryFollowParamId: () => [],
 };
 
 export default TitleDanhMuc;

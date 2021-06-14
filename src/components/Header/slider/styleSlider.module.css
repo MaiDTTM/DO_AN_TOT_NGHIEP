@@ -209,6 +209,9 @@
 .menu_hover_six:hover {
 	display: flex;
 }
+.menu_hover_six_none:hover {
+	display: none;
+}
 .menu_hover_row {
 	width: 267px;
 	height: 100%;

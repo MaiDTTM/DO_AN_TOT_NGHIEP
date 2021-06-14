@@ -53,7 +53,6 @@ function User() {
 		setModal2Visible(modal2Visible);
 	};
 	const onFinishAdd = (values) => {
-		console.log('values', values); // MongLV log fix bug
 		values['avatar'] = linkFileUtil;
 		values['password'] = PassDefault;
 		values['status'] = status;
