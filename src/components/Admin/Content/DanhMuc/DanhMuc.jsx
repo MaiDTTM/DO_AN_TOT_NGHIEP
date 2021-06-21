@@ -132,6 +132,7 @@ function DanhMuc() {
 		setFileListUtil([]);
 		setValueIndexOld(null);
 		setValueIndex(null);
+		setParamId('-1');
 	};
 
 	const onCancel = () => {
@@ -141,7 +142,6 @@ function DanhMuc() {
 
 	const handleCancelModal = () => {
 		setModal2Visible(false);
-		setParamId('-1');
 		onReset();
 	};
 

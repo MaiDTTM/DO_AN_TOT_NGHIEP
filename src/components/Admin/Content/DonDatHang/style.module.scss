@@ -173,8 +173,16 @@
 }
 .footer_logo{
 	width: 1.375rem;
+	max-width: 1.375rem;
+	max-height: 1.375rem;
 	height: 1.375rem;
 	margin-right: .3125rem;
+}
+.footer_logo_image {
+	width: 1.375rem;
+	max-width: 1.375rem;
+	max-height: 1.375rem;
+	height: 1.375rem;
 }
 .footer_tien{
 	color: #ee4d2d;

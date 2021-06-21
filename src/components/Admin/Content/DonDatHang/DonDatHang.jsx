@@ -10,7 +10,11 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
-import ModalDetail from '../../../Account/DonHang/Modal/ModalDetail';
+
+const ModalDetail = React.lazy(() =>
+	import('../../../Account/DonHang/Modal/ModalDetail')
+);
+
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 function DonDatHang() {
@@ -30,7 +34,10 @@ function DonDatHang() {
 		setItemTransactionDetail(value);
 	};
 	const handleImage = (cartId) => {
-		return carts[cartId] && carts[cartId].product_id
+		return carts[cartId] &&
+			carts[cartId].product_id &&
+			product[carts[cartId].product_id] &&
+			product[carts[cartId].product_id].image
 			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
 			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};
@@ -110,7 +117,7 @@ function DonDatHang() {
 					<div className={style.footer_list_ringth}>
 						<div className={style.footer_list_one}>
 							<div className={style.footer_logo}>
-								<img src={logo} alt={'logo'} />
+								<img className={style.footer_logo_image} src={logo} alt={'logo'} />
 							</div>
 							<span className={style.footer_tong_tien}>Tổng số tiền : </span>
 							<span className={style.footer_tien}>{ConvertStringToVND(item.amount)}</span>
@@ -175,6 +182,7 @@ function DonDatHang() {
 							{ConvertStringToVND(
 								carts[cartId] &&
 									carts[cartId].product_id &&
+									product[carts[cartId].product_id] &&
 									product[carts[cartId].product_id].amount
 							)}
 							{/*<sup>đ</sup>*/}
@@ -186,6 +194,7 @@ function DonDatHang() {
 						title={
 							carts[cartId] &&
 							carts[cartId].product_id &&
+							product[carts[cartId].product_id] &&
 							product[carts[cartId].product_id].name
 						}
 						description={`Số lượng: ${carts[cartId] && carts[cartId].amount}`}

@@ -26,6 +26,17 @@ function MenuAdmin(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { setCheckKey, objectKey } = props;
+
+	// const
+	const keyDefault = React.useMemo(
+		() =>
+			localStorage.getItem('checkKey_admin')
+				? localStorage.getItem('checkKey_admin')
+				: objectKey.TRANG_CHU,
+		[]
+	);
+
+	// func
 	const handleClick = ({ key }) => {
 		setCheckKey(key);
 		if (key === 'Đăng xuất') {
@@ -38,7 +49,7 @@ function MenuAdmin(props) {
 		<Menu
 			theme="dark"
 			mode="inline"
-			defaultSelectedKeys={objectKey.TRANG_CHU}
+			defaultSelectedKeys={keyDefault}
 			onClick={handleClick}
 		>
 			<div className="logo" style={{ width: '100%', height: 63 }}>
@@ -75,7 +86,7 @@ function MenuAdmin(props) {
 	);
 }
 MenuAdmin.propTypes = {
-	objKeyMenu: PropTypes.object,
+	objKeyMenu: PropTypes.object.isRequired,
 	setCheckKey: PropTypes.func,
 };
 MenuAdmin.defaultProps = {

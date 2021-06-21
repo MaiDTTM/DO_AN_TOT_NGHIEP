@@ -10,7 +10,7 @@ import useProductLogicData from '../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
-import ModalDetail from './Modal/ModalDetail';
+const ModalDetail = React.lazy(() => import('./Modal/ModalDetail'));
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 
@@ -55,7 +55,7 @@ function DonHang() {
 		setIsModalVisible(true);
 	};
 	const handleImage = (cartId) => {
-		return carts[cartId] && carts[cartId].product_id && product[carts[cartId].product_id]
+		return carts[cartId] && carts[cartId].product_id
 			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
 			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};

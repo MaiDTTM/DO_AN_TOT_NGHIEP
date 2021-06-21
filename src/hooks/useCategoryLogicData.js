@@ -31,6 +31,7 @@ function useCategoryLogicData() {
 				type: TYPE_ACTION.CATEGORY.POST_CATEGORY,
 				payload: { data: obj },
 			});
+			messageAnt.success(message);
 		} else {
 			messageAnt.warn(message);
 		}

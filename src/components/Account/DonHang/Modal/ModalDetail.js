@@ -30,8 +30,7 @@ function ModalDetail(props) {
 	const handleCancelDetail = () => {
 		setItem();
 	};
-	if (!item && Object.keys(product).length === 0 && Object.keys(carts).length === 0)
-		return <React.Fragment />;
+	if (!item) return null;
 	return (
 		<Modal
 			title={'CHI TIẾT ĐƠN HÀNG CỦA BẠN'}
@@ -147,12 +146,12 @@ function ModalDetail(props) {
 }
 
 ModalDetail.propTypes = {
-	item: PropTypes.string,
+	item: PropTypes.object.isRequired,
 	setItem: PropTypes.func,
 };
 
 ModalDetail.defaultProps = {
-	item: '',
+	item: null,
 	setItem: () => null,
 };
 
