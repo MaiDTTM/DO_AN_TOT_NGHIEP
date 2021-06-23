@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import logo from '../../../img/logotet2019.png';
 import styles from './index.module.css';
 import { Checkbox, message as messageAnt } from 'antd';
+import cookie from 'react-cookies';
 import baseAPI from '../../../axios/baseAPI';
 import { TypeApi } from '../../../util/TypeApi';
 import { useDispatch } from 'react-redux';
@@ -14,12 +15,19 @@ const TypeInput = {
 	user: 'user',
 	password: 'password',
 };
+const user_admin_save = 'user_admin_save';
+const password_admin_save = 'password_admin_save';
+
 function LoginAdmin() {
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [userAdmin, setUserAdmin] = useState('');
 	const [password, setPassword] = useState('');
+
+	// const
+	const isSavePassword = !!(cookie.load(user_admin_save) && cookie.load(user_admin_save));
+
 	// handle
 	const onChangeText = (event, type) => {
 		switch (type) {
@@ -33,6 +41,17 @@ function LoginAdmin() {
 				break;
 		}
 	};
+
+	const handleSaveUserPass = (e) => {
+		if (e.target.checked) {
+			cookie.save(user_admin_save, userAdmin, { path: '/' });
+			cookie.save(password_admin_save, password, { path: '/' });
+		} else {
+			cookie.remove(user_admin_save, { path: '/' });
+			cookie.remove(password_admin_save, { path: '/' });
+		}
+	};
+
 	const onSave = async () => {
 		const data = { userAdmin, password };
 		if (userAdmin && password) {
@@ -49,16 +68,44 @@ function LoginAdmin() {
 		setUserAdmin('');
 		setPassword('');
 	};
+
+	const handleIsLogin = async (userAdmin = '', password = '') => {
+		const { message } = await baseAPI.add(`${TypeApi.admin}/login`, {
+			userAdmin,
+			password,
+		});
+		console.log('message', message); // MongLV log fix bug
+		if (message === 'SUCCESS') {
+			await history.push('/homeAdmin');
+		}
+	};
+
+	// Vòng đời
+	React.useEffect(() => {
+		const user = localStorage.getItem('email_admin');
+		const password = localStorage.getItem('password_admin');
+		try {
+			// Mục đích muốn kiểm tra xem người dùng đã đăng nhập từ lúc nào
+			handleIsLogin(user, password).catch();
+		} catch (e) {
+			console.log('handleIsLogin error: ', e);
+		}
+		// Kiểm tra xem người dùng có lưu mật khẩu không
+		if (isSavePassword) {
+			setUserAdmin(cookie.load(user_admin_save));
+			setPassword(cookie.load(password_admin_save));
+		}
+	}, []);
 	return (
 		<div className={styles.dang_nhap}>
 			<div className={styles.herader_dangnhap}>
-				<img src={logo} />
+				<img alt={logo} src={logo} />
 				<div className={styles.verticalLine}>
 					<p>
 						<b>Hãy đăng nhập để vào trang quản trị của bạn !</b>
 					</p>
 				</div>
-				<div></div>
+				<div />
 				<hr />
 			</div>
 			<div className={styles.title}>
@@ -94,7 +141,9 @@ function LoginAdmin() {
 				</div>
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>
 					<div className={styles.action_dang_nhap}>
-						<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
+						<Checkbox onChange={handleSaveUserPass} defaultChecked={isSavePassword}>
+							Lưu mật khẩu cho lần đăng nhập tiếp theo
+						</Checkbox>
 						<Link to={'/registerAdmin'}>
 							<div
 								style={{

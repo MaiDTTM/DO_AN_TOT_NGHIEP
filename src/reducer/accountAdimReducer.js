@@ -1,17 +1,12 @@
 import { TYPE_ACTION } from '../actions/TypeAction';
-const setLocalStore = (accountAdmin, name = '') => {
-	accountAdmin &&
-		Object.keys(accountAdmin).map((item) => {
-			name.length > 0
-				? localStorage.setItem(`${item}_${name}`, accountAdmin[item])
-				: localStorage.setItem(item, accountAdmin[item]);
-			return null;
-		});
-};
+import setLocalStore from '../util/setLocalStore';
+
 const accountAdminReducer = (accountAdmin = {}, action) => {
 	switch (action.type) {
 		case TYPE_ACTION.ADMIN.LOGIN:
+			debugger; // MongLV
 			setLocalStore(action.payload.data, 'admin');
+			debugger; // Todo by MongLV
 			return action.payload.data;
 		case TYPE_ACTION.ADMIN.LOGOUT:
 			return {};

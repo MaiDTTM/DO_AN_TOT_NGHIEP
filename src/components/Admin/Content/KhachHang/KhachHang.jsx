@@ -1,7 +1,12 @@
 /* eslint-disable */
 import { Button, Table, Modal, Form, Popconfirm, message, Switch, Image } from 'antd';
 import React, { useState } from 'react';
-import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {
+	CopyOutlined,
+	DeleteOutlined,
+	EditOutlined,
+	SettingOutlined,
+} from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
@@ -124,18 +129,19 @@ function KhachHang() {
 							type="text"
 							style={{ color: '#4cd3d7' }}
 						>
-							<EditOutlined />
+							{/*<EditOutlined />*/}
+							<SettingOutlined />
 						</Button>
-						<Popconfirm
-							title="Sure to delete?"
-							onConfirm={() => handleDelete(record._id)}
-						>
-							<Button
-								style={{ color: '#ea506f' }}
-								type="text"
-								icon={<DeleteOutlined />}
-							/>
-						</Popconfirm>
+						{/*<Popconfirm*/}
+						{/*	title="Sure to delete?"*/}
+						{/*	onConfirm={() => handleDelete(record._id)}*/}
+						{/*>*/}
+						{/*	<Button*/}
+						{/*		style={{ color: '#ea506f' }}*/}
+						{/*		type="text"*/}
+						{/*		icon={<DeleteOutlined />}*/}
+						{/*	/>*/}
+						{/*</Popconfirm>*/}
 					</div>
 				);
 			},
