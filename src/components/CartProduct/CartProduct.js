@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { Input, Popconfirm, Avatar, Button, message, Table, Modal } from 'antd';
 import queryString from 'query-string';
@@ -83,9 +84,9 @@ function CartProduct() {
 
 	// Vòng đời
 	React.useEffect(() => {
+		getListCart().catch((error) => console.log('error:', error));
+		getListProduct().catch((error) => console.log('error:', error));
 		handleFindIndex();
-		getListCart();
-		getListProduct();
 	}, []);
 
 	// JSX
@@ -336,7 +337,7 @@ function CartProduct() {
 							>
 								<div className={Styles.img_header_cart}>
 									<Link to={'/'}>
-										<img src={logo} />{' '}
+										<img alt={logo} src={logo} />{' '}
 									</Link>{' '}
 									<div className={Styles.gio_hang}> Giỏ hàng </div>{' '}
 								</div>{' '}

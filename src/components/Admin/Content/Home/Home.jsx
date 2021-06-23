@@ -1,24 +1,7 @@
 import React from 'react';
-import { Badge, Calendar, Tabs, Row, Col, Tooltip } from 'antd';
-import {
-	AndroidOutlined,
-	AppleOutlined,
-	CopyOutlined,
-	InfoCircleOutlined,
-	MoneyCollectOutlined,
-	QuestionCircleOutlined,
-} from '@ant-design/icons';
-import Trend from 'ant-design-pro/lib/Trend';
+import { Badge, Calendar, Tabs } from 'antd';
+import { AndroidOutlined, AppleOutlined } from '@ant-design/icons';
 import style from './styles.module.scss';
-import NumberInfo from 'ant-design-pro/lib/NumberInfo';
-import {
-	ChartCard,
-	Field,
-	MiniArea,
-	MiniBar,
-	MiniProgress,
-} from 'ant-design-pro/lib/Charts';
-import numeral from 'numeral';
 import moment from 'moment';
 import Dashboard from './Dashboard/Dashboard';
 // import PropTypes from 'prop-types';

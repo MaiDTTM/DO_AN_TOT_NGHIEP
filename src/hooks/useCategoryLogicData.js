@@ -49,6 +49,7 @@ function useCategoryLogicData() {
 					type: TYPE_ACTION.CATEGORY.PUT_CATEGORY,
 					payload: { data: { ...item } },
 				});
+				return null; // Note: hot_bug
 			});
 
 			dispatch({
