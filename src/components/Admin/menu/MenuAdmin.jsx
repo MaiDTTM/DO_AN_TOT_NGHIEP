@@ -1,11 +1,10 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
 import logo from '../../../img/logotet2019.png';
 import { Menu } from 'antd';
 import {
-	BarsOutlined,
 	ContactsOutlined,
 	ContainerOutlined,
 	DesktopOutlined,
@@ -15,20 +14,18 @@ import {
 	OrderedListOutlined,
 	SettingOutlined,
 	SlidersOutlined,
-	SnippetsOutlined,
-	UserOutlined,
-	WalletOutlined,
 } from '@ant-design/icons';
 import { TYPE_ACTION } from '../../../actions/TypeAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 function MenuAdmin(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const accountAdmin = useSelector((state) => state['accountAdmin']);
 	const { setCheckKey, objectKey } = props;
 
 	// const
-	const keyDefault = React.useMemo(
+	const keyMenu = React.useMemo(
 		() =>
 			localStorage.getItem('checkKey_admin')
 				? localStorage.getItem('checkKey_admin')
@@ -47,13 +44,17 @@ function MenuAdmin(props) {
 	};
 	return (
 		<Menu
-			theme="dark"
-			mode="inline"
-			defaultSelectedKeys={keyDefault}
+			theme={'dark'}
+			mode={'inline'}
+			defaultSelectedKeys={keyMenu}
 			onClick={handleClick}
 		>
-			<div className="logo" style={{ width: '100%', height: 63 }}>
-				<img src={logo} style={{ width: '100%' }} />
+			<div
+				className="logo"
+				style={{ width: '100%', height: 63, cursor: 'pointer' }}
+				onClick={() => history.push('/')}
+			>
+				<img alt={'logo admin'} src={logo} style={{ width: '100%' }} />
 			</div>
 			<Menu.Item key={objectKey.TRANG_CHU} icon={<HomeOutlined />}>
 				Trang chủ
@@ -73,9 +74,13 @@ function MenuAdmin(props) {
 			<Menu.Item key={objectKey.KHACH_HANG} icon={<ContactsOutlined />}>
 				Khách hàng
 			</Menu.Item>
-			<Menu.Item key={objectKey.NHAN_VIEN} icon={<FormOutlined />}>
-				Nhân viên
-			</Menu.Item>
+			{/* Chỉ có position mới có quyền xem mục này */}
+			{accountAdmin && accountAdmin.position === 'Quản lý' && (
+				<Menu.Item key={objectKey.NHAN_VIEN} icon={<FormOutlined />}>
+					Nhân viên
+				</Menu.Item>
+			)}
+
 			<Menu.Item key={objectKey.CAI_DAT} icon={<SettingOutlined />}>
 				Cài đặt tài khoản
 			</Menu.Item>
@@ -101,6 +106,6 @@ MenuAdmin.defaultProps = {
 		CAI_DAT: 'Cài đặt tài khoản',
 		LOGOUT: 'Đăng xuất',
 	},
-	setCheckKey: () => {},
+	setCheckKey: () => null,
 };
-export default MenuAdmin;
+export default React.memo(MenuAdmin);

@@ -11,7 +11,7 @@ const { Meta } = Card;
 
 ProductListGoiYChoBan.propTypes = {};
 
-function ProductListGoiYChoBan({ product }) {
+function ProductListGoiYChoBan({ product, isSearch }) {
 	return (
 		<div className={Styles.list_hot}>
 			<div className={Styles.content_host}>
@@ -27,7 +27,7 @@ function ProductListGoiYChoBan({ product }) {
 					>
 						<div style={{ display: 'flex', flexDirection: 'column' }}>
 							<div>
-								<h1>GỢI Ý HÔM NAY</h1>
+								<h1>{isSearch ? 'Kết quả tìm kiếm' : 'GỢI Ý HÔM NAY'}</h1>
 							</div>
 							<div
 								style={{
@@ -65,7 +65,6 @@ function ProductListGoiYChoBan({ product }) {
 				>
 					<div className={Styles.content_host_item_goi_y}>
 						{Object.values(product)
-							.concat(Object.values(product))
 							.slice(0, 45)
 							.map((item) => (
 								<Link to={`/detail/${item._id}`}>
@@ -157,6 +156,7 @@ function ProductListGoiYChoBan({ product }) {
 
 ProductListGoiYChoBan.propTypes = {
 	product: PropTypes.object,
+	isSearch: PropTypes.bool,
 };
 
 ProductListGoiYChoBan.defaultProps = {

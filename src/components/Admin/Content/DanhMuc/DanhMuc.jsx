@@ -20,6 +20,7 @@ import TitleDanhMuc from '../TitleDanhMuc';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
+import { ContextApp } from '../../../../context/contextApp';
 
 const { SubMenu } = Menu;
 // submenu keys of first level
@@ -59,8 +60,20 @@ function DanhMuc() {
 		updateCategory,
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
+	const { textSearch, setTextSearch } = React.useContext(ContextApp);
 	const newArrProduct = Object.values(product);
-	const categoryArr = Object.values(category);
+	const categoryFilter = () => {
+		let categoryNew = {};
+		const arrSearch = Object.values(category).filter(
+			(item) => item.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
+		);
+		arrSearch.map((item) => {
+			categoryNew[item._id] = item;
+		});
+		return { ...categoryNew };
+	};
+	const categoryArr = Object.values(categoryFilter());
+
 	const categoryPaPa = (paramId = '-1') =>
 		categoryArr.filter((item) => item.paramId === paramId);
 	const categoryPaPaSort = (paramId = '-1') =>
@@ -86,7 +99,7 @@ function DanhMuc() {
 			setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
 		}
 	};
-	const onSearch = (value) => console.log(value);
+	const onSearch = (value) => setTextSearch(value);
 	const setModalVisible2 = (modal2Visible) => {
 		setModal2Visible(modal2Visible);
 	};

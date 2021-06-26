@@ -1,3 +1,10 @@
 import { createContext } from 'react';
-const ContextApp = createContext();
+const defaultFunc = () => null;
+const ContextApp = createContext({
+	selectedRowKeys: [],
+	setSelectedRowKeys: defaultFunc,
+
+	textSearch: '',
+	setTextSearch: defaultFunc(),
+});
 export { ContextApp };

@@ -10,6 +10,7 @@ import useProductLogicData from '../../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
 
 const ModalDetail = React.lazy(() =>
 	import('../../../Account/DonHang/Modal/ModalDetail')
@@ -20,7 +21,8 @@ const { TextArea } = Input;
 function DonDatHang() {
 	const { transaction, putTransaction } = useTransactionData();
 	const { carts } = useCartLogicData();
-	const { product } = useProductLogicData();
+	const { product, updateProduct } = useProductLogicData();
+	const { customer } = useCustomerLogicData();
 
 	// state
 	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
@@ -68,6 +70,16 @@ function DonDatHang() {
 				item['status_transaction'] = TYPE_TRANSACTION.DANG_GIAO;
 				break;
 			case TYPE_TRANSACTION.DANG_GIAO:
+				item['carts_id'].map(async (carts_id) => {
+					const obj =
+						carts[carts_id] &&
+						carts[carts_id].product_id &&
+						product[carts[carts_id].product_id];
+					debugger; // Todo by MongLV
+					obj.sold = obj.sold + carts[carts_id].amount;
+					await updateProduct(obj);
+					return carts_id;
+				});
 				item['status_transaction'] = TYPE_TRANSACTION.DA_GIAO;
 				break;
 			case TYPE_TRANSACTION.DA_HUY:
@@ -94,6 +106,7 @@ function DonDatHang() {
 	const handleDetailTransaction = (item = null) => {
 		setItemTransactionDetail(item);
 	};
+
 	// JSX
 	const ListComponent = (item) => (
 		<List
@@ -108,10 +121,16 @@ function DonDatHang() {
 				<div className={style.footer_list}>
 					<div className={style.footer_list_left}>
 						<div>
-							Họ và tên : <span style={{ marginLeft: 30 }}>Thanh Mai Dao</span>
+							Họ và tên :{' '}
+							<span style={{ marginLeft: 30 }}>
+								{item.user_id && customer[item.user_id] && customer[item.user_id].name}
+							</span>
 						</div>
 						<div>
-							Số điện thoại : <span style={{ marginLeft: 5 }}>0966382406</span>
+							Số điện thoại :{' '}
+							<span style={{ marginLeft: 5 }}>
+								{item.user_id && customer[item.user_id] && customer[item.user_id].phone}
+							</span>
 						</div>
 					</div>
 					<div className={style.footer_list_ringth}>
@@ -183,7 +202,13 @@ function DonDatHang() {
 								carts[cartId] &&
 									carts[cartId].product_id &&
 									product[carts[cartId].product_id] &&
-									product[carts[cartId].product_id].amount
+									(product[carts[cartId].product_id].price -
+										(
+											(product[carts[cartId].product_id].price *
+												product[carts[cartId].product_id].price_seo.split(' ')[0]) /
+											100
+										).toFixed(2)) *
+										carts[cartId].amount
 							)}
 							{/*<sup>đ</sup>*/}
 						</div>,

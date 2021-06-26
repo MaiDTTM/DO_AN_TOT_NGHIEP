@@ -9,14 +9,13 @@ import baseAPI from '../../../axios/baseAPI';
 import { TypeApi } from '../../../util/TypeApi';
 import { useDispatch } from 'react-redux';
 import { loginAdmin } from '../../../actions/adminAction';
+import TypeCookiesUtil from '../../../util/TypeCookies';
 // import PropTypes from 'prop-types';
 
 const TypeInput = {
 	user: 'user',
 	password: 'password',
 };
-const user_admin_save = 'user_admin_save';
-const password_admin_save = 'password_admin_save';
 
 function LoginAdmin() {
 	// hook
@@ -26,7 +25,10 @@ function LoginAdmin() {
 	const [password, setPassword] = useState('');
 
 	// const
-	const isSavePassword = !!(cookie.load(user_admin_save) && cookie.load(user_admin_save));
+	const isSavePassword = !!(
+		cookie.load(TypeCookiesUtil.user_admin_save) &&
+		cookie.load(TypeCookiesUtil.user_admin_save)
+	);
 
 	// handle
 	const onChangeText = (event, type) => {
@@ -44,11 +46,11 @@ function LoginAdmin() {
 
 	const handleSaveUserPass = (e) => {
 		if (e.target.checked) {
-			cookie.save(user_admin_save, userAdmin, { path: '/' });
-			cookie.save(password_admin_save, password, { path: '/' });
+			cookie.save(TypeCookiesUtil.user_admin_save, userAdmin, { path: '/' });
+			cookie.save(TypeCookiesUtil.password_admin_save, password, { path: '/' });
 		} else {
-			cookie.remove(user_admin_save, { path: '/' });
-			cookie.remove(password_admin_save, { path: '/' });
+			cookie.remove(TypeCookiesUtil.user_admin_save, { path: '/' });
+			cookie.remove(TypeCookiesUtil.password_admin_save, { path: '/' });
 		}
 	};
 
@@ -70,12 +72,12 @@ function LoginAdmin() {
 	};
 
 	const handleIsLogin = async (userAdmin = '', password = '') => {
-		const { message } = await baseAPI.add(`${TypeApi.admin}/login`, {
+		const { message, Admin } = await baseAPI.add(`${TypeApi.admin}/login`, {
 			userAdmin,
 			password,
 		});
-		console.log('message', message); // MongLV log fix bug
 		if (message === 'SUCCESS') {
+			await dispatch(loginAdmin(Admin));
 			await history.push('/homeAdmin');
 		}
 	};
@@ -92,8 +94,8 @@ function LoginAdmin() {
 		}
 		// Kiểm tra xem người dùng có lưu mật khẩu không
 		if (isSavePassword) {
-			setUserAdmin(cookie.load(user_admin_save));
-			setPassword(cookie.load(password_admin_save));
+			setUserAdmin(cookie.load(TypeCookiesUtil.user_admin_save));
+			setPassword(cookie.load(TypeCookiesUtil.password_admin_save));
 		}
 	}, []);
 	return (

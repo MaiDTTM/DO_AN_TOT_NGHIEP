@@ -77,6 +77,8 @@
 .gia_item_cart {
     margin-right: 15px;
 	margin-top: 5px;
+	display: flex;
+	flex-direction: column;
 }
 .so_luong_item_cart{
 	width: 150px;

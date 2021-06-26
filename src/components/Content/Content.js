@@ -6,6 +6,7 @@ import ProductListGoiYChoBan from './GoiYChoBan/productGoiYChoBan';
 import FlashSale from './FlashSale/FlashSale';
 import ProductListXuHuong from './XuHuongTimKiem/XuHuoongTimKiem';
 import { useSelector } from 'react-redux';
+import { ContextApp } from '../../context/contextApp';
 
 //style
 const listBanner = {
@@ -47,6 +48,32 @@ const productGoiY = {
 function Content(props) {
 	// hooks
 	const product = useSelector((state) => state['product']);
+	const { textSearch } = React.useContext(ContextApp);
+	const isSearch = textSearch.length > 0;
+	React.useEffect(() => {
+		const scrollSearch = setTimeout(() => {
+			window.scroll(0, 400);
+		}, 0);
+		return () => {
+			clearTimeout(scrollSearch);
+		};
+	}, [isSearch]);
+	const productFilter = () => {
+		let productNew = {};
+
+		const priceString = (item) =>
+			(item.price * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ';
+		const arrSearch = Object.values(product).filter(
+			(item) =>
+				item.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1 ||
+				priceString(item).toLowerCase().indexOf(`${textSearch}`.toLowerCase()) !== -1
+		);
+		arrSearch.map((item) => {
+			productNew[item._id] = item;
+		});
+		return { ...productNew };
+	};
+
 	return (
 		<div
 			style={{
@@ -56,20 +83,24 @@ function Content(props) {
 				alignItems: 'center',
 			}}
 		>
-			<div style={listBanner}>
-				<ListPicture />
-			</div>
-			<div style={flashSale}>
-				<FlashSale product={product} />
-			</div>
-			<div style={productHot}>
-				<ProductListHot />
-			</div>
-			<div style={productXuHuong}>
-				<ProductListXuHuong />
-			</div>
+			{!isSearch && (
+				<React.Fragment>
+					<div style={listBanner}>
+						<ListPicture />
+					</div>
+					<div style={flashSale}>
+						<FlashSale product={product} />
+					</div>
+					<div style={productHot}>
+						<ProductListHot />
+					</div>
+					<div style={productXuHuong}>
+						<ProductListXuHuong />
+					</div>
+				</React.Fragment>
+			)}
 			<div style={productGoiY}>
-				<ProductListGoiYChoBan product={product} />
+				<ProductListGoiYChoBan isSearch={isSearch} product={productFilter()} />
 			</div>
 		</div>
 	);

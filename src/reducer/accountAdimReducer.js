@@ -6,7 +6,6 @@ const accountAdminReducer = (accountAdmin = {}, action) => {
 		case TYPE_ACTION.ADMIN.LOGIN:
 			debugger; // MongLV
 			setLocalStore(action.payload.data, 'admin');
-			debugger; // Todo by MongLV
 			return action.payload.data;
 		case TYPE_ACTION.ADMIN.LOGOUT:
 			return {};

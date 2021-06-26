@@ -24,6 +24,7 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import ExportCSV from './ExportCSV/ExportCSV';
 import style from './style.module.scss';
+import { ContextApp } from '../../../../context/contextApp';
 // import PropTypes from 'prop-types';
 
 const layout = {
@@ -46,16 +47,13 @@ function SanPham() {
 	const { category } = useCategoryLogicData();
 	const { postProduct, product, deleteProduct, updateProduct } = useProductLogicData();
 	const arrProduct = [];
-	Object.values(product).map((item) => {
-		try {
-			arrProduct.push({ ...item, catalog_id: category[item.catalog_id].name });
-		} catch (e) {
-			console.log('e', e);
-		}
-		return item;
-	});
+
 	const refCallBack = React.useRef();
 	const refCallBack2 = React.useRef();
+
+	// context
+	const { textSearch } = React.useContext(ContextApp);
+
 	// state
 	const [modalVisible, setModalVisible] = useState(false);
 	const [linkFileUtil, setLinkFileUtil] = useState('');
@@ -67,6 +65,29 @@ function SanPham() {
 	const [customers, setCustomers] = useState(arrProduct);
 	const [fileList, setFileList] = useState([]);
 	// handle func
+	const productFilter = () => {
+		let productNew = {};
+
+		const priceString = (item) =>
+			(item.price * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ';
+		const arrSearch = Object.values(product).filter(
+			(item) =>
+				item.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1 ||
+				priceString(item).toLowerCase().indexOf(`${textSearch}`.toLowerCase()) !== -1
+		);
+		arrSearch.map((item) => {
+			productNew[item._id] = item;
+		});
+		return { ...productNew };
+	};
+	Object.values(productFilter()).map((item) => {
+		try {
+			arrProduct.push({ ...item, catalog_id: category[item.catalog_id].name });
+		} catch (e) {
+			console.log('e', e);
+		}
+		return item;
+	});
 	const ModalVisible = (modalVisible) => {
 		setModalVisible(modalVisible);
 	};
@@ -426,7 +447,7 @@ function SanPham() {
 			<div className={style.table_product}>
 				<Table
 					columns={columns}
-					dataSource={Object.values(product).reverse()}
+					dataSource={Object.values(productFilter()).reverse()}
 					pagination={{ pageSize: 50 }}
 					scroll={{ y: 380 }}
 					bordered={true}

@@ -21,8 +21,10 @@ function useCartLogicData() {
 		} else message.warn('Kiểm tra internet');
 	};
 	const getListCart = async (dataPrams = { user_id: myUser._id }) => {
-		const data = await baseAPI.getAll(TypeApi.cart, dataPrams);
-		dispatch({ type: TYPE_ACTION.CART.GET_ALL_CART, payload: { data } });
+		if (Object.keys(myUser).length > 0) {
+			const data = await baseAPI.getAll(TypeApi.cart, dataPrams);
+			dispatch({ type: TYPE_ACTION.CART.GET_ALL_CART, payload: { data } });
+		}
 	};
 	const updateCart = async (obj = {}) => {
 		const { message: messageAPI, data } = await baseAPI.update(

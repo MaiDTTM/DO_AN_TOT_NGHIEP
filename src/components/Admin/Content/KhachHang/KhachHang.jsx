@@ -1,13 +1,7 @@
 /* eslint-disable */
 import { Button, Table, Modal, Form, Popconfirm, message, Switch, Image } from 'antd';
 import React, { useState } from 'react';
-import {
-	CopyOutlined,
-	DeleteOutlined,
-	EditOutlined,
-	SettingOutlined,
-} from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { CopyOutlined, SettingOutlined } from '@ant-design/icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
@@ -40,7 +34,11 @@ function KhachHang() {
 			render: (image) => (
 				<Image
 					style={{ width: 80, height: 50, objectFit: 'cover' }}
-					src={BASE_URL_IMAGE + image}
+					src={
+						image
+							? BASE_URL_IMAGE + image
+							: 'https://lh3.googleusercontent.com/proxy/jEeyZ7Mo5eJLoUZbIGw6Ci1bBrQcIGafUKLlncTw-Cz1EGiHp3v7OhV6XqeC4jXJ_Jnd7sO1H5F69TTDVqPQ-AYvFUtVv-GMC3jn0CvIA8LJtA'
+					}
 				/>
 			),
 		},
@@ -150,7 +148,7 @@ function KhachHang() {
 	const PassDefault = '12345@2021';
 	const handleDelete = (record) => {};
 	const handleEdit = (record) => {
-		setStatus(record.state);
+		setStatus(record.status);
 		setModal1Visible(true);
 		setDataEditModal(record);
 		form2.setFieldsValue({ ...record });
@@ -176,66 +174,68 @@ function KhachHang() {
 		console.log('params', pagination, filters, sorter, extra);
 	}
 
+	// JSX
+	const ModalEdit = (
+		<Modal
+			title={
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					CẬP NHẬT TÀI KHOẢN
+				</div>
+			}
+			centered
+			style={{ top: 20 }}
+			visible={modal1Visible}
+			footer={null}
+			onCancel={() => setModal1Visible(false)}
+		>
+			<Form
+				{...layout}
+				form={form2}
+				name={'basic'}
+				initialValues={{ remember: true }}
+				onFinish={onFinishEdit}
+			>
+				<Form.Item name={'status'} label="Tắt/Bật User" style={{ marginLeft: '10px' }}>
+					<Switch checked={status} onChange={handleSwitch} />
+				</Form.Item>
+				<Form.Item label="Password" name="password">
+					<Popconfirm
+						title="Bạn muốn reset lại mật khẩu ?"
+						okText="Yes"
+						cancelText="No"
+						onConfirm={handleResetPass}
+					>
+						<Button type={'danger'}>Reset</Button>
+					</Popconfirm>{' '}
+					{visibleCopy && (
+						<CopyToClipboard text={PassDefault}>
+							<Button type={'default'} onClick={() => message.success('Copy thành công')}>
+								{PassDefault} <CopyOutlined />
+							</Button>
+						</CopyToClipboard>
+					)}
+				</Form.Item>
+				<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 7 }}>
+					<Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
+						Cập nhật
+					</Button>
+					<Button
+						onClick={() => setModal1Visible(false)}
+						htmlType="button"
+						style={{ paddingLeft: '10px' }}
+					>
+						Đóng
+					</Button>
+				</Form.Item>
+			</Form>
+		</Modal>
+	);
+
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', minHeight: 508 }}>
 			<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 				{/*modal edit*/}
-				<Modal
-					title={
-						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							CẬP NHẬT TÀI KHOẢN
-						</div>
-					}
-					centered
-					style={{ top: 20 }}
-					visible={modal1Visible}
-					footer={null}
-					onCancel={() => setModal1Visible(false)}
-				>
-					<Form
-						{...layout}
-						form={form2}
-						name="basic"
-						initialValues={{ remember: true }}
-						onFinish={onFinishEdit}
-					>
-						<Form.Item name="status" label="Tắt/Bật User" style={{ marginLeft: '10px' }}>
-							<Switch defaultChecked={status} onChange={handleSwitch} />
-						</Form.Item>
-						<Form.Item label="Password" name="password">
-							<Popconfirm
-								title="Bạn muốn reset lại mật khẩu ?"
-								okText="Yes"
-								cancelText="No"
-								onConfirm={handleResetPass}
-							>
-								<Button type={'danger'}>Reset</Button>
-							</Popconfirm>{' '}
-							{visibleCopy && (
-								<CopyToClipboard text={PassDefault}>
-									<Button
-										type={'default'}
-										onClick={() => message.success('Copy thành công')}
-									>
-										{PassDefault} <CopyOutlined />
-									</Button>
-								</CopyToClipboard>
-							)}
-						</Form.Item>
-						<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 7 }}>
-							<Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
-								Cập nhật
-							</Button>
-							<Button
-								onClick={() => setModal1Visible(false)}
-								htmlType="button"
-								style={{ paddingLeft: '10px' }}
-							>
-								Đóng
-							</Button>
-						</Form.Item>
-					</Form>
-				</Modal>
+				{!!modal1Visible && ModalEdit}
 			</div>
 			<div className={style.table_customer}>
 				<Table

@@ -114,7 +114,7 @@ function CartProduct() {
 						>
 							Xóa sản phẩm đã chọn{' '}
 						</Button>{' '}
-						<Button onClick={handleClickBuyAllProduct}> Xem sản phẩm đã chọn </Button>{' '}
+						{/*<Button onClick={handleClickBuyAllProduct}> Xem sản phẩm đã chọn </Button>{' '}*/}
 						<Modal
 							title={
 								<div
@@ -256,12 +256,33 @@ function CartProduct() {
 		),
 		price: (
 			<div className={Styles.gia_item_cart}>
-				<span>
+				<div
+					style={{
+						textDecorationLine:
+							product[item.product_id] && product[item.product_id].price_seo !== '0 %'
+								? 'line-through'
+								: 'none',
+					}}
+				>
 					{' '}
 					{`${
 						product && product[item.product_id] && product[item.product_id].price * 1000
 					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
-				</span>{' '}
+				</div>
+				<div>
+					{product &&
+						product[item.product_id] &&
+						(
+							(
+								product[item.product_id].price -
+								(product[item.product_id].price *
+									product[item.product_id].price_seo.split(' ')[0]) /
+									100
+							).toFixed(2) * 1000
+						)
+							.toString()
+							.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+				</div>
 			</div>
 		),
 		number: item.amount,
@@ -271,12 +292,20 @@ function CartProduct() {
 					color: 'red',
 				}}
 			>
-				{' '}
-				{`${
-					product &&
+				{product &&
 					product[item.product_id] &&
-					product[item.product_id].price * 1000 * item.amount
-				}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
+					(
+						(
+							product[item.product_id].price -
+							(product[item.product_id].price *
+								product[item.product_id].price_seo.split(' ')[0]) /
+								100
+						).toFixed(2) *
+						1000 *
+						item.amount
+					)
+						.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
 			</span>
 		),
 		action: (
@@ -341,18 +370,18 @@ function CartProduct() {
 									</Link>{' '}
 									<div className={Styles.gio_hang}> Giỏ hàng </div>{' '}
 								</div>{' '}
-								<div className={Styles.search_header_cart}>
-									<Search
-										placeholder="input search text"
-										allowClear
-										enterButton="Search"
-										size="large"
-										onSearch={onSearch}
-										style={{
-											backgroundColor: '#f05d40',
-										}}
-									/>{' '}
-								</div>{' '}
+								{/*<div className={Styles.search_header_cart}>*/}
+								{/*	<Search*/}
+								{/*		placeholder="input search text"*/}
+								{/*		allowClear*/}
+								{/*		enterButton="Search"*/}
+								{/*		size="large"*/}
+								{/*		onSearch={onSearch}*/}
+								{/*		style={{*/}
+								{/*			backgroundColor: '#f05d40',*/}
+								{/*		}}*/}
+								{/*	/>{' '}*/}
+								{/*</div>{' '}*/}
 							</div>{' '}
 						</div>{' '}
 					</div>{' '}

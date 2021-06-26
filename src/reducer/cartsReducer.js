@@ -10,6 +10,8 @@ const cartsReducer = (carts = {}, action) => {
 			return action.payload.data;
 		case TYPE_ACTION.CART.EDIT_CART:
 			return action.payload.data;
+		case TYPE_ACTION.CART.CLEAR_LOGOUT:
+			return {};
 		default:
 			return carts;
 	}

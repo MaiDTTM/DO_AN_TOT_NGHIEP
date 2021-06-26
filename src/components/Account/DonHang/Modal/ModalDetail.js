@@ -117,11 +117,34 @@ function ModalDetail(props) {
 											</span>
 										</div>
 										<span className={style.item_order_gia}>
-											{ConvertStringToVND(product[carts[cartId].product_id].amount)}
+											{ConvertStringToVND(
+												carts[cartId] &&
+													carts[cartId].product_id &&
+													product[carts[cartId].product_id] &&
+													product[carts[cartId].product_id].price -
+														(
+															(product[carts[cartId].product_id].price *
+																product[carts[cartId].product_id].price_seo.split(
+																	' '
+																)[0]) /
+															100
+														).toFixed(2)
+											)}
 										</span>
 										<span className={style.item_order_tien}>
 											{ConvertStringToVND(
-												carts[cartId].amount * product[carts[cartId].product_id].amount
+												carts[cartId] &&
+													carts[cartId].product_id &&
+													product[carts[cartId].product_id] &&
+													(product[carts[cartId].product_id].price -
+														(
+															(product[carts[cartId].product_id].price *
+																product[carts[cartId].product_id].price_seo.split(
+																	' '
+																)[0]) /
+															100
+														).toFixed(2)) *
+														carts[cartId].amount
 											)}
 										</span>
 									</div>

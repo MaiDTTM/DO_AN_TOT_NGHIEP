@@ -54,6 +54,11 @@ function DonHang() {
 		setItemCancel(item);
 		setIsModalVisible(true);
 	};
+	const handleDatLaiDonDaHuy = (item) => {
+		item['status_transaction'] = TYPE_TRANSACTION.CHO_XAC_NHAN;
+		item['messageError'] = '';
+		putTransaction(item, handleCancel);
+	};
 	const handleImage = (cartId) => {
 		return carts[cartId] && carts[cartId].product_id
 			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
@@ -112,7 +117,7 @@ function DonHang() {
 										<Button
 											type="primary"
 											disabled={type === TYPE_TRANSACTION.ALL}
-											// onClick={() => updateStatus(item)}
+											onClick={() => handleDatLaiDonDaHuy(item)}
 										>
 											Đặt lại
 										</Button>

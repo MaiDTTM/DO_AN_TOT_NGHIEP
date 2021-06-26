@@ -1,11 +1,10 @@
 /* eslint-disable */
 import React, { useContext } from 'react';
-import { Avatar, InputNumber, Table } from 'antd';
+import { InputNumber, Table } from 'antd';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.scss';
 import logo from '../../../../img/logo-gcb.jpg';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Select, Radio, Modal } from 'antd';
+import { Form, Input, Button, Radio, Modal } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
@@ -16,7 +15,6 @@ import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useTransactionData from '../../../../hooks/useTransactionData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 const { TextArea } = Input;
-const { Option } = Select;
 const layout = {
 	labelCol: { span: 8 },
 	wrapperCol: { span: 16 },
@@ -79,7 +77,6 @@ function BuyProduct() {
 	const [dataTable, setDataTable] = React.useState([]);
 
 	// handle func
-
 	const handleChangeAmount = (value, data) => {
 		updateCart({
 			_id: data._id,
@@ -105,11 +102,18 @@ function BuyProduct() {
 	};
 	const handleSumMoney = (typeNumber = false) => {
 		let sumMoney = 0;
-		Object.values(selectedRowKeys).length > 0 &&
-			Object.values(selectedRowKeys).map(
+		selectedRowKeys.length > 0 &&
+			selectedRowKeys.map(
 				(item) =>
 					(sumMoney =
-						sumMoney + product[carts[item].product_id].price * carts[item].amount)
+						sumMoney +
+						(
+							product[carts[item].product_id].price -
+							(product[carts[item].product_id].price *
+								product[carts[item].product_id].price_seo.split(' ')[0]) /
+								100
+						).toFixed(2) *
+							carts[item].amount)
 			);
 		if (typeNumber) return sumMoney;
 		return ConvertStringToVND(sumMoney);
@@ -128,6 +132,9 @@ function BuyProduct() {
 	React.useEffect(() => {
 		getListCart();
 		getListProduct();
+		return () => {
+			setSelectedRowKeys([]);
+		};
 	}, []);
 	React.useEffect(() => {
 		form.setFieldsValue({ ...myUser });
@@ -160,7 +167,17 @@ function BuyProduct() {
 				price: (
 					<div>
 						{carts[idCart].amount &&
-							(product[carts[idCart].product_id].price * carts[idCart].amount * 1000)
+							product[carts[idCart].product_id] &&
+							(
+								(
+									product[carts[idCart].product_id].price -
+									(product[carts[idCart].product_id].price *
+										product[carts[idCart].product_id].price_seo.split(' ')[0]) /
+										100
+								).toFixed(2) *
+								1000 *
+								carts[idCart].amount
+							)
 								.toString()
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
 					</div>

@@ -11,12 +11,14 @@ import useCategoryLogicData from '../../hooks/useCategoryLogicData';
 import useProductLogicData from '../../hooks/useProductLogicData';
 import { BASE_URL_IMAGE } from '../../util/TypeApi';
 import Styles from '../Content/GoiYChoBan/styleGoiY.module.css';
+import { ContextApp } from '../../context/contextApp';
 // import PropTypes from 'prop-types';
 const { Meta } = Card;
 
 function WatchCatagory() {
 	// hooks
 	const { product } = useProductLogicData();
+
 	const { category, getListCategory } = useCategoryLogicData();
 	const categoryArr = Object.values(category);
 	const categoryPaPa = categoryArr.filter((item) => item.paramId === '-1');
@@ -24,6 +26,9 @@ function WatchCatagory() {
 		return a.index - b.index;
 	});
 	const history = useHistory();
+
+	// context
+	const { textSearch } = React.useContext(ContextApp);
 
 	// ref
 	const idOld = React.useRef();
@@ -36,9 +41,18 @@ function WatchCatagory() {
 	const id = parsed['_id'];
 	const title =
 		categoryId && category[categoryId] ? category[categoryId].name : 'Tất cả sản phẩm';
+	const productFilter = () => {
+		const priceString = (item) =>
+			(item.price * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ';
+		return Object.values(product).filter(
+			(item) =>
+				item.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1 ||
+				priceString(item).toLowerCase().indexOf(`${textSearch}`.toLowerCase()) !== -1
+		);
+	};
 	const arrProduct = categoryId
-		? Object.values(product).filter((item) => item['catalog_id'] === categoryId)
-		: Object.values(product);
+		? productFilter().filter((item) => item['catalog_id'] === categoryId)
+		: productFilter();
 
 	// func handle
 	const isActive = (_id) => {

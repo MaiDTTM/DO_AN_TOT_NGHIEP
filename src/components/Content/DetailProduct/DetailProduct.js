@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../Header/advertisement/style.scss';
 import '../../Header/menuHeader/style.module.css';
 import Styles from './Style.module.scss';
@@ -13,24 +13,25 @@ import baseAPI from '../../../axios/baseAPI';
 import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
 import { TYPE_ACTION } from '../../../actions/TypeAction';
 import ReactImageMagnify from 'react-image-magnify';
+import { ContextApp } from '../../../context/contextApp';
 const { Meta } = Card;
 const key = 'updatable';
 // import PropTypes from 'prop-types';
 
-const imageBaseUrl = 'https://s3-us-west-1.amazonaws.com/react-package-assets/images/';
-const images = [
-	{ name: 'wristwatch_355.jpg', vw: '355w' },
-	{ name: 'wristwatch_481.jpg', vw: '481w' },
-	{ name: 'wristwatch_584.jpg', vw: '584w' },
-	{ name: 'wristwatch_687.jpg', vw: '687w' },
-	{ name: 'wristwatch_770.jpg', vw: '770w' },
-	{ name: 'wristwatch_861.jpg', vw: '861w' },
-	{ name: 'wristwatch_955.jpg', vw: '955w' },
-	{ name: 'wristwatch_1033.jpg', vw: '1033w' },
-	{ name: 'wristwatch_1112.jpg', vw: '1112w' },
-	{ name: 'wristwatch_1192.jpg', vw: '1192w' },
-	{ name: 'wristwatch_1200.jpg', vw: '1200w' },
-];
+// const imageBaseUrl = 'https://s3-us-west-1.amazonaws.com/react-package-assets/images/';
+// const images = [
+// 	{ name: 'wristwatch_355.jpg', vw: '355w' },
+// 	{ name: 'wristwatch_481.jpg', vw: '481w' },
+// 	{ name: 'wristwatch_584.jpg', vw: '584w' },
+// 	{ name: 'wristwatch_687.jpg', vw: '687w' },
+// 	{ name: 'wristwatch_770.jpg', vw: '770w' },
+// 	{ name: 'wristwatch_861.jpg', vw: '861w' },
+// 	{ name: 'wristwatch_955.jpg', vw: '955w' },
+// 	{ name: 'wristwatch_1033.jpg', vw: '1033w' },
+// 	{ name: 'wristwatch_1112.jpg', vw: '1112w' },
+// 	{ name: 'wristwatch_1192.jpg', vw: '1192w' },
+// 	{ name: 'wristwatch_1200.jpg', vw: '1200w' },
+// ];
 function DetailProduct() {
 	// hooks
 	const { id } = useParams();
@@ -39,6 +40,7 @@ function DetailProduct() {
 	const carts = useSelector((state) => state['carts']);
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const { setSelectedRowKeys } = useContext(ContextApp);
 
 	// filter
 	const arrayProduct = Object.values(product).filter((item) => item._id === id);
@@ -47,17 +49,21 @@ function DetailProduct() {
 	const [objDetail, setObjDetail] = React.useState({});
 	const [productSuggest, setProductSuggest] = React.useState([]);
 	const [imageActive, setImageActive] = React.useState('');
-	const handleBuyProduct = () => {
-		myUser.email
-			? history.push('/buyproduct')
+	const [amount, setAmount] = React.useState(1);
+	const handleBuyProduct = async () => {
+		const idCart = await handleAddCart(false);
+		console.log('idCart', idCart); // MongLV log fix bug
+		await setSelectedRowKeys([idCart]);
+		(await myUser.email)
+			? history.push(`/buyproduct`)
 			: message.warn('Bạn cần đăng nhập để thực hiện chức năng này');
 	};
-	const handleAddCart = async () => {
+	const handleAddCart = async (isMessage = true) => {
 		const dataCart = {
 			product_id: id,
 			status: false,
 			user_id: myUser._id,
-			amount: 1,
+			amount: amount,
 		};
 		const { message: messageAPI, cart } = await baseAPI.add(TypeApi.cart, dataCart);
 		if (messageAPI === 'SUCCESS') {
@@ -66,22 +72,25 @@ function DetailProduct() {
 				type: TYPE_ACTION.CART.ADD_CART,
 				payload: { data: { ...carts } },
 			});
-			message.loading({
-				className: 'message_success',
-				content: 'Đang thêm vào giỏ của bạn!',
-				key,
-			});
-			setTimeout(() => {
-				message.success({
+			isMessage &&
+				message.loading({
 					className: 'message_success',
-					content: 'Thêm vào giỏ hàng thành công!',
+					content: 'Đang thêm vào giỏ của bạn!',
 					key,
-					duration: 2,
 				});
-			}, 1000);
+			isMessage &&
+				setTimeout(() => {
+					message.success({
+						className: 'message_success',
+						content: 'Thêm vào giỏ hàng thành công!',
+						key,
+						duration: 2,
+					});
+				}, 1000);
 		} else {
-			message.warn(messageAPI);
+			isMessage && message.warn(messageAPI);
 		}
+		return cart && cart._id && cart._id;
 	};
 	let slideIndex;
 	const currentDiv = (n) => {
@@ -112,6 +121,10 @@ function DetailProduct() {
 		const arr = Object.values(data);
 		arr.length > 0 && type === 'getId' ? handleFunc(arr[0]) : handleFunc(arr);
 	};
+
+	const onChangeNumber = (value) => {
+		setAmount(value);
+	};
 	React.useEffect(() => {
 		window.scrollTo(0, 0);
 		arrayProduct.length > 0
@@ -133,9 +146,7 @@ function DetailProduct() {
 	// 		})
 	// 		.join(', ');
 	// };
-	const onChangeNumber = (value) => {
-		console.log('changed', value);
-	};
+
 	return (
 		<div>
 			<Chung />
@@ -278,7 +289,7 @@ function DetailProduct() {
 											max={8}
 											bordered
 											defaultValue={1}
-											onChange={() => onChangeNumber()}
+											onChange={onChangeNumber}
 										/>
 									</div>
 								</div>
@@ -292,24 +303,74 @@ function DetailProduct() {
 									</div>
 								</div>
 								<div className={Styles.copy_action_detail}>
-									<div className={Styles.copy_action_mua}>
-										<Button
-											type="primary"
-											className={Styles.btn_detail}
-											onClick={handleBuyProduct}
-										>
-											Mua ngay
-										</Button>
-									</div>
-									<div className={Styles.copy_action_gio}>
-										<Button
-											className={Styles.btn_detail_them_vao_gio}
-											onClick={handleAddCart}
-											type="primary"
-										>
-											Thêm vào giỏ hàng
-										</Button>
-									</div>
+									{Object.keys(myUser).length > 0 ? (
+										<React.Fragment>
+											<div
+												className={Styles.copy_action_mua}
+												style={{
+													display:
+														objDetail.amount - objDetail['sold'] > 0 ? 'block' : 'none',
+												}}
+											>
+												<Button
+													type="primary"
+													className={Styles.btn_detail}
+													onClick={handleBuyProduct}
+												>
+													Mua ngay
+												</Button>
+											</div>
+											<div
+												className={Styles.copy_action_gio}
+												style={{
+													display:
+														objDetail.amount - objDetail['sold'] > 0 ? 'block' : 'none',
+												}}
+											>
+												<Button
+													className={Styles.btn_detail_them_vao_gio}
+													onClick={handleAddCart}
+													type="primary"
+												>
+													Thêm vào giỏ hàng
+												</Button>
+											</div>
+										</React.Fragment>
+									) : (
+										<React.Fragment>
+											<div
+												className={Styles.copy_action_gio}
+												style={{
+													display:
+														objDetail.amount - objDetail['sold'] > 0 ? 'block' : 'none',
+												}}
+											>
+												<Button
+													className={Styles.btn_detail}
+													onClick={() => history.push('/login')}
+													type="primary"
+												>
+													Đăng nhập tài khoản để mua hàng
+												</Button>
+											</div>
+											<div
+												className={Styles.copy_action_mua}
+												style={{
+													display:
+														objDetail.amount - objDetail['sold'] > 0 ? 'block' : 'none',
+												}}
+											>
+												<Button
+													type="primary"
+													className={Styles.btn_detail}
+													style={{ width: 'unset !important' }}
+													onClick={() => history.push('/register')}
+												>
+													Đăng ký tài khoản để mua hàng
+												</Button>
+											</div>
+										</React.Fragment>
+									)}
 								</div>
 								<div>
 									Tổng đài mua hàng miễn cước{' '}

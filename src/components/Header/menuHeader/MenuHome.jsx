@@ -14,6 +14,7 @@ import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
 import baseAPI from '../../../axios/baseAPI';
 import useCartLogicData from '../../../hooks/useCartLogicData';
 import useProductLogicData from '../../../hooks/useProductLogicData';
+import { ContextApp } from '../../../context/contextApp';
 //style
 const stylIcon = { width: '90px', display: 'flex', justifyContent: 'space-evenly' };
 
@@ -29,11 +30,14 @@ function MenuHome() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
+	// context
+	const { setTextSearch } = React.useContext(ContextApp);
+
 	// const
 	const arrCarts = Object.values(carts).filter((item) => !item.status);
 
 	// handle func
-	const onSearch = (value) => console.log(value);
+	const onSearch = (value) => setTextSearch(value);
 
 	const handleClick = (event) => {
 		switch (event.key) {
@@ -46,6 +50,7 @@ function MenuHome() {
 			case 'LOGOUT':
 				localStorage.clear();
 				dispatch({ type: TYPE_ACTION.USER.LOGOUT });
+				dispatch({ type: TYPE_ACTION.CART.CLEAR_LOGOUT });
 				history.push('/');
 				break;
 			default:
@@ -202,7 +207,7 @@ function MenuHome() {
 					</Dropdown>
 				</div>
 				<div style={stylIcon}>
-					<Badge size="small" count={9}>
+					<Badge size="small" count={0}>
 						<Button
 							icon={<HeartTwoTone twoToneColor="#eb2f96" />}
 							style={{ color: '#eb2f96' }}

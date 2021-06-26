@@ -110,8 +110,8 @@ function AccountMe() {
 						>
 							<SubMenu key="sub1" icon={<MailOutlined />} title="Hồ sơ của bạn">
 								<Menu.Item key="1">Tài khoản</Menu.Item>
-								<Menu.Item key="3">Địa chỉ</Menu.Item>
-								<Menu.Item key="4">Đổi mật khẩu</Menu.Item>
+								{/*<Menu.Item key="3">Địa chỉ</Menu.Item>*/}
+								{/*<Menu.Item key="4">Đổi mật khẩu</Menu.Item>*/}
 							</SubMenu>
 							<Menu.Item icon={<SettingOutlined />} key="2">
 								Đơn hàng

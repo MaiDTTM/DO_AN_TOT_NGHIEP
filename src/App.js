@@ -61,6 +61,7 @@ function App() {
 
 	// state
 	const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+	const [textSearch, setTextSearch] = React.useState('');
 
 	// Vòng đời
 	React.useEffect(() => {
@@ -69,7 +70,9 @@ function App() {
 	}, []);
 
 	return (
-		<ContextApp.Provider value={{ selectedRowKeys, setSelectedRowKeys }}>
+		<ContextApp.Provider
+			value={{ selectedRowKeys, setSelectedRowKeys, textSearch, setTextSearch }}
+		>
 			<React.Suspense fallback={<LoadingBase />}>
 				<Router>
 					<Switch>
@@ -84,6 +87,7 @@ function App() {
 						<Route path="/detail/:id" exact component={DetailProduct} />
 						<Route path="/gioithieu" exact component={IntroduceProduct} />
 						<Route path="/buyproduct" exact component={BuyProduct} />
+						{/*<Route path="/buyproduct/:id" exact component={BuyProduct} />*/}
 						<Route path="/cart" exact component={CartProduct} />
 						<Route path="/account" exact component={AccountMe} />
 						<Route path="/lienhe" exact component={LienHe} />

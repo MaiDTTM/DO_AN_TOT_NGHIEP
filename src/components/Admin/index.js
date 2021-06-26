@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Button, Input, Layout, Avatar } from 'antd';
+import { Input, Layout, Avatar } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import MenuAdmin from './menu/MenuAdmin';
 import './style.module.scss';
@@ -15,6 +16,8 @@ import useTransactionData from '../../hooks/useTransactionData';
 import { useSelector } from 'react-redux';
 import { BASE_URL_IMAGE } from '../../util/TypeApi';
 import Style from './style.module.scss';
+import TypeCookiesUtil from '../../util/TypeCookies';
+import { ContextApp } from '../../context/contextApp';
 const { Header, Sider, Content } = Layout;
 
 const objectKey = {
@@ -40,6 +43,10 @@ function LayoutAdmin() {
 	const { getListAdmin } = useUserAdminLogicData();
 	const { getListCart } = useCartLogicData();
 	const { getListTransaction } = useTransactionData();
+	const history = useHistory();
+
+	// context
+	const { setTextSearch } = React.useContext(ContextApp);
 
 	// state
 	const [collapsed, setCollapsed] = useState(false);
@@ -53,15 +60,14 @@ function LayoutAdmin() {
 	}, []);
 
 	React.useEffect(() => {
-		localStorage.setItem(checkKey_admin, checkKey);
+		checkKey && localStorage.setItem(checkKey_admin, checkKey);
 	}, [checkKey]);
 
 	const toggle = () => {
 		setCollapsed(!collapsed);
 		collapsed === true ? setSizeLayout(200) : setSizeLayout(77);
-		// setSizeLayout(77);
 	};
-	const onSearch = (value) => console.log(value);
+	const onSearch = (value) => setTextSearch(value);
 
 	React.useEffect(() => {
 		getListCategory().catch();
@@ -70,7 +76,10 @@ function LayoutAdmin() {
 		getListCustomer().catch();
 		getListAdmin().catch();
 		getListTransaction({}, true).catch();
-		getListCart().catch();
+		getListCart({}).catch();
+
+		// check chưa đăng nhập thì quay lại trang login của admin
+		accountAdmin && Object.keys(accountAdmin).length === 0 && history.push('/admin');
 	}, []);
 
 	// JSX
@@ -96,14 +105,15 @@ function LayoutAdmin() {
 						<h1 style={{ color: '#0bb122' }}>CÔNG TY GCB</h1>
 					</div>
 				</div>
+
 				<Search
-					placeholder="input search text"
+					placeholder={'Tìm kiếm nhanh'}
 					onSearch={onSearch}
 					enterButton
 					style={{ width: 350, marginTop: '15px' }}
 				/>
 				<div style={{ display: 'flex', marginRight: '30px' }}>
-					<div style={{ marginRight: '10px' }}>
+					<div style={{ marginRight: '10px', cursor: 'pointer' }}>
 						<Avatar
 							style={{ width: '30px', height: '30px' }}
 							icon={<UserOutlined />}
@@ -169,4 +179,4 @@ LayoutAdmin.propTypes = {};
 
 LayoutAdmin.defaultProps = {};
 
-export default LayoutAdmin;
+export default React.memo(LayoutAdmin);
