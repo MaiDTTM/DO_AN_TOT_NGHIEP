@@ -226,12 +226,14 @@ function DetailProduct() {
 										<div className={Styles.action_binh_luan} style={{ marginLeft: 10 }}>
 											Bình luận
 										</div>
-										<div className={Styles.action_thuong_hieu}>Thương hiệu : GCB</div>
+										<div className={Styles.action_thuong_hieu}>Thương hiệu: GCB</div>
 										<div className={Styles.action_thuong_hieu}>
-											Mã SP :
-											<span style={{ fontWeight: 'bold', color: '#e76633' }}>
-												{objDetail._id}
-											</span>
+											<p>
+												Mã SP:{' '}
+												<span style={{ fontWeight: 'bold', color: '#e76633' }}>
+													{objDetail._id}
+												</span>
+											</p>
 										</div>
 									</div>
 								</div>

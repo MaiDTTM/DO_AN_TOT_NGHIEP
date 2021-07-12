@@ -29,8 +29,8 @@
 .titell {
 	display: flex;
 	justify-content: center;
-	margin-top: 50px;
-    margin-left: 10px;
+	margin-top:15px;
+    margin-left: 5px;
 }
 .item_form_dang_ky {
     position: relative;

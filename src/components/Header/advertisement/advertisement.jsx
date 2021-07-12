@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import logo from '../../../img/dai-tiec.png';
+import logo from '../../../img/sale-gia-soc-boc-ngay-thoi-1190-x-60.png';
 
 Advertisement.propTypes = {};
 

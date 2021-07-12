@@ -32,6 +32,7 @@ function UploadFileView(props) {
 		setFileListUtil,
 		limit,
 		listLinkFileUtil,
+		setListLinkFileUtil,
 	} = props;
 	const [linkFile, setLinkFile] = React.useState('');
 	const [listLinkFile, setListLinkFile] = React.useState([]);
@@ -45,7 +46,7 @@ function UploadFileView(props) {
 		setFileList(info.fileList);
 		setFileListUtil(info.fileList);
 		setIsNext(false);
-
+		debugger; // Todo by MongLV
 		switch (info.file.status) {
 			case 'uploading':
 				break;
@@ -60,7 +61,9 @@ function UploadFileView(props) {
 				setListLinkFile([...listLinkFile]);
 				break;
 			case 'removed':
-				setListLinkFile([...listLinkFile.slice(0, listLinkFile.length - 1)]);
+				const listFilter = listLinkFile.filter((item) => item !== info.file.uid);
+				setListLinkFile([...listFilter]);
+				setListLinkFileUtil([...listFilter]);
 				setIsNext(true);
 				break;
 			default:
@@ -106,6 +109,10 @@ function UploadFileView(props) {
 		setListLinkFile(listLinkFileUtil);
 	}, [fileListUtil, linkFileUtil, listLinkFileUtil]);
 
+	// React.useEffect(() => {
+	// 	listLinkFilesetListLinkFileUtil(listLinkFile);
+	// }, [listLinkFile]);
+
 	return (
 		<div className={styles.upload_file}>
 			<Upload {...UpFile} fileList={fileList} listType="picture-card">
@@ -145,9 +152,9 @@ UploadFileView.defaultProps = {
 	refFunc: { current: null },
 	styles: _styles,
 	imgDefault: 'https://img.icons8.com/cotton/344/image--v1.png',
-	setLinkFileUtil: () => {},
-	setFileListUtil: () => {},
-	setListLinkFileUtil: () => {},
+	setLinkFileUtil: () => null,
+	setFileListUtil: () => null,
+	setListLinkFileUtil: () => null,
 	linkFileUtil: '',
 	fileListUtil: [],
 	listLinkFileUtil: [],

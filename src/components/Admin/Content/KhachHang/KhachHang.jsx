@@ -17,6 +17,7 @@ const layout = {
 		span: 19,
 	},
 };
+
 function KhachHang() {
 	const [form2] = Form.useForm();
 	const [visibleCopy, setVisibleCopy] = useState(false);
@@ -31,16 +32,18 @@ function KhachHang() {
 			key: 'image',
 			fixed: 'left',
 			width: 120,
-			render: (image) => (
-				<Image
-					style={{ width: 80, height: 50, objectFit: 'cover' }}
-					src={
-						image
-							? BASE_URL_IMAGE + image
-							: 'https://lh3.googleusercontent.com/proxy/jEeyZ7Mo5eJLoUZbIGw6Ci1bBrQcIGafUKLlncTw-Cz1EGiHp3v7OhV6XqeC4jXJ_Jnd7sO1H5F69TTDVqPQ-AYvFUtVv-GMC3jn0CvIA8LJtA'
-					}
-				/>
-			),
+			render: (image) => {
+				return (
+					<Image
+						style={{ width: 80, height: 50, objectFit: 'cover' }}
+						src={
+							image && image.length > 0
+								? BASE_URL_IMAGE + image
+								: BASE_URL_IMAGE + 'default.jpg'
+						}
+					/>
+				);
+			},
 		},
 		{
 			title: 'Name',
@@ -98,10 +101,10 @@ function KhachHang() {
 			title: 'Address',
 			dataIndex: 'address',
 		},
-		{
-			title: 'Mật khẩu',
-			dataIndex: 'password',
-		},
+		// {
+		// 	title: 'Mật khẩu',
+		// 	dataIndex: 'password',
+		// },
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',

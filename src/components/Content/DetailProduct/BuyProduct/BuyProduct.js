@@ -14,7 +14,9 @@ import { ContextApp } from '../../../../context/contextApp';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useTransactionData from '../../../../hooks/useTransactionData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+
 const { TextArea } = Input;
+
 const layout = {
 	labelCol: { span: 8 },
 	wrapperCol: { span: 16 },

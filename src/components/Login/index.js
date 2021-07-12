@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, message as messageAnt } from 'antd';
+import cookie from 'react-cookies';
+
 // style
 import styles from './index.module.css';
 import logo from '../../img/logotet2019.png';
@@ -10,6 +12,8 @@ import { TypeApi } from '../../util/TypeApi';
 import { LoginUser } from '../../actions/userAction';
 import { GoogleLogin } from 'react-google-login';
 import { createFromIconfontCN, GooglePlusOutlined } from '@ant-design/icons';
+import TypeCookiesUtil from '../../util/TypeCookies';
+
 // import SocialLogin from 'react-social-login';
 //const
 const IconFont = createFromIconfontCN({
@@ -23,12 +27,29 @@ function Login() {
 	// state
 	const [user, setUser] = useState('');
 	const [password, setPassword] = useState('');
+	const [checkBox, setCheckBox] = useState(false);
 
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
 
+	const isSavePassword = React.useMemo(
+		() =>
+			!!(
+				cookie.load(TypeCookiesUtil.user_save) &&
+				cookie.load(TypeCookiesUtil.user_password_save) &&
+				Boolean(cookie.load(TypeCookiesUtil.user_checkbox_save))
+			),
+		[checkBox]
+	);
+
 	// handle
+	const onChangeCheck = (e) => {
+		cookie.save(TypeCookiesUtil.user_save, user, { path: '/' });
+		cookie.save(TypeCookiesUtil.user_password_save, password, { path: '/' });
+		cookie.save(TypeCookiesUtil.user_checkbox_save, e.target.checked, { path: '/' });
+		setCheckBox(e.target.checked);
+	};
 	const onChangeText = (event, type) => {
 		switch (type) {
 			case TypeInput.user:
@@ -56,6 +77,7 @@ function Login() {
 		}
 		setUser('');
 		setPassword('');
+		setCheckBox(false);
 	};
 	//login
 	const responseGoogle = (response) => {
@@ -68,6 +90,19 @@ function Login() {
 	// const handleSocialLoginFailure = (err) => {
 	// 	console.error(err);
 	// };
+
+	React.useEffect(() => {
+		if (isSavePassword) {
+			setUser(cookie.load(TypeCookiesUtil.user_save));
+			setPassword(cookie.load(TypeCookiesUtil.user_password_save));
+		}
+	}, [checkBox]);
+
+	React.useEffect(() => {
+		if (isSavePassword) {
+			setCheckBox(Boolean(cookie.load(TypeCookiesUtil.user_checkbox_save)));
+		}
+	}, []);
 	return (
 		<div className={styles.dang_nhap}>
 			<div className={styles.herader_dangnhap}>
@@ -116,7 +151,14 @@ function Login() {
 				</div>
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>
 					<div className={styles.action_dang_nhap}>
-						<Checkbox>Lưu mật khẩu cho lần đăng nhập tiếp theo</Checkbox>
+						{/* XXX */}
+						<Checkbox
+							onChange={onChangeCheck}
+							checked={checkBox}
+							disabled={password.length === 0 || user.length === 0}
+						>
+							Lưu mật khẩu cho lần đăng nhập tiếp theo
+						</Checkbox>
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap}>

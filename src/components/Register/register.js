@@ -30,6 +30,7 @@ function Register() {
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
+	const [checkBox, setCheckBox] = useState(false);
 
 	// hook
 	const dispatch = useDispatch();
@@ -53,6 +54,10 @@ function Register() {
 				break;
 		}
 	};
+	const onChangeCheck = (e) => {
+		console.log(`checked = ${e.target.checked}`);
+		setCheckBox(e.target.checked);
+	};
 	const handleReset = () => {
 		setEmail('');
 		setName('');
@@ -60,25 +65,36 @@ function Register() {
 		setPhone('');
 	};
 	const onCreate = async () => {
-		if (name && email && phone && password) {
-			const data = {
-				name,
-				email,
-				phone,
-				password,
-			};
-			const { message, user } = await baseAPI.add(TypeApi.user, data);
-			if (message === 'SUCCESS') {
-				await dispatch(AddUser(user));
-				messageAnt.success('Đăng ký thành công');
-				history.push('/login');
+		console.log('checkBox', checkBox); // MongLV log fix bug
+		if (!!checkBox) {
+			console.log('name', name); // MongLV log fix bug
+			console.log('email', email); // MongLV log fix bug
+			console.log('phone', phone); // MongLV log fix bug
+			console.log('password', password); // MongLV log fix bug
+			if (name && email && phone && password) {
+				const data = {
+					name,
+					email,
+					phone,
+					password,
+				};
+				const { message, user } = await baseAPI.add(TypeApi.user, data);
+				if (message === 'SUCCESS') {
+					await dispatch(AddUser(user));
+					messageAnt.success('Đăng ký thành công');
+					history.push('/login');
+				} else {
+					messageAnt.warn(message);
+				}
 			} else {
-				messageAnt.warn(message);
+				messageAnt.warn('Không được bỏ trống thông tin nào !');
 			}
+			handleReset();
 		} else {
-			messageAnt.warn('Không được bỏ trống thông tin nào !');
+			messageAnt.warn(
+				'Bạn phải chấp nhận điều khoản của chúng tôi mới có thể đăng ký được !'
+			);
 		}
-		handleReset();
 	};
 	const responseGoogle = (response) => {
 		console.log(response);
@@ -163,7 +179,8 @@ function Register() {
 				</div>
 				<div className={style.item_form_dang_ky}>
 					<div className={style.action_dang_ky}>
-						<Checkbox>
+						{/* XXX */}
+						<Checkbox onChange={onChangeCheck}>
 							Tôi đồng ý với các điều khoản quy định sử dụng của trang web
 						</Checkbox>
 					</div>

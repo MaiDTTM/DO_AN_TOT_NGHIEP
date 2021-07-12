@@ -302,9 +302,10 @@ input, button, select, textarea {
 }
 
 .table_product {
+    margin-left: 30px;
     :global {
         .ant-col-16 {
-            max-width: unset;
+            max-width: 95%;
         }
     }
 }

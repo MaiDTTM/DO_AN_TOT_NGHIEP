@@ -42,22 +42,35 @@ function CartProduct() {
 	const arrSelect = Object.values(carts).filter(
 		(item) => parsed && parsed.id === item._id
 	);
+	const _selectedRowKeys = selectedRowKeys.filter((item) => item !== parsed.id);
+	const arrOutOfStock = React.useMemo(
+		() =>
+			Object.keys(carts).filter(
+				(id) =>
+					carts[id] &&
+					product[carts[id].product_id] &&
+					product[carts[id].product_id].amount - product[carts[id].product_id].sold === 0
+			),
+		[carts, product]
+	);
+
 	const arrCartTable = arrSelect
 		.concat(arrCarts.reverse())
 		.filter((item) => !item.status);
 
 	// handle func
-	const onSelectChange = (selectedRowKeys) => {
-		setSelectedRowKeys(selectedRowKeys);
+	const onSelectChange = (_selectedRowKeys) => {
+		setSelectedRowKeys(_selectedRowKeys);
 	};
 
 	const handleDeleteOption = () => {
-		selectedRowKeys.map(async (idCart) => await deleteCart(idCart));
+		console.log('_selectedRowKeys', _selectedRowKeys); // MongLV log fix bug
+		_selectedRowKeys.map(async (idCart) => await deleteCart(idCart));
 	};
 	const onSearch = (value) => console.log(value);
 
 	const handleClickBuyAllProduct = () => {
-		if (selectedRowKeys.length === 0) {
+		if (_selectedRowKeys.length === 0) {
 			message.error('Hãy chọn sản phẩm để thực hiện chức năng này');
 		} else {
 			setModal2Visible(true);
@@ -67,6 +80,18 @@ function CartProduct() {
 	const handleFindIndex = () => {
 		if (parsed && parsed.id) {
 			setSelectedRowKeys([parsed.id]);
+		}
+
+		// Nếu đã hết hàng thì sẽ lại bỏ id đó ra khỏi array
+		if (arrOutOfStock.includes(parsed.id)) {
+			setSelectedRowKeys([..._selectedRowKeys]);
+		}
+	};
+	const onPushPageBuy = () => {
+		if (selectedRowKeys.length > 0) {
+			history.push('/buyproduct');
+		} else {
+			message.warn('Bạn cẩn tích chọn để đặt mua');
 		}
 	};
 	const onStart = (event, uiData) => {
@@ -86,9 +111,14 @@ function CartProduct() {
 	React.useEffect(() => {
 		getListCart().catch((error) => console.log('error:', error));
 		getListProduct().catch((error) => console.log('error:', error));
-		handleFindIndex();
 	}, []);
 
+	React.useEffect(() => {
+		handleFindIndex();
+	}, [carts, product]);
+
+	// IF này để check trường hợp dữ liệu trả về null dẫn đến dữ liệu bị lỗi
+	if (Object.keys(carts).length === 0 || Object.keys(product).length === 0) return null;
 	// JSX
 	const columns = [
 		{
@@ -112,7 +142,7 @@ function CartProduct() {
 							}}
 							danger
 						>
-							Xóa sản phẩm đã chọn{' '}
+							Xóa sản phẩm đã chọn
 						</Button>{' '}
 						{/*<Button onClick={handleClickBuyAllProduct}> Xem sản phẩm đã chọn </Button>{' '}*/}
 						<Modal
@@ -147,7 +177,7 @@ function CartProduct() {
 						>
 							<PopupBuyProduct
 								setModal2Visible={setModal2Visible}
-								selectedRowKeys={selectedRowKeys}
+								selectedRowKeys={_selectedRowKeys}
 								product={product}
 								carts={carts}
 							/>{' '}
@@ -175,7 +205,7 @@ function CartProduct() {
 		},
 	];
 	const rowSelection = {
-		selectedRowKeys,
+		_selectedRowKeys,
 		onChange: onSelectChange,
 		getCheckboxProps: (record) => {
 			const isCheck =
@@ -322,16 +352,15 @@ function CartProduct() {
 						Đã hết hàng{' '}
 					</Button>
 				) : (
-					<Link to={'/buyproduct'}>
-						<Button
-							style={{
-								backgroundColor: '#ee4d2d',
-								color: '#fff',
-							}}
-						>
-							Mua hàng{' '}
-						</Button>{' '}
-					</Link>
+					<Button
+						style={{
+							backgroundColor: '#ee4d2d',
+							color: '#fff',
+						}}
+						onClick={onPushPageBuy}
+					>
+						Mua hàng{' '}
+					</Button>
 				)}{' '}
 				<Popconfirm
 					placement="topLeft"

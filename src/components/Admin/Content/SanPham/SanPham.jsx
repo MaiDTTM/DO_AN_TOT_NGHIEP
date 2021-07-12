@@ -64,6 +64,9 @@ function SanPham() {
 	const [dataProductEdit, setDataProductEdit] = useState(null);
 	const [customers, setCustomers] = useState(arrProduct);
 	const [fileList, setFileList] = useState([]);
+
+	console.log('fileListContentUtil', fileListContentUtil); // MongLV log fix bug
+	console.log('listLinkFileUtil', listLinkFileUtil); // MongLV log fix bug
 	// handle func
 	const productFilter = () => {
 		let productNew = {};
@@ -168,6 +171,7 @@ function SanPham() {
 	const handleSelect = (optionA, optionB) => {
 		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase());
 	};
+
 	// import excel
 	const props = {
 		action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -244,9 +248,17 @@ function SanPham() {
 			),
 		},
 		{
-			title: 'Số lượng',
+			title: 'Tổng sản phẩm đã nhập',
 			dataIndex: 'amount',
 			width: 80,
+		},
+		{
+			title: 'Số lượng còn',
+			dataIndex: 'con_lai',
+			width: 75,
+			render: (_, data) => {
+				return <>{data.amount - data.sold || 0}</>;
+			},
 		},
 		{
 			title: 'Đã bán',
@@ -366,7 +378,7 @@ function SanPham() {
 					visible={modalVisible}
 					maskClosable={false}
 					footer={null}
-					onCancel={() => setModalVisible(false)}
+					onCancel={onReset}
 				>
 					<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
 						<Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
@@ -385,10 +397,10 @@ function SanPham() {
 							<UploadFileView
 								// linkFileUtil={linkFileUtil}
 								fileListUtil={fileListContentUtil}
-								setListLinkFileUtil={setListLinkFileUtil}
 								listLinkFileUtil={listLinkFileUtil}
 								// setLinkFileUtil={setLinkFileUtil}
 								setFileListUtil={setFileListContentUtil}
+								setListLinkFileUtil={setListLinkFileUtil}
 								limit={10}
 								refFunc={refCallBack2}
 							/>
@@ -448,8 +460,8 @@ function SanPham() {
 				<Table
 					columns={columns}
 					dataSource={Object.values(productFilter()).reverse()}
-					pagination={{ pageSize: 50 }}
-					scroll={{ y: 380 }}
+					// pagination={{ pageSize: 50 }}
+					scroll={{ y: 390 }}
 					bordered={true}
 				/>
 			</div>

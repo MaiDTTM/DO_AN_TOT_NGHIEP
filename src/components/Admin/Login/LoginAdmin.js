@@ -23,11 +23,13 @@ function LoginAdmin() {
 	const history = useHistory();
 	const [userAdmin, setUserAdmin] = useState('');
 	const [password, setPassword] = useState('');
+	const [checkBox, setCheckBox] = useState(false);
 
 	// const
 	const isSavePassword = !!(
 		cookie.load(TypeCookiesUtil.user_admin_save) &&
-		cookie.load(TypeCookiesUtil.user_admin_save)
+		cookie.load(TypeCookiesUtil.password_admin_save) &&
+		cookie.load(TypeCookiesUtil.admin_checkbox_save)
 	);
 
 	// handle
@@ -48,10 +50,13 @@ function LoginAdmin() {
 		if (e.target.checked) {
 			cookie.save(TypeCookiesUtil.user_admin_save, userAdmin, { path: '/' });
 			cookie.save(TypeCookiesUtil.password_admin_save, password, { path: '/' });
+			cookie.save(TypeCookiesUtil.admin_checkbox_save, e.target.checked, { path: '/' });
 		} else {
 			cookie.remove(TypeCookiesUtil.user_admin_save, { path: '/' });
 			cookie.remove(TypeCookiesUtil.password_admin_save, { path: '/' });
+			cookie.save(TypeCookiesUtil.admin_checkbox_save, e.target.checked, { path: '/' });
 		}
+		setCheckBox(e.target.checked);
 	};
 
 	const onSave = async () => {
@@ -69,6 +74,7 @@ function LoginAdmin() {
 		}
 		setUserAdmin('');
 		setPassword('');
+		setCheckBox(false);
 	};
 
 	const handleIsLogin = async (userAdmin = '', password = '') => {
@@ -96,6 +102,13 @@ function LoginAdmin() {
 		if (isSavePassword) {
 			setUserAdmin(cookie.load(TypeCookiesUtil.user_admin_save));
 			setPassword(cookie.load(TypeCookiesUtil.password_admin_save));
+			setCheckBox(Boolean(cookie.load(TypeCookiesUtil.admin_checkbox_save)));
+		}
+	}, []);
+
+	React.useEffect(() => {
+		if (isSavePassword) {
+			setCheckBox(Boolean(cookie.load(TypeCookiesUtil.user_checkbox_save)));
 		}
 	}, []);
 	return (
@@ -143,7 +156,11 @@ function LoginAdmin() {
 				</div>
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>
 					<div className={styles.action_dang_nhap}>
-						<Checkbox onChange={handleSaveUserPass} defaultChecked={isSavePassword}>
+						<Checkbox
+							onChange={handleSaveUserPass}
+							checked={checkBox}
+							disabled={password.length === 0 || userAdmin.length === 0}
+						>
 							Lưu mật khẩu cho lần đăng nhập tiếp theo
 						</Checkbox>
 						<Link to={'/registerAdmin'}>

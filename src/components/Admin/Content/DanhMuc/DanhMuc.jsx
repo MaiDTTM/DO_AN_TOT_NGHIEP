@@ -60,24 +60,8 @@ function DanhMuc() {
 		updateCategory,
 	} = useCategoryLogicData();
 	const { product } = useProductLogicData();
-	const { textSearch, setTextSearch } = React.useContext(ContextApp);
+	const { textSearch } = React.useContext(ContextApp);
 	const newArrProduct = Object.values(product);
-	const categoryFilter = () => {
-		let categoryNew = {};
-		const arrSearch = Object.values(category).filter(
-			(item) => item.name.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
-		);
-		arrSearch.map((item) => {
-			categoryNew[item._id] = item;
-		});
-		return { ...categoryNew };
-	};
-	const categoryArr = Object.values(categoryFilter());
-
-	const categoryPaPa = (paramId = '-1') =>
-		categoryArr.filter((item) => item.paramId === paramId);
-	const categoryPaPaSort = (paramId = '-1') =>
-		categoryPaPa(paramId).sort((a, b) => a.index - b.index);
 
 	// state
 	const [openKeys, setOpenKeys] = React.useState([]);
@@ -89,6 +73,37 @@ function DanhMuc() {
 	const [listProduct, setListProduct] = useState({ ...newArrProduct });
 	const [valueIndex, setValueIndex] = useState(null); // gia tri thay doi trong o input
 	const [valueIndexOld, setValueIndexOld] = useState(null); // gia tri cu lay duoc khi click edit
+	const [searchCategory, setSearchCategory] = useState(''); // Text tìm kiếm category
+
+	// const
+	const categoryFilter = React.useCallback(() => {
+		let categoryNew = {};
+		try {
+			const arrSearch = Object.values(category).filter((item) => {
+				return (
+					item &&
+					item.name &&
+					item.name.toLowerCase().indexOf(searchCategory.toLowerCase()) !== -1
+				);
+			});
+			arrSearch.map((item) => {
+				categoryNew[item._id] = item;
+			});
+		} catch (e) {
+			console.log('error categoryFilter', e); // MongLV log fix bug
+		}
+
+		return { ...categoryNew };
+	}, [category, searchCategory]);
+	const categoryArr = React.useMemo(() => Object.values(categoryFilter()), [
+		category,
+		searchCategory,
+	]);
+
+	const categoryPaPa = (paramId = '-1') =>
+		categoryArr.filter((item) => item.paramId === paramId);
+	const categoryPaPaSort = (paramId = '-1') =>
+		categoryPaPa(paramId).sort((a, b) => a.index - b.index);
 
 	// handle func
 	const onOpenChange = (keys) => {
@@ -99,7 +114,7 @@ function DanhMuc() {
 			setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
 		}
 	};
-	const onSearch = (value) => setTextSearch(value);
+	const onSearch = (value) => setSearchCategory(value);
 	const setModalVisible2 = (modal2Visible) => {
 		setModal2Visible(modal2Visible);
 	};
@@ -253,11 +268,12 @@ function DanhMuc() {
 			),
 		},
 		{
-			title: 'Số lượng',
+			title: 'Số lượng còn',
 			dataIndex: 'amount',
 			key: '2',
 			align: 'center',
 			width: 75,
+			render: (_, data) => data.amount - data.sold || 0,
 		},
 		{
 			title: 'Đã bán',
@@ -329,7 +345,7 @@ function DanhMuc() {
 						})}
 				</Menu>
 				<div className={styles.danh_muc_action}>
-					<Search placeholder="input search text" onSearch={onSearch} enterButton />
+					<Search placeholder={'Tìm kiếm danh mục'} onSearch={onSearch} enterButton />
 					<Button type="primary" onClick={() => setModalVisible2(true)}>
 						Thêm
 					</Button>

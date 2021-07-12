@@ -60,7 +60,7 @@ function DonHang() {
 		putTransaction(item, handleCancel);
 	};
 	const handleImage = (cartId) => {
-		return carts[cartId] && carts[cartId].product_id
+		return carts[cartId] && carts[cartId].product_id && product[carts[cartId].product_id]
 			? BASE_URL_IMAGE + product[carts[cartId].product_id].image
 			: 'https://blackmantkd.com/wp-content/uploads/2017/04/default-image.jpg';
 	};
