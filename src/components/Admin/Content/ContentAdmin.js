@@ -64,4 +64,4 @@ ContentAdmin.propTypes = {
 	objectKey: PropTypes.object.isRequired,
 };
 
-export default ContentAdmin;
+export default React.memo(ContentAdmin);

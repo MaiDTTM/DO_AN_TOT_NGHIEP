@@ -518,4 +518,4 @@ DetailProduct.propTypes = {};
 
 DetailProduct.defaultProps = {};
 
-export default DetailProduct;
+export default React.memo(DetailProduct);

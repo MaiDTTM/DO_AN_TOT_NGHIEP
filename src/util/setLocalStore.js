@@ -1,5 +1,4 @@
 const setLocalStore = (accountAdmin, name = '') => {
-	debugger; // Todo by MongLV
 	accountAdmin &&
 		Object.keys(accountAdmin).map((item) => {
 			localStorage.setItem(

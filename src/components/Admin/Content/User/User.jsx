@@ -185,4 +185,4 @@ User.propTypes = {};
 
 User.defaultProps = {};
 
-export default User;
+export default React.memo(User);

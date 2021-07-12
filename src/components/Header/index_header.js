@@ -26,4 +26,4 @@ function IndexHeader() {
 	);
 }
 
-export default IndexHeader;
+export default React.memo(IndexHeader);

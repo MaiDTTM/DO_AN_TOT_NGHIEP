@@ -80,4 +80,4 @@ function ProductListXuHuong(props) {
 	);
 }
 
-export default ProductListXuHuong;
+export default React.memo(ProductListXuHuong);

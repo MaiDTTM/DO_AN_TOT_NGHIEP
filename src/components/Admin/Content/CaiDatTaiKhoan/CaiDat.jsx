@@ -10,10 +10,14 @@ import {
 	Select,
 	Switch,
 	Upload,
+	message,
 } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
-import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
+import {BASE_URL_IMAGE, TYPE_STORE} from '../../../../util/TypeApi';
 import style from './styles.module.css';
+import {useSelector} from "react-redux";
+import useUserAdminLogicData from "../../../../hooks/useUserAdminLogicData";
+import UploadFileView from "../../../../baseComponent/UploadFileView";
 // import PropTypes from 'prop-types';
 const validateMessages = {
 	required: '${label} is required!',
@@ -28,46 +32,39 @@ const validateMessages = {
 const { Option } = Select;
 function CaiDat() {
 	const [form] = Form.useForm();
-	const [value, setValue] = React.useState(1);
-	const [linkFile, setLinkFile] = React.useState('');
-	const [fileList, setFileList] = React.useState([]);
-	const [previewVisible, setPreviewVisible] = React.useState(false);
-	const [previewImage, setPreviewImage] = React.useState('');
-	const [previewTitle, setPreviewTitle] = React.useState('');
+	const [fileListUtil, setFileListUtil] = React.useState([]);
+	const [linkFileUtil, setLinkFileUtil] = React.useState('');
 
-	const onFinish = (values) => {};
-	const onChangeRadios = (e) => {
-		setValue(`${e.target.value}`);
-	};
-	function onChangeStatus(checked) {
-		console.log(`switch to ${checked}`);
-	}
-	const onChange = (info) => {
-		setFileList(info.fileList);
-		switch (info.file.status) {
-			case 'uploading':
-				break;
-			case 'done':
-				setLinkFile(info.file.response.fileNameInServer);
-				break;
-			default:
-				// message.error(`${info.file.name}`);
-				setLinkFile('');
-				break;
+	// hooks
+	const accountAdmin = useSelector((state) => state[TYPE_STORE.accountAdmin]);
+	const {updateUserAdmin} = useUserAdminLogicData();
+
+	// handle func
+	const onFinish = (values) => {
+		const dataUpdate = {...accountAdmin, ...values};
+		dataUpdate['avatar'] = linkFileUtil;
+		console.log('dataUpdate', dataUpdate); // MongLV log fix bug
+		if (dataUpdate.new_password === dataUpdate.check_new_password) {
+			updateUserAdmin(dataUpdate).catch(err => console.log(err))
+		} else {
+			message.warn('Mật khẩu không trùng nhau!');
 		}
 	};
-	const linkFileView = linkFile
-		? BASE_URL_IMAGE + linkFile
-		: 'https://img.icons8.com/cotton/344/image--v1.png';
 
 	// JSX
-	const UpFile = {
-		name: 'file',
-		action: `${BASE_URL_IMAGE}upload`,
-		multiple: true,
-		onChange: (info) => onChange(info),
-	};
-	const handleCancel = () => setPreviewVisible(false);
+	React.useEffect(() => {
+		form.setFieldsValue(accountAdmin);
+		setFileListUtil([
+			{
+				uid: '-1',
+				name: accountAdmin.avatar,
+				status: 'done',
+				url: BASE_URL_IMAGE + accountAdmin.avatar,
+			},
+		]);
+		setLinkFileUtil(accountAdmin.avatar);
+	}, []);
+
 	return (
 		<div className={style.my_account_profile}>
 			<div className={style.my_account_section__header}>
@@ -132,29 +129,29 @@ function CaiDat() {
 								</div>
 								<div className={style.my_account_profile__left_item_input}>
 									<Form.Item name={'gender'}>
-										<Radio.Group onChange={onChangeRadios} value={value.toString()}>
-											<Radio value={'1'}>Nam</Radio>
-											<Radio value={'2'}>Nữ</Radio>
-											<Radio value={'3'}>Khác</Radio>
+										<Radio.Group >
+											<Radio value={'Nam'}>Nam</Radio>
+											<Radio value={'Nữ'}>Nữ</Radio>
+											<Radio value={'Khác'}>Khác</Radio>
 										</Radio.Group>
 									</Form.Item>
 								</div>
 							</div>
-							<div className={style.my_account_profile__left_item}>
-								<div className={style.my_account_profile__left_item_title}>
-									Ngày sinh :
-								</div>
-								<div className={style.my_account_profile__left_item_input}>
-									<Form.Item>
-										<DatePicker
-										// format={dateFormat}
-										// value={date}
-										// defaultValue={date}
-										// onChange={onChangeDate}
-										/>
-									</Form.Item>
-								</div>
-							</div>
+							{/*<div className={style.my_account_profile__left_item}>*/}
+							{/*	<div className={style.my_account_profile__left_item_title}>*/}
+							{/*		Ngày sinh :*/}
+							{/*	</div>*/}
+							{/*	<div className={style.my_account_profile__left_item_input}>*/}
+							{/*		<Form.Item name={'date_of_birth'}>*/}
+							{/*			<DatePicker*/}
+							{/*				format={'DD-MM-YYYY'}*/}
+							{/*			// value={date}*/}
+							{/*			// defaultValue={date}*/}
+							{/*			// onChange={onChangeDate}*/}
+							{/*			/>*/}
+							{/*		</Form.Item>*/}
+							{/*	</div>*/}
+							{/*</div>*/}
 							<div className={style.my_account_profile__left_item}>
 								<div className={style.my_account_profile__left_item_title}>Địa chỉ :</div>
 								<div className={style.my_account_profile__left_item_input}>
@@ -166,8 +163,8 @@ function CaiDat() {
 							<div className={style.my_account_profile__left_item}>
 								<div className={style.my_account_profile__left_item_title}>Chức vụ :</div>
 								<div className={style.my_account_profile__left_item_input}>
-									<Form.Item name="gender" rules={[{ required: true }]}>
-										<Select allowClear>
+									<Form.Item name="position" rules={[{ required: true }]}>
+										<Select allowClear disabled>
 											<Option value="quanly">Quản lý </Option>
 											<Option value="nhanvien">Nhân viên </Option>
 											<Option value="ketoan">Kế toán </Option>
@@ -175,14 +172,14 @@ function CaiDat() {
 									</Form.Item>
 								</div>
 							</div>
-							<div className={style.my_account_profile__left_item}>
-								<div className={style.my_account_profile__left_item_title}>
-									Trạng thái :
-								</div>
-								<div className={style.my_account_profile__left_item_input}>
-									<Switch defaultChecked onChange={onChangeStatus} />
-								</div>
-							</div>
+							{/*<div className={style.my_account_profile__left_item}>*/}
+							{/*	<div className={style.my_account_profile__left_item_title}>*/}
+							{/*		Trạng thái :*/}
+							{/*	</div>*/}
+							{/*	<div className={style.my_account_profile__left_item_input}>*/}
+							{/*		<Switch defaultChecked onChange={onChangeStatus} />*/}
+							{/*	</div>*/}
+							{/*</div>*/}
 						</div>
 						<div className={style.my_account_profile__right}>
 							{/*mk hiển thị trang hồ sơ*/}
@@ -194,7 +191,7 @@ function CaiDat() {
 									Mật khẩu HT:
 								</div>
 								<div className={style.my_account_profile__left_item_input}>
-									<Form.Item name={'password'}>
+									<Form.Item name={'old_password'}>
 										<Input.Password
 											prefix={<LockOutlined className="site-form-item-icon" />}
 											type="password"
@@ -245,28 +242,12 @@ function CaiDat() {
 								</div>
 								<div className={style.my_account_profile__left_item_input}>
 									<Form.Item>
-										<Upload
-											{...UpFile}
-											listType="picture-card"
-											fileList={fileList}
-											// onPreview={handlePreview}
-										>
-											{linkFile.length <= 0 ? (
-												<img
-													alt="example"
-													src={linkFileView}
-													style={{ width: 50, height: 50 }}
-												/>
-											) : null}
-										</Upload>
-										<Modal
-											visible={previewVisible}
-											title={previewTitle}
-											footer={null}
-											onCancel={handleCancel}
-										>
-											<img alt="example" style={{ width: '100%' }} src={previewImage} />
-										</Modal>
+										<UploadFileView
+											setFileListUtil={setFileListUtil}
+											setLinkFileUtil={setLinkFileUtil}
+											fileListUtil={fileListUtil}
+											linkFileUtil={linkFileUtil}
+										/>
 									</Form.Item>
 									<div>
 										Dung lượng file tối đa 2 MB
@@ -301,4 +282,4 @@ CaiDat.propTypes = {};
 
 CaiDat.defaultProps = {};
 
-export default CaiDat;
+export default React.memo(CaiDat);

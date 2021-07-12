@@ -128,4 +128,4 @@ AppWithZoomCustomization.defaultProps = {
 	previewImg:
 		'https://rukminim1.flixcart.com/image/1664/1664/jz30nm80/bedsheet/q/z/s/comfort-living-100-cotton-double-bedsheet-with-2-pillow-covers-original-imafj69wjzahmcw5.jpeg?q=90',
 };
-export default AppWithZoomCustomization;
+export default React.memo(AppWithZoomCustomization);

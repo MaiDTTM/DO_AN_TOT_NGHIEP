@@ -27,4 +27,4 @@ TestAPI.propTypes = {};
 
 TestAPI.defaultProps = {};
 
-export default TestAPI;
+export default React.memo(TestAPI);

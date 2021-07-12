@@ -473,4 +473,4 @@ SanPham.propTypes = {};
 
 SanPham.defaultProps = {};
 
-export default SanPham;
+export default React.memo(SanPham);

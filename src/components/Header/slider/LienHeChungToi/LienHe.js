@@ -219,4 +219,4 @@ LienHe.propTypes = {};
 
 LienHe.defaultProps = {};
 
-export default LienHe;
+export default React.memo(LienHe);

@@ -107,4 +107,4 @@ Home.propTypes = {};
 
 Home.defaultProps = {};
 
-export default Home;
+export default React.memo(Home);

@@ -304,4 +304,4 @@ FormChung.propTypes = {};
 
 FormChung.defaultProps = {};
 
-export default FormChung;
+export default React.memo(FormChung);

@@ -33,4 +33,4 @@ SelectDanhMuc.propTypes = {};
 
 SelectDanhMuc.defaultProps = {};
 
-export default SelectDanhMuc;
+export default React.memo(SelectDanhMuc);

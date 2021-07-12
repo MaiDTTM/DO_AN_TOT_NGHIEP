@@ -118,4 +118,4 @@ NewAddress.propTypes = {};
 
 NewAddress.defaultProps = {};
 
-export default NewAddress;
+export default React.memo(NewAddress);

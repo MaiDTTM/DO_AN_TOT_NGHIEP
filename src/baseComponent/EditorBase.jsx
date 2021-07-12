@@ -91,4 +91,4 @@ EditorBase.defaultProps = {
 	setContent: () => {},
 };
 
-export default EditorBase;
+export default React.memo(EditorBase);

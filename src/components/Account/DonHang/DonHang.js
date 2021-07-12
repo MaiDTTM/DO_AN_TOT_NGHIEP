@@ -217,4 +217,4 @@ DonHang.propTypes = {};
 
 DonHang.defaultProps = {};
 
-export default DonHang;
+export default React.memo(DonHang);

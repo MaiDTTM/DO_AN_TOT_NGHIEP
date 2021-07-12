@@ -170,4 +170,4 @@ MenuAntd.propTypes = {};
 
 MenuAntd.defaultProps = {};
 
-export default MenuAntd;
+export default React.memo(MenuAntd);

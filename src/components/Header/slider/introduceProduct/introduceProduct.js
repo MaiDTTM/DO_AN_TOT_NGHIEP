@@ -143,4 +143,4 @@ IntroduceProduct.propTypes = {};
 
 IntroduceProduct.defaultProps = {};
 
-export default IntroduceProduct;
+export default React.memo(IntroduceProduct);

@@ -159,4 +159,4 @@ PopupBuyProduct.defaultProps = {
 	product: {},
 };
 
-export default PopupBuyProduct;
+export default React.memo(PopupBuyProduct);

@@ -151,4 +151,4 @@ FlashSale.defaultProps = {
 	product: {},
 };
 
-export default FlashSale;
+export default React.memo(FlashSale);

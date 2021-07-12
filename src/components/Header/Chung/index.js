@@ -90,4 +90,4 @@ Chung.propTypes = {};
 
 Chung.defaultProps = {};
 
-export default Chung;
+export default React.memo(Chung);

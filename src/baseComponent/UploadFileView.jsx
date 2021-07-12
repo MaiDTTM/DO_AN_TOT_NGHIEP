@@ -46,7 +46,6 @@ function UploadFileView(props) {
 		setFileList(info.fileList);
 		setFileListUtil(info.fileList);
 		setIsNext(false);
-		debugger; // Todo by MongLV
 		switch (info.file.status) {
 			case 'uploading':
 				break;

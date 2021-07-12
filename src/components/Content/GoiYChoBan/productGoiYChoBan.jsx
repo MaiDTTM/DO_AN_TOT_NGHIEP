@@ -163,4 +163,4 @@ ProductListGoiYChoBan.defaultProps = {
 	product: {},
 };
 
-export default ProductListGoiYChoBan;
+export default React.memo(ProductListGoiYChoBan);

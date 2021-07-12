@@ -495,4 +495,4 @@ BuyProduct.propTypes = {};
 
 BuyProduct.defaultProps = {};
 
-export default BuyProduct;
+export default React.memo(BuyProduct);

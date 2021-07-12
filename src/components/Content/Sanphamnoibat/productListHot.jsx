@@ -186,4 +186,4 @@ function ProductListHot(props) {
 	);
 }
 
-export default ProductListHot;
+export default React.memo(ProductListHot);

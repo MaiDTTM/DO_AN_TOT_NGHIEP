@@ -146,4 +146,4 @@ CommentProduct.propTypes = {};
 
 CommentProduct.defaultProps = {};
 
-export default CommentProduct;
+export default React.memo(CommentProduct);

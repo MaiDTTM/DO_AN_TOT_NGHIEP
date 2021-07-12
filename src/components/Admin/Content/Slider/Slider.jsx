@@ -265,4 +265,4 @@ Slider.propTypes = {};
 
 Slider.defaultProps = {};
 
-export default Slider;
+export default React.memo(Slider);

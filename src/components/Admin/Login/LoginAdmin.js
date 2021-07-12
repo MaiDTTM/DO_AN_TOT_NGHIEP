@@ -190,4 +190,4 @@ LoginAdmin.propTypes = {};
 
 LoginAdmin.defaultProps = {};
 
-export default LoginAdmin;
+export default React.memo(LoginAdmin);

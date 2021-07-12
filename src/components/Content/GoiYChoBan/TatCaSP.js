@@ -115,4 +115,4 @@ TatCaSP.propTypes = {};
 
 TatCaSP.defaultProps = {};
 
-export default TatCaSP;
+export default React.memo(TatCaSP);

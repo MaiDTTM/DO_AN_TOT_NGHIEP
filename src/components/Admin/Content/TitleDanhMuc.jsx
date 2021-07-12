@@ -138,4 +138,4 @@ TitleDanhMuc.defaultProps = {
 	listCategoryFollowParamId: () => [],
 };
 
-export default TitleDanhMuc;
+export default React.memo(TitleDanhMuc);

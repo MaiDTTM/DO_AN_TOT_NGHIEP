@@ -263,4 +263,4 @@ function MenuHome() {
 	);
 }
 
-export default MenuHome;
+export default React.memo(MenuHome);

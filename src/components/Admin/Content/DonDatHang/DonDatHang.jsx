@@ -75,7 +75,6 @@ function DonDatHang() {
 						carts[carts_id] &&
 						carts[carts_id].product_id &&
 						product[carts[carts_id].product_id];
-					debugger; // Todo by MongLV
 					obj.sold = obj.sold + carts[carts_id].amount;
 					await updateProduct(obj);
 					return carts_id;
@@ -275,4 +274,4 @@ DonDatHang.propTypes = {};
 
 DonDatHang.defaultProps = {};
 
-export default DonDatHang;
+export default React.memo(DonDatHang);

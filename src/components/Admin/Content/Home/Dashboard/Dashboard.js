@@ -263,4 +263,4 @@ Dashboard.propTypes = {};
 
 Dashboard.defaultProps = {};
 
-export default Dashboard;
+export default React.memo(Dashboard);

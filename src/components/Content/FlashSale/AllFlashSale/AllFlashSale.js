@@ -96,4 +96,4 @@ AllFlashSale.propTypes = {};
 
 AllFlashSale.defaultProps = {};
 
-export default AllFlashSale;
+export default React.memo(AllFlashSale);

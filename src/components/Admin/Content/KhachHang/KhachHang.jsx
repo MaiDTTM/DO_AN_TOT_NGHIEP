@@ -258,4 +258,4 @@ KhachHang.propTypes = {};
 
 KhachHang.defaultProps = {};
 
-export default KhachHang;
+export default React.memo(KhachHang);

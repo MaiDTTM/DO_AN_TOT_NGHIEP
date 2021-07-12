@@ -46,4 +46,4 @@ function ListPicture(props) {
 	);
 }
 
-export default ListPicture;
+export default React.memo(ListPicture);

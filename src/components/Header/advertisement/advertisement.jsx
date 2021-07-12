@@ -12,4 +12,4 @@ function Advertisement(props) {
 	);
 }
 
-export default Advertisement;
+export default React.memo(Advertisement);

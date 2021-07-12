@@ -329,4 +329,4 @@ HoSo.propTypes = {};
 
 HoSo.defaultProps = {};
 
-export default HoSo;
+export default React.memo(HoSo);

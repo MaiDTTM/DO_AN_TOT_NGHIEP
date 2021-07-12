@@ -78,4 +78,4 @@ UploadImg.propTypes = {};
 
 UploadImg.defaultProps = {};
 
-export default UploadImg;
+export default React.memo(UploadImg);

@@ -179,4 +179,4 @@ function RegisterAdmin() {
 	);
 }
 
-export default RegisterAdmin;
+export default React.memo(RegisterAdmin);

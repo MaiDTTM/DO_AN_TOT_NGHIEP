@@ -66,4 +66,4 @@ HoverMenu.propTypes = {};
 
 HoverMenu.defaultProps = {};
 
-export default HoverMenu;
+export default React.memo(HoverMenu);

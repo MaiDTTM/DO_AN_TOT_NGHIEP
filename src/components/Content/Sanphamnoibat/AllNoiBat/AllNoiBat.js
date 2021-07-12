@@ -64,4 +64,4 @@ AllNoiBat.propTypes = {};
 
 AllNoiBat.defaultProps = {};
 
-export default AllNoiBat;
+export default React.memo(AllNoiBat);

@@ -159,4 +159,4 @@ AccountMe.propTypes = {};
 
 AccountMe.defaultProps = {};
 
-export default AccountMe;
+export default React.memo(AccountMe);

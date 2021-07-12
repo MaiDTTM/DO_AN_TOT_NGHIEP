@@ -105,4 +105,4 @@ HeaderAdmin.propTypes = {};
 
 HeaderAdmin.defaultProps = {};
 
-export default HeaderAdmin;
+export default React.memo(HeaderAdmin);

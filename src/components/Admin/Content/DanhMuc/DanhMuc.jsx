@@ -451,4 +451,4 @@ DanhMuc.propTypes = {};
 
 DanhMuc.defaultProps = {};
 
-export default DanhMuc;
+export default React.memo(DanhMuc);

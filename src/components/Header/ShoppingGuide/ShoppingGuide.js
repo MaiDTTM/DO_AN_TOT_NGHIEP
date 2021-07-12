@@ -382,4 +382,4 @@ ShoppingGuider.propTypes = {};
 
 ShoppingGuider.defaultProps = {};
 
-export default ShoppingGuider;
+export default React.memo(ShoppingGuider);
