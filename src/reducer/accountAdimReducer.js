@@ -8,7 +8,7 @@ const accountAdminReducer = (accountAdmin = {}, action) => {
 			return action.payload.data;
 		case TYPE_ACTION.ADMIN.LOGOUT:
 			return {};
-		case TYPE_ACTION.ADMIN.PUT:
+		case TYPE_ACTION.ADMIN.PUT_ACCOUNT_ADMIN:
 			setLocalStore(action.payload.data);
 			return action.payload.data;
 		default:

@@ -6,6 +6,7 @@ const adminReducer = (admin = {}, action) => {
 		case TYPE_ACTION.ADMIN.POST:
 			return { ...admin, ...action.payload.data };
 		case TYPE_ACTION.ADMIN.PUT:
+			debugger; // Todo by MongLV
 			return { ...admin, ...action.payload.data };
 		case TYPE_ACTION.ADMIN.DELETE:
 			return action.payload.data;

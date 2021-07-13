@@ -7,6 +7,7 @@ const TypeApi = {
 	slider: '/slider',
 	transaction: '/transaction',
 	adminuser: '/user/admin',
+	chart: '/chart'
 };
 
 const TYPE_STORE = {

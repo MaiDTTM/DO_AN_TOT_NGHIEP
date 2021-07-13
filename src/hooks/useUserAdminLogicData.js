@@ -9,6 +9,7 @@ import { message as messageAnt } from 'antd';
 function useUserAdminLogicData() {
 	const dispatch = useDispatch();
 	const userAdmin = useSelector((state) => state[TYPE_STORE.userAdmin]);
+	const accountAdmin = useSelector((state) => state[TYPE_STORE.accountAdmin]);
 	const getListAdmin = async (obj = {}) => {
 		const data = await baseAPI.getAll(TypeApi.admin, obj);
 		dispatch({ type: TYPE_ACTION.ADMIN.GET_ALL, payload: { data } });
@@ -46,6 +47,12 @@ function useUserAdminLogicData() {
 				type: TYPE_ACTION.ADMIN.PUT,
 				payload: { data: { ...userAdmin } },
 			});
+			if (obj._id === accountAdmin._id) {
+				dispatch({
+					type: TYPE_ACTION.ADMIN.PUT_ACCOUNT_ADMIN,
+					payload: { data: obj}
+				})
+			}
 			messageAnt.success('Sửa thông tin thành công !');
 		} else messageAnt.warn(message);
 	};
