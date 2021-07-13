@@ -65,8 +65,6 @@ function SanPham() {
 	const [customers, setCustomers] = useState(arrProduct);
 	const [fileList, setFileList] = useState([]);
 
-	console.log('fileListContentUtil', fileListContentUtil); // MongLV log fix bug
-	console.log('listLinkFileUtil', listLinkFileUtil); // MongLV log fix bug
 	// handle func
 	const productFilter = () => {
 		let productNew = {};
@@ -381,7 +379,11 @@ function SanPham() {
 					onCancel={onReset}
 				>
 					<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-						<Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
+						<Form.Item
+							name="name"
+							label="Tên sản phẩm"
+							rules={[{ required: true, message: 'Nhập tên sản phẩm! ' }]}
+						>
 							<Input />
 						</Form.Item>
 						<Form.Item name="image" label="Ảnh sản phẩm">
@@ -405,7 +407,11 @@ function SanPham() {
 								refFunc={refCallBack2}
 							/>
 						</Form.Item>
-						<Form.Item name="catalog_id" label="Danh mục" rules={[{ required: true }]}>
+						<Form.Item
+							name="catalog_id"
+							label="Danh mục"
+							rules={[{ required: true, message: 'Chọn danh mục sản phẩm!' }]}
+						>
 							<Select
 								showSearch
 								style={{ width: 200 }}
@@ -421,13 +427,25 @@ function SanPham() {
 								))}
 							</Select>
 						</Form.Item>
-						<Form.Item name="amount" label="Số lượng" rules={[{ required: true }]}>
+						<Form.Item
+							name="amount"
+							label="Số lượng"
+							rules={[{ required: true, message: 'Số lượng sản phẩm!' }]}
+						>
 							<InputNumber />
 						</Form.Item>
-						<Form.Item name="price" label="Giá tiền" rules={[{ required: true }]}>
+						<Form.Item
+							name="price"
+							label="Giá tiền"
+							rules={[{ required: true, message: 'Giá sản phẩm!' }]}
+						>
 							<InputNumber />
 						</Form.Item>
-						<Form.Item name="price_seo" label="SALE sản phẩm">
+						<Form.Item
+							name="price_seo"
+							label="SALE sản phẩm"
+							rules={[{ required: true, message: 'Chọn sale!' }]}
+						>
 							<Select
 								showSearch
 								style={{ width: 200 }}

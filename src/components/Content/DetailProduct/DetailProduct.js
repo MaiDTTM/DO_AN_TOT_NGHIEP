@@ -52,7 +52,6 @@ function DetailProduct() {
 	const [amount, setAmount] = React.useState(1);
 	const handleBuyProduct = async () => {
 		const idCart = await handleAddCart(false);
-		console.log('idCart', idCart); // MongLV log fix bug
 		await setSelectedRowKeys([idCart]);
 		(await myUser.email)
 			? history.push(`/buyproduct`)

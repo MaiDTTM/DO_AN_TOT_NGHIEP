@@ -146,6 +146,7 @@
 	/*width: 300px;*/
 }
 .input_field {
+	display: flex;
 	position: relative;
 	line-height: 44px;
 	width: 70%;
@@ -168,6 +169,21 @@
 	cursor: text;
 	margin-left: 10px;
 	padding-left: 10px;
+}
+.input_field span {
+	top: 35%;
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+	line-height: 14px;
+	transform: translateY(0);
+	position: absolute;
+	left: 0;
+	transition: 0.2s all;
+	cursor: text;
+	margin-left: 145px;
+}
+.input_field span:hover {
+	cursor: pointer;
 }
 .input_field input {
 	background-color: #ffffff !important;

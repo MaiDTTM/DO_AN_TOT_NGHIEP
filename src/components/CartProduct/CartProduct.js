@@ -64,7 +64,6 @@ function CartProduct() {
 	};
 
 	const handleDeleteOption = () => {
-		console.log('_selectedRowKeys', _selectedRowKeys); // MongLV log fix bug
 		_selectedRowKeys.map(async (idCart) => await deleteCart(idCart));
 	};
 	const onSearch = (value) => console.log(value);

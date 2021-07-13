@@ -33,7 +33,11 @@ function Slider() {
 	const [linkFileUtil, setLinkFileUtil] = useState('');
 	const [fileListUtil, setFileListUtil] = useState([]);
 	const [dataSlidertEdit, setDataSlidertEdit] = useState(null);
+	const [indexOld, setIndexOld] = useState(null);
+	const [indexNew, setIndexNew] = useState(null);
 	const { slider, deleteSlider, postSlider, updateSlider } = useSliderLogicData();
+	const ArrSlider = Object.values(slider);
+	const sliderLength = ArrSlider.length;
 	const columns = [
 		{
 			title: 'Hình ảnh',
@@ -97,6 +101,7 @@ function Slider() {
 		message.error('Click on No');
 	}
 	const ModalVisible1 = (record) => {
+		setIndexOld(record.index);
 		setModalVisible1(true);
 		setDataSlidertEdit(record);
 		formEdit.setFieldsValue({ ...record });
@@ -115,6 +120,7 @@ function Slider() {
 	};
 	const onFinishAdd = (values) => {
 		values['image_link'] = linkFileUtil;
+		values['index'] = sliderLength + 1;
 		let isIndex = false;
 		Object.values(slider).map((item) => item.index === values.index && (isIndex = true));
 		if (!isIndex) {
@@ -130,17 +136,23 @@ function Slider() {
 	};
 	const onFinishEdit = (values) => {
 		values['image_link'] = linkFileUtil;
-		let isIndex = false;
-		Object.values(slider).map((item) => item.index === values.index && (isIndex = true));
-		if (!isIndex) {
-			if (linkFileUtil) {
+		if (linkFileUtil) {
+			if (indexNew && indexOld && indexOld !== indexNew) {
+				// tim phan tu co index trung voi index cua item dang sua va cap nhat lai index cho phan tu do
+				const FilterItemIndex = ArrSlider.filter((item) => item.index === indexNew);
+				FilterItemIndex[0]['index'] = indexOld;
+				updateSlider({ ...FilterItemIndex });
+				// cap nhat phan tu dang xet voi index moi
+				values['index'] = indexNew;
 				updateSlider({ ...dataSlidertEdit, ...values });
 				onReset();
 			} else {
-				message.warn('Thiếu ảnh đi kèm');
+				values['index'] = indexOld;
+				updateSlider({ ...dataSlidertEdit, ...values });
+				onReset();
 			}
 		} else {
-			message.warn('Vị trí đã tồn tại');
+			message.warn('Thiếu ảnh đi kèm');
 		}
 	};
 
@@ -152,7 +164,7 @@ function Slider() {
 		setModalVisible1(false);
 	};
 	function onChangeInput(value) {
-		console.log('changed', value);
+		setIndexNew(value);
 	}
 	return (
 		<div>
@@ -201,9 +213,9 @@ function Slider() {
 					<Form.Item name="name" label="Tên slider :" rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
-					<Form.Item name="index" label="Vị trí :" rules={[{ required: true }]}>
-						<InputNumber min={1} max={10} onChange={onChangeInput} />
-					</Form.Item>
+					{/*<Form.Item name="index" label="Vị trí :" rules={[{ required: true }]}>*/}
+					{/*	<InputNumber min={1} max={10} onChange={onChangeInput} />*/}
+					{/*</Form.Item>*/}
 					<Form.Item name="destination" label="Mô tả :">
 						<Input />
 					</Form.Item>
@@ -242,7 +254,7 @@ function Slider() {
 						<Input />
 					</Form.Item>
 					<Form.Item name="index" label="Vị trí :" rules={[{ required: true }]}>
-						<InputNumber min={1} max={10} onChange={onChangeInput} />
+						<InputNumber min={1} max={sliderLength} onChange={onChangeInput} />
 					</Form.Item>
 					<Form.Item name="destination" label="Mô tả :">
 						<Input />

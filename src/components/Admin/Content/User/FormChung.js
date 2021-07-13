@@ -69,12 +69,16 @@ function FormChung(props) {
 			dataIndex: 'gender',
 			key: '1',
 		},
-		// {
-		// 	title: 'Ngày sinh',
-		// 	dataIndex: 'date_of_birth',
-		// 	key: '2',
-		// 	width: 150,
-		// },
+		{
+			title: 'Ngày sinh',
+			// dataIndex: 'date_of_birth',
+			key: '2',
+			width: 150,
+			render: (record) => {
+				const date = record.date_of_birth.split('T');
+				return <div>{date[0]}</div>;
+			},
+		},
 		{
 			title: 'Email',
 			dataIndex: 'email',
@@ -84,20 +88,30 @@ function FormChung(props) {
 		{
 			title: 'Số điện thoại',
 			dataIndex: 'phone',
-			key: '5',
+			key: '4',
 			width: 150,
 		},
 		{
 			title: 'Địa chỉ',
 			dataIndex: 'address',
-			key: '6',
+			key: '5',
 			width: 300,
 		},
 		{
 			title: 'Mật khẩu',
-			dataIndex: 'password',
+			// dataIndex: 'password',
 			key: '6',
 			width: 150,
+			render: (record) => {
+				return (
+					<input
+						disabled
+						type="password"
+						value={record.password}
+						style={{ backgroundColor: '#fff !important' }}
+					/>
+				);
+			},
 		},
 		{
 			title: 'Trạng thái',

@@ -12,19 +12,20 @@
 		}
 		.ant-menu-submenu-title {
 			padding-left: 8px !important;
+			padding-right: 0 !important;
 			span {
 				float: left;
 			}
-			span:first-child{
+			span:first-child {
 				margin-top: 10px;
 			}
-			span:nth-child(2){
+			span:nth-child(2) {
 				width: 159px !important;
 				text-overflow: ellipsis !important;
 				white-space: nowrap;
 				overflow: hidden;
 			}
-			span:last-child{
+			span:last-child {
 				margin-top: 10px;
 				margin-left: 8px !important;
 			}
@@ -36,16 +37,16 @@
 				span {
 					float: left;
 				}
-				span:first-child{
+				span:first-child {
 					margin-top: 10px;
 				}
-				span:nth-child(2){
+				span:nth-child(2) {
 					width: 170px !important;
 					text-overflow: ellipsis !important;
 					white-space: nowrap;
 					overflow: hidden;
 				}
-				span:last-child{
+				span:last-child {
 					margin-top: 10px;
 					margin-right: 0px !important;
 				}
@@ -53,6 +54,19 @@
 			.ant-menu-inline {
 				background-color: #eef7ee;
 			}
+		}
+		.ant-menu-item:hover,
+		.ant-menu-item-active,
+		.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+		.ant-menu-submenu-active,
+		.ant-menu-submenu-title:hover {
+			color: #16b0d7;
+			background-color: #eae7e7;
+			font-weight: bold;
+		}
+		.ant-menu-submenu-title{
+			margin-top: 0 !important;
+			padding-top: 4px !important;
 		}
 	}
 }
@@ -95,7 +109,7 @@
 		}
 		.ant-table-content {
 			.ant-table-tbody {
-				.ant-table-cell{
+				.ant-table-cell {
 					z-index: 0 !important;
 				}
 				.ant-table-cell:first-child {

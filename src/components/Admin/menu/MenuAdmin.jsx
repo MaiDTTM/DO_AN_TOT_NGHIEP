@@ -54,7 +54,7 @@ function MenuAdmin(props) {
 				style={{ width: '100%', height: 63, cursor: 'pointer' }}
 				onClick={() => history.push('/')}
 			>
-				<img alt={'logo admin'} src={logo} style={{ width: '100%' }} />
+				<img alt={'logo admin'} src={logo} style={{ width: '100%', height: '100%' }} />
 			</div>
 			<Menu.Item key={objectKey.TRANG_CHU} icon={<HomeOutlined />}>
 				Trang chủ

@@ -33,6 +33,16 @@ function useSliderLogicData() {
 		const { message } = await baseAPI.delete(TypeApi.slider, id);
 		if (message === 'SUCCESS') {
 			delete slider[id];
+			Object.values(slider)
+				.sort((a, b) => a.index - b.index)
+				.map((item, index) => {
+					item.index = index + 1;
+					dispatch({
+						type: TYPE_ACTION.SLIDER.PUT_SLIDER,
+						payload: { data: { ...item } },
+					});
+					return null;
+				});
 			dispatch({
 				type: TYPE_ACTION.SLIDER.DELETE_SLIDER,
 				payload: { data: { ...slider } },

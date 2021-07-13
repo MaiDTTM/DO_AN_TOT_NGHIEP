@@ -11,7 +11,12 @@ import baseAPI from '../../axios/baseAPI';
 import { TypeApi } from '../../util/TypeApi';
 import { LoginUser } from '../../actions/userAction';
 import { GoogleLogin } from 'react-google-login';
-import { createFromIconfontCN, GooglePlusOutlined } from '@ant-design/icons';
+import {
+	createFromIconfontCN,
+	EyeInvisibleOutlined,
+	EyeOutlined,
+	GooglePlusOutlined,
+} from '@ant-design/icons';
 import TypeCookiesUtil from '../../util/TypeCookies';
 
 // import SocialLogin from 'react-social-login';
@@ -28,11 +33,17 @@ function Login() {
 	const [user, setUser] = useState('');
 	const [password, setPassword] = useState('');
 	const [checkBox, setCheckBox] = useState(false);
-
+	const [passView, setPassView] = useState(true);
 	// hook
 	const dispatch = useDispatch();
 	const history = useHistory();
-
+	const ShowPassword = () => {
+		if (passView) {
+			setPassView(false);
+		} else {
+			setPassView(true);
+		}
+	};
 	const isSavePassword = React.useMemo(
 		() =>
 			!!(
@@ -138,7 +149,7 @@ function Login() {
 				<div className={styles.item_form_dang_nhap}>
 					<div className={styles.input_field}>
 						<input
-							type="password"
+							type={passView ? 'password' : 'Text'}
 							id="pass"
 							value={password}
 							onChange={(e) => onChangeText(e, TypeInput.password)}
@@ -147,6 +158,9 @@ function Login() {
 						<label htmlFor="password" style={{ width: '100px' }}>
 							Password
 						</label>
+						<span onClick={ShowPassword}>
+							{passView === true ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+						</span>
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>

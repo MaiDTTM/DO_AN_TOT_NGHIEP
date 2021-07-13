@@ -53,16 +53,30 @@ function UploadFileView(props) {
 				// message.success('Thêm thành công');
 				setLinkFile(info.file.response.fileNameInServer);
 				setLinkFileUtil(info.file.response.fileNameInServer);
-
 				// Note:
 				setIsNext(true);
 				listLinkFile.push(info.file.response.fileNameInServer);
 				setListLinkFile([...listLinkFile]);
+
+				info.fileList.splice(info.fileList.length - 1, 1, {
+					uid: info.file.response.fileNameInServer,
+					name: info.file.response.fileNameInServer,
+					status: 'done',
+					url: BASE_URL_IMAGE + info.file.response.fileNameInServer,
+				});
+				setFileListUtil(info.fileList);
+
 				break;
 			case 'removed':
 				const listFilter = listLinkFile.filter((item) => item !== info.file.uid);
+
 				setListLinkFile([...listFilter]);
 				setListLinkFileUtil([...listFilter]);
+				if (listFilter.length === 0) {
+					setLinkFile('');
+					setLinkFileUtil('');
+					setFileList([]);
+				}
 				setIsNext(true);
 				break;
 			default:

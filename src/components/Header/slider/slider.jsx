@@ -232,7 +232,7 @@ function Slider() {
 					<Carousel autoplay className={Styles.picture_slider}>
 						{Object.values(slider)
 							.sort((item1, item2) => item1.index - item2.index)
-							.slice(0, 6)
+							.slice(0, 5)
 							.map((item) => (
 								<div>
 									<h3 style={contentStyle}>

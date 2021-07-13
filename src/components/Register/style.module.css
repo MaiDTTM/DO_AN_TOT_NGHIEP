@@ -103,6 +103,21 @@
     width: 80%;
     height: 90%;
 }
+.input_field span {
+	top: 35%;
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+	line-height: 14px;
+	transform: translateY(0);
+	position: absolute;
+	left: 0;
+	transition: 0.2s all;
+	cursor: text;
+	margin-left: 132px;
+}
+.input_field span:hover {
+	cursor: pointer;
+}
 .input_field input:invalid {
 	outline: 0;
 }

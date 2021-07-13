@@ -12,7 +12,12 @@ import style from './style.module.css';
 import 'antd/dist/antd.css';
 import styles from '../Login/index.module.css';
 import { GoogleLogin } from 'react-google-login';
-import { createFromIconfontCN, GooglePlusOutlined } from '@ant-design/icons';
+import {
+	createFromIconfontCN,
+	EyeInvisibleOutlined,
+	EyeOutlined,
+	GooglePlusOutlined,
+} from '@ant-design/icons';
 
 // const
 const TypeInput = {
@@ -31,6 +36,7 @@ function Register() {
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
 	const [checkBox, setCheckBox] = useState(false);
+	const [passView, setPassView] = useState(true);
 
 	// hook
 	const dispatch = useDispatch();
@@ -54,6 +60,13 @@ function Register() {
 				break;
 		}
 	};
+	const ShowPassword = () => {
+		if (passView) {
+			setPassView(false);
+		} else {
+			setPassView(true);
+		}
+	};
 	const onChangeCheck = (e) => {
 		console.log(`checked = ${e.target.checked}`);
 		setCheckBox(e.target.checked);
@@ -65,12 +78,7 @@ function Register() {
 		setPhone('');
 	};
 	const onCreate = async () => {
-		console.log('checkBox', checkBox); // MongLV log fix bug
 		if (!!checkBox) {
-			console.log('name', name); // MongLV log fix bug
-			console.log('email', email); // MongLV log fix bug
-			console.log('phone', phone); // MongLV log fix bug
-			console.log('password', password); // MongLV log fix bug
 			if (name && email && phone && password) {
 				const data = {
 					name,
@@ -167,7 +175,7 @@ function Register() {
 					<div className={style.input_field}>
 						<input
 							value={password}
-							type="password"
+							type={passView ? 'password' : 'Text'}
 							id="pass"
 							onChange={(e) => onChangeText(e, TypeInput.password)}
 							required
@@ -175,6 +183,10 @@ function Register() {
 						<label htmlFor="password" style={{ width: '100px' }}>
 							Password
 						</label>
+						<span onClick={ShowPassword}>
+							{passView === true ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+							{/*<EyeInvisibleOutlined />*/}
+						</span>
 					</div>
 				</div>
 				<div className={style.item_form_dang_ky}>

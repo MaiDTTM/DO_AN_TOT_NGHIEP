@@ -6,6 +6,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import style from './style.module.scss';
+import moment from 'moment';
+import dateFormat from 'dateformat';
 // import PropTypes from 'prop-types';
 
 // const
@@ -25,6 +27,12 @@ function KhachHang() {
 	const [modal1Visible, setModal1Visible] = React.useState(false);
 	const [dataEditModal, setDataEditModal] = useState(null);
 	const { customer, updateCustomer } = useCustomerLogicData();
+	console.log('customer', customer); // MaiDao
+	const date = '2021-06-16T12:26:36+07:00';
+	const newD = dateFormat(date, 'yyyy-mm-dd');
+	console.log('newD', newD); // MaiDao
+
+	// const
 	const columns = [
 		{
 			title: 'Ảnh đại diện',
@@ -94,17 +102,29 @@ function KhachHang() {
 		},
 		{
 			title: 'Ngày sinh',
-			dataIndex: 'date_of_birth',
-			defaultSortOrder: 'descend',
+			render: (record) => {
+				const date = record.date_of_birth.split('T');
+				return <div>{date[0]}</div>;
+			},
 		},
 		{
 			title: 'Address',
 			dataIndex: 'address',
 		},
-		// {
-		// 	title: 'Mật khẩu',
-		// 	dataIndex: 'password',
-		// },
+		{
+			title: 'Mật khẩu',
+			// dataIndex: 'password',
+			render: (record) => {
+				return (
+					<input
+						disabled
+						type="password"
+						value={record.password}
+						style={{ backgroundColor: '#fff !important' }}
+					/>
+				);
+			},
+		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',

@@ -21,6 +21,7 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import { ContextApp } from '../../../../context/contextApp';
+import { MailOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 // submenu keys of first level
@@ -90,7 +91,7 @@ function DanhMuc() {
 				categoryNew[item._id] = item;
 			});
 		} catch (e) {
-			console.log('error categoryFilter', e); // MongLV log fix bug
+			console.log('error categoryFilter', e);
 		}
 
 		return { ...categoryNew };
@@ -134,7 +135,8 @@ function DanhMuc() {
 					// Nếu giá trị index thay đổi thì tìm trong mảng category phần tử có index = gia tri thay doi và cap nhat lai
 					const filter = categoryPaPa(dataEditCategoryModal.paramId).filter(
 						(item) => item.index === valueIndex
-					); // tìm ra vị trị cũ đang chiếm index đó
+					);
+					// tìm ra vị trị cũ đang chiếm index đó
 					const newObjFilter = Object.assign(...filter);
 					newObjFilter['index'] = valueIndexOld;
 					updateCategory({ ...newObjFilter }, false); // Update lại vị trí của index đang chiếm thành index củ của index cập nhật
@@ -153,14 +155,18 @@ function DanhMuc() {
 			message.warn('Thiếu icon');
 		}
 	};
-	const onReset = () => {
-		form.resetFields();
-		setDataEditCategoryModal(null);
-		setLinkFileUtil('');
-		setFileListUtil([]);
-		setValueIndexOld(null);
-		setValueIndex(null);
-		setParamId('-1');
+	const onReset = (isReset = false) => {
+		if (dataEditCategoryModal && isReset) {
+			form.setFieldsValue({ ...dataEditCategoryModal });
+		} else {
+			form.resetFields();
+			setDataEditCategoryModal(null);
+			setLinkFileUtil('');
+			setFileListUtil([]);
+			setValueIndexOld(null);
+			setValueIndex(null);
+			setParamId('-1');
+		}
 	};
 
 	const onCancel = () => {
@@ -319,8 +325,9 @@ function DanhMuc() {
 				<div className={styles.title_danh_muc}>DANH SÁCH DANH MỤC</div>
 				<Menu
 					className={styles.menu_danh_muc}
-					mode="inline"
+					mode={'inline'}
 					openKeys={openKeys}
+					theme={'light'}
 					onOpenChange={(keys) => onOpenChange(keys)}
 					style={{ width: 256 }}
 					onClick={(key) => handleClick(key)}
@@ -391,8 +398,12 @@ function DanhMuc() {
 								Định dạng:.JPEG, .PNG
 							</div>
 							<div
-								style={{ color: '#f65353', marginLeft: 120, marginBottom: 10 }}
-								id="chu_y"
+								style={{
+									color: '#f65353',
+									marginLeft: 120,
+									marginBottom: 10,
+									display: dataEditCategoryModal ? 'block' : 'none',
+								}}
 							>
 								* Click vào ảnh để thay đổi avatar
 							</div>
@@ -408,7 +419,7 @@ function DanhMuc() {
 										onChange={onChange}
 									/>
 								</Form.Item>
-								<div style={{ marginLeft: 120, marginBottom: 20 }} id="chu_y">
+								<div style={{ marginLeft: 120, marginBottom: 20 }}>
 									* Vị trí hiển thị trên trang khách hàng
 								</div>
 							</div>
@@ -416,7 +427,7 @@ function DanhMuc() {
 								<Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>
 									Submit
 								</Button>
-								<Button htmlType="button" onClick={onReset}>
+								<Button htmlType="button" onClick={() => onReset(true)}>
 									Reset
 								</Button>
 							</Form.Item>

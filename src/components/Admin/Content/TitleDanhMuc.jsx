@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Popover, Popconfirm } from 'antd';
+import { Avatar, Popover, Popconfirm, Button } from 'antd';
 import {
 	AppstoreOutlined,
 	DeleteFilled,
@@ -9,6 +9,7 @@ import {
 	FolderAddFilled,
 	EyeInvisibleOutlined,
 	EyeOutlined,
+	RightOutlined,
 } from '@ant-design/icons';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 import useProductLogicData from '../../../hooks/useProductLogicData';
@@ -106,17 +107,32 @@ function TitleDanhMuc({
 	);
 	return (
 		<>
-			<div>
-				<Avatar
-					style={{ backgroundColor: '#87d068' }}
-					icon={<AppstoreOutlined />}
-					src={BASE_URL_IMAGE + item.icon}
-				/>
-				<span style={{ marginLeft: 5, ...stylesName }}>{item && item.name}</span>
-				<Popover placement={'right'} content={content} title={null}>
-					<SettingOutlined style={{ marginLeft: 10 }} />
-				</Popover>
-			</div>
+			{numberCategory === 0 ? (
+				<div>
+					<Avatar
+						style={{ backgroundColor: '#87d068' }}
+						icon={<AppstoreOutlined />}
+						src={BASE_URL_IMAGE + item.icon}
+					/>
+					<span style={{ marginLeft: 5, ...stylesName }}>{item && item.name}</span>
+					<Popover placement={'right'} content={content} title={null}>
+						<SettingOutlined style={{ marginLeft: 10 }} />
+					</Popover>
+				</div>
+			) : (
+				<div>
+					<Avatar
+						style={{ backgroundColor: '#87d068' }}
+						icon={<AppstoreOutlined />}
+						src={BASE_URL_IMAGE + item.icon}
+					/>
+					<span style={{ marginLeft: 5, ...stylesName }}>{item && item.name}</span>
+					<Popover placement={'right'} content={content} title={null}>
+						<SettingOutlined style={{ marginLeft: 8, marginTop: '10px' }} />
+					</Popover>
+					<RightOutlined />
+				</div>
+			)}
 		</>
 	);
 }

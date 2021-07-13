@@ -10,6 +10,7 @@ import { TypeApi } from '../../../util/TypeApi';
 import { useDispatch } from 'react-redux';
 import { loginAdmin } from '../../../actions/adminAction';
 import TypeCookiesUtil from '../../../util/TypeCookies';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 // import PropTypes from 'prop-types';
 
 const TypeInput = {
@@ -24,14 +25,20 @@ function LoginAdmin() {
 	const [userAdmin, setUserAdmin] = useState('');
 	const [password, setPassword] = useState('');
 	const [checkBox, setCheckBox] = useState(false);
-
+	const [passView, setPassView] = useState(true);
 	// const
 	const isSavePassword = !!(
 		cookie.load(TypeCookiesUtil.user_admin_save) &&
 		cookie.load(TypeCookiesUtil.password_admin_save) &&
 		cookie.load(TypeCookiesUtil.admin_checkbox_save)
 	);
-
+	const ShowPassword = () => {
+		if (passView) {
+			setPassView(false);
+		} else {
+			setPassView(true);
+		}
+	};
 	// handle
 	const onChangeText = (event, type) => {
 		switch (type) {
@@ -143,7 +150,7 @@ function LoginAdmin() {
 				<div className={styles.item_form_dang_nhap}>
 					<div className={styles.input_field}>
 						<input
-							type="password"
+							type={passView ? 'password' : 'Text'}
 							id="pass"
 							value={password}
 							onChange={(e) => onChangeText(e, TypeInput.password)}
@@ -152,6 +159,9 @@ function LoginAdmin() {
 						<label htmlFor="password" style={{ width: '100px' }}>
 							Password
 						</label>
+						<span onClick={ShowPassword}>
+							{passView === true ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+						</span>
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap} style={{ marginTop: '15px' }}>

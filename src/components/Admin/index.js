@@ -86,7 +86,7 @@ function LayoutAdmin() {
 	const ComponentHeader = (
 		<Header
 			className={Style.site_layout_background}
-			style={{ position: 'fixed', zIndex: 1, width: '85.5%' }}
+			style={{ position: 'fixed', zIndex: 1, minWidth: '1300px' }}
 		>
 			<div
 				style={{
