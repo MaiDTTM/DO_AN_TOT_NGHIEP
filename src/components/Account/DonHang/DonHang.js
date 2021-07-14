@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import logo from '../../../img/tong_tien.png';
 // import PropTypes from 'prop-types';
 import style from './styles.module.scss';
-import { Tabs, List, Button, Image, Modal, Input } from 'antd';
+import { Tabs, List, Button, Image, Modal, Input, Form, message } from 'antd';
 import useTransactionData from '../../../hooks/useTransactionData';
 import useCartLogicData from '../../../hooks/useCartLogicData';
 import useProductLogicData from '../../../hooks/useProductLogicData';
 import ConvertStringToVND from '../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
+import { StopOutlined } from '@ant-design/icons';
 const ModalDetail = React.lazy(() => import('./Modal/ModalDetail'));
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -26,22 +27,38 @@ function DonHang() {
 	const [itemTransaction, setItemTransaction] = useState(null);
 	const [valuesCancel, setValuesCancel] = useState('');
 
+	//const
+	const [form] = Form.useForm();
 	const transactionFilter = () => {
 		let arr = [...Object.values(transaction)];
 		if (type !== 'Tất cả') {
 			arr = Object.values(transaction).filter((item) => item.status_transaction === type);
 		}
-		return arr;
+		return arr.reverse();
 	};
-	const handleOk = () => {
+	// const handleOk = () => {
+	// 	itemCancel['status_transaction'] = TYPE_TRANSACTION.DA_HUY;
+	// 	valuesCancel && (itemCancel['messageError'] = valuesCancel);
+	// 	putTransaction(itemCancel, handleCancel);
+	// };
+	const handleOk = (values) => {
 		itemCancel['status_transaction'] = TYPE_TRANSACTION.DA_HUY;
-		valuesCancel && (itemCancel['messageError'] = valuesCancel);
-		putTransaction(itemCancel, handleCancel);
+		if (values.messageError.length <= 10) {
+			message.warning('Lý do tối thiểu 10 ký tự!');
+		} else {
+			itemCancel['messageError'] = values.messageError;
+			putTransaction(itemCancel, handleCancel);
+			handleCancel();
+		}
+	};
+
+	const onFinishFailed = (errorInfo) => {
+		console.log('Failed:', errorInfo);
 	};
 	const handleCancel = () => {
 		setIsModalVisible(false);
 		setItemCancel(null);
-		setValuesCancel('');
+		form.resetFields();
 	};
 
 	const HandleDetailTransaction = (item = null) => {
@@ -104,7 +121,7 @@ function DonHang() {
 									<Button
 										danger
 										type="primary"
-										disabled={type === TYPE_TRANSACTION.ALL}
+										// disabled={type === TYPE_TRANSACTION.ALL}
 										onClick={() => handleHuyDon(item)}
 									>
 										Hủy đơn
@@ -116,7 +133,7 @@ function DonHang() {
 									<div style={{ marginLeft: 10 }}>
 										<Button
 											type="primary"
-											disabled={type === TYPE_TRANSACTION.ALL}
+											// disabled={type === TYPE_TRANSACTION.ALL}
 											onClick={() => handleDatLaiDonDaHuy(item)}
 										>
 											Đặt lại
@@ -198,15 +215,39 @@ function DonHang() {
 				</Tabs>
 			</div>
 			<Modal
-				title="Lý do hủy đơn ?"
+				title={
+					<div style={{ color: '#ec2323', fontWeight: 'bold' }}>
+						<StopOutlined style={{ color: '#ef2b2b', marginRight: 18 }} />
+						Lý do hủy đơn?
+					</div>
+				}
 				visible={isModalVisible}
-				onOk={handleOk}
-				onCancel={handleCancel}
+				closable={false}
+				footer={false}
 			>
-				<TextArea
-					placeholder={'Lý do hủy đơn của bạn là gì ?'}
-					onChange={onChangeCancel}
-				/>
+				<Form
+					name="basic"
+					wrapperCol={{ span: 24 }}
+					initialValues={{ remember: true }}
+					onFinish={handleOk}
+					onFinishFailed={onFinishFailed}
+					form={form}
+				>
+					<Form.Item
+						name="messageError"
+						rules={[{ required: true, message: 'Nhập lý do để hủy đơn hàng này!' }]}
+					>
+						<Input.TextArea />
+					</Form.Item>
+					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+						<Button type="primary" htmlType="submit">
+							Ok
+						</Button>
+						<Button onClick={handleCancel} style={{ marginLeft: 18 }}>
+							Cancel
+						</Button>
+					</Form.Item>
+				</Form>
 			</Modal>
 			<ModalDetail item={itemTransaction} setItem={setItemTransaction} />
 		</div>

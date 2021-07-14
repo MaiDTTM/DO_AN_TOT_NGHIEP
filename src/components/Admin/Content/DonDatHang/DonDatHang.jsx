@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Tabs, List, Button, Image, Modal, Input } from 'antd';
+import { Tabs, List, Button, Image, Modal, Input, message, Form } from 'antd';
 import style from './style.module.scss';
 import logo from '../../../../img/tong_tien.png';
 import useTransactionData from '../../../../hooks/useTransactionData';
@@ -11,13 +11,13 @@ import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
+import { StopOutlined } from '@ant-design/icons';
 
 const ModalDetail = React.lazy(() =>
 	import('../../../Account/DonHang/Modal/ModalDetail')
 );
 
 const { TabPane } = Tabs;
-const { TextArea } = Input;
 function DonDatHang() {
 	const { transaction, putTransaction } = useTransactionData();
 	const { carts } = useCartLogicData();
@@ -28,10 +28,10 @@ function DonDatHang() {
 	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
 	const [itemCancel, setItemCancel] = React.useState(null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [valuesCancel, setValuesCancel] = useState('');
 	const [itemTransactionDetail, setItemTransactionDetail] = useState(null);
 
 	// handleFunction
+	const [form] = Form.useForm();
 	const _setItemTransactionDetail = (value = null) => {
 		setItemTransactionDetail(value);
 	};
@@ -46,20 +46,25 @@ function DonDatHang() {
 	const handleCancel = () => {
 		setIsModalVisible(false);
 		setItemCancel(null);
-		setValuesCancel('');
+		form.resetFields();
 	};
 
-	const handleOk = () => {
+	const handleOk = (values) => {
 		itemCancel['status_transaction'] = TYPE_TRANSACTION.DA_HUY;
-		valuesCancel && (itemCancel['messageError'] = valuesCancel);
-		putTransaction(itemCancel, handleCancel);
+		if (values.messageError.length <= 10) {
+			message.warning('Lý do tối thiểu 10 ký tự!');
+		} else {
+			itemCancel['messageError'] = values.messageError;
+			putTransaction(itemCancel, handleCancel);
+			handleCancel();
+		}
 	};
 
+	const onFinishFailed = (errorInfo) => {
+		console.log('Failed:', errorInfo);
+	};
 	const callback = (key) => {
 		setType(key);
-	};
-	const onChangeCancel = (e) => {
-		setValuesCancel(e.target.value);
 	};
 	const updateStatus = (item) => {
 		switch (item['status_transaction']) {
@@ -258,12 +263,39 @@ function DonDatHang() {
 				</Tabs>
 			</div>
 			<Modal
-				title="Lý do hủy đơn ?"
+				title={
+					<div style={{ color: '#ec2323', fontWeight: 'bold' }}>
+						<StopOutlined style={{ color: '#ef2b2b', marginRight: 18 }} />
+						Lý do hủy đơn?
+					</div>
+				}
 				visible={isModalVisible}
-				onOk={handleOk}
-				onCancel={handleCancel}
+				closable={false}
+				footer={false}
 			>
-				<TextArea placeholder="Lý do hủy đơn của bạn là gì ?" onChange={onChangeCancel} />
+				<Form
+					name="basic"
+					wrapperCol={{ span: 24 }}
+					initialValues={{ remember: true }}
+					onFinish={handleOk}
+					onFinishFailed={onFinishFailed}
+					form={form}
+				>
+					<Form.Item
+						name="messageError"
+						rules={[{ required: true, message: 'Nhập lý do để hủy đơn hàng này!' }]}
+					>
+						<Input.TextArea />
+					</Form.Item>
+					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+						<Button type="primary" htmlType="submit">
+							Ok
+						</Button>
+						<Button onClick={handleCancel} style={{ marginLeft: 18 }}>
+							Cancel
+						</Button>
+					</Form.Item>
+				</Form>
 			</Modal>
 			<ModalDetail item={itemTransactionDetail} setItem={_setItemTransactionDetail} />
 		</div>

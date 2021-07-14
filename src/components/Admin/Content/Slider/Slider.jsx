@@ -239,7 +239,7 @@ function Slider() {
 				centered
 				visible={modalVisible1}
 				footer={null}
-				onCancel={() => setModalVisible1(false)}
+				onCancel={onReset}
 			>
 				<Form {...layout} form={formEdit} name="control-hooks" onFinish={onFinishEdit}>
 					<Form.Item name="image_link" label="Ảnh :">
@@ -264,7 +264,7 @@ function Slider() {
 							Submit
 						</Button>
 						<Button htmlType="button" onClick={onReset}>
-							Reset
+							Đóng
 						</Button>
 					</Form.Item>
 				</Form>

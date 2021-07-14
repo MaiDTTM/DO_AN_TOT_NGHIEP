@@ -32,12 +32,12 @@
     margin-top: 25px;
 }
 .img_hover_cart{
-    width: 70px;
-    height: 70px;
+    width: 15%;
+    /*height: 70px;*/
 }
 .span_hover_cart{
     margin-left: 20px;
-    width: 100%;
+    width: 70%;
     word-wrap: break-word;
     text-overflow: ellipsis;
 }
@@ -48,4 +48,5 @@
 .gia_hover_cart{
     color: #02d702;
     margin-left: 10px;
+    width: 15%;
 }

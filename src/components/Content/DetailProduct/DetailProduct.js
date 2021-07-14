@@ -282,7 +282,7 @@ function DetailProduct() {
 									</div>
 								</div>
 								<div className={Styles.copy_content_detail_item}>
-									<div className={Styles.copy_content_detail_title}>Vận chuyển :</div>
+									<div style={{ width: '30%', fontSize: '20px' }}>Vận chuyển :</div>
 									<div className={Styles.copy_content_detail_van_chuyen}>
 										<span>
 											<strong>Miễn phí vận chuyển </strong>
@@ -304,6 +304,7 @@ function DetailProduct() {
 													type="primary"
 													className={Styles.btn_detail}
 													onClick={handleBuyProduct}
+													style={{ width: 152.08 }}
 												>
 													Mua ngay
 												</Button>

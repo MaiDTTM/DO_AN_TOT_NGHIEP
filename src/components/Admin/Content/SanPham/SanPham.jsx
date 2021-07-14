@@ -14,7 +14,12 @@ import {
 	Tag,
 	Upload,
 } from 'antd';
-import { DeleteOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+	DeleteOutlined,
+	EditOutlined,
+	ExclamationCircleOutlined,
+	UploadOutlined,
+} from '@ant-design/icons';
 import UploadFileView from '../../../../baseComponent/UploadFileView';
 import EditorBase from '../../../../baseComponent/EditorBase';
 import useCategoryLogicData from '../../../../hooks/useCategoryLogicData';
@@ -147,7 +152,7 @@ function SanPham() {
 			} else {
 				updateProduct({ ...dataProductEdit, ...values });
 			}
-			onReset();
+			onCancel();
 		} else {
 			message.warn('Thiếu ảnh đi kèm');
 		}
@@ -155,7 +160,6 @@ function SanPham() {
 
 	const onReset = () => {
 		form.resetFields();
-		setModalVisible(false);
 		setLinkFileUtil('');
 		setDescription('');
 		setFileListUtil([]);
@@ -165,7 +169,32 @@ function SanPham() {
 		refCallBack.current && refCallBack.current.handleResetState();
 		refCallBack2.current && refCallBack2.current.handleResetState();
 	};
-
+	const onResetEdit = () => {
+		if (dataProductEdit) {
+			form.setFieldsValue({ ...dataProductEdit });
+		}
+	};
+	const onCancel = (close) => {
+		setModalVisible(false);
+		onReset();
+	};
+	const onNoCancel = (close) => {
+		setModalVisible(true);
+	};
+	const handleCancelModal = () => {
+		Modal.confirm({
+			title: (
+				<div style={{ fontWeight: 'bold', color: '#ef5029' }}>
+					Bạn có chắc chắn muốn thoát không ?
+				</div>
+			),
+			icon: <ExclamationCircleOutlined />,
+			onOk: () => onCancel(close),
+			onCancel: () => onNoCancel(close),
+			okText: 'Có',
+			cancelText: 'Không',
+		});
+	};
 	const handleSelect = (optionA, optionB) => {
 		return optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase());
 	};
@@ -343,27 +372,7 @@ function SanPham() {
 							Import excel
 						</Button>
 					</Upload>
-					{/*<Button*/}
-					{/*	style={{*/}
-					{/*		marginBottom: 15,*/}
-					{/*		marginRight: 5,*/}
-					{/*		backgroundColor: '#42ecec',*/}
-					{/*		borderRadius: 15,*/}
-					{/*	}}*/}
-					{/*>*/}
-					{/*	Import excel*/}
-					{/*</Button>*/}
 					<ExportCSV csvData={customers} fileName="List_product" wscols={wscols} />
-					{/*<Button*/}
-					{/*	style={{*/}
-					{/*		marginBottom: 15,*/}
-					{/*		backgroundColor: '#42ec53',*/}
-					{/*		color: '#fff',*/}
-					{/*		borderRadius: 15,*/}
-					{/*	}}*/}
-					{/*>*/}
-					{/*	Export excel*/}
-					{/*</Button>*/}
 				</div>
 				{/*modal them*/}
 				<Modal
@@ -376,7 +385,7 @@ function SanPham() {
 					visible={modalVisible}
 					maskClosable={false}
 					footer={null}
-					onCancel={onReset}
+					onCancel={handleCancelModal}
 				>
 					<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
 						<Form.Item
@@ -432,14 +441,14 @@ function SanPham() {
 							label="Số lượng"
 							rules={[{ required: true, message: 'Số lượng sản phẩm!' }]}
 						>
-							<InputNumber />
+							<InputNumber min={0} />
 						</Form.Item>
 						<Form.Item
 							name="price"
 							label="Giá tiền"
 							rules={[{ required: true, message: 'Giá sản phẩm!' }]}
 						>
-							<InputNumber />
+							<InputNumber min={0} />
 						</Form.Item>
 						<Form.Item
 							name="price_seo"
@@ -470,6 +479,23 @@ function SanPham() {
 							<Button type="primary" htmlType="submit">
 								Submit
 							</Button>
+							{dataProductEdit ? (
+								<Button
+									htmlType="button"
+									style={{ marginLeft: 10 }}
+									onClick={() => onResetEdit()}
+								>
+									Reset
+								</Button>
+							) : (
+								<Button
+									htmlType="button"
+									style={{ marginLeft: 10 }}
+									onClick={() => onReset(true)}
+								>
+									Reset
+								</Button>
+							)}
 						</Form.Item>
 					</Form>
 				</Modal>
@@ -478,7 +504,6 @@ function SanPham() {
 				<Table
 					columns={columns}
 					dataSource={Object.values(productFilter()).reverse()}
-					// pagination={{ pageSize: 50 }}
 					scroll={{ y: 390 }}
 					bordered={true}
 				/>

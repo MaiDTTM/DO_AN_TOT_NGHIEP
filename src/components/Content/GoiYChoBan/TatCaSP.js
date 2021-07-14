@@ -25,7 +25,6 @@ function TatCaSP() {
 				<div className={style.page_row}>
 					{Object.values(product)
 						.concat(Object.values(product))
-						.slice(0, 40)
 						.map((item) => (
 							<Link to={`/detail/${item._id}`}>
 								{item['price_seo'] !== '0 %' ? (
@@ -102,9 +101,9 @@ function TatCaSP() {
 							</Link>
 						))}
 				</div>
-				<div className={style.content_page}>
-					<Pagination defaultCurrent={6} total={500} />
-				</div>
+				{/*<div className={style.content_page}>*/}
+				{/*	<Pagination defaultCurrent={6} total={500} />*/}
+				{/*</div>*/}
 			</div>
 			<Footer />
 		</div>

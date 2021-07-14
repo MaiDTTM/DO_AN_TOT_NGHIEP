@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { InputNumber, Table } from 'antd';
 // import PropTypes from 'prop-types';
 import Styles from './style.module.scss';
@@ -73,7 +73,6 @@ function BuyProduct() {
 	const [form] = Form.useForm();
 	const myUser = useSelector((state) => state['myUser']);
 	const { selectedRowKeys, setSelectedRowKeys } = useContext(ContextApp);
-
 	// state
 	const [modal2Visible, setModal2Visible] = React.useState(false);
 	const [dataTable, setDataTable] = React.useState([]);
@@ -451,6 +450,16 @@ function BuyProduct() {
 										pagination={false}
 									/>
 								</Form.Item>
+							</div>
+							<div className={Styles.line_order}>
+								<div style={{ display: 'flex' }}>
+									<span style={{ marginRight: 10, lineHeight: 2.4 }}>
+										Phí vận chuyển :
+									</span>
+									<Form.Item>
+										<span>{} VNĐ</span>
+									</Form.Item>
+								</div>
 							</div>
 							<div className={Styles.line_order}>
 								<span className={Styles.total_text}>Thành tiền :</span>

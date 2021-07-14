@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Card } from 'antd';
 //style
 import Styles from './styleHost.module.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Slider from './SliderNoiBat/Slider';
 import { Link } from 'react-router-dom';
+import { BASE_URL_IMAGE } from '../../../util/TypeApi';
+import { useSelector } from 'react-redux';
 const { Meta } = Card;
 ProductListHot.propTypes = {};
 
 function ProductListHot(props) {
+	const product = useSelector((state) => state['product']);
+	const newArrValue = Object.values(product);
+	// const newRandom = [];
+	// for (let i = 0; i < 8; i++) {
+	// 	const item = newArrValue[Math.floor(Math.random() * newArrValue.length)];
+	// 	newRandom.push(item);
+	// }
 	return (
 		<div className={Styles.list_hot}>
 			<div className={Styles.content_noi_bat}>
@@ -27,13 +36,13 @@ function ProductListHot(props) {
 							Miễn phí vận chuyển
 						</div>
 					</div>
-					<div className={Styles.xem_tat_ca_noi_bat}>
-						<Link to="/allnoibat">
-							<Button type="text" className={Styles.btn_xem}>
-								Xem tất cả >
-							</Button>
-						</Link>
-					</div>
+					{/*<div className={Styles.xem_tat_ca_noi_bat}>*/}
+					{/*	<Link to="/allnoibat">*/}
+					{/*		<Button type="text" className={Styles.btn_xem}>*/}
+					{/*			Xem tất cả >*/}
+					{/*		</Button>*/}
+					{/*	</Link>*/}
+					{/*</div>*/}
 				</div>
 				<hr
 					style={{
@@ -48,138 +57,53 @@ function ProductListHot(props) {
 						<Slider />
 					</div>
 					<div className={Styles.item_cart_content}>
-						<Button
-							className={Styles.btn_giam_noi_bat}
-							type="primary"
-							shape="circle"
-							icon={<LeftOutlined />}
-						/>
+						{/*<Button*/}
+						{/*	className={Styles.btn_giam_noi_bat}*/}
+						{/*	type="primary"*/}
+						{/*	shape="circle"*/}
+						{/*	icon={<LeftOutlined />}*/}
+						{/*/>*/}
 						<div className={Styles.item_cart_content_i}>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Bảng số và phép tính BA127b (1-20 số)"
-										src="https://media.shoptretho.com.vn/upload/image/product/20190508/bang-so-va-phep-tinh-ba127b-2.png?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Bảng số và phép tính BA127b (1-20 số)"
-									description="86.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đồ chơi ô tô thả hình số đàn nhạc đa năng XE33d"
-										src="https://media.shoptretho.com.vn/upload/image/product/20190508/do-choi-o-to-tha-hinh-so-da-nang-xe33d-1.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đồ chơi ô tô thả hình số đàn nhạc đa năng XE33d"
-									description="260.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đập bóng lốc xoáy DB10"
-										src="https://media.shoptretho.com.vn/upload/image/product/20170727/dap-bong-loc-xoay-5.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta title="Đập bóng lốc xoáy DB10" description="180.000 VND" />
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-										src="https://media.shoptretho.com.vn/upload/image/product/20151013/do-choi-go-a-xau-chuoi-thong-minh-aws0026.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-									description="86.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-										src="https://media.shoptretho.com.vn/upload/image/product/20151013/do-choi-go-a-xau-chuoi-thong-minh-aws0026.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-									description="86.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đồ chơi gỗ GCB - Bảng ghép hình chú voi BA76"
-										src="https://media.shoptretho.com.vn/upload/image/product/20160613/bang-ghep-hinh-voi-ba76-1.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đồ chơi gỗ GCB - Bảng ghép hình chú voi BA76"
-									description="260.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đàn gõ Xylophone hình khủng long DA30b"
-										src="https://media.shoptretho.com.vn/upload/image/product/20191023/dan-khung-long-ngo-nghinh-8-phim-1.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đàn gõ Xylophone hình khủng long DA30b"
-									description="180.000 VND"
-								/>
-							</Card>
-							<Card
-								hoverable
-								className={Styles.card_noi_bat}
-								cover={
-									<img
-										alt="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-										src="https://media.shoptretho.com.vn/upload/image/product/20151013/do-choi-go-a-xau-chuoi-thong-minh-aws0026.jpg?mode=max&width=400&height=400"
-									/>
-								}
-							>
-								<Meta
-									title="Đồ chơi gỗ GCB - Luồn hạt LH07 in hình voi"
-									description="86.000 VND"
-								/>
-							</Card>
+							{newArrValue.slice(0, 8).map((item) => {
+								return (
+									<Link to={`/detail/${item._id}`}>
+										{
+											<Card
+												hoverable
+												className={Styles.card_noi_bat}
+												cover={<img alt={item.image} src={BASE_URL_IMAGE + item.image} />}
+											>
+												<Meta
+													title={item.name}
+													description={
+														<div
+															style={{
+																color: '#ff6b00',
+																fontSize: 14,
+																fontWeight: 'bold',
+															}}
+														>
+															<span className={Styles.old_price}>
+																{(item.price * 1000)
+																	.toString()
+																	.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' đ'}
+															</span>
+														</div>
+													}
+												/>
+											</Card>
+										}
+									</Link>
+								);
+							})}
 						</div>
 					</div>
-					<Button
-						type="primary"
-						shape="circle"
-						className={Styles.btn_tang_noi_bat}
-						icon={<RightOutlined />}
-					/>
+					{/*<Button*/}
+					{/*	type="primary"*/}
+					{/*	shape="circle"*/}
+					{/*	className={Styles.btn_tang_noi_bat}*/}
+					{/*	icon={<RightOutlined />}*/}
+					{/*/>*/}
 				</div>
 			</div>
 		</div>

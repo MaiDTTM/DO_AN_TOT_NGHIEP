@@ -126,7 +126,7 @@
 	justify-content: space-around;
 	margin-bottom: 10px;
 	flex-wrap: wrap;
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 }
 .slideshow_container {
 	max-width: 40% !important;

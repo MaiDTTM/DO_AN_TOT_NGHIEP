@@ -21,7 +21,7 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import ConvertStringToVND from '../../../../util/ConvertStringToVND';
 import useProductLogicData from '../../../../hooks/useProductLogicData';
 import { ContextApp } from '../../../../context/contextApp';
-import { MailOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, MailOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 // submenu keys of first level
@@ -75,7 +75,6 @@ function DanhMuc() {
 	const [valueIndex, setValueIndex] = useState(null); // gia tri thay doi trong o input
 	const [valueIndexOld, setValueIndexOld] = useState(null); // gia tri cu lay duoc khi click edit
 	const [searchCategory, setSearchCategory] = useState(''); // Text tìm kiếm category
-
 	// const
 	const categoryFilter = React.useCallback(() => {
 		let categoryNew = {};
@@ -169,14 +168,28 @@ function DanhMuc() {
 		}
 	};
 
-	const onCancel = () => {
+	const onCancel = (close) => {
 		onReset();
 		setModal2Visible(false);
 	};
-
+	const onNoCancel = (close) => {
+		setModal2Visible(true);
+	};
 	const handleCancelModal = () => {
-		setModal2Visible(false);
-		onReset();
+		Modal.confirm({
+			title: (
+				<div style={{ fontWeight: 'bold', color: '#ef5029' }}>
+					Bạn có chắc chắn muốn thoát không ?
+				</div>
+			),
+			icon: <ExclamationCircleOutlined />,
+			onOk: () => onCancel(close),
+			onCancel: () => onNoCancel(close),
+			okText: 'Có',
+			cancelText: 'Không',
+		});
+		// setModal2Visible(false);
+		// onReset();
 	};
 
 	const handleEditModal = (item) => {
