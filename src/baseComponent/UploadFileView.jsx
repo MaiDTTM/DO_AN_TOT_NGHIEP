@@ -58,18 +58,19 @@ function UploadFileView(props) {
 				listLinkFile.push(info.file.response.fileNameInServer);
 				setListLinkFile([...listLinkFile]);
 
-				info.fileList.splice(info.fileList.length - 1, 1, {
+				const fileList = [...info.fileList];
+				fileList.splice(info.fileList.length - 1, 1, {
 					uid: info.file.response.fileNameInServer,
 					name: info.file.response.fileNameInServer,
 					status: 'done',
 					url: BASE_URL_IMAGE + info.file.response.fileNameInServer,
 				});
-				setFileListUtil(info.fileList);
+				setFileListUtil(fileList);
 
 				break;
 			case 'removed':
 				const listFilter = listLinkFile.filter((item) => item !== info.file.uid);
-
+				console.log('listFilter', listFilter); // MongLV log fix bug
 				setListLinkFile([...listFilter]);
 				setListLinkFileUtil([...listFilter]);
 				if (listFilter.length === 0) {

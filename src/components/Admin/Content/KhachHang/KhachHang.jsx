@@ -8,6 +8,7 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import style from './style.module.scss';
 // import moment from 'moment';
 // import dateFormat from 'dateformat';
+
 // import PropTypes from 'prop-types';
 
 // const

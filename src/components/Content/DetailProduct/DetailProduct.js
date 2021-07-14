@@ -14,7 +14,7 @@ import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
 import { TYPE_ACTION } from '../../../actions/TypeAction';
 import ReactImageMagnify from 'react-image-magnify';
 import { ContextApp } from '../../../context/contextApp';
-import Comments from '../../../baseComponent/comments/Comments';
+import CommentsContainer from '../../../baseComponent/comments/CommentsContainer';
 const { Meta } = Card;
 const key = 'updatable';
 // import PropTypes from 'prop-types';
@@ -485,7 +485,7 @@ function DetailProduct() {
 						<div className={Styles.product_ratings__header}>BÌNH LUẬN VỀ SẢN PHẨM</div>
 						<div className={Styles.item_binh_luan}>
 							<div className={Styles.comment}>
-								<Comments />
+								<CommentsContainer id_product={id} />
 							</div>
 							<div className={Styles.pagination}>
 								<Pagination defaultCurrent={1} total={50} />

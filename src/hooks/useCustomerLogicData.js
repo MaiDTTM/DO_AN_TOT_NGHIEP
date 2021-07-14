@@ -13,6 +13,11 @@ function useCustomerLogicData() {
 		const data = await baseAPI.getAll(TypeApi.user, obj);
 		dispatch({ type: TYPE_ACTION.CUSTOMER.GET_LIST, payload: { data } });
 	};
+	const getDateFlowId = async (id, callback = () => null) => {
+		const data = await baseAPI.getAll(`${TypeApi.user}/${id}`);
+		callback(data);
+		return data;
+	};
 	const updateCustomer = async (obj) => {
 		const { message, user } = await baseAPI.update(
 			`${TypeApi.adminuser}/${obj._id}`,
@@ -27,7 +32,7 @@ function useCustomerLogicData() {
 			messageAnt.success('Cập nhật thành công !');
 		} else messageAnt.warn(message);
 	};
-	return { customer, getListCustomer, updateCustomer };
+	return { customer, getListCustomer, updateCustomer, getDateFlowId };
 }
 
 useCustomerLogicData.propTypes = {};
