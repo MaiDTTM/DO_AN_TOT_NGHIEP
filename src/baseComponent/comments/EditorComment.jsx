@@ -16,9 +16,9 @@ function EditorComment({ avatarUrl, handleSend }) {
 	}, [content]);
 	return (
 		<div className={styles.editor}>
-			<Avatar size={50} src={avatarUrl}>
-				USER
-			</Avatar>
+			{/*<Avatar size={50} src={avatarUrl}>*/}
+			{/*	USER*/}
+			{/*</Avatar>*/}
 			<TextArea
 				value={content}
 				placeholder={'Bình luận của bạn'}

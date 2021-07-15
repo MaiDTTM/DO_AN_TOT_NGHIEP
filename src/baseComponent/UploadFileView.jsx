@@ -70,7 +70,6 @@ function UploadFileView(props) {
 				break;
 			case 'removed':
 				const listFilter = listLinkFile.filter((item) => item !== info.file.uid);
-				console.log('listFilter', listFilter); // MongLV log fix bug
 				setListLinkFile([...listFilter]);
 				setListLinkFileUtil([...listFilter]);
 				if (listFilter.length === 0) {

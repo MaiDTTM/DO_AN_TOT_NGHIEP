@@ -205,7 +205,7 @@
 	width: 60%;
 }
 .left_order_info {
-	width: 110px;
+	width: 150px;
 	float: left;
 	white-space: nowrap;
 }
@@ -234,7 +234,7 @@
 }
 .head_col1 {
 	float: left;
-	width: 465px;
+	width: 425px;
 	text-transform: uppercase;
 	padding-left: 3px;
 }
@@ -244,8 +244,13 @@
 	text-transform: uppercase;
 }
 .head_col3 {
+	width: 103px;
+	margin-right: 21px;
 	float: left;
 	text-transform: uppercase;
+}
+.head_col4{
+	width: 103px;
 }
 .inside_order_detail {
 	float: left;
@@ -263,7 +268,7 @@
 	flex-direction: row;
 }
 .item_order_name {
-	width: 386px;
+	width: 350px;
 	float: left;
 }
 .bottom_order {
@@ -288,12 +293,14 @@
 	margin: 13px 0 0 10px;
 }
 .item_order_gia {
-	margin: 15px 0 0 15px;
+	margin: 15px 0 0 10px;
 	float: left;
+	min-width: 100px;
 }
 .item_order_tien {
-	margin: 15px 0 0 57px;
+	margin: 15px 0 0 0;
 	float: left;
+	min-width: 100px;
 }
 .bottom_order {
 	float: left;

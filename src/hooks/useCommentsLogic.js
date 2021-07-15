@@ -18,7 +18,17 @@ function useCommentsLogic() {
 			messageAnt.warn(message);
 		}
 	};
-	return [getListComment, postComment];
+	const deleteComments = async(id, callback = () => null, data) => {
+		const { message } = await baseAPI.delete(TypeApi.comments, id);
+		if (message === 'SUCCESS') {
+			delete data[id];
+			callback({...data});
+			messageAnt.success('Xóa thành công');
+		} else {
+			messageAnt.warn(message);
+		}
+	}
+	return [getListComment, postComment, deleteComments];
 }
 
 export default useCommentsLogic;

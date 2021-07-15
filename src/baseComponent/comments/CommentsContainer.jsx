@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Comments from './Comments';
 import useCommentsLogic from '../../hooks/useCommentsLogic';
@@ -8,7 +9,7 @@ import PropTypes from 'prop-types';
 
 function CommentsContainer({ id_product }) {
 	// hooks
-	const [getList, postComment] = useCommentsLogic();
+	const [getList, postComment, deleteComments] = useCommentsLogic();
 	const myUser = useSelector((state) => state[TYPE_STORE.myUser]);
 
 	// state
@@ -20,6 +21,9 @@ function CommentsContainer({ id_product }) {
 		newData[obj._id] = obj;
 		setDate(newData);
 	};
+	const deleteComment = (id) => {
+		deleteComments(id, setDate, data)
+	}
 	const post = (obj) => postComment(obj, updateData);
 
 	React.useEffect(() => {
@@ -33,6 +37,7 @@ function CommentsContainer({ id_product }) {
 			id_product={id_product}
 			postComment={post}
 			id_user={myUser._id}
+			deleteComment={deleteComment}
 			avatarUrl={BASE_URL_IMAGE + myUser.avatar}
 		/>
 	);

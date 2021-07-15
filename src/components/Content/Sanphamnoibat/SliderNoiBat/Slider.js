@@ -13,7 +13,6 @@ function Slider() {
 	};
 	// KHai bào hàm hiển thị slide
 	const showSlides = () => {
-		console.log('slideIndex', slideIndex);
 		let i;
 		const slides = document.getElementsByClassName('mySlides');
 		const dots = document.getElementsByClassName('dot');

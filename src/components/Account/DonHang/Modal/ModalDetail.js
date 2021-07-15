@@ -70,7 +70,9 @@ function ModalDetail(props) {
 						</div>
 						<div className={style.line_order_info}>
 							<div className={style.line_order_info_left}>
-								<span className={style.left_order_info}>Trạng thái:</span>
+								<span className={style.left_order_info} style={{ width: 250 }}>
+									Trạng thái:
+								</span>
 								<span className={style.right_order_info} style={{ fontWeight: 'bold' }}>
 									{item.status_transaction}
 								</span>
@@ -86,6 +88,10 @@ function ModalDetail(props) {
 								</div>
 							)}
 						</div>
+						<div className={style.line_order_info}>
+							<span className={style.left_order_info}>Phí vận chuyển:</span>
+							<span className={style.right_order_info}>{/**/}</span>
+						</div>
 					</div>
 					<div className={style.add_giaohang}>
 						<span style={{ textTransform: 'uppercase' }}>Địa chỉ giao hàng :</span>
@@ -96,7 +102,7 @@ function ModalDetail(props) {
 					<div className={style.header_manage_order}>
 						<span className={style.head_col1}>Danh sách sản phẩm</span>
 						<span className={style.head_col2}>Đơn giá</span>
-						<span className={style.head_col3}>Thành tiền</span>
+						<span className={style.head_col4}>Thành tiền</span>
 					</div>
 					<div className={style.inside_order_detail}>
 						{item.carts_id.map(
@@ -121,14 +127,7 @@ function ModalDetail(props) {
 												carts[cartId] &&
 													carts[cartId].product_id &&
 													product[carts[cartId].product_id] &&
-													product[carts[cartId].product_id].price -
-														(
-															(product[carts[cartId].product_id].price *
-																product[carts[cartId].product_id].price_seo.split(
-																	' '
-																)[0]) /
-															100
-														).toFixed(2)
+													product[carts[cartId].product_id].price.toFixed(2)
 											)}
 										</span>
 										<span className={style.item_order_tien}>

@@ -210,7 +210,7 @@ function SanPham() {
 				message.error(`${file.name} is not a excel file`);
 			}
 			return file.type ===
-				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 				? true
 				: Upload.LIST_IGNORE;
 		},
@@ -255,9 +255,9 @@ function SanPham() {
 						<i style={{ fontSize: 12, fontWeight: 'bold', color: 'black' }}>
 							(
 							{data.catalog_id &&
-								category[data.catalog_id] &&
-								category[data.catalog_id].name &&
-								category[data.catalog_id].name}
+							category[data.catalog_id] &&
+							category[data.catalog_id].name &&
+							category[data.catalog_id].name}
 							)
 						</i>
 					</>
@@ -346,7 +346,7 @@ function SanPham() {
 	return (
 		<div>
 			<div>
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex',justifyContent:'center'}}>
 					<Button
 						style={{
 							marginBottom: 15,
@@ -359,19 +359,19 @@ function SanPham() {
 					>
 						Thêm sản phẩm
 					</Button>
-					<Upload {...props} fileList={fileList}>
-						<Button
-							style={{
-								marginBottom: 15,
-								marginRight: 5,
-								backgroundColor: '#42ecec',
-								borderRadius: 15,
-							}}
-							icon={<UploadOutlined />}
-						>
-							Import excel
-						</Button>
-					</Upload>
+					{/*<Upload {...props} fileList={fileList}>*/}
+					{/*	<Button*/}
+					{/*		style={{*/}
+					{/*			marginBottom: 15,*/}
+					{/*			marginRight: 5,*/}
+					{/*			backgroundColor: '#42ecec',*/}
+					{/*			borderRadius: 15,*/}
+					{/*		}}*/}
+					{/*		icon={<UploadOutlined />}*/}
+					{/*	>*/}
+					{/*		Import excel*/}
+					{/*	</Button>*/}
+					{/*</Upload>*/}
 					<ExportCSV csvData={customers} fileName="List_product" wscols={wscols} />
 				</div>
 				{/*modal them*/}

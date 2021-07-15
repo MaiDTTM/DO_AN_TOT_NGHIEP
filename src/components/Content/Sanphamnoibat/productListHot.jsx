@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'antd';
 //style
 import Styles from './styleHost.module.css';
@@ -12,12 +12,17 @@ ProductListHot.propTypes = {};
 
 function ProductListHot(props) {
 	const product = useSelector((state) => state['product']);
+	const [newRandom, setNewRandom] = React.useState([]);
 	const newArrValue = Object.values(product);
-	// const newRandom = [];
-	// for (let i = 0; i < 8; i++) {
-	// 	const item = newArrValue[Math.floor(Math.random() * newArrValue.length)];
-	// 	newRandom.push(item);
-	// }
+	useEffect(() => {
+		if (newArrValue.length > 0) {
+			for (let i = 0; i < 8; i++) {
+				const item = newArrValue[Math.floor(Math.random() * newArrValue.length)];
+				newRandom.length < 8 && newRandom.push(item);
+				setNewRandom([...newRandom]);
+			}
+		}
+	}, [product]);
 	return (
 		<div className={Styles.list_hot}>
 			<div className={Styles.content_noi_bat}>
@@ -64,7 +69,7 @@ function ProductListHot(props) {
 						{/*	icon={<LeftOutlined />}*/}
 						{/*/>*/}
 						<div className={Styles.item_cart_content_i}>
-							{newArrValue.slice(0, 8).map((item) => {
+							{newRandom.map((item) => {
 								return (
 									<Link to={`/detail/${item._id}`}>
 										{

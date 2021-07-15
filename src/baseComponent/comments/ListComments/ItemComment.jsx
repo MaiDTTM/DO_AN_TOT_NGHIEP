@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { Avatar } from 'antd';
+import {Avatar, Button} from 'antd';
 import style from '../index.module.scss';
 import UserComment from './UserComment';
 
@@ -17,16 +17,17 @@ const dateString = (date) =>
 	':' +
 	date.getSeconds();
 
-function ItemComment({ id_user, content = '', timestamp = new Date().getTime() }) {
+function ItemComment({ id_user, content = '', timestamp = new Date().getTime(), deleteComment = () => null, id }) {
 	return (
 		<div className={style.item_comment_row}>
-			<div className={style.item_comment_column} style={{ width: '30%' }}>
+			<div className={style.item_comment_column_2} style={{ width: '15%' }}>
 				<UserComment id={id_user} />
 			</div>
-			<div className={style.item_comment_column} style={{ width: '70%' }}>
-				<div>{content}</div>
-				<div>{dateString(new Date(timestamp))}</div>
+			<div className={style.item_comment_column_2} style={{ width: '80%' }}>
+				<h2 className={style.content_} >{content}</h2>
+				<h4>Ngày bình luận: {dateString(new Date(timestamp))}</h4>
 			</div>
+			<Button type={'danger'} onClick={() => deleteComment(id)} style={{borderRadius: 500}}>X</Button>
 		</div>
 	);
 }

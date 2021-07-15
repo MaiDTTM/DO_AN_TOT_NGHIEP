@@ -43,7 +43,6 @@ function CaiDat() {
 	const onFinish = (values) => {
 		const dataUpdate = {...accountAdmin, ...values};
 		dataUpdate['avatar'] = linkFileUtil;
-		console.log('dataUpdate', dataUpdate); // MongLV log fix bug
 		if (dataUpdate.new_password === dataUpdate.check_new_password) {
 			updateUserAdmin(dataUpdate).catch(err => console.log(err))
 		} else {

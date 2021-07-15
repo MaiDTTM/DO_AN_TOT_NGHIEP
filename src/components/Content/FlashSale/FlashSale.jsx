@@ -22,7 +22,7 @@ function FlashSale({ product }) {
 		console.log('finished!');
 	};
 	const handleNext = () => {
-		if (arraySale.length !== numberEnd - 1) {
+		if (newArraySale.length !== numberEnd - 1) {
 			setNumberStart(numberStart + 6);
 			setNumberEnd(numberEnd + 6);
 		}
@@ -63,13 +63,15 @@ function FlashSale({ product }) {
 					</div>
 				</div>
 				<div className={Styles.content_host_item}>
-					<Button
-						onClick={handleDown}
-						className={Styles.btn_giam}
-						type="primary"
-						shape="circle"
-						icon={<LeftOutlined />}
-					/>
+					{!!numberStart && (
+						<Button
+							onClick={handleDown}
+							className={Styles.btn_giam}
+							type="primary"
+							shape="circle"
+							icon={<LeftOutlined />}
+						/>
+					)}
 					<div
 						style={{
 							width: '95%',
@@ -130,13 +132,15 @@ function FlashSale({ product }) {
 							);
 						})}
 					</div>
-					<Button
-						type="primary"
-						shape="circle"
-						onClick={handleNext}
-						className={Styles.btn_tang}
-						icon={<RightOutlined />}
-					/>
+					{newArraySale.length !== numberEnd && (
+						<Button
+							type="primary"
+							shape="circle"
+							onClick={handleNext}
+							className={Styles.btn_tang}
+							icon={<RightOutlined />}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

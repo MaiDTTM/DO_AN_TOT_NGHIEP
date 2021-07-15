@@ -12,6 +12,8 @@ import TYPE_TRANSACTION from '../../../../util/TypeDoDatHang';
 import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 import useCustomerLogicData from '../../../../hooks/useCustomerLogicData';
 import { StopOutlined } from '@ant-design/icons';
+import {ContextApp} from "../../../../context/contextApp";
+import LoadingBase from "../../../../baseComponent/LoadingBase";
 
 const ModalDetail = React.lazy(() =>
 	import('../../../Account/DonHang/Modal/ModalDetail')
@@ -23,12 +25,15 @@ function DonDatHang() {
 	const { carts } = useCartLogicData();
 	const { product, updateProduct } = useProductLogicData();
 	const { customer } = useCustomerLogicData();
+	const { textSearch } = React.useContext(ContextApp);
+	console.log('customer', customer); // MongLV log fix bug
 
 	// state
 	const [type, setType] = React.useState(TYPE_TRANSACTION.ALL);
 	const [itemCancel, setItemCancel] = React.useState(null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [itemTransactionDetail, setItemTransactionDetail] = useState(null);
+
 
 	// handleFunction
 	const [form] = Form.useForm();
@@ -105,7 +110,17 @@ function DonDatHang() {
 		if (type !== 'Tất cả') {
 			arr = Object.values(transaction).filter((item) => item.status_transaction === type);
 		}
-		return arr.reverse();
+
+		const list = arr.filter((item) => {
+			// if(customer && Object.key(customer).length > 0 && item.user_id) {
+			// 	return item._id.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
+			// 	|| customer[item.user_id].name.toLowerCase().indexOf(textSearch.toLowerCase())
+			// }
+			return item._id.toLowerCase().indexOf(textSearch.toLowerCase()) !== -1
+		}).reverse();
+		// return arr.reverse();
+		console.log('list', list); // MongLV log fix bug
+		return list;
 	};
 	const handleDetailTransaction = (item = null) => {
 		setItemTransactionDetail(item);

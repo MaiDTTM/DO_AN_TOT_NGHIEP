@@ -43,8 +43,8 @@ function DonHang() {
 	// };
 	const handleOk = (values) => {
 		itemCancel['status_transaction'] = TYPE_TRANSACTION.DA_HUY;
-		if (values.messageError.length <= 10) {
-			message.warning('Lý do tối thiểu 10 ký tự!');
+		if (values.messageError.length <= 5) {
+			message.warning('Lý do tối thiểu 5 ký tự!');
 		} else {
 			itemCancel['messageError'] = values.messageError;
 			putTransaction(itemCancel, handleCancel);

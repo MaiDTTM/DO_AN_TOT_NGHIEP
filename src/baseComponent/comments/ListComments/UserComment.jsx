@@ -7,7 +7,6 @@ import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 function UserComment({ id }) {
 	const { getDateFlowId } = useCustomerLogicData();
 	const [user, setUser] = React.useState(null);
-	console.log('user', user); // MongLV log fix bug
 	React.useEffect(() => {
 		getDateFlowId(id)
 			.then((data) => setUser(data))
@@ -19,7 +18,7 @@ function UserComment({ id }) {
 			<Avatar size={50} src={BASE_URL_IMAGE + user.image}>
 				USER
 			</Avatar>
-			<div>{user.name}</div>
+			<h2>{user.name}</h2>
 		</>
 	);
 }

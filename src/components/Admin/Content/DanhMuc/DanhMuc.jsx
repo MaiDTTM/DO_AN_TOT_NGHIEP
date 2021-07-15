@@ -145,7 +145,7 @@ function DanhMuc() {
 					updateCategory({ ...dataEditCategoryModal, ...values });
 					onCancel();
 				} else {
-					values['index'] = valueIndex;
+					// values['index'] = value.index;
 					updateCategory({ ...dataEditCategoryModal, ...values });
 					onCancel();
 				}
@@ -157,6 +157,15 @@ function DanhMuc() {
 	const onReset = (isReset = false) => {
 		if (dataEditCategoryModal && isReset) {
 			form.setFieldsValue({ ...dataEditCategoryModal });
+			setLinkFileUtil(dataEditCategoryModal.icon);
+			setFileListUtil([
+				{
+					uid: '-1',
+					name: dataEditCategoryModal.icon,
+					status: 'done',
+					url: BASE_URL_IMAGE + dataEditCategoryModal.icon,
+				},
+			]);
 		} else {
 			form.resetFields();
 			setDataEditCategoryModal(null);
@@ -265,9 +274,9 @@ function DanhMuc() {
 						<i style={{ fontSize: 12, fontWeight: 'bold', color: 'black' }}>
 							(
 							{data.catalog_id &&
-								category[data.catalog_id] &&
-								category[data.catalog_id].name &&
-								category[data.catalog_id].name}
+							category[data.catalog_id] &&
+							category[data.catalog_id].name &&
+							category[data.catalog_id].name}
 							)
 						</i>
 					</>
@@ -346,23 +355,23 @@ function DanhMuc() {
 					onClick={(key) => handleClick(key)}
 				>
 					{categoryPaPaSort().length > 0 &&
-						categoryPaPaSort().map((item) => {
-							return (
-								item.paramId === '-1' && (
-									<SubMenu
-										key={item._id}
-										title={TitleCategory(item)}
-										onTitleClick={handleSubmenuClick}
-									>
-										{categoryPaPaSort(item._id).map((itemChildren) => (
-											<Menu.Item key={itemChildren._id}>
-												{TitleCategory(itemChildren)}
-											</Menu.Item>
-										))}
-									</SubMenu>
-								)
-							);
-						})}
+					categoryPaPaSort().map((item) => {
+						return (
+							item.paramId === '-1' && (
+								<SubMenu
+									key={item._id}
+									title={TitleCategory(item)}
+									onTitleClick={handleSubmenuClick}
+								>
+									{categoryPaPaSort(item._id).map((itemChildren) => (
+										<Menu.Item key={itemChildren._id}>
+											{TitleCategory(itemChildren)}
+										</Menu.Item>
+									))}
+								</SubMenu>
+							)
+						);
+					})}
 				</Menu>
 				<div className={styles.danh_muc_action}>
 					<Search placeholder={'Tìm kiếm danh mục'} onSearch={onSearch} enterButton />

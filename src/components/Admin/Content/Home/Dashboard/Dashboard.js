@@ -39,7 +39,6 @@ function Dashboard() {
 		const data = await baseAPI.getAll(TypeApi.chart);
 		await setDataChart(data);
 	};
-	console.log('dataChart', dataChart); // MongLV log fix bug
 	React.useEffect(() => {
 		getChart().catch((err) => console.log(err));
 	}, []);

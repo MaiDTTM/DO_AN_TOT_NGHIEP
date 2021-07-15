@@ -77,6 +77,12 @@ function BuyProduct() {
 	const [modal2Visible, setModal2Visible] = React.useState(false);
 	const [dataTable, setDataTable] = React.useState([]);
 
+	React.useEffect(() => {
+		if (selectedRowKeys.length === 0) {
+			history.push('/cart');
+		}
+	}, []);
+
 	// handle func
 	const handleChangeAmount = (value, data) => {
 		updateCart({
@@ -116,8 +122,9 @@ function BuyProduct() {
 						).toFixed(2) *
 							carts[item].amount)
 			);
+		sumMoney < 200 && (sumMoney = sumMoney + 35);
 		if (typeNumber) return sumMoney;
-		return ConvertStringToVND(sumMoney);
+		return ConvertStringToVND(sumMoney.toFixed(2));
 	};
 	const handleDeleteCart = (idDelete) => {
 		const result = selectedRowKeys.filter((id) => id !== idDelete);
@@ -457,7 +464,7 @@ function BuyProduct() {
 										Phí vận chuyển :
 									</span>
 									<Form.Item>
-										<span>{} VNĐ</span>
+										<span>{handleSumMoney(true) < 200 ? '35.000' : '0'} VNĐ</span>
 									</Form.Item>
 								</div>
 							</div>
