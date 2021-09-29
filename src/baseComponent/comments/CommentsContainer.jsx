@@ -7,7 +7,7 @@ import { BASE_URL_IMAGE, TYPE_STORE } from '../../util/TypeApi';
 import PropTypes from 'prop-types';
 // import PropTypes from 'prop-types';
 
-function CommentsContainer({ id_product }) {
+function CommentsContainer({ id_product, maxIndex, minIndex }) {
 	// hooks
 	const [getList, postComment, deleteComments] = useCommentsLogic();
 	const myUser = useSelector((state) => state[TYPE_STORE.myUser]);
@@ -22,8 +22,8 @@ function CommentsContainer({ id_product }) {
 		setDate(newData);
 	};
 	const deleteComment = (id) => {
-		deleteComments(id, setDate, data)
-	}
+		deleteComments(id, setDate, data);
+	};
 	const post = (obj) => postComment(obj, updateData);
 
 	React.useEffect(() => {
@@ -39,6 +39,8 @@ function CommentsContainer({ id_product }) {
 			id_user={myUser._id}
 			deleteComment={deleteComment}
 			avatarUrl={BASE_URL_IMAGE + myUser.avatar}
+			maxIndex={maxIndex}
+			minIndex={minIndex}
 		/>
 	);
 }

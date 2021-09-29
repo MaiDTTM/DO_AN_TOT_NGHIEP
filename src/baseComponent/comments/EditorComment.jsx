@@ -1,32 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Button, Input } from 'antd';
+import { Avatar, Button, Input, Rate } from 'antd';
 import styles from './index.module.scss';
 
 const { TextArea } = Input;
 
-function EditorComment({ avatarUrl, handleSend }) {
+function EditorComment({ handleSend }) {
 	// state
 	const [content, setContent] = React.useState('');
+	const [vote, setVote] = React.useState(0);
 
 	const onChange = React.useCallback((e) => setContent(e.target.value), []);
+	const handleChangeVote = (value) => {
+		setVote(value);
+	};
 	const onSend = React.useCallback(() => {
-		handleSend('-1', content);
+		handleSend('-1', { content, vote });
 		setContent('');
-	}, [content]);
+		setVote(0);
+	}, [content, vote]);
 	return (
 		<div className={styles.editor}>
-			{/*<Avatar size={50} src={avatarUrl}>*/}
-			{/*	USER*/}
-			{/*</Avatar>*/}
 			<TextArea
 				value={content}
 				placeholder={'Bình luận của bạn'}
 				allowClear={false}
 				onChange={onChange}
+				rows={3}
 			/>
-			<div style={{ marginLeft: 5 }}>
-				<Button type={'primary'} onClick={onSend} style={{ borderRadius: 10 }}>
+			<div className={styles.submit_comment}>
+				<Rate
+					style={{ fontSize: '16px' }}
+					allowHalf
+					value={vote}
+					onChange={handleChangeVote}
+				/>
+				<Button type={'primary'} onClick={onSend} className={styles.button_comment}>
 					Gửi
 				</Button>
 			</div>

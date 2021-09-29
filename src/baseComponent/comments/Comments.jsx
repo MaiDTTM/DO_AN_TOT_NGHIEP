@@ -4,17 +4,32 @@ import styles from './index.module.scss';
 import EditorComment from './EditorComment';
 import ListComment from './ListComments/ListComment';
 
-function Comments({ id_product, postComment, id_user, avatarUrl, data, deleteComment }) {
+function Comments({
+	id_product,
+	postComment,
+	id_user,
+	avatarUrl,
+	data,
+	deleteComment,
+	maxIndex,
+	minIndex,
+}) {
 	const handleSend = (id_comment = '-1', content) =>
 		postComment({
 			id_product,
 			id_comment: id_comment,
-			destination: content,
+			destination: content.content,
+			vote: content.vote,
 			id_user,
 		});
 	return (
 		<div className={styles.container}>
-			<ListComment data={data} deleteComment={deleteComment} />
+			<ListComment
+				data={data}
+				deleteComment={deleteComment}
+				maxIndex={maxIndex}
+				minIndex={minIndex}
+			/>
 			<EditorComment avatarUrl={avatarUrl} handleSend={handleSend} />
 		</div>
 	);
@@ -30,7 +45,7 @@ Comments.propTypes = {
 
 Comments.defaultProps = {
 	postComment: () => null,
-	deleteComment: () => null
+	deleteComment: () => null,
 };
 
 export default React.memo(Comments);

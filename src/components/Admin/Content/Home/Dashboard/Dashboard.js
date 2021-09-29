@@ -53,7 +53,7 @@ function Dashboard() {
 							</div>
 						</div>
 						<div className={style.StatsCard_cardContent_290}>
-							<p className={style.StatsCard_cardCategory_293}>Số lượng đặt hàng (day)</p>
+							<p className={style.StatsCard_cardCategory_293}>Số lượng đặt hàng</p>
 							<h2 className={style.StatsCard_cardTitle_294}>
 								{dataChart && dataChart.numberTransactionDay} {''}
 								<small className={style.StatsCard_cardTitleSmall_295}>lượt</small>

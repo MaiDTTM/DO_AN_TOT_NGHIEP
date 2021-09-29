@@ -296,13 +296,15 @@ function HoSo(props) {
 											<img alt="example" style={{ width: '100%' }} src={previewImage} />
 										</Modal>
 									</Form.Item>
-									<div>
-										Dung lượng file tối đa 2 MB
-										<br />
-										Định dạng:.JPEG, .PNG
-									</div>
-									<div style={{ color: '#f65353', display: 'none' }} id="chu_y">
-										* Click vào ảnh để thay đổi avatar
+									<div style={{ display: 'none' }} id="chu_y">
+										<div>
+											Dung lượng file tối đa 2 MB
+											<br />
+											Định dạng:.JPEG, .PNG
+										</div>
+										<div style={{ color: '#f65353' }}>
+											* Click vào ảnh để thay đổi avatar
+										</div>
 									</div>
 								</div>
 							</div>

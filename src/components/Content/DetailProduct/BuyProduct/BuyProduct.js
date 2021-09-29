@@ -295,155 +295,121 @@ function BuyProduct() {
 					form={form}
 				>
 					<div style={{ display: 'flex' }}>
-						<div className={Styles.left_order}>
-							<div className={Styles.thong_tin}>
-								<span className={Styles.tieu_de}>Thông tin mua hàng</span>
-								<Form.Item
-									name="name"
-									rules={[{ required: true, message: 'Please input your username!' }]}
-								>
-									<Input placeholder="Username" style={styleInput} disabled />
-								</Form.Item>
-								{/*<Form.Item*/}
-								{/*	className={Styles.form_thanh_toan}*/}
-								{/*	name="password"*/}
-								{/*	rules={[{ required: true, message: 'Please input your password!' }]}*/}
-								{/*>*/}
-								{/*	<Input.Password placeholder="Password" style={styleInput} />*/}
-								{/*</Form.Item>*/}
-								<Form.Item>
-									<div style={{ display: 'flex', width: '380px' }}>
-										<span className={Styles.gt}>Giới tính : </span>
-										<Radio.Group
-											name={'gender'}
-											style={{ marginLeft: '10px', display: 'flex' }}
-											disabled
-										>
-											<Radio style={radioStyle} value={'1'}>
-												Nam
-											</Radio>
-											<Radio style={radioStyle} value={'2'}>
-												Nữ
-											</Radio>
-											<Radio style={radioStyle} value={'3'}>
-												Khác
-											</Radio>
-										</Radio.Group>
-									</div>
-								</Form.Item>
-								<Form.Item
-									name="phone"
-									rules={[{ required: true, message: 'Please input your phone number!' }]}
-								>
-									<Input
-										style={{ width: '100%', ...styleInput }}
-										placeholder="Số điện thoại giao hàng"
-									/>
-								</Form.Item>
-								<Form.Item
-									name="email"
-									rules={[
-										{
-											type: 'email',
-											message: 'The input is not valid E-mail!',
-										},
-										{
-											required: true,
-											message: 'Please input your E-mail!',
-										},
-									]}
-								>
-									<Input placeholder="Email" style={styleInput} disabled />
-								</Form.Item>
-								{/*<Form.Item name="diachi">*/}
-								{/*	<div style={{ width: '400px', display: 'flex' }}>*/}
-								{/*		<div style={{ width: '190px' }}>*/}
-								{/*			<Form.Item name="tinhthanhpho" rules={[{ required: true }]}>*/}
-								{/*				<Select*/}
-								{/*					placeholder="Select a option and change input text above"*/}
-								{/*					// onChange={this.onGenderChange}*/}
-								{/*					allowClear*/}
-								{/*					defaultValue="defaule"*/}
-								{/*				>*/}
-								{/*					<Option value="defaule">Tỉnh / Thành phố</Option>*/}
-								{/*					<Option value="HaNoi">Hà Nội</Option>*/}
-								{/*					<Option value="HungYen">Hưng Yên</Option>*/}
-								{/*					<Option value="HaiDuong">Hải Dương</Option>*/}
-								{/*				</Select>*/}
-								{/*			</Form.Item>*/}
-								{/*		</div>*/}
-								{/*		<div style={{ width: '190px' }}>*/}
-								{/*			<Form.Item name="quanhuyen" rules={[{ required: true }]}>*/}
-								{/*				<Select*/}
-								{/*					placeholder="Select a option and change input text above"*/}
-								{/*					// onChange={this.onGenderChange}*/}
-								{/*					allowClear*/}
-								{/*					defaultValue="defaule"*/}
-								{/*				>*/}
-								{/*					<Option value="defaule">Quận / Huyện </Option>*/}
-								{/*					<Option value="HaNoi">Hà Nội</Option>*/}
-								{/*					<Option value="HungYen">Hưng Yên</Option>*/}
-								{/*					<Option value="HaiDuong">Hải Dương</Option>*/}
-								{/*				</Select>*/}
-								{/*			</Form.Item>*/}
-								{/*		</div>*/}
-								{/*	</div>*/}
-								{/*</Form.Item>*/}
-								<div className={Styles.textarea_diachi}>
+						<div style={{ display: 'flex', flexDirection: 'column' }}>
+							<div className={Styles.left_order}>
+								<div className={Styles.thong_tin}>
+									<span className={Styles.tieu_de}>Thông tin mua hàng</span>
 									<Form.Item
-										name="address"
-										rules={[{ required: true, message: 'Không được bỏ trống địa chỉ' }]}
+										name="name"
+										rules={[{ required: true, message: 'Please input your username!' }]}
 									>
-										<TextArea placeholder="Số nhà, tòa nhà, đường, xã phường" rows={3} />
+										<Input placeholder="Username" style={styleInput} disabled />
 									</Form.Item>
-								</div>
-							</div>
-							<div className={Styles.thanh_toan}>
-								<span className={Styles.tieu_de}>Thời gian nhận hàng</span>
-								<Form.Item
-									name={'delivery_time'}
-									rules={[{ required: true, message: 'Không được trống trường này' }]}
-								>
-									<Radio.Group style={{ marginLeft: '10px' }}>
-										<Radio style={radioStyle} value={'Trong giờ hành chính'}>
-											Trong giờ hành chính
-										</Radio>
-										<Radio style={radioStyle} value={'Ngoài giờ hành chính'}>
-											Ngoài giờ hành chính
-										</Radio>
-									</Radio.Group>
-								</Form.Item>
-								<div className={Styles.tieu_de}>Hình thức thanh toán</div>
-								<Form.Item
-									name={'payment'}
-									rules={[{ required: true, message: 'Không được trống trường này' }]}
-								>
-									<Radio.Group style={{ marginLeft: '10px' }}>
-										<Radio style={radioStyle} value={'Thanh toán khi nhận hàng(COD)'}>
-											Thanh toán khi nhận hàng(COD)
-										</Radio>
-										<Radio
-											style={radioStyle}
-											value={'Chuyển khoản qua ngân hàng'}
-											disabled
-										>
-											Chuyển khoản qua ngân hàng
-										</Radio>
-									</Radio.Group>
-								</Form.Item>
-								<div className={Styles.textarea_message}>
-									<Form.Item name={'message'}>
-										<TextArea
-											rows={4}
-											placeholder="Viết ghi chú, yêu cầu đối với đơn hàng cho người giao hàng."
+									<Form.Item>
+										<div style={{ display: 'flex', width: '380px' }}>
+											<span className={Styles.gt}>Giới tính : </span>
+											<Radio.Group
+												name={'gender'}
+												style={{ marginLeft: '10px', display: 'flex' }}
+												disabled
+											>
+												<Radio style={radioStyle} value={'1'}>
+													Nam
+												</Radio>
+												<Radio style={radioStyle} value={'2'}>
+													Nữ
+												</Radio>
+												<Radio style={radioStyle} value={'3'}>
+													Khác
+												</Radio>
+											</Radio.Group>
+										</div>
+									</Form.Item>
+									<Form.Item
+										name="phone"
+										rules={[
+											{ required: true, message: 'Please input your phone number!' },
+										]}
+									>
+										<Input
+											style={{ width: '100%', ...styleInput }}
+											placeholder="Số điện thoại giao hàng"
 										/>
 									</Form.Item>
+									<Form.Item
+										name="email"
+										rules={[
+											{
+												type: 'email',
+												message: 'The input is not valid E-mail!',
+											},
+											{
+												required: true,
+												message: 'Please input your E-mail!',
+											},
+										]}
+									>
+										<Input placeholder="Email" style={styleInput} disabled />
+									</Form.Item>
+									<div className={Styles.textarea_diachi}>
+										<Form.Item
+											name="address"
+											rules={[{ required: true, message: 'Không được bỏ trống địa chỉ' }]}
+										>
+											<TextArea
+												placeholder="Số nhà, tòa nhà, đường, xã phường"
+												rows={3}
+											/>
+										</Form.Item>
+									</div>
+								</div>
+								<div className={Styles.thanh_toan}>
+									<span className={Styles.tieu_de}>Thời gian nhận hàng</span>
+									<Form.Item
+										name={'delivery_time'}
+										rules={[{ required: true, message: 'Không được trống trường này' }]}
+									>
+										<Radio.Group style={{ marginLeft: '10px' }}>
+											<Radio style={radioStyle} value={'Trong giờ hành chính'}>
+												Trong giờ hành chính
+											</Radio>
+											<Radio style={radioStyle} value={'Ngoài giờ hành chính'}>
+												Ngoài giờ hành chính
+											</Radio>
+										</Radio.Group>
+									</Form.Item>
+									<div className={Styles.tieu_de} style={{ marginTop: '0px' }}>
+										Hình thức thanh toán
+									</div>
+									<Form.Item
+										name={'payment'}
+										rules={[{ required: true, message: 'Không được trống trường này' }]}
+									>
+										<Radio.Group style={{ marginLeft: '10px' }}>
+											<Radio style={radioStyle} value={'Thanh toán khi nhận hàng(COD)'}>
+												Thanh toán khi nhận hàng(COD)
+											</Radio>
+											<Radio
+												style={radioStyle}
+												value={'Chuyển khoản qua ngân hàng'}
+												disabled
+											>
+												Chuyển khoản qua ngân hàng
+											</Radio>
+										</Radio.Group>
+									</Form.Item>
+									<div className={Styles.textarea_message}>
+										<Form.Item name={'message'}>
+											<TextArea
+												rows={3}
+												placeholder="Viết ghi chú, yêu cầu đối với đơn hàng cho người giao hàng."
+											/>
+										</Form.Item>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div className={Styles.right_order}>
 							<div style={{ marginLeft: '20px', width: '380px', display: 'flex' }}>
-								<span className={Styles.tieu_de}>
+								<span className={Styles.tieu_de} style={{ marginTop: '0px' }}>
 									Đơn hàng
 									<span className={Styles.so_luong}> {selectedRowKeys.length}</span>
 								</span>
@@ -458,15 +424,18 @@ function BuyProduct() {
 									/>
 								</Form.Item>
 							</div>
+						</div>
+						<div className={Styles.right_order}>
+							<div style={{ marginLeft: '20px', width: '330px', display: 'flex' }}>
+								<span className={Styles.tieu_de}>Tổng tiền đơn hàng</span>
+							</div>
 							<div className={Styles.line_order}>
-								<div style={{ display: 'flex' }}>
-									<span style={{ marginRight: 10, lineHeight: 2.4 }}>
-										Phí vận chuyển :
+								<span className={Styles.total_text}>Phí vận chuyển :</span>
+								<Form.Item>
+									<span className={Styles.total_money_oder}>
+										{handleSumMoney(true) < 200 ? '35.000' : '0'} VNĐ
 									</span>
-									<Form.Item>
-										<span>{handleSumMoney(true) < 200 ? '35.000' : '0'} VNĐ</span>
-									</Form.Item>
-								</div>
+								</Form.Item>
 							</div>
 							<div className={Styles.line_order}>
 								<span className={Styles.total_text}>Thành tiền :</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import {Avatar, Button} from 'antd';
+import { Avatar, Button } from 'antd';
 import style from '../index.module.scss';
 import UserComment from './UserComment';
 
@@ -17,17 +17,39 @@ const dateString = (date) =>
 	':' +
 	date.getSeconds();
 
-function ItemComment({ id_user, content = '', timestamp = new Date().getTime(), deleteComment = () => null, id }) {
+function ItemComment({
+	user,
+	id_user,
+	vote,
+	content = '',
+	timestamp = new Date().getTime(),
+	deleteComment = () => null,
+	id,
+}) {
 	return (
 		<div className={style.item_comment_row}>
-			<div className={style.item_comment_column_2} style={{ width: '15%' }}>
-				<UserComment id={id_user} />
+			<UserComment id={id_user} vote={vote} />
+			<div className={style.item_comment_column_2}>{content}</div>
+			<div className={style.comment_item_meta}>
+				<a onClick="openReply(this)" className={style.comment_item_reply} data-id="43971">
+					Trả lời
+				</a>
+				<a
+					className={style.comment_item_reply}
+					data-url="/Product/AddCommentLike"
+					data-id="43971"
+					onClick=""
+					id="like43971"
+				>
+					Thích (2)
+				</a>
+				{user === id_user && (
+					<a className={style.comment_item_reply} onClick={() => deleteComment(id)}>
+						Xóa
+					</a>
+				)}
+				<span className={style.comment_item_time}>{dateString(new Date(timestamp))}</span>
 			</div>
-			<div className={style.item_comment_column_2} style={{ width: '80%' }}>
-				<h2 className={style.content_} >{content}</h2>
-				<h4>Ngày bình luận: {dateString(new Date(timestamp))}</h4>
-			</div>
-			<Button type={'danger'} onClick={() => deleteComment(id)} style={{borderRadius: 500}}>X</Button>
 		</div>
 	);
 }

@@ -117,7 +117,7 @@ function MenuHome() {
 										product[item.product_id] &&
 										BASE_URL_IMAGE + product[item.product_id].image
 									}
-									style={{ width: 70, height: 70 }}
+									style={{ width: 50, height: 50 }}
 								/>
 							</div>
 							<div className={Styles.span_hover_cart}>

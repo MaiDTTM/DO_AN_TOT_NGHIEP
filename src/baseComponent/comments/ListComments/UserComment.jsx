@@ -1,10 +1,13 @@
 import React from 'react';
 import useCustomerLogicData from '../../../hooks/useCustomerLogicData';
-import { Avatar } from 'antd';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
+import style from '../index.module.scss';
+import { Rate } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import Avatar from 'antd/es/avatar/avatar';
 // import PropTypes from 'prop-types';
 
-function UserComment({ id }) {
+function UserComment({ id, vote }) {
 	const { getDateFlowId } = useCustomerLogicData();
 	const [user, setUser] = React.useState(null);
 	React.useEffect(() => {
@@ -14,12 +17,19 @@ function UserComment({ id }) {
 	}, []);
 	if (!user) return null;
 	return (
-		<>
-			<Avatar size={50} src={BASE_URL_IMAGE + user.image}>
-				USER
-			</Avatar>
-			<h2>{user.name}</h2>
-		</>
+		<div className={style.comment_item_author}>
+			<div className={style.comment_item_author_avatext}>
+				<img
+					style={{ width: '26px', height: '26px' }}
+					src={BASE_URL_IMAGE + user.image}
+					alt="Ngọc Bích- Phòng CSKH Sh op Trẻ Thơ"
+				/>
+			</div>
+			<span className={style.comment_item_author_name}>{user.name}</span>
+			<div className={style.show_rate}>
+				<Rate allowHalf value={vote} />
+			</div>
+		</div>
 	);
 }
 
