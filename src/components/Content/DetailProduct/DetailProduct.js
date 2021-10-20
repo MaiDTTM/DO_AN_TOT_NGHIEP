@@ -10,7 +10,7 @@ import Footer from '../../Footer/footer';
 import Chung from '../../Header/Chung';
 import { useDispatch, useSelector } from 'react-redux';
 import baseAPI from '../../../axios/baseAPI';
-import { BASE_URL_IMAGE, TypeApi } from '../../../util/TypeApi';
+import { BASE_URL_IMAGE, TYPE_STORE, TypeApi } from '../../../util/TypeApi';
 import { TYPE_ACTION } from '../../../actions/TypeAction';
 import ReactImageMagnify from 'react-image-magnify';
 import { ContextApp } from '../../../context/contextApp';
@@ -34,20 +34,21 @@ function DetailProduct() {
 
 	// filter
 	const arrayProduct = Object.values(product).filter((item) => item._id === id);
-
+	const listComments = useSelector((state) => state[TYPE_STORE.comment]);
+	const comments = Object.values(listComments);
 	// state
 	const [objDetail, setObjDetail] = React.useState({});
 	const [productSuggest, setProductSuggest] = React.useState([]);
 	const [imageActive, setImageActive] = React.useState('');
 	const [amount, setAmount] = React.useState(1);
-	const [listComment, setListComment] = React.useState([]);
 	const [current, setCurrent] = useState(1);
 	const [minIndex, setMinIndex] = useState(0);
 	const [maxIndex, setMaxIndex] = useState(pageSize);
 
 	let numberVote = 0;
-	listComment.map((item) => (numberVote += item.vote));
-	const valueCommentTB = numberVote / listComment.length;
+	comments.map((item) => (numberVote += item.vote));
+	const valueCommentTB =
+		numberVote / comments.filter((value) => value.id_comment === '-1').length;
 
 	const handleBuyProduct = async () => {
 		const idCart = await handleAddCart(false);
@@ -108,9 +109,7 @@ function DetailProduct() {
 	React.useEffect(() => {
 		window.scrollTo(0, 0);
 		getList({ id_product: id })
-			.then((data) => {
-				setListComment(Object.values(data));
-			})
+			.then()
 			.catch((err) => console.log(err));
 		arrayProduct.length > 0
 			? setObjDetail(arrayProduct[0])
@@ -200,7 +199,8 @@ function DetailProduct() {
 									<div className={Styles.action_header_detail_item}>
 										<Rate allowHalf value={valueCommentTB} style={{ fontSize: '18px' }} />
 										<div className={Styles.action_binh_luan} style={{ marginLeft: 10 }}>
-											{listComment.length} bình luận
+											{comments.filter((value) => value.id_comment === '-1').length} bình
+											luận
 										</div>
 										<div className={Styles.action_thuong_hieu}>Thương hiệu: GCB</div>
 										<div className={Styles.action_thuong_hieu}>
@@ -482,7 +482,7 @@ function DetailProduct() {
 									size="small"
 									pageSize={pageSize}
 									current={current}
-									total={listComment.length}
+									total={comments.length}
 									onChange={handleChange}
 								/>
 							</div>

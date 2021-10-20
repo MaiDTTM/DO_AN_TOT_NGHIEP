@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
+import moment from 'moment';
 import style from './style.module.scss';
 import {
 	CopyOutlined,
@@ -75,8 +76,8 @@ function FormChung(props) {
 			key: '2',
 			width: 150,
 			render: (record) => {
-				const date = record.date_of_birth.split('T');
-				return <div>{date[0]}</div>;
+				const date = moment(new Date(record.date_of_birth)).format('DD-MM-YYYY');
+				return <div>{date}</div>;
 			},
 		},
 		{
@@ -97,22 +98,22 @@ function FormChung(props) {
 			key: '5',
 			width: 300,
 		},
-		{
-			title: 'Mật khẩu',
-			// dataIndex: 'password',
-			key: '6',
-			width: 150,
-			render: (record) => {
-				return (
-					<input
-						disabled
-						type="password"
-						value={record.password}
-						style={{ backgroundColor: '#fff !important' }}
-					/>
-				);
-			},
-		},
+		// {
+		// 	title: 'Mật khẩu',
+		// 	// dataIndex: 'password',
+		// 	key: '6',
+		// 	width: 150,
+		// 	render: (record) => {
+		// 		return (
+		// 			<input
+		// 				disabled
+		// 				type="password"
+		// 				value={record.password}
+		// 				style={{ backgroundColor: '#fff !important' }}
+		// 			/>
+		// 		);
+		// 	},
+		// },
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
@@ -256,7 +257,7 @@ function FormChung(props) {
 						<Input />
 					</Form.Item>
 					<Form.Item name="status" label="Tắt/Bật User" style={{ marginLeft: '10px' }}>
-						<Switch defaultChecked={status} onChange={handleSwitch} />
+						{modal1Visible && <Switch defaultChecked={status} onChange={handleSwitch} />}
 					</Form.Item>
 					<Form.Item label="Password" name="password">
 						<Popconfirm

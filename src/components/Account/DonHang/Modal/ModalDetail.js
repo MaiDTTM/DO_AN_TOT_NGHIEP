@@ -10,12 +10,12 @@ import { BASE_URL_IMAGE } from '../../../../util/TypeApi';
 
 function ModalDetail(props) {
 	const { item, setItem } = props;
-
 	// hooks
 	const { carts } = useCartLogicData();
 	const { product } = useProductLogicData();
 	const draggleRef = React.createRef();
 	const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
+	let numberShip = 0;
 
 	const onStart = (event, uiData) => {
 		const { clientWidth, clientHeight } = window?.document?.documentElement;
@@ -30,6 +30,22 @@ function ModalDetail(props) {
 	const handleCancelDetail = () => {
 		setItem();
 	};
+	if (item && item.carts_id) {
+		const arrSumMoney = item.carts_id.map(
+			(value) =>
+				carts[value] &&
+				carts[value].product_id &&
+				product[carts[value].product_id] &&
+				(product[carts[value].product_id].price -
+					(
+						(product[carts[value].product_id].price *
+							product[carts[value].product_id].price_seo.split(' ')[0]) /
+						100
+					).toFixed(2)) *
+					carts[value].amount
+		);
+		arrSumMoney.map((value) => (numberShip += value));
+	}
 	if (!item) return null;
 	return (
 		<Modal
@@ -90,7 +106,9 @@ function ModalDetail(props) {
 						</div>
 						<div className={style.line_order_info}>
 							<span className={style.left_order_info}>Phí vận chuyển:</span>
-							<span className={style.right_order_info}>{/**/}</span>
+							<span className={style.right_order_info}>
+								{numberShip <= 200 ? 35000 : 0} VNĐ
+							</span>
 						</div>
 					</div>
 					<div className={style.add_giaohang}>

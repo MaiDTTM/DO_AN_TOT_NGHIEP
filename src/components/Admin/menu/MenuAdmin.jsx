@@ -80,7 +80,6 @@ function MenuAdmin(props) {
 					Nhân viên
 				</Menu.Item>
 			)}
-
 			<Menu.Item key={objectKey.CAI_DAT} icon={<SettingOutlined />}>
 				Cài đặt tài khoản
 			</Menu.Item>

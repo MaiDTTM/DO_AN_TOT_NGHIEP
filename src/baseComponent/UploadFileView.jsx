@@ -10,6 +10,18 @@ import { BASE_URL_IMAGE } from '../util/TypeApi';
 import _styles from './styles/index.module.scss';
 import baseAPI from '../axios/baseAPI';
 
+function beforeUpload(file) {
+	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+	if (!isJpgOrPng) {
+		message.error('You can only upload JPG/PNG file!');
+	}
+	const isLt2M = file.size / 1024 / 1024 < 2;
+	if (!isLt2M) {
+		message.error('Image must smaller than 2MB!');
+	}
+	return isJpgOrPng && isLt2M;
+}
+
 // const
 const getBase64 = async (file) => {
 	return new Promise((resolve, reject) => {
@@ -33,6 +45,7 @@ function UploadFileView(props) {
 		limit,
 		listLinkFileUtil,
 		setListLinkFileUtil,
+		accept,
 	} = props;
 	const [linkFile, setLinkFile] = React.useState('');
 	const [listLinkFile, setListLinkFile] = React.useState([]);
@@ -65,6 +78,7 @@ function UploadFileView(props) {
 					status: 'done',
 					url: BASE_URL_IMAGE + info.file.response.fileNameInServer,
 				});
+				console.log('info.file', info.file.response); // MongLV log fix bug
 				setFileListUtil(fileList);
 
 				break;
@@ -128,7 +142,13 @@ function UploadFileView(props) {
 
 	return (
 		<div className={styles.upload_file}>
-			<Upload {...UpFile} fileList={fileList} listType="picture-card">
+			<Upload
+				{...UpFile}
+				fileList={fileList}
+				listType="picture-card"
+				accept={accept}
+				beforeUpload={beforeUpload}
+			>
 				{fileList.length <= limit && isNext ? (
 					<img
 						alt="example"
@@ -147,6 +167,7 @@ UploadFileView.propTypes = {
 
 	imgDefault: PropTypes.string,
 	linkFileUtil: PropTypes.string,
+	accept: PropTypes.string,
 
 	callback: PropTypes.func,
 	setLinkFileUtil: PropTypes.func,
@@ -172,5 +193,6 @@ UploadFileView.defaultProps = {
 	fileListUtil: [],
 	listLinkFileUtil: [],
 	limit: 0,
+	accept: 'image/png, image/jpeg',
 };
 export default React.memo(UploadFileView);

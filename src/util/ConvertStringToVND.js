@@ -1,5 +1,6 @@
 function ConvertStringToVND(number = 0, type = ' VNĐ') {
-	const money = (number * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + type;
+	const money =
+		(Math.round(number) * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + type;
 	return money;
 }
 

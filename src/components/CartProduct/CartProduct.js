@@ -144,6 +144,16 @@ function CartProduct() {
 							Xóa sản phẩm đã chọn
 						</Button>{' '}
 						{/*<Button onClick={handleClickBuyAllProduct}> Xem sản phẩm đã chọn </Button>{' '}*/}
+						<Button
+							style={{
+								backgroundColor: '#ee4d2d',
+								color: '#fff',
+							}}
+							onClick={onPushPageBuy}
+						>
+							{' '}
+							Mua sản phẩm đã chọn
+						</Button>{' '}
 						<Modal
 							title={
 								<div
@@ -252,53 +262,76 @@ function CartProduct() {
 			},
 		],
 	};
-	const dataTable = arrCartTable.map((item, i) => ({
-		key: item._id,
-		stt: i + 1,
-		name: (
-			<div
-				style={{
-					display: 'flex',
-					width: '500px',
-				}}
-			>
-				<Avatar
-					src={
-						product &&
-						product[item.product_id] &&
-						BASE_URL_IMAGE + product[item.product_id].image
-					}
-					style={{
-						width: '50px',
-						height: '50px',
-					}}
-				/>{' '}
+	const dataTable = arrCartTable.map((item, i) => {
+		return {
+			key: item._id,
+			stt: i + 1,
+			name: (
 				<div
 					style={{
-						marginLeft: '15px',
+						display: 'flex',
+						width: '500px',
 					}}
 				>
-					{' '}
-					{product && product[item.product_id] && product[item.product_id].name}{' '}
-				</div>{' '}
-			</div>
-		),
-		price: (
-			<div className={Styles.gia_item_cart}>
-				<div
-					style={{
-						textDecorationLine:
-							product[item.product_id] && product[item.product_id].price_seo !== '0 %'
-								? 'line-through'
-								: 'none',
-					}}
-				>
-					{' '}
-					{`${
-						product && product[item.product_id] && product[item.product_id].price * 1000
-					}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
+					<Avatar
+						src={
+							product &&
+							product[item.product_id] &&
+							BASE_URL_IMAGE + product[item.product_id].image
+						}
+						style={{
+							width: '50px',
+							height: '50px',
+						}}
+					/>{' '}
+					<div
+						style={{
+							marginLeft: '15px',
+						}}
+					>
+						{' '}
+						{product && product[item.product_id] && product[item.product_id].name}{' '}
+					</div>{' '}
 				</div>
-				<div>
+			),
+			price: (
+				<div className={Styles.gia_item_cart}>
+					<div
+						style={{
+							textDecorationLine:
+								product[item.product_id] && product[item.product_id].price_seo !== '0 %'
+									? 'line-through'
+									: 'none',
+						}}
+					>
+						{' '}
+						{`${
+							product && product[item.product_id] && product[item.product_id].price * 1000
+						}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}{' '}
+					</div>
+					<div>
+						{product &&
+							product[item.product_id] &&
+							(
+								(
+									product[item.product_id].price -
+									(product[item.product_id].price *
+										product[item.product_id].price_seo.split(' ')[0]) /
+										100
+								).toFixed(2) * 1000
+							)
+								.toString()
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+					</div>
+				</div>
+			),
+			number: item.amount,
+			total: (
+				<span
+					style={{
+						color: 'red',
+					}}
+				>
 					{product &&
 						product[item.product_id] &&
 						(
@@ -307,79 +340,59 @@ function CartProduct() {
 								(product[item.product_id].price *
 									product[item.product_id].price_seo.split(' ')[0]) /
 									100
-							).toFixed(2) * 1000
+							).toFixed(2) *
+							1000 *
+							item.amount
 						)
 							.toString()
 							.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
+				</span>
+			),
+			action: (
+				<div className={Styles.action_item_cart}>
+					{' '}
+					{product[item.product_id].amount - product[item.product_id].sold === 0 ? (
+						<Button
+							style={{
+								backgroundColor: '#bcb2b2',
+								color: '#fff',
+							}}
+							disabled
+						>
+							Đã hết hàng{' '}
+						</Button>
+					) : (
+						<Button
+							style={{
+								backgroundColor: '#ee4d2d',
+								color: '#fff',
+							}}
+							onClick={onPushPageBuy}
+							disabled={selectedRowKeys.length > 1}
+						>
+							Mua hàng{' '}
+						</Button>
+					)}{' '}
+					<Popconfirm
+						placement="topLeft"
+						title={text}
+						onConfirm={() => deleteCart(item._id)}
+						okText="Yes"
+						cancelText="No"
+					>
+						<Button
+							type="text"
+							style={{
+								color: '#9f643c',
+							}}
+						>
+							Xoá{' '}
+						</Button>{' '}
+					</Popconfirm>{' '}
 				</div>
-			</div>
-		),
-		number: item.amount,
-		total: (
-			<span
-				style={{
-					color: 'red',
-				}}
-			>
-				{product &&
-					product[item.product_id] &&
-					(
-						(
-							product[item.product_id].price -
-							(product[item.product_id].price *
-								product[item.product_id].price_seo.split(' ')[0]) /
-								100
-						).toFixed(2) *
-						1000 *
-						item.amount
-					)
-						.toString()
-						.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VNĐ'}
-			</span>
-		),
-		action: (
-			<div className={Styles.action_item_cart}>
-				{' '}
-				{product[item.product_id].amount - product[item.product_id].sold === 0 ? (
-					<Button
-						style={{
-							backgroundColor: '#bcb2b2',
-							color: '#fff',
-						}}
-						disabled
-					>
-						Đã hết hàng{' '}
-					</Button>
-				) : (
-					<Button
-						style={{
-							backgroundColor: '#ee4d2d',
-							color: '#fff',
-						}}
-						onClick={onPushPageBuy}
-					>
-						Mua hàng{' '}
-					</Button>
-				)}{' '}
-				<Popconfirm
-					placement="topLeft"
-					title={text}
-					onConfirm={() => deleteCart(item._id)}
-					okText="Yes"
-					cancelText="No"
-				>
-					<Button
-						type="text"
-						style={{
-							color: '#9f643c',
-						}}
-					>
-						Xoá{' '}
-					</Button>{' '}
-				</Popconfirm>{' '}
-			</div>
-		),
-	}));
+			),
+		};
+	});
 	return (
 		<div>
 			<div className={Styles.form_cart}>

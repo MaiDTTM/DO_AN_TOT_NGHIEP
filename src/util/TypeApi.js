@@ -21,6 +21,7 @@ const TYPE_STORE = {
 	transaction: 'transaction',
 	userAdmin: 'admin',
 	accountAdmin: 'accountAdmin',
+	comment: 'comment',
 };
 const BASE_URL = 'http://localhost:1999/api';
 const BASE_URL_IMAGE = `${BASE_URL}/file/`;

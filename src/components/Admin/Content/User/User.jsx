@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal, Select, Tabs } from 'antd';
+import { Button, Form, Input, message, Modal, Select, Tabs, DatePicker } from 'antd';
 import FormChung from './FormChung';
 import style from './style.module.scss';
 import { useSelector } from 'react-redux';
@@ -122,10 +122,14 @@ function User() {
 									<Option value="Khác">Khác</Option>
 								</Select>
 							</Form.Item>
-							{/*<Form.Item name="date_of_birth" label="Ngày sinh : ">*/}
-							{/*	<DatePicker />*/}
-							{/*</Form.Item>*/}
-							<Form.Item name="email" label="Email :" rules={[{ type: 'email' }]}>
+							<Form.Item name="date_of_birth" label="Ngày sinh : ">
+								<DatePicker />
+							</Form.Item>
+							<Form.Item
+								name="email"
+								label="Email :"
+								rules={[{ required: true, type: 'email' }]}
+							>
 								<Input />
 							</Form.Item>
 							<Form.Item label="Mật khẩu :" name="password">
@@ -134,7 +138,13 @@ function User() {
 							<Form.Item
 								name="phone"
 								label="Số điện thoại :"
-								rules={[{ required: true, message: 'Please input your phone number!' }]}
+								// rules={[
+								// 	{
+								// 		// required: true,
+								// 		message: 'Please input your phone number!',
+								// 		type: 'number',
+								// 	},
+								// ]}
 							>
 								<Input style={{ width: '100%' }} />
 							</Form.Item>

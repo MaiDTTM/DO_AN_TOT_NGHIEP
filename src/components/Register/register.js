@@ -78,30 +78,36 @@ function Register() {
 		setPhone('');
 	};
 	const onCreate = async () => {
-		if (!!checkBox) {
-			if (name && email && phone && password) {
-				const data = {
-					name,
-					email,
-					phone,
-					password,
-				};
+		if (name && email && phone && password) {
+			const data = {
+				name,
+				email,
+				phone,
+				password,
+			};
+			const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			const phoneFilter = /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(phone);
+			if (!filter.test(email)) {
+				messageAnt.warn('Email không hợp lệ!');
+			} else if (!phoneFilter) {
+				messageAnt.warn('Số điện thoại không hợp lệ!');
+			} else if (!checkBox) {
+				messageAnt.warn(
+					'Bạn phải chấp nhận điều khoản của chúng tôi mới có thể đăng ký được !'
+				);
+			} else {
 				const { message, user } = await baseAPI.add(TypeApi.user, data);
 				if (message === 'SUCCESS') {
 					await dispatch(AddUser(user));
 					messageAnt.success('Đăng ký thành công');
 					history.push('/login');
+					handleReset();
 				} else {
 					messageAnt.warn(message);
 				}
-			} else {
-				messageAnt.warn('Không được bỏ trống thông tin nào !');
 			}
-			handleReset();
 		} else {
-			messageAnt.warn(
-				'Bạn phải chấp nhận điều khoản của chúng tôi mới có thể đăng ký được !'
-			);
+			messageAnt.warn('Không được bỏ trống thông tin nào !');
 		}
 	};
 	const responseGoogle = (response) => {
@@ -150,7 +156,16 @@ function Register() {
 							onChange={(e) => onChangeText(e, TypeInput.email)}
 							required
 						/>
-						<label htmlFor="email" style={{ width: '60px' }}>
+						<label
+							htmlFor="email"
+							style={{
+								width: '60px',
+								top: email && 0,
+								color: email && '#00dd22',
+								fontSize: email && '14px',
+								zIndex: email && 1,
+							}}
+						>
 							Email
 						</label>
 					</div>

@@ -1,10 +1,8 @@
 import React from 'react';
-import useCustomerLogicData from '../../../hooks/useCustomerLogicData';
 import { BASE_URL_IMAGE } from '../../../util/TypeApi';
 import style from '../index.module.scss';
 import { Rate } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import Avatar from 'antd/es/avatar/avatar';
+import useCustomerLogicData from '../../../hooks/useCustomerLogicData';
 // import PropTypes from 'prop-types';
 
 function UserComment({ id, vote }) {

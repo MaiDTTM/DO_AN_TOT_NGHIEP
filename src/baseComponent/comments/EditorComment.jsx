@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 const { TextArea } = Input;
 
-function EditorComment({ handleSend }) {
+function EditorComment({ handleSend, isShowEditor = null, rootId }) {
 	// state
 	const [content, setContent] = React.useState('');
 	const [vote, setVote] = React.useState(0);
@@ -14,27 +14,30 @@ function EditorComment({ handleSend }) {
 	const handleChangeVote = (value) => {
 		setVote(value);
 	};
-	const onSend = React.useCallback(() => {
-		handleSend('-1', { content, vote });
+	const onSend = () => {
+		console.table({ content, vote }); // MaiDao
+		handleSend(rootId, content, vote);
 		setContent('');
 		setVote(0);
-	}, [content, vote]);
+	};
 	return (
-		<div className={styles.editor}>
+		<div className={styles.editor} style={{ paddingLeft: isShowEditor && '30px' }}>
 			<TextArea
 				value={content}
-				placeholder={'Bình luận của bạn'}
+				placeholder={isShowEditor ? '' : 'Bình luận của bạn'}
 				allowClear={false}
 				onChange={onChange}
-				rows={3}
+				rows={isShowEditor ? 2 : 3}
 			/>
 			<div className={styles.submit_comment}>
-				<Rate
-					style={{ fontSize: '16px' }}
-					allowHalf
-					value={vote}
-					onChange={handleChangeVote}
-				/>
+				{!isShowEditor && (
+					<Rate
+						style={{ fontSize: '16px' }}
+						allowHalf
+						value={vote}
+						onChange={handleChangeVote}
+					/>
+				)}
 				<Button type={'primary'} onClick={onSend} className={styles.button_comment}>
 					Gửi
 				</Button>
@@ -48,11 +51,13 @@ EditorComment.propTypes = {
 	handleSend: PropTypes.func,
 
 	avatarUrl: PropTypes.string,
+	rootId: PropTypes.string,
 };
 
 EditorComment.defaultProps = {
 	handleText: () => null,
 	handleSend: () => null,
+	rootId: '-1',
 };
 
 export default React.memo(EditorComment);

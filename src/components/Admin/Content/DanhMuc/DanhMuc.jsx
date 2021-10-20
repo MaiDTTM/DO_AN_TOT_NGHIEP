@@ -274,9 +274,9 @@ function DanhMuc() {
 						<i style={{ fontSize: 12, fontWeight: 'bold', color: 'black' }}>
 							(
 							{data.catalog_id &&
-							category[data.catalog_id] &&
-							category[data.catalog_id].name &&
-							category[data.catalog_id].name}
+								category[data.catalog_id] &&
+								category[data.catalog_id].name &&
+								category[data.catalog_id].name}
 							)
 						</i>
 					</>
@@ -355,23 +355,23 @@ function DanhMuc() {
 					onClick={(key) => handleClick(key)}
 				>
 					{categoryPaPaSort().length > 0 &&
-					categoryPaPaSort().map((item) => {
-						return (
-							item.paramId === '-1' && (
-								<SubMenu
-									key={item._id}
-									title={TitleCategory(item)}
-									onTitleClick={handleSubmenuClick}
-								>
-									{categoryPaPaSort(item._id).map((itemChildren) => (
-										<Menu.Item key={itemChildren._id}>
-											{TitleCategory(itemChildren)}
-										</Menu.Item>
-									))}
-								</SubMenu>
-							)
-						);
-					})}
+						categoryPaPaSort().map((item) => {
+							return (
+								item.paramId === '-1' && (
+									<SubMenu
+										key={item._id}
+										title={TitleCategory(item)}
+										onTitleClick={handleSubmenuClick}
+									>
+										{categoryPaPaSort(item._id).map((itemChildren) => (
+											<Menu.Item key={itemChildren._id}>
+												{TitleCategory(itemChildren)}
+											</Menu.Item>
+										))}
+									</SubMenu>
+								)
+							);
+						})}
 				</Menu>
 				<div className={styles.danh_muc_action}>
 					<Search placeholder={'Tìm kiếm danh mục'} onSearch={onSearch} enterButton />
@@ -408,6 +408,7 @@ function DanhMuc() {
 							</Form.Item>
 							<Form.Item name={'icon'} label="Icon :">
 								<UploadFileView
+									accept="image/png, image/jpeg"
 									setFileListUtil={setFileListUtil}
 									setLinkFileUtil={setLinkFileUtil}
 									fileListUtil={fileListUtil}

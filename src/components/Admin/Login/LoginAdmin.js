@@ -79,8 +79,6 @@ function LoginAdmin() {
 		} else {
 			messageAnt.warn('Không được bỏ trống thông tin nào !');
 		}
-		setUserAdmin('');
-		setPassword('');
 		setCheckBox(false);
 	};
 
@@ -173,17 +171,17 @@ function LoginAdmin() {
 						>
 							Lưu mật khẩu cho lần đăng nhập tiếp theo
 						</Checkbox>
-						<Link to={'/registerAdmin'}>
-							<div
-								style={{
-									color: '#45c326',
-									textDecoration: 'underline',
-									cursor: 'pointer',
-								}}
-							>
-								Register now !
-							</div>
-						</Link>
+						{/*<Link to={'/registerAdmin'}>*/}
+						{/*	<div*/}
+						{/*		style={{*/}
+						{/*			color: '#45c326',*/}
+						{/*			textDecoration: 'underline',*/}
+						{/*			cursor: 'pointer',*/}
+						{/*		}}*/}
+						{/*	>*/}
+						{/*		Register now !*/}
+						{/*	</div>*/}
+						{/*</Link>*/}
 					</div>
 				</div>
 				<div className={styles.item_form_dang_nhap}>

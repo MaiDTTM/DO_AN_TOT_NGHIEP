@@ -108,20 +108,20 @@ function KhachHang() {
 			title: 'Address',
 			dataIndex: 'address',
 		},
-		{
-			title: 'Mật khẩu',
-			// dataIndex: 'password',
-			render: (record) => {
-				return (
-					<input
-						disabled
-						type="password"
-						value={record.password}
-						style={{ backgroundColor: '#fff !important' }}
-					/>
-				);
-			},
-		},
+		// {
+		// 	title: 'Mật khẩu',
+		// 	// dataIndex: 'password',
+		// 	render: (record) => {
+		// 		return (
+		// 			<input
+		// 				disabled
+		// 				type="password"
+		// 				value={record.password}
+		// 				style={{ backgroundColor: '#fff !important' }}
+		// 			/>
+		// 		);
+		// 	},
+		// },
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',

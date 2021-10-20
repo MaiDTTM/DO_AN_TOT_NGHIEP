@@ -11,6 +11,7 @@ import transactionReducer from './transactionReducer';
 import customerReducer from './customerReducer';
 import adminReducer from './adminReducer';
 import accountAdimReducer from './accountAdimReducer';
+import commentReducer from './commentReducer';
 
 const store = {};
 const listState = [
@@ -37,6 +38,10 @@ const listState = [
 	{
 		name: TYPE_STORE.slider,
 		value: sliderReducer,
+	},
+	{
+		name: TYPE_STORE.comment,
+		value: commentReducer,
 	},
 	{
 		name: TYPE_STORE.transaction,
